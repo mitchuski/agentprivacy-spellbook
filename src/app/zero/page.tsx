@@ -6,6 +6,43 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
+// Video mapping for tales
+const getTaleVideo = (tale: number): string | null => {
+  const videoMap: { [key: number]: string } = {
+    1: '/assets/monastaryofhiddentruthzero_tale1.mp4', // Tale 1: The Monastery of Hidden Knowledge
+  };
+  return videoMap[tale] || null;
+};
+
+function TaleImage({ tale }: { tale: number }) {
+  const videoSrc = getTaleVideo(tale);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    // Reset when tale changes
+    setHasError(false);
+  }, [tale]);
+
+  if (!videoSrc || hasError) {
+    return null; // Don't show anything if no video exists
+  }
+
+  return (
+    <div className="relative w-full rounded-lg overflow-hidden border border-surface/50 bg-background/50 mb-6">
+      <video
+        key={tale}
+        src={videoSrc}
+        className="w-full h-auto object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        onError={() => setHasError(true)}
+      />
+    </div>
+  );
+}
+
 // Tale metadata from manifest
 const taleData: { [key: number]: { title: string; spell: string; proverb: string } } = {
   1: { title: "The Monastery of Hidden Knowledge", spell: "🏛️(🧙‍♂️³) → ZKP = {✓complete, ✓sound, ✓zero-knowledge}", proverb: "Three properties guard the gate of honest proof: completeness lets truth enter, soundness bars deception, zero-knowledge preserves mystery." },
@@ -131,6 +168,8 @@ export default function ZeroPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
+  const [copiedInscription, setCopiedInscription] = useState(false);
+  const [copiedProverbText, setCopiedProverbText] = useState(false);
   const [talesAvailable, setTalesAvailable] = useState<boolean>(false); // Default to false (production mode)
 
   // Check if tales are available (local vs production)
@@ -280,6 +319,30 @@ export default function ZeroPage() {
     return "";
   };
 
+  const copyInscriptionEmojis = async () => {
+    const emojis = getInscriptionEmojis(activeAct);
+    if (!emojis) return;
+    try {
+      await navigator.clipboard.writeText(emojis);
+      setCopiedInscription(true);
+      setTimeout(() => setCopiedInscription(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy inscription:', err);
+    }
+  };
+
+  const copyProverbText = async () => {
+    const proverb = getProverb(activeAct);
+    if (!proverb) return;
+    try {
+      await navigator.clipboard.writeText(proverb);
+      setCopiedProverbText(true);
+      setTimeout(() => setCopiedProverbText(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy proverb:', err);
+    }
+  };
+
   const copyProverb = async () => {
     const emojis = getInscriptionEmojis(activeAct);
     if (!emojis) return;
@@ -400,6 +463,30 @@ export default function ZeroPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
+            {/* Top Right Learn Button */}
+            {markdownContent && (
+              <div className="absolute top-4 right-2 sm:right-4 z-10">
+                <button
+                  onClick={copyToClipboard}
+                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
+                  title="Copy story text"
+                >
+                  {copied ? (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="text-primary text-xs sm:text-sm font-medium"
+                    >
+                      cast
+                    </motion.div>
+                  ) : (
+                    <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
+                      learn 🧙‍♂️
+                    </span>
+                  )}
+                </button>
+              </div>
+            )}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeAct}
@@ -409,10 +496,63 @@ export default function ZeroPage() {
                 transition={{ duration: 0.3 }}
               >
                 {activeAct >= 1 && activeAct <= 30 && (
-                  <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-text mb-2">Tale {activeAct}: {taleData[activeAct]?.title}</h2>
-                    <div className="h-1 w-20 bg-primary rounded-full"></div>
-                  </div>
+                  <>
+                    <div className="mb-6">
+                      <h2 className="text-2xl font-bold text-text mb-2">Tale {activeAct}: {taleData[activeAct]?.title}</h2>
+                      <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
+                      
+                      {/* Inscribe and Proverb Cards */}
+                      <div className="flex gap-3 flex-wrap pr-20 sm:pr-24">
+                        <button
+                          onClick={copyProverbText}
+                          className="flex-1 min-w-[200px] bg-surface/60 hover:bg-surface/80 border border-surface/50 rounded-lg p-3 transition-all duration-200 text-left group"
+                          title="Copy proverb"
+                        >
+                          <div className="text-primary/70 text-xs font-medium mb-2">proverb</div>
+                          <div className="min-h-[3rem]">
+                            {copiedProverbText ? (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary text-xs sm:text-sm font-medium"
+                              >
+                                cast
+                              </motion.div>
+                            ) : (
+                              <div className="text-text italic text-sm leading-relaxed">
+                                {getProverb(activeAct) || "Proverb will appear here"}
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                        <button
+                          onClick={copyInscriptionEmojis}
+                          className="flex-1 min-w-[200px] bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg p-3 transition-all duration-200 text-left group"
+                          title="Copy inscription"
+                        >
+                          <div className="text-primary/70 text-xs font-medium mb-2">inscribe</div>
+                          <div className="min-h-[3rem]">
+                            {copiedInscription ? (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary text-xs sm:text-sm font-medium"
+                              >
+                                cast
+                              </motion.div>
+                            ) : (
+                              <div className="text-text text-sm font-mono whitespace-pre-line break-words">
+                                {getInscriptionEmojis(activeAct) || "Inscription will appear here"}
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Video Section */}
+                    <TaleImage tale={activeAct} />
+                  </>
                 )}
                 
                 {activeAct === 32 ? (

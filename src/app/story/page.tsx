@@ -104,7 +104,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
     },
     {
       title: "Act IX: Zcash Shield",
-      emojis: "🛡️ → 🛡️⚡ → 💰🔒 → 🪙🕶️",
+      emojis: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
       quote: "Privacy shield becomes cryptographic certainty, 7th capital flows shielded."
     },
     {
@@ -121,6 +121,11 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       title: "Last Page",
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
       quote: "Blade, spell, proof, bilateral attestations, web of trust, infrastructure: 7th capital compounds."
+    },
+    {
+      title: "Relationship Proverb Protocol (RPP)",
+      emojis: "👤❓ → 🔮📜(👤↔️📖) → 🔓💬",
+      quote: "Seeker's question invokes mage-divination bridging their context to the chronicle; only proverb-lock release permits voice."
     },
     {
       title: "First Person Spellbook Incantation",
@@ -222,6 +227,8 @@ export default function StoryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
+  const [copiedInscription, setCopiedInscription] = useState(false);
+  const [copiedProverbText, setCopiedProverbText] = useState(false);
 
   const acts = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12, 13]; // 0 = first page, 1-11 = Acts, 12 = last page, 13 = inscriptions
 
@@ -303,7 +310,7 @@ export default function StoryPage() {
       6: "🤝📜 + 🤝📜 + 🤝📜 = 🚪🌐",
       7: "1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤",
       8: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
-      9: "🛡️ → 🛡️⚡ → 💰🔒 → 🪙🕶️",
+      9: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
       10: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
       11: "⚔️ ➗ 📖 = 🌀 = 1.618",
       12: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -328,6 +335,30 @@ export default function StoryPage() {
       12: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
     };
     return proverbs[act] || "";
+  };
+
+  const copyInscriptionEmojis = async () => {
+    const emojis = getInscriptionEmojis(activeAct);
+    if (!emojis) return;
+    try {
+      await navigator.clipboard.writeText(emojis);
+      setCopiedInscription(true);
+      setTimeout(() => setCopiedInscription(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy inscription:', err);
+    }
+  };
+
+  const copyProverbText = async () => {
+    const proverb = getProverb(activeAct);
+    if (!proverb) return;
+    try {
+      await navigator.clipboard.writeText(proverb);
+      setCopiedProverbText(true);
+      setTimeout(() => setCopiedProverbText(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy proverb:', err);
+    }
   };
 
   const copyProverb = async () => {
@@ -450,6 +481,30 @@ export default function StoryPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
+            {/* Top Right Learn Button */}
+            {markdownContent && (
+              <div className="absolute top-4 right-2 sm:right-4 z-10">
+                <button
+                  onClick={copyToClipboard}
+                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
+                  title="Copy story text"
+                >
+                  {copied ? (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="text-primary text-xs sm:text-sm font-medium"
+                    >
+                      cast
+                    </motion.div>
+                  ) : (
+                    <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
+                      learn 🧙‍♂️
+                    </span>
+                  )}
+                </button>
+              </div>
+            )}
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeAct}
@@ -462,7 +517,55 @@ export default function StoryPage() {
                   <>
                     <div className="mb-6">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
-                      <div className="h-1 w-20 bg-primary rounded-full"></div>
+                      <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
+                      
+                      {/* Inscribe and Proverb Cards */}
+                      <div className="flex gap-3 flex-wrap pr-20 sm:pr-24">
+                        <button
+                          onClick={copyProverbText}
+                          className="flex-1 min-w-[200px] bg-surface/60 hover:bg-surface/80 border border-surface/50 rounded-lg p-3 transition-all duration-200 text-left group"
+                          title="Copy proverb"
+                        >
+                          <div className="text-primary/70 text-xs font-medium mb-2">proverb</div>
+                          <div className="min-h-[3rem]">
+                            {copiedProverbText ? (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary text-xs sm:text-sm font-medium"
+                              >
+                                cast
+                              </motion.div>
+                            ) : (
+                              <div className="text-text italic text-sm leading-relaxed">
+                                {getProverb(activeAct) || "Proverb will appear here"}
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                        <button
+                          onClick={copyInscriptionEmojis}
+                          className="flex-1 min-w-[200px] bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg p-3 transition-all duration-200 text-left group"
+                          title="Copy inscription"
+                        >
+                          <div className="text-primary/70 text-xs font-medium mb-2">inscribe</div>
+                          <div className="min-h-[3rem]">
+                            {copiedInscription ? (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary text-xs sm:text-sm font-medium"
+                              >
+                                cast
+                              </motion.div>
+                            ) : (
+                              <div className="text-text text-sm font-mono whitespace-pre-line break-words">
+                                {getInscriptionEmojis(activeAct) || "Inscription will appear here"}
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      </div>
                     </div>
                     
                     {/* Image Section */}
