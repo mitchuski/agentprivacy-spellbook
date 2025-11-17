@@ -185,11 +185,9 @@ export default function ZeroPage() {
     checkTalesAvailability();
   }, []);
 
-  // Acts: 0 = first page, 1-30 = tales, 31 = last page, 32 = inscriptions
-  // In production (tales not available), only show first page
-  // Default to production mode (only first page) until we confirm tales exist
-  const allActs = [0, ...Array.from({ length: 30 }, (_, i) => i + 1), 31, 32];
-  const acts = talesAvailable ? allActs : [0]; // Only show all acts if tales are confirmed available
+  // Acts: 0 = first page, 1 = tale 1
+  // Only show first page and tale 1 (when available)
+  const acts = talesAvailable ? [0, 1] : [0]; // Only show first page and tale 1 if available
 
   // Reset to first page if current activeAct is not available
   useEffect(() => {
