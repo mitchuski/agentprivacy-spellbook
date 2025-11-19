@@ -10,6 +10,7 @@ import rehypeRaw from 'rehype-raw';
 const getTaleVideo = (tale: number): string | null => {
   const videoMap: { [key: number]: string } = {
     1: '/assets/monastaryofhiddentruthzero_tale1.mp4', // Tale 1: The Monastery of Hidden Knowledge
+    2: '/assets/trialsinthreesoulbaemountain.mp4', // Tale 2: The Three Trials of Truth
   };
   return videoMap[tale] || null;
 };
@@ -185,9 +186,9 @@ export default function ZeroPage() {
     checkTalesAvailability();
   }, []);
 
-  // Acts: 0 = first page, 1 = tale 1
-  // Only show first page and tale 1 (when available)
-  const acts = talesAvailable ? [0, 1] : [0]; // Only show first page and tale 1 if available
+  // Acts: 0 = first page, 1 = tale 1, 2 = tale 2
+  // Show first page and available tales
+  const acts = talesAvailable ? [0, 1, 2] : [0]; // Show first page, tale 1, and tale 2 if available
 
   // Reset to first page if current activeAct is not available
   useEffect(() => {

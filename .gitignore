@@ -34,10 +34,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# zero spellbook (excluded from git, except first page and tale 1)
-/public/zero/
+# zero spellbook (excluded from git, except first page and tale 1-2)
+/public/zero/markdown/*
 !/public/zero/markdown/00-zeromage-firstpage.md
 !/public/zero/markdown/01-tale-01.md
-/src/app/zero/
+!/public/zero/markdown/02-tale-02.md
+/src/app/zero/*
 !/src/app/zero/page.tsx
 
