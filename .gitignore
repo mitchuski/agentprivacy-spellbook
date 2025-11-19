@@ -34,11 +34,39 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# zero spellbook (excluded from git, except first page and tale 1-2)
+# zero spellbook (excluded from git, except first page and all tales)
 /public/zero/markdown/*
 !/public/zero/markdown/00-zeromage-firstpage.md
 !/public/zero/markdown/01-tale-01.md
 !/public/zero/markdown/02-tale-02.md
+!/public/zero/markdown/03-tale-03.md
+!/public/zero/markdown/04-tale-04.md
+!/public/zero/markdown/05-tale-05.md
+!/public/zero/markdown/06-tale-06.md
+!/public/zero/markdown/07-tale-07.md
+!/public/zero/markdown/08-tale-08.md
+!/public/zero/markdown/09-tale-09.md
+!/public/zero/markdown/10-tale-10.md
+!/public/zero/markdown/11-tale-11.md
+!/public/zero/markdown/12-tale-12.md
+!/public/zero/markdown/13-tale-13.md
+!/public/zero/markdown/14-tale-14.md
+!/public/zero/markdown/15-tale-15.md
+!/public/zero/markdown/16-tale-16.md
+!/public/zero/markdown/17-tale-17.md
+!/public/zero/markdown/18-tale-18.md
+!/public/zero/markdown/19-tale-19.md
+!/public/zero/markdown/20-tale-20.md
+!/public/zero/markdown/21-tale-21.md
+!/public/zero/markdown/22-tale-22.md
+!/public/zero/markdown/23-tale-23.md
+!/public/zero/markdown/24-tale-24.md
+!/public/zero/markdown/25-tale-25.md
+!/public/zero/markdown/26-tale-26.md
+!/public/zero/markdown/27-tale-27.md
+!/public/zero/markdown/28-tale-28.md
+!/public/zero/markdown/29-tale-29.md
+!/public/zero/markdown/30-tale-30.md
 /src/app/zero/*
 !/src/app/zero/page.tsx
 
