@@ -52,6 +52,23 @@ function ActImage({ act }: { act: number }) {
   );
 }
 
+// Shared proverbs data
+const storyProverbs: { [key: number]: string } = {
+  0: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
+  1: "The swordsman who never strikes guards nothing; the mage who never casts commands nothing.",
+  2: "What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable; what both accomplish, the spellbook verifies.",
+  3: "the swordsman alone rages, mage alone dreams, action alone blinds—sovereignty demands all three to intertwine.",
+  4: "Trust begins unarmored—the swordsman and mage test small betrayals before the first person may grant the keys to more powerful treasures.",
+  5: "Solo combat sets the terms and proves the swordsman; coordinated spells prove the mage; spellbooks weave both into campaigns worthy of legend.",
+  6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
+  7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
+  8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
+  9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
+  10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
+  11: "The blade that becomes the spell loses both edges.",
+  12: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
+};
+
 function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
@@ -60,72 +77,77 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
     {
       title: "First Page",
       emojis: "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
-      quote: "Human summons mage and sword bound by bilateral terms, multiplied by Drake's teaching, defeats surveillance."
+      quote: storyProverbs[0]
     },
     {
       title: "Act I: Venice, 1494",
       emojis: "📖💰 → 🐉⏳ → ⚔️🔮",
-      quote: "Double-entry ledgers birth the Drake's vision: blade and spell for future's sovereignty."
+      quote: storyProverbs[1]
     },
     {
       title: "Act II: The Dual Ceremony",
       emojis: "🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️",
-      quote: "Blade and spell spring from verified personhood, build bilateral attestations, weave web of trust."
+      quote: storyProverbs[2]
     },
     {
       title: "Act III: The Drake's Teaching",
       emojis: "👤✓ → ⚔️📖 → 🔒📝 → 🤝📜 → 🕸️✓ → 🌐🏛️",
-      quote: "Verified human summons dual agents who operate with proof, build relationships, present attestations, coordinate through infrastructure."
+      quote: storyProverbs[3]
     },
     {
       title: "Act IV: Blade Alone",
       emojis: "🗡️ → 🍪⚔️ → 🔒 → 📖📝 → 🤝📜₁",
-      quote: "Blade slashes surveillance, generates commitments, mage chronicles with binding, earns first bilateral attestation."
+      quote: storyProverbs[4]
     },
     {
       title: "Act V: Light Armor",
       emojis: "🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊",
-      quote: "With three attestations, light armor enables multi-site coordination, deeper chronicles accumulate."
+      quote: storyProverbs[5]
     },
     {
       title: "Act VI: Trust Graph Plane",
       emojis: "🤝📜 + 🤝📜 + 🤝📜 = 🚪🌐",
-      quote: "Three bilateral attestations open the door to coordination space."
+      quote: storyProverbs[6]
     },
     {
       title: "Act VII: The Mirror That Never Completes",
       emojis: "1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤",
-      quote: "Unified agents become legible. Dual agents preserve the shimmer that is dignity."
+      quote: storyProverbs[7]
     },
     {
       title: "Act VIII: Ancient Rule",
       emojis: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
-      quote: "Fifteen attestations earn Heavy, gates to Intel Pools open."
+      quote: storyProverbs[8]
     },
     {
       title: "Act IX: Zcash Shield",
       emojis: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
-      quote: "Privacy shield becomes cryptographic certainty, 7th capital flows shielded."
+      quote: storyProverbs[9]
     },
     {
       title: "Act X: Topology of Revelation",
       emojis: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
-      quote: "Substrate cannot touch memory directly, only through discrete thought. The triangle steers itself."
+      quote: storyProverbs[10]
     },
     {
       title: "Act XI: Balanced Spiral of Sovereignty",
       emojis: "⚔️ ➗ 📖 = 🌀",
-      quote: "blade / spell = phi = sovereignty"
+      quote: storyProverbs[11]
     },
     {
       title: "Last Page",
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
-      quote: "Blade, spell, proof, bilateral attestations, web of trust, infrastructure: 7th capital compounds."
+      quote: storyProverbs[12]
     },
     {
       title: "Relationship Proverb Protocol (RPP)",
       emojis: "👤❓ → 🔮📜(👤↔️📖) → 🔓💬",
       quote: "Seeker's question invokes mage-divination bridging their context to the chronicle; only proverb-lock release permits voice."
+    },
+    {
+      title: "The Emergence Spell",
+      emojis: "👣 → 🎯 | 🌊 → 📜 | ⏰ → 🔓 | 🕊 → ⭕️ → 🔮🤝👤",
+      quote: "The right people arrive, the right thing happens, the right moment opens, and the right ending closes — trust the pattern, for it trusts you."
     },
     {
       title: "First Person Spellbook Incantation",
@@ -312,29 +334,14 @@ export default function StoryPage() {
       8: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
       9: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
       10: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
-      11: "⚔️ ➗ 📖 = 🌀 = 1.618",
+      11: "⚔️ ➗ 📖 = 🌀",
       12: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
     };
     return inscriptions[act] || "";
   };
 
   const getProverb = (act: number): string => {
-    const proverbs: { [key: number]: string } = {
-      0: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
-      1: "The swordsman who never strikes guards nothing; the mage who never casts commands nothing.",
-      2: "What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable; what both accomplish, the spellbook verifies.",
-      3: "the swordsman alone rages, mage alone dreams, action alone blinds—sovereignty demands all three to intertwine.",
-      4: "Trust begins unarmored—the swordsman and mage test small betrayals before the first person may grant the keys to more powerful treasures.",
-      5: "Solo combat sets the terms and proves the swordsman; coordinated spells prove the mage; spellbooks weave both into campaigns worthy of legend.",
-      6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
-      7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
-      8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
-      9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
-      10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
-      11: "The blade that becomes the spell loses both edges.",
-      12: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
-    };
-    return proverbs[act] || "";
+    return storyProverbs[act] || "";
   };
 
   const copyInscriptionEmojis = async () => {
@@ -481,8 +488,8 @@ export default function StoryPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
-            {/* Top Right Learn Button */}
-            {markdownContent && (
+            {/* Top Right Learn Button (only for non-act pages) */}
+            {markdownContent && (activeAct === 0 || activeAct === 12 || activeAct === 13) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10">
                 <button
                   onClick={copyToClipboard}
@@ -515,12 +522,9 @@ export default function StoryPage() {
               >
                 {activeAct !== 0 && activeAct !== 12 && activeAct !== 13 && (
                   <>
+                    {/* Inscribe and Proverb Cards + Learn Button */}
                     <div className="mb-6">
-                      <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
-                      <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
-                      
-                      {/* Inscribe and Proverb Cards */}
-                      <div className="flex gap-3 flex-wrap pr-20 sm:pr-24">
+                      <div className="flex gap-3 flex-wrap items-start">
                         <button
                           onClick={copyProverbText}
                           className="flex-1 min-w-[200px] bg-surface/60 hover:bg-surface/80 border border-surface/50 rounded-lg p-3 transition-all duration-200 text-left group"
@@ -565,6 +569,27 @@ export default function StoryPage() {
                             )}
                           </div>
                         </button>
+                        {markdownContent && (
+                          <button
+                            onClick={copyToClipboard}
+                            className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0 self-start"
+                            title="Copy story text"
+                          >
+                            {copied ? (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary text-xs sm:text-sm font-medium"
+                              >
+                                cast
+                              </motion.div>
+                            ) : (
+                              <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
+                                learn 🧙‍♂️
+                              </span>
+                            )}
+                          </button>
+                        )}
                       </div>
                     </div>
                     

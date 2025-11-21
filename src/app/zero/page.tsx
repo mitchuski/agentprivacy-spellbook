@@ -463,8 +463,8 @@ export default function ZeroPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
-            {/* Top Right Learn Button */}
-            {markdownContent && (
+            {/* Top Right Learn Button (only for non-tale pages) */}
+            {markdownContent && (activeAct === 0 || activeAct === 31 || activeAct === 32) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10">
                 <button
                   onClick={copyToClipboard}
@@ -497,12 +497,9 @@ export default function ZeroPage() {
               >
                 {activeAct >= 1 && activeAct <= 30 && (
                   <>
+                    {/* Inscribe and Proverb Cards + Learn Button */}
                     <div className="mb-6">
-                      <h2 className="text-2xl font-bold text-text mb-2">Tale {activeAct}: {taleData[activeAct]?.title}</h2>
-                      <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
-                      
-                      {/* Inscribe and Proverb Cards */}
-                      <div className="flex gap-3 flex-wrap pr-20 sm:pr-24">
+                      <div className="flex gap-3 flex-wrap items-start">
                         <button
                           onClick={copyProverbText}
                           className="flex-1 min-w-[200px] bg-surface/60 hover:bg-surface/80 border border-surface/50 rounded-lg p-3 transition-all duration-200 text-left group"
@@ -547,11 +544,37 @@ export default function ZeroPage() {
                             )}
                           </div>
                         </button>
+                        {markdownContent && (
+                          <button
+                            onClick={copyToClipboard}
+                            className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0 self-start"
+                            title="Copy story text"
+                          >
+                            {copied ? (
+                              <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary text-xs sm:text-sm font-medium"
+                              >
+                                cast
+                              </motion.div>
+                            ) : (
+                              <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
+                                learn 🧙‍♂️
+                              </span>
+                            )}
+                          </button>
+                        )}
                       </div>
                     </div>
                     
                     {/* Video Section */}
                     <TaleImage tale={activeAct} />
+                    
+                    {/* Title below image */}
+                    <div className="mb-6">
+                      <h2 className="text-2xl font-bold text-text">Tale {activeAct}: {taleData[activeAct]?.title}</h2>
+                    </div>
                   </>
                 )}
                 

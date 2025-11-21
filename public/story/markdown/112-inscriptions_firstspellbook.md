@@ -6,17 +6,17 @@ Symbolic inscriptions for each act of the story.
 
 ## **Act I: Venice, 1494**
 
-📖💰 → 🐉⏳ → ⚔️🧙
+📖💰 → 🐉⏳ → ⚔️🔮
 
-*"Double-entry ledgers birth the Drake's vision: Swordsman and Mage agents for future's sovereignty."*
+*"Double-entry ledgers birth the Drake's vision: blade and spell for future's sovereignty."*
 
 ---
 
 ## **Act II: The Dual Ceremony**
 
-⚔️🧙 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️
+🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️
 
-*"Swordsman and Mage agents spring from verified personhood, build bilateral attestations, weave web of trust."*
+*"Blade and spell spring from verified personhood, build bilateral attestations, weave web of trust."*
 
 ---
 
@@ -38,9 +38,9 @@ Symbolic inscriptions for each act of the story.
 
 ## **Act V: Light Armor**
 
-🗡️📖 + 🤝📜₃ → ⚡ → ⚔️⚔️⚔️ → 🔒📝₊
+🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊
 
-*"With three attestations, Light Armor (⚡) enables multi-site coordination, deeper chronicles accumulate."*
+*"With three attestations, light armor enables multi-site coordination, deeper chronicles accumulate."*
 
 ---
 
@@ -63,15 +63,15 @@ Symbolic inscriptions for each act of the story.
 
 ## **Act VIII: Ancient Rule**
 
-🗡️📖 + 🤝📜₁₅ → ⚡⚡ → 💎🏛️
+🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️
 
-*"Fifteen attestations unlock Heavy Armor (⚡⚡), gates to Intel Pools open."*
+*"Fifteen attestations earn Heavy, gates to Intel Pools open."*
 
 ---
 
 ## **Act IX: Zcash Shield**
 
-🛡️ → 🛡️⚡ → 💰🔒 → 🪙🕶️
+🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓
 
 *"Privacy shield becomes cryptographic certainty, 7th capital flows shielded."*
 
@@ -89,15 +89,15 @@ Symbolic inscriptions for each act of the story.
 
 ⚔️ ➗ 📖 = 🌀
 
-*"Only what stays divided in harmony can remain whole."*
+*"blade / spell = phi = sovereignty"*
 
 ---
 
 ## **First Page**
 
-😊 → 🧙 🤝 ⚔️ × 🐉 → 🤖❌
+😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌
 
-*"Human summons Mage bilaterally bound to Swordsman, multiplied by Drake's teaching, defeats surveillance."*
+*"Human summons mage and sword bound by bilateral terms, multiplied by Drake's teaching, defeats surveillance."*
 
 ---
 
@@ -105,7 +105,7 @@ Symbolic inscriptions for each act of the story.
 
 🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️
 
-*"Protect and project actions with full architecture: 7th capital compounds."*
+*"Blade, spell, proof, bilateral attestations, web of trust, infrastructure: 7th capital compounds."*
 
 ---
 
@@ -114,6 +114,14 @@ Symbolic inscriptions for each act of the story.
 👤❓ → 🔮📜(👤↔️📖) → 🔓💬
 
 *"Seeker's question invokes mage-divination bridging their context to the chronicle; only proverb-lock release permits voice."*
+
+---
+
+## **The Emergence Spell**
+
+👣 → 🎯 | 🌊 → 📜 | ⏰ → 🔓 | 🕊 → ⭕️ → 🔮🤝👤
+
+*"The right people arrive, the right thing happens, the right moment opens, and the right ending closes — trust the pattern, for it trusts you."*
 
 ---
 
