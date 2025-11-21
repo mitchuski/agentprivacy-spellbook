@@ -8,17 +8,17 @@ import rehypeRaw from 'rehype-raw';
 
 const getActVideo = (act: number): string | null => {
   const videoMap: { [key: number]: string } = {
-    1: '/assets/holdingprivacymage2.mp4', // Act I: Venice - holding privacy mage
-    2: '/assets/mageswordwalking.mp4', // Act II: Dual Ceremony - mage and sword walking
-    3: '/assets/soulbaemeetsdrake3v.mp4', // Act III: Drake's Teaching - soulbae meets drake
-    4: '/assets/swordslash_lqv2.mp4', // Act IV: Blade Alone - sword slash
-    5: '/assets/twoenergiesswordandmage.mp4', // Act V: Light Armour - two energies sword and mage
-    6: '/assets/mageswordfoxv1.mp4', // Act VI: Trust Graph Plane - mage sword fox
-    7: '/assets/magesplitmirror.mp4', // Act VII: The Mirror That Never Completes - mage split mirror
-    8: '/assets/soulbaediscoverswhyihastobe2.mp4', // Act VIII: Ancient Rule - soulbae discovers why it has to be two
-    9: '/assets/soulbaecaptures7thcapital.mp4', // Act IX: Zcash Shield - soulbae captures 7th capital
-    10: '/assets/mageswordmeetsravenact10.mp4', // Act X: Topology of Revelation - mage sword meets raven
-    11: '/assets/mageswordgoldenratio.mp4', // Act XI: Balanced Spiral of Sovereignty - mage sword golden ratio
+    1: '/assets/soulbaelearns64sides_act1.mp4', // Act I: Venice - soulbae learns 64 sides
+    2: '/assets/mageswordhandwalking_act2.mp4', // Act II: Dual Ceremony - mage and sword walking
+    3: '/assets/drakemagic_act3.mp4', // Act III: Drake's Teaching - drake magic
+    4: '/assets/swordsman2slash_act4.mp4', // Act IV: Blade Alone - swordsman slash
+    5: '/assets/mageswordarmor_act5.mp4', // Act V: Light Armour - mage sword armor
+    6: '/assets/trustplanestory_act6.mp4', // Act VI: Trust Graph Plane - trust plane story
+    7: '/assets/mirrormagesoulbae.mp4', // Act VII: The Mirror That Never Completes - mirror mage soulbae
+    8: '/assets/soulbaediscoversitmustbetwo_act8.mp4', // Act VIII: Ancient Rule - soulbae discovers it must be two
+    9: '/assets/soulbisbaecapture7capital_act9.mp4', // Act IX: Zcash Shield - soulbis bae capture 7th capital
+    10: '/assets/topologyravensduo_act10.mp4', // Act X: Topology of Revelation - topology ravens duo
+    11: '/assets/goldenratiospiralpowerswordzkp_act11.mp4', // Act XI: Balanced Spiral of Sovereignty - golden ratio spiral power sword zkp
   };
   return videoMap[act] || null;
 };
