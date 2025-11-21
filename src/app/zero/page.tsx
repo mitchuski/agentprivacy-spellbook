@@ -9,8 +9,9 @@ import rehypeRaw from 'rehype-raw';
 // Video mapping for tales
 const getTaleVideo = (tale: number): string | null => {
   const videoMap: { [key: number]: string } = {
-    1: '/assets/monastaryofhiddentruthzero_tale1.mp4', // Tale 1: The Monastery of Hidden Knowledge
-    2: '/assets/trialsinthreesoulbaemountain.mp4', // Tale 2: The Three Trials of Truth
+    1: '/assets/monastryprotectionzk_tale1.mp4', // Tale 1: The Monastery of Hidden Knowledge
+    2: '/assets/threetrialsmageswordzero_tale2.mp4', // Tale 2: The Three Trials of Truth
+    3: '/assets/soulbaebisenergyconnect_tale3.mp4', // Tale 3: The Silent Messenger - soulbae bis energy connect
   };
   return videoMap[tale] || null;
 };
@@ -186,9 +187,9 @@ export default function ZeroPage() {
     checkTalesAvailability();
   }, []);
 
-  // Acts: 0 = first page, 1 = tale 1, 2 = tale 2
+  // Acts: 0 = first page, 1 = tale 1, 2 = tale 2, 3 = tale 3
   // Show first page and available tales
-  const acts = talesAvailable ? [0, 1, 2] : [0]; // Show first page, tale 1, and tale 2 if available
+  const acts = talesAvailable ? [0, 1, 2, 3] : [0]; // Show first page, tale 1, tale 2, and tale 3 if available
 
   // Reset to first page if current activeAct is not available
   useEffect(() => {
