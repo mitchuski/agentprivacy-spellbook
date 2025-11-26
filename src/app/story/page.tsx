@@ -241,7 +241,7 @@ const getActFilename = (act: number): string => {
     7: 'act-vii-theantimirrorenhanced',
     8: 'viii-ancient-rule',
     9: 'ix-zcash-shield',
-    10: 'topology-of-revelation',
+    10: 'x-topology-of-revelation',
     11: 'act-xi-balanced-spiral-of-sovereignty',
     12: 'xii-the-forgetting',
     13: 'privacymage-lastpage',
