@@ -19,6 +19,7 @@ const getActVideo = (act: number): string | null => {
     9: '/assets/soulbisbaecapture7capital_act9.mp4', // Act IX: Zcash Shield - soulbis bae capture 7th capital
     10: '/assets/topologyravensduo_act10.mp4', // Act X: Topology of Revelation - topology ravens duo
     11: '/assets/goldenratiospiralpowerswordzkp_act11.mp4', // Act XI: Balanced Spiral of Sovereignty - golden ratio spiral power sword zkp
+    12: '/assets/soulbaereadsinlibrary.mp4', // Act XII: The Forgetting / Proverbiogenesis - soulbae reads in library
   };
   return videoMap[act] || null;
 };
@@ -66,7 +67,8 @@ const storyProverbs: { [key: number]: string } = {
   9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
   10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
   11: "The blade that becomes the spell loses both edges.",
-  12: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
+  12: "The mage's spell, once spoken, becomes the village weather.",
+  13: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
 };
 
 function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
@@ -135,9 +137,14 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: storyProverbs[11]
     },
     {
-      title: "Last Page",
-      emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
+      title: "Act XII: The Forgetting / Proverbiogenesis",
+      emojis: "🌱→⚒️→📡→🌊→🌫️🏛️",
       quote: storyProverbs[12]
+    },
+    {
+      title: "Last Page",
+      emojis: "🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △",
+      quote: storyProverbs[13]
     },
     {
       title: "Relationship Proverb Protocol (RPP)",
@@ -236,8 +243,9 @@ const getActFilename = (act: number): string => {
     9: 'ix-zcash-shield',
     10: 'topology-of-revelation',
     11: 'act-xi-balanced-spiral-of-sovereignty',
-    12: 'privacymage-lastpage',
-    13: 'inscriptions',
+    12: 'xii-the-forgetting',
+    13: 'privacymage-lastpage',
+    14: 'inscriptions',
   };
   return filenames[act] || '';
 };
@@ -252,21 +260,21 @@ export default function StoryPage() {
   const [copiedInscription, setCopiedInscription] = useState(false);
   const [copiedProverbText, setCopiedProverbText] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12, 13]; // 0 = first page, 1-11 = Acts, 12 = last page, 13 = inscriptions
+  const acts = [0, ...Array.from({ length: 12 }, (_, i) => i + 1), 13, 14]; // 0 = first page, 1-12 = Acts, 13 = last page, 14 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-11), last page (12), or inscriptions (13)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 11) || activeAct === 12 || activeAct === 13) {
+        // Load markdown for first page (0), acts (1-12), last page (13), or inscriptions (14)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 12) || activeAct === 13 || activeAct === 14) {
           let filename: string;
-          if (activeAct === 12) {
+          if (activeAct === 13) {
             filename = '111-privacymage-lastpage.md';
-          } else if (activeAct === 13) {
+          } else if (activeAct === 14) {
             filename = '112-inscriptions.md';
-          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10 || activeAct === 11) {
-            filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
+          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10 || activeAct === 11 || activeAct === 12) {
+            filename = `${String(activeAct).padStart(2, '0')}-act-${getActFilename(activeAct)}.md`;
           } else {
             filename = `0${activeAct}-act-${getActFilename(activeAct)}.md`;
           }
@@ -335,7 +343,8 @@ export default function StoryPage() {
       9: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
       10: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
       11: "⚔️ ➗ 📖 = 🌀",
-      12: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
+      12: "🌱→⚒️→📡→🌊→🌫️🏛️",
+      13: "🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △",
     };
     return inscriptions[act] || "";
   };
@@ -454,8 +463,8 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
-                  if (actNum === 12) return 'last page';
-                  if (actNum === 13) return 'spells';
+                  if (actNum === 13) return 'last page';
+                  if (actNum === 14) return 'spells';
                   return `Act ${actNum}`;
                 };
                 
@@ -489,7 +498,7 @@ export default function StoryPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Right Learn Button (only for non-act pages) */}
-            {markdownContent && (activeAct === 0 || activeAct === 12 || activeAct === 13) && (
+            {markdownContent && (activeAct === 0 || activeAct === 13 || activeAct === 14) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10">
                 <button
                   onClick={copyToClipboard}
@@ -520,7 +529,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 12 && activeAct !== 13 && (
+                {activeAct !== 0 && activeAct !== 13 && activeAct !== 14 && (
                   <>
                     {/* Inscribe and Proverb Cards + Learn Button */}
                     <div className="mb-6">
@@ -600,7 +609,7 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                {activeAct === 13 ? (
+                {activeAct === 14 ? (
                   <InscriptionsPage onCopy={copyInscription} />
                 ) : (
                   <div className="markdown-content">
@@ -641,7 +650,7 @@ export default function StoryPage() {
                 )}
                 
                 {/* Footer for all acts */}
-                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 11) || activeAct === 12) && markdownContent && (
+                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 12) || activeAct === 13) && markdownContent && (
                   <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0 pr-28 sm:pr-36 md:pr-44 lg:pr-52">
                     <button
                       onClick={copyProverb}
