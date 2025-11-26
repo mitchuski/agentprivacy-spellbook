@@ -272,8 +272,10 @@ export default function StoryPage() {
           if (activeAct === 13) {
             filename = '111-privacymage-lastpage.md';
           } else if (activeAct === 14) {
-            filename = '112-inscriptions.md';
-          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10 || activeAct === 11 || activeAct === 12) {
+            filename = '112-inscriptions_firstspellbook.md';
+          } else if (activeAct === 0) {
+            filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
+          } else if (activeAct === 7 || activeAct === 10 || activeAct === 11 || activeAct === 12) {
             filename = `${String(activeAct).padStart(2, '0')}-act-${getActFilename(activeAct)}.md`;
           } else {
             filename = `0${activeAct}-act-${getActFilename(activeAct)}.md`;
