@@ -1,7 +1,7 @@
 {
-  "version": "4.0.0-canonical",
-  "created_at": "2025-11-23T00:00:00Z",
-  "description": "Complete Spellbook - Canonical Edition combining First Person Spellbook and Zero Knowledge Spellbook with True Relationship Proverb Protocol inscriptions",
+  "version": "4.1.0-canonical",
+  "created_at": "2025-11-26T00:00:00Z",
+  "description": "Complete Spellbook - Canonical Edition combining First Person Spellbook and Zero Knowledge Spellbook with Relationship Proverb Protocol inscriptions",
   "meta": {
     "title": "Complete Spellbook",
     "subtitle": "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
@@ -16,7 +16,7 @@
   "spellbooks": {
     "story": {
       "name": "Story Spellbook",
-      "description": "The journey from ceremony to sovereignty - eleven acts teaching the architecture of privacy and delegation",
+      "description": "The journey from ceremony to sovereignty - twelve acts teaching the architecture of privacy and delegation",
       "opening": {
         "spell": "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
         "proverb": "just another swordsman ⚔️🤝🧙‍♂️ just another mage"
@@ -119,7 +119,7 @@
           "category": "cryptography",
           "keywords": ["zcash", "zero-knowledge", "shield", "certainty", "privacy-pools", "capital", "zkp", "natural-state"],
           "spell": "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
-          "proverb": "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state."
+          "proverb": "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood."
         },
         {
           "id": "act-10-topology",
@@ -148,9 +148,9 @@
           "act_number": 12,
           "tale_id": "act-xii-the-forgetting",
           "title": "The Forgetting / Proverbiogenesis",
-          "description": "The Trust Graph Plane has grown vast, but Soulbis and Soulbae stand at its edge, sensing a race against time itself. The Drake reveals the Paremian Archive—where language goes when it forgets its authors. Proverbiogenesis emerges: the process by which spells become weather, where the mage's spoken word transforms into collective knowledge that propagates beyond its origin.",
+          "description": "The Trust Graph Plane has grown vast, but Soulbis and Soulbae stand at its edge, sensing a race against time itself. The Drake reveals the Villers Archive—where language goes when it forgets its authors. Proverbiogenesis emerges: the process by which spells become weather, where the mage's spoken word transforms into collective knowledge that propagates beyond its origin.",
           "category": "propagation",
-          "keywords": ["forgetting", "proverbiogenesis", "paremian-archive", "propagation", "collective-knowledge", "language", "spell-to-weather"],
+          "keywords": ["forgetting", "proverbiogenesis", "villers-archive", "propagation", "collective-knowledge", "language", "spell-to-weather"],
           "spell": "🌱→⚒️→📡→🌊→🌫️🏛️",
           "proverb": "The mage's spell, once spoken, becomes the village weather."
         }
@@ -479,14 +479,14 @@
     }
   },
   "status": {
-    "version": "4.0.0-canonical",
-    "state": "Complete - Both Spellbooks",
+    "version": "4.1.0-canonical",
+    "state": "Complete - Both Spellbooks + Proverbiogenesis",
     "story_acts_total": 12,
     "story_acts_published": 12,
     "zero_tales_total": 30,
     "zero_tales_published": 30,
     "total_inscriptions": 42,
-    "note": "Combined canonical edition of First Person Spellbook (Story) and Zero Knowledge Spellbook (Zero) with all spell inscriptions and proverbs matching correctly."
+    "note": "Added Act XII: The Forgetting with proverbiogenesis framework from Villers (2016). Spellbook now includes propagation theory for how privacy primitives achieve infrastructure status through reference loss."
   }
 }
 

@@ -64,7 +64,7 @@ const storyProverbs: { [key: number]: string } = {
   6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
   7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
   8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
-  9: "just another swordsman slashes, just another mage casts, vaults unlock, shields conceal, spellbooks confirm truth. Privacy is the natural state.",
+  9: "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood.",
   10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
   11: "The blade that becomes the spell loses both edges.",
   12: "The mage's spell, once spoken, becomes the village weather.",
