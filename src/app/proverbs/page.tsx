@@ -366,22 +366,6 @@ export default function ProverbsPage() {
                         </div>
                       </div>
 
-                      {/* Spell */}
-                      {spellMappings[actNum] && (
-                        <div className="mt-2 mb-2 -mx-3 sm:-mx-4 px-3 sm:px-4">
-                          <div className="overflow-x-auto overflow-y-hidden scrollbar-hide">
-                            <div className="text-[10px] sm:text-xs font-mono text-text-muted whitespace-nowrap inline-block min-w-max">
-                              {spellMappings[actNum].split('\n').map((line, idx) => (
-                                <span key={idx} className="whitespace-nowrap">
-                                  {line}
-                                  {idx < spellMappings[actNum].split('\n').length - 1 && ' '}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
                       {/* Expanded Inscriptions */}
                       <AnimatePresence>
                         {isExpanded && hasInscriptions && (
