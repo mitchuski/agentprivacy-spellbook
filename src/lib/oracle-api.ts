@@ -3,7 +3,7 @@
  * Connects frontend to Oracle backend for submission tracking
  */
 
-const ORACLE_API_URL = process.env.NEXT_PUBLIC_ORACLE_API_URL || 'http://localhost:3001';
+const ORACLE_API_URL = process.env.NEXT_PUBLIC_ORACLE_API_URL || 'http://localhost:3003';
 
 export interface SubmissionStatus {
   status: 'pending' | 'verified' | 'inscribed' | 'rejected' | 'failed';
@@ -158,30 +158,33 @@ export async function getInscriptions(): Promise<{
   total: number;
   countByAct: Record<number, number>;
 } | null> {
-  // Try API first (if ORACLE_API_URL is set and not localhost)
+  // Try API first (if ORACLE_API_URL is set)
+  // On localhost, we'll try the API but with a shorter timeout
   const isProduction = typeof window !== 'undefined' && 
     !window.location.hostname.includes('localhost') &&
     !window.location.hostname.includes('127.0.0.1');
   
-  if (ORACLE_API_URL && ORACLE_API_URL !== 'http://localhost:3003' && isProduction) {
+  if (ORACLE_API_URL) {
     try {
       const response = await fetch(`${ORACLE_API_URL}/api/inscriptions`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        // Add timeout for production
-        signal: AbortSignal.timeout(5000), // 5 second timeout
+        // Shorter timeout for localhost, longer for production
+        signal: AbortSignal.timeout(isProduction ? 5000 : 2000), // 2s localhost, 5s production
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Loaded inscriptions from API');
+        console.log(`Loaded inscriptions from API: ${ORACLE_API_URL}`);
         return data;
+      } else {
+        console.warn(`Oracle API returned ${response.status}, falling back to static data`);
       }
     } catch (error: any) {
-      // API unavailable, fall back to static data
-      console.warn('Oracle API unavailable, using static data:', error.message);
+      // API unavailable (offline, timeout, etc.), fall back to static data
+      console.warn(`Oracle API unavailable (${ORACLE_API_URL}), using static data:`, error.message);
     }
   }
 
