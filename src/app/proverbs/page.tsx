@@ -332,7 +332,7 @@ export default function ProverbsPage() {
                       key={`act-${actNum}`}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`p-4 rounded-lg border transition-colors ${
+                      className={`p-3 sm:p-4 rounded-lg border transition-colors overflow-hidden ${
                         hasInscriptions
                           ? 'bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/30 hover:border-primary/50'
                           : 'bg-surface/20 border-surface/30 opacity-60'
