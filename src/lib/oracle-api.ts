@@ -124,29 +124,87 @@ export async function getStats(): Promise<any> {
 }
 
 /**
+ * Get static inscriptions data (fallback)
+ */
+function getStaticInscriptions(): {
+  inscriptions: any[];
+  total: number;
+  countByAct: Record<number, number>;
+} {
+  // Try to load from static JSON file
+  try {
+    // This will be available at /data/inscriptions.json after build
+    // For now, return empty data - will be populated when you add the JSON file
+    return {
+      inscriptions: [],
+      total: 0,
+      countByAct: {},
+    };
+  } catch (error) {
+    return {
+      inscriptions: [],
+      total: 0,
+      countByAct: {},
+    };
+  }
+}
+
+/**
  * Get onchain inscriptions from the inscription indexer
+ * Hybrid approach: Try API first, fallback to static data
  */
 export async function getInscriptions(): Promise<{
   inscriptions: any[];
   total: number;
   countByAct: Record<number, number>;
 } | null> {
+  // Try API first (if ORACLE_API_URL is set and not localhost)
+  const isProduction = typeof window !== 'undefined' && 
+    !window.location.hostname.includes('localhost') &&
+    !window.location.hostname.includes('127.0.0.1');
+  
+  if (ORACLE_API_URL && ORACLE_API_URL !== 'http://localhost:3003' && isProduction) {
+    try {
+      const response = await fetch(`${ORACLE_API_URL}/api/inscriptions`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Add timeout for production
+        signal: AbortSignal.timeout(5000), // 5 second timeout
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Loaded inscriptions from API');
+        return data;
+      }
+    } catch (error: any) {
+      // API unavailable, fall back to static data
+      console.warn('Oracle API unavailable, using static data:', error.message);
+    }
+  }
+
+  // Fallback: Try to load static data from JSON file
   try {
-    const response = await fetch(`${ORACLE_API_URL}/api/inscriptions`, {
+    const response = await fetch('/data/inscriptions.json', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
-    if (!response.ok) {
-      return null;
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Loaded inscriptions from static data');
+      return data;
     }
-
-    return await response.json();
   } catch (error: any) {
-    // Silently handle network errors
-    return null;
+    // Static file also unavailable
+    console.warn('Static inscriptions data unavailable');
   }
+
+  // Final fallback: return empty data
+  return getStaticInscriptions();
 }
 
