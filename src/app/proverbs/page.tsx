@@ -135,21 +135,21 @@ export default function ProverbsPage() {
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-8">
-              <Link href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
+            <div className="flex items-center gap-4 sm:gap-8 min-w-0">
+              <Link href="/" className="text-lg sm:text-xl font-bold text-text hover:text-primary transition-colors flex-shrink-0">
                 agentprivacy
               </Link>
-              <div className="flex items-center gap-6">
-                <Link href="/story" className="text-text hover:text-primary transition-colors font-medium">
+              <div className="flex items-center gap-3 sm:gap-6 overflow-x-auto">
+                <Link href="/story" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
                   story
                 </Link>
-                <Link href="/zero" className="text-text hover:text-primary transition-colors font-medium">
+                <Link href="/zero" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
                   zero
                 </Link>
-                <Link href="/proverbs" className="text-primary border-b-2 border-primary pb-1 font-medium">
+                <Link href="/proverbs" className="text-sm sm:text-base text-primary border-b-2 border-primary pb-1 font-medium whitespace-nowrap">
                   proverbs
                 </Link>
-                <Link href="/mage" className="text-text hover:text-primary transition-colors font-medium">
+                <Link href="/mage" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
                   mage
                 </Link>
               </div>
@@ -340,27 +340,27 @@ export default function ProverbsPage() {
                     >
                       {/* Act Header */}
                       <div
-                        className="flex items-center justify-between cursor-pointer"
+                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 cursor-pointer"
                         onClick={() => toggleAct(actNum)}
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 min-w-0">
                           <span className={`text-lg font-bold ${hasInscriptions ? 'text-primary' : 'text-text-muted'}`}>
                             Act {getRomanNumeral(actNum)}
                           </span>
-                          <span className="text-text-muted">•</span>
-                          <span className={`text-sm ${hasInscriptions ? 'text-text' : 'text-text-muted'}`}>
+                          <span className="hidden sm:inline text-text-muted">•</span>
+                          <span className={`text-sm ${hasInscriptions ? 'text-text' : 'text-text-muted'} truncate`}>
                             {actTitles[actNum]?.split(' / ')[0] || `Act ${actNum}`}
                           </span>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded ${
+                        <div className="flex items-center gap-3 flex-shrink-0">
+                          <span className={`px-2 py-1 text-xs font-semibold rounded whitespace-nowrap ${
                             hasInscriptions
                               ? 'bg-primary/20 text-primary border border-primary/30'
                               : 'bg-surface/30 text-text-muted border border-surface/30'
                           }`}>
                             {actInscriptions.length} inscription{actInscriptions.length !== 1 ? 's' : ''}
                           </span>
-                          <span className="text-text-muted text-sm">
+                          <span className="text-text-muted text-sm flex-shrink-0">
                             {isExpanded ? '▼' : '▶'}
                           </span>
                         </div>
@@ -395,11 +395,11 @@ export default function ProverbsPage() {
                                         {inscription.emojiSpell}
                                       </span>
                                     )}
-                                    <div className="flex-1 min-w-0">
-                                      <p className="text-text italic mb-2 leading-relaxed">
+                                    <div className="flex-1 min-w-0 overflow-hidden">
+                                      <p className="text-text italic mb-2 leading-relaxed break-words">
                                         "{inscription.proverb}"
                                       </p>
-                                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
+                                      <div className="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1 text-xs text-text-muted">
                                         {inscription.matchScore > 0 && (
                                           <span title="Match Score">
                                             Score: {(inscription.matchScore * 100).toFixed(0)}%
