@@ -396,19 +396,19 @@ export default function ProverbsPage() {
                               {actInscriptions.map((inscription) => (
                                 <div
                                   key={inscription.txid}
-                                  className="p-3 bg-background/60 border border-surface/40 rounded-lg"
+                                  className="p-3 sm:p-4 bg-background/60 border border-surface/40 rounded-lg"
                                 >
-                                  <div className="flex items-start gap-3">
+                                  <div className="flex items-start gap-2 sm:gap-3">
                                     {inscription.emojiSpell && (
-                                      <span className="text-2xl flex-shrink-0" title="Emoji Spell">
+                                      <span className="text-xl sm:text-2xl flex-shrink-0" title="Emoji Spell">
                                         {inscription.emojiSpell}
                                       </span>
                                     )}
                                     <div className="flex-1 min-w-0 overflow-hidden">
-                                      <p className="text-text italic mb-2 leading-relaxed break-words">
+                                      <p className="text-sm sm:text-base text-text italic mb-2 leading-relaxed break-words">
                                         "{inscription.proverb}"
                                       </p>
-                                      <div className="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1 text-xs text-text-muted">
+                                      <div className="flex flex-wrap items-center gap-x-2 sm:gap-x-4 gap-y-1 text-[10px] sm:text-xs text-text-muted">
                                         {inscription.matchScore > 0 && (
                                           <span title="Match Score">
                                             Score: {(inscription.matchScore * 100).toFixed(0)}%
