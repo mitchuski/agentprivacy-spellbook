@@ -368,8 +368,10 @@ export default function ProverbsPage() {
 
                       {/* Spell */}
                       {spellMappings[actNum] && (
-                        <div className="mt-2 text-xs font-mono text-text-muted">
-                          {spellMappings[actNum]}
+                        <div className="mt-2 text-xs font-mono text-text-muted overflow-x-auto">
+                          <div className="whitespace-nowrap min-w-max">
+                            {spellMappings[actNum]}
+                          </div>
                         </div>
                       )}
 
