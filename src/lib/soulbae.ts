@@ -185,6 +185,10 @@ export async function chatWithSoulbae(
     // Try the request - if proxy fails (404), fall back to direct API
     let response: Response;
     try {
+      // Add timeout for production requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      
       response = await fetch(endpoint, {
         method: 'POST',
         headers: requestHeaders,
@@ -197,7 +201,10 @@ export async function chatWithSoulbae(
         }),
         mode: 'cors',
         credentials: 'omit',
+        signal: controller.signal,
       });
+      
+      clearTimeout(timeoutId);
 
       // If proxy route doesn't exist (404), fall back to direct API
       if (response.status === 404 && isDevelopment && endpoint === '/api/near-ai/chat') {

@@ -186,22 +186,26 @@ export async function getInscriptions(): Promise<{
   }
 
   // Fallback: Try to load static data from JSON file
+  // In Next.js static export, public/ files are served from root
   try {
     const response = await fetch('/data/inscriptions.json', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
+      cache: 'no-cache', // Don't cache the JSON file
     });
 
     if (response.ok) {
       const data = await response.json();
       console.log('Loaded inscriptions from static data');
       return data;
+    } else {
+      console.warn(`Static data file returned ${response.status}: ${response.statusText}`);
     }
   } catch (error: any) {
     // Static file also unavailable
-    console.warn('Static inscriptions data unavailable');
+    console.warn('Static inscriptions data unavailable:', error.message);
   }
 
   // Final fallback: return empty data
