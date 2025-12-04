@@ -368,14 +368,14 @@ export default function ProverbsPage() {
 
                       {/* Spell */}
                       {spellMappings[actNum] && (
-                        <div className="mt-2 text-[10px] sm:text-xs font-mono text-text-muted">
-                          <div className="overflow-x-auto overflow-y-hidden -mx-1 px-1">
-                            <div className="whitespace-nowrap inline-block">
+                        <div className="mt-2 -mx-3 sm:-mx-4 px-3 sm:px-4">
+                          <div className="overflow-x-auto overflow-y-hidden scrollbar-hide">
+                            <div className="text-[10px] sm:text-xs font-mono text-text-muted whitespace-nowrap inline-block min-w-max">
                               {spellMappings[actNum].split('\n').map((line, idx) => (
-                                <div key={idx} className="whitespace-nowrap inline-block">
+                                <span key={idx} className="whitespace-nowrap">
                                   {line}
-                                  {idx < spellMappings[actNum].split('\n').length - 1 && <br />}
-                                </div>
+                                  {idx < spellMappings[actNum].split('\n').length - 1 && ' '}
+                                </span>
                               ))}
                             </div>
                           </div>
