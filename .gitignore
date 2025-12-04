@@ -23,6 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+build-output.log
 
 # local env files
 .env*.local
@@ -34,39 +35,75 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# zero spellbook (excluded from git, except first page and all tales)
-/public/zero/markdown/*
+# zero spellbook (excluded from git, except first page)
+/public/zero/
 !/public/zero/markdown/00-zeromage-firstpage.md
-!/public/zero/markdown/01-tale-01.md
-!/public/zero/markdown/02-tale-02.md
-!/public/zero/markdown/03-tale-03.md
-!/public/zero/markdown/04-tale-04.md
-!/public/zero/markdown/05-tale-05.md
-!/public/zero/markdown/06-tale-06.md
-!/public/zero/markdown/07-tale-07.md
-!/public/zero/markdown/08-tale-08.md
-!/public/zero/markdown/09-tale-09.md
-!/public/zero/markdown/10-tale-10.md
-!/public/zero/markdown/11-tale-11.md
-!/public/zero/markdown/12-tale-12.md
-!/public/zero/markdown/13-tale-13.md
-!/public/zero/markdown/14-tale-14.md
-!/public/zero/markdown/15-tale-15.md
-!/public/zero/markdown/16-tale-16.md
-!/public/zero/markdown/17-tale-17.md
-!/public/zero/markdown/18-tale-18.md
-!/public/zero/markdown/19-tale-19.md
-!/public/zero/markdown/20-tale-20.md
-!/public/zero/markdown/21-tale-21.md
-!/public/zero/markdown/22-tale-22.md
-!/public/zero/markdown/23-tale-23.md
-!/public/zero/markdown/24-tale-24.md
-!/public/zero/markdown/25-tale-25.md
-!/public/zero/markdown/26-tale-26.md
-!/public/zero/markdown/27-tale-27.md
-!/public/zero/markdown/28-tale-28.md
-!/public/zero/markdown/29-tale-29.md
-!/public/zero/markdown/30-tale-30.md
-/src/app/zero/*
+/src/app/zero/
 !/src/app/zero/page.tsx
 
+# sensitive keys and secrets
+oracle-swordsman/PRODUCTION_ZCASH_KEYS.json
+oracle-swordsman/secretsigner-workload-config-with-keys.json
+oracle-swordsman/zcash-addresses-controlled.json
+oracle-swordsman/zallet-addresses.txt
+oracle-swordsman/act-p2sh-addresses.txt
+**/*-keys.json
+**/*-keys.txt
+**/*-addresses.txt
+**/*-addresses.json
+**/secretsigner-workload-config*.json
+**/PRODUCTION_*.json
+**/PRODUCTION_*.txt
+
+# environment files
+.env
+.env.local
+.env.production
+.env.development
+.env*.local
+# Allow .env.example files (they contain placeholders, not real secrets)
+!.env.example
+!**/.env.example
+
+# logs
+*.log
+logs/
+oracle-swordsman/logs/
+
+# temp files
+temp/
+oracle-swordsman/temp/
+*.tmp
+
+# build artifacts
+oracle-swordsman/dist/
+oracle-swordsman/build/
+
+# database
+*.db
+*.sqlite
+*.sqlite3
+
+
+# legacy development scripts (contain hardcoded keys)
+oracle-swordsman/legacy/
+oracle-swordsman/verify-act.js
+
+# Inscription scripts with private keys
+oracle-swordsman/inscribe-act*.js
+oracle-swordsman/spend-act*.js
+oracle-swordsman/deshield-act*.js
+
+# WIF private key files
+*.wif
+wif.txt
+**/wif.txt
+# Files with hardcoded secrets - DO NOT TRACK
+oracle-swordsman/scripts/archive/
+oracle-swordsman/scripts/deployment/setup-with-keys.ts
+oracle-swordsman/scripts/key-generation/generate-addresses-proper.ts
+oracle-swordsman/scripts/key-generation/SPELLBOOK_ADDRESS_GUIDE.md
+oracle-swordsman/tests/integration/test-secretsigner.ts
+
+# Backup files
+*.bak

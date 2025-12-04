@@ -5,21 +5,40 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import SwordsmanPanel from '@/components/SwordsmanPanel';
+import UAddressDisplay from '@/components/UAddressDisplay';
+import { getTaleIdFromAct } from '@/lib/zcash-memo';
+
+// Spell mappings for story spellbook - must match inscriptions
+const storySpellMappings: { [actNumber: number]: string } = {
+  1: '📖💰 → 🐉⏳ → ⚔️🔮',
+  2: '🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️',
+  3: '👤✓ → ⚔️📖 → 🔒📝 → 🤝📜 → 🕸️✓ → 🌐🏛️',
+  4: '🗡️ → 🍪⚔️ → 🔒 → 📖📝 → 🤝📜₁',
+  5: '🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊',
+  6: '🤝📜 + 🤝📜 + 🤝📜 = 🚪🌐',
+  7: '1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤',
+  8: '🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️',
+  9: '🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓',
+  10: '🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}',
+  11: '⚔️ ➗ 📖 = 🌀',
+  12: '🌱→⚒️→📡→🌊→🌫️🏛️',
+};
 
 const getActVideo = (act: number): string | null => {
   const videoMap: { [key: number]: string } = {
     1: '/assets/soulbaelearns64sides_act1.mp4', // Act I: Venice - soulbae learns 64 sides
-    2: '/assets/mageswordhandwalking_act2.mp4', // Act II: Dual Ceremony - mage and sword walking
+    2: '/assets/mageswordhandwalking_act2.mp4', // Act II: Dual Ceremony - mage sword hand walking
     3: '/assets/drakemagic_act3.mp4', // Act III: Drake's Teaching - drake magic
-    4: '/assets/swordsman2slash_act4.mp4', // Act IV: Blade Alone - swordsman slash
+    4: '/assets/swordsman2slash_act4.mp4', // Act IV: Blade Alone - swordsman 2 slash
     5: '/assets/mageswordarmor_act5.mp4', // Act V: Light Armour - mage sword armor
     6: '/assets/trustplanestory_act6.mp4', // Act VI: Trust Graph Plane - trust plane story
     7: '/assets/mirrormagesoulbae.mp4', // Act VII: The Mirror That Never Completes - mirror mage soulbae
     8: '/assets/soulbaediscoversitmustbetwo_act8.mp4', // Act VIII: Ancient Rule - soulbae discovers it must be two
-    9: '/assets/soulbisbaecapture7capital_act9.mp4', // Act IX: Zcash Shield - soulbis bae capture 7th capital
+    9: '/assets/soulbisbaecapture7capital_act9.mp4', // Act IX: Zcash Shield - soulbisbae capture 7th capital
     10: '/assets/topologyravensduo_act10.mp4', // Act X: Topology of Revelation - topology ravens duo
     11: '/assets/goldenratiospiralpowerswordzkp_act11.mp4', // Act XI: Balanced Spiral of Sovereignty - golden ratio spiral power sword zkp
-    12: '/assets/soulbaereadsinlibrary.mp4', // Act XII: The Forgetting / Proverbiogenesis - soulbae reads in library
+    12: '/assets/soulbaereadsinlibrary.mp4', // Act XII: The Forgetting - soulbae reads in library
   };
   return videoMap[act] || null;
 };
@@ -53,111 +72,117 @@ function ActImage({ act }: { act: number }) {
   );
 }
 
-// Shared proverbs data
-const storyProverbs: { [key: number]: string } = {
-  0: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
-  1: "The swordsman who never strikes guards nothing; the mage who never casts commands nothing.",
-  2: "What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable; what both accomplish, the spellbook verifies.",
-  3: "the swordsman alone rages, mage alone dreams, action alone blinds—sovereignty demands all three to intertwine.",
-  4: "Trust begins unarmored—the swordsman and mage test small betrayals before the first person may grant the keys to more powerful treasures.",
-  5: "Solo combat sets the terms and proves the swordsman; coordinated spells prove the mage; spellbooks weave both into campaigns worthy of legend.",
-  6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
-  7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
-  8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
-  9: "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood.",
-  10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
-  11: "The blade that becomes the spell loses both edges.",
-  12: "The mage's spell, once spoken, becomes the village weather.",
-  13: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
-};
-
-function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
+function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (actNumber: number) => void }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
+
+  const getProverbForInscription = (act: number): string => {
+    const proverbs: { [key: number]: string } = {
+      0: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
+      1: "The swordsman who never strikes guards nothing; the mage who never casts commands nothing.",
+      2: "What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable; what both accomplish, the spellbook verifies.",
+      3: "the swordsman alone rages, mage alone dreams, action alone blinds—sovereignty demands all three to intertwine.",
+      4: "Trust begins unarmored—the swordsman and mage test small betrayals before the first person may grant the keys to more powerful treasures.",
+      5: "Solo combat sets the terms and proves the swordsman; coordinated spells prove the mage; spellbooks weave both into campaigns worthy of legend.",
+      6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
+      7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
+      8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
+      9: "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood.",
+      10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
+      11: "The blade that becomes the spell loses both edges.",
+      12: "The mage's spell, once spoken, becomes the village weather.",
+    };
+    return proverbs[act] || "";
+  };
 
   const inscriptions = [
     {
       title: "First Page",
+      actNumber: 0,
       emojis: "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
-      quote: storyProverbs[0]
+      quote: getProverbForInscription(0)
     },
     {
       title: "Act I: Venice, 1494",
+      actNumber: 1,
       emojis: "📖💰 → 🐉⏳ → ⚔️🔮",
-      quote: storyProverbs[1]
+      quote: getProverbForInscription(1)
     },
     {
       title: "Act II: The Dual Ceremony",
+      actNumber: 2,
       emojis: "🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️",
-      quote: storyProverbs[2]
+      quote: getProverbForInscription(2)
     },
     {
       title: "Act III: The Drake's Teaching",
+      actNumber: 3,
       emojis: "👤✓ → ⚔️📖 → 🔒📝 → 🤝📜 → 🕸️✓ → 🌐🏛️",
-      quote: storyProverbs[3]
+      quote: getProverbForInscription(3)
     },
     {
       title: "Act IV: Blade Alone",
+      actNumber: 4,
       emojis: "🗡️ → 🍪⚔️ → 🔒 → 📖📝 → 🤝📜₁",
-      quote: storyProverbs[4]
+      quote: getProverbForInscription(4)
     },
     {
       title: "Act V: Light Armor",
+      actNumber: 5,
       emojis: "🗡️📖 + 🤝📜₃ → 🛡️ → ⚔️⚔️⚔️ → 🔒📝₊",
-      quote: storyProverbs[5]
+      quote: getProverbForInscription(5)
     },
     {
       title: "Act VI: Trust Graph Plane",
+      actNumber: 6,
       emojis: "🤝📜 + 🤝📜 + 🤝📜 = 🚪🌐",
-      quote: storyProverbs[6]
+      quote: getProverbForInscription(6)
     },
     {
       title: "Act VII: The Mirror That Never Completes",
+      actNumber: 7,
       emojis: "1️⃣🤖 → 🪞→👤\n2️⃣🤖 → 🪞→✨ + 👤",
-      quote: storyProverbs[7]
+      quote: getProverbForInscription(7)
     },
     {
       title: "Act VIII: Ancient Rule",
+      actNumber: 8,
       emojis: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
-      quote: storyProverbs[8]
+      quote: getProverbForInscription(8)
     },
     {
       title: "Act IX: Zcash Shield",
+      actNumber: 9,
       emojis: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
-      quote: storyProverbs[9]
+      quote: getProverbForInscription(9)
     },
     {
       title: "Act X: Topology of Revelation",
+      actNumber: 10,
       emojis: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
-      quote: storyProverbs[10]
+      quote: getProverbForInscription(10)
     },
     {
       title: "Act XI: Balanced Spiral of Sovereignty",
+      actNumber: 11,
       emojis: "⚔️ ➗ 📖 = 🌀",
-      quote: storyProverbs[11]
+      quote: getProverbForInscription(11)
     },
     {
-      title: "Act XII: The Forgetting / Proverbiogenesis",
+      title: "Act XII: The Forgetting",
+      actNumber: 12,
       emojis: "🌱→⚒️→📡→🌊→🌫️🏛️",
-      quote: storyProverbs[12]
+      quote: getProverbForInscription(12)
     },
     {
-      title: "Last Page",
-      emojis: "🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △",
-      quote: storyProverbs[13]
-    },
-    {
-      title: "Relationship Proverb Protocol (RPP)",
-      emojis: "👤❓ → 🔮📜(👤↔️📖) → 🔓💬",
-      quote: "Seeker's question invokes mage-divination bridging their context to the chronicle; only proverb-lock release permits voice."
-    },
-    {
-      title: "The Emergence Spell",
-      emojis: "👣 → 🎯 | 🌊 → 📜 | ⏰ → 🔓 | 🕊 → ⭕️ → 🔮🤝👤",
-      quote: "The right people arrive, the right thing happens, the right moment opens, and the right ending closes — trust the pattern, for it trusts you."
+      title: "Closing Spell",
+      actNumber: 0,
+      emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
+      quote: "just another swordsman ⚔️🤝🧙‍♂️ just another mage"
     },
     {
       title: "First Person Spellbook Incantation",
+      actNumber: 1,
       emojis: "📖 → 🐉 → 👤✓ → 🗡️🔮 → 🔒📝 → 🤝📜 → 🕸️ → 🪞 → 🌐 → 🛡️⚡ → △ → 🌀 → ☯️",
       quote: "Chronicle births dragon's gate, ceremony verifies passage, sovereignty splits to sword and spell: commitments bind, attestations connect, watchers weave, mirrors preserve, infrastructure coordinates, shields channel power, triangle stands irreducible, spiral balances revelation, sovereignty emerges from equilibrium."
     }
@@ -189,7 +214,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
             <p className="text-2xl mb-2 whitespace-pre-line">{inscription.emojis}</p>
             <p className="text-text-muted italic text-sm">"{inscription.quote}"</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => handleCopySpell(inscription.emojis, index)}
               className="px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
@@ -222,6 +247,15 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
                 "proverb"
               )}
             </button>
+            {onProtect && inscription.actNumber !== undefined && inscription.actNumber !== null && inscription.actNumber > 0 ? (
+              <button
+                onClick={() => onProtect(inscription.actNumber!)}
+                className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
+              >
+                <span>⚔️</span>
+                <span>protect</span>
+              </button>
+            ) : null}
           </div>
         </div>
       ))}
@@ -238,14 +272,13 @@ const getActFilename = (act: number): string => {
     4: 'iv-blade-alone',
     5: 'v-light-armour',
     6: 'vi-trust-graph-plane',
-    7: 'vii-theantimirrorenhanced',
+    7: 'act-vii-theantimirrorenhanced',
     8: 'viii-ancient-rule',
     9: 'ix-zcash-shield',
-    10: 'x-topology-of-revelation',
-    11: 'xi-balanced-spiral-of-sovereignty',
-    12: 'xii-the-forgetting',
-    13: 'privacymage-lastpage',
-    14: 'inscriptions',
+    10: 'topology-of-revelation',
+    11: 'act-xi-balanced-spiral-of-sovereignty',
+    12: 'act-xii-the-forgetting',
+    13: 'inscriptions',
   };
   return filenames[act] || '';
 };
@@ -257,26 +290,21 @@ export default function StoryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
-  const [copiedInscription, setCopiedInscription] = useState(false);
-  const [copiedProverbText, setCopiedProverbText] = useState(false);
+  const [copiedProverbTop, setCopiedProverbTop] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 12 }, (_, i) => i + 1), 13, 14]; // 0 = first page, 1-12 = Acts, 13 = last page, 14 = inscriptions
+  const acts = [0, ...Array.from({ length: 12 }, (_, i) => i + 1), 13]; // 0 = first page, 1-12 = Acts, 13 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-12), last page (13), or inscriptions (14)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 12) || activeAct === 13 || activeAct === 14) {
+        // Load markdown for first page (0), acts (1-12), or inscriptions (13)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 12) || activeAct === 13) {
           let filename: string;
           if (activeAct === 13) {
-            filename = '111-privacymage-lastpage.md';
-          } else if (activeAct === 14) {
-            filename = '112-inscriptions_firstspellbook.md';
-          } else if (activeAct === 0) {
+            filename = '112-inscriptions.md';
+          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10 || activeAct === 11 || activeAct === 12) {
             filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
-          } else if (activeAct === 7 || activeAct === 10 || activeAct === 11 || activeAct === 12) {
-            filename = `${String(activeAct).padStart(2, '0')}-act-${getActFilename(activeAct)}.md`;
           } else {
             filename = `0${activeAct}-act-${getActFilename(activeAct)}.md`;
           }
@@ -284,21 +312,34 @@ export default function StoryPage() {
           const url = `/story/markdown/${filename}`;
           console.log(`Loading markdown for act ${activeAct}: ${url}`);
           
-          const response = await fetch(url);
-          if (response.ok) {
-            let text = await response.text();
-            // Store original markdown for copying
-            setOriginalMarkdownContent(text);
-            // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
-            text = text.replace(
-              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
-              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
-            );
-            setMarkdownContent(text);
-            console.log(`Successfully loaded markdown for act ${activeAct}`);
-          } else {
-            console.error(`Failed to load markdown for act ${activeAct}: ${response.status} ${response.statusText}`);
-            setMarkdownContent('');
+          try {
+            const response = await fetch(url, {
+              method: 'GET',
+              headers: {
+                'Accept': 'text/markdown, text/plain, */*',
+              },
+            });
+            
+            if (response.ok) {
+              let text = await response.text();
+              // Store original markdown for copying
+              setOriginalMarkdownContent(text);
+              // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
+              text = text.replace(
+                /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
+                '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
+              );
+              setMarkdownContent(text);
+              console.log(`Successfully loaded markdown for act ${activeAct}`);
+            } else {
+              console.error(`Failed to load markdown for act ${activeAct}: ${response.status} ${response.statusText} from ${url}`);
+              // Show user-friendly error message
+              setMarkdownContent(`<p class="text-text-muted">Unable to load content for this act. Please try refreshing the page.</p>`);
+              setOriginalMarkdownContent('');
+            }
+          } catch (fetchError: any) {
+            console.error(`Network error loading markdown for act ${activeAct}:`, fetchError);
+            setMarkdownContent(`<p class="text-text-muted">Network error loading content. Please check your connection and try again.</p>`);
             setOriginalMarkdownContent('');
           }
         } else {
@@ -318,16 +359,18 @@ export default function StoryPage() {
   }, [activeAct]);
 
   const copyToClipboard = async () => {
-    // Copy the original markdown (with the instruction text in plain format)
-    const textToCopy = originalMarkdownContent || markdownContent;
-    if (!textToCopy) return;
-    
     try {
-      await navigator.clipboard.writeText(textToCopy);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      // Copy the full markdown file content for the current story/tale
+      const textToCopy = originalMarkdownContent || markdownContent;
+      if (textToCopy) {
+        await navigator.clipboard.writeText(textToCopy);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } else {
+        console.error('No markdown content available to copy');
+      }
     } catch (err) {
-      console.error('Failed to copy text:', err);
+      console.error('Failed to copy markdown:', err);
     }
   };
 
@@ -344,39 +387,29 @@ export default function StoryPage() {
       8: "🗡️📖 + 🤝📜₁₅ → 🛡️🛡️ → 💎🏛️",
       9: "🛡️ → 🛡️⚡ → 💰🔒 → 🕶️🦓",
       10: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
-      11: "⚔️ ➗ 📖 = 🌀",
+      11: "⚔️ ➗ 📖 = 🌀 = 1.618",
       12: "🌱→⚒️→📡→🌊→🌫️🏛️",
-      13: "🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △",
     };
     return inscriptions[act] || "";
   };
 
   const getProverb = (act: number): string => {
-    return storyProverbs[act] || "";
-  };
-
-  const copyInscriptionEmojis = async () => {
-    const emojis = getInscriptionEmojis(activeAct);
-    if (!emojis) return;
-    try {
-      await navigator.clipboard.writeText(emojis);
-      setCopiedInscription(true);
-      setTimeout(() => setCopiedInscription(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy inscription:', err);
-    }
-  };
-
-  const copyProverbText = async () => {
-    const proverb = getProverb(activeAct);
-    if (!proverb) return;
-    try {
-      await navigator.clipboard.writeText(proverb);
-      setCopiedProverbText(true);
-      setTimeout(() => setCopiedProverbText(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy proverb:', err);
-    }
+    const proverbs: { [key: number]: string } = {
+      0: "just another swordsman ⚔️🤝🧙‍♂️ just another mage",
+      1: "The swordsman who never strikes guards nothing; the mage who never casts commands nothing.",
+      2: "What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable; what both accomplish, the spellbook verifies.",
+      3: "the swordsman alone rages, mage alone dreams, action alone blinds—sovereignty demands all three to intertwine.",
+      4: "Trust begins unarmored—the swordsman and mage test small betrayals before the first person may grant the keys to more powerful treasures.",
+      5: "Solo combat sets the terms and proves the swordsman; coordinated spells prove the mage; spellbooks weave both into campaigns worthy of legend.",
+      6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
+      7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
+      8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
+      9: "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood.",
+      10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
+      11: "The blade that becomes the spell loses both edges.",
+      12: "The mage's spell, once spoken, becomes the village weather.",
+    };
+    return proverbs[act] || "";
   };
 
   const copyProverb = async () => {
@@ -388,6 +421,18 @@ export default function StoryPage() {
       setTimeout(() => setCopiedProverb(false), 2000);
     } catch (err) {
       console.error('Failed to copy inscription:', err);
+    }
+  };
+
+  const copyProverbText = async () => {
+    const proverb = getProverb(activeAct);
+    if (!proverb) return;
+    try {
+      await navigator.clipboard.writeText(proverb);
+      setCopiedProverbTop(true);
+      setTimeout(() => setCopiedProverbTop(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy proverb:', err);
     }
   };
 
@@ -418,8 +463,61 @@ export default function StoryPage() {
   const hasPrevious = acts.indexOf(activeAct) > 0;
   const hasNext = acts.indexOf(activeAct) < acts.length - 1;
 
+  // Get tale ID for current act
+  const getCurrentTaleId = (): string => {
+    if (activeAct === 0 || activeAct === 13) {
+      return 'act-i-venice'; // Default
+    }
+    return getTaleIdFromAct(activeAct);
+  };
+
+  // Show Swordsman panel only for actual acts (not first page or inscriptions)
+  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 12;
+
+  // Get act name for current act
+  const getActName = (act: number): string => {
+    const actNames: { [key: number]: string } = {
+      1: 'Act I: Venice',
+      2: 'Act II: Dual Ceremony',
+      3: 'Act III: Drake\'s Teaching',
+      4: 'Act IV: Blade Alone',
+      5: 'Act V: Light Armour',
+      6: 'Act VI: Trust Graph Plane',
+      7: 'Act VII: Mirror Enhanced',
+      8: 'Act VIII: Ancient Rule',
+      9: 'Act IX: Zcash Shield',
+      10: 'Act X: Topology of Revelation',
+      11: 'Act XI: Balanced Spiral',
+      12: 'Act XII: The Forgetting',
+    };
+    return actNames[act] || `Act ${act}`;
+  };
+
+  // Handle protect button - switch to act and open swordsman panel
+  const handleProtect = (actNumber: number) => {
+    setActiveAct(actNumber);
+    // Open swordsman panel after a short delay to allow render
+    setTimeout(() => {
+      const swordsmanButton = document.querySelector('[data-swordsman-toggle]');
+      if (swordsmanButton) {
+        (swordsmanButton as HTMLElement).click();
+      }
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+      {/* Swordsman Panel - Right Side */}
+      {showSwordsmanPanel && (
+        <SwordsmanPanel
+          taleId={getCurrentTaleId()}
+          actNumber={activeAct}
+          spellbook="story"
+          actName={getActName(activeAct)}
+          spell={storySpellMappings[activeAct]}
+        />
+      )}
+
       {/* Navigation Header */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -440,6 +538,18 @@ export default function StoryPage() {
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
                   zero
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  proverbs
+                </a>
+                <a
+                  href="/mage"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  mage
                 </a>
               </div>
             </div>
@@ -465,8 +575,7 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
-                  if (actNum === 13) return 'last page';
-                  if (actNum === 14) return 'spells';
+                  if (actNum === 13) return 'spells';
                   return `Act ${actNum}`;
                 };
                 
@@ -497,26 +606,36 @@ export default function StoryPage() {
             </div>
           </div>
 
+
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
-            {/* Top Right Learn Button (only for non-act pages) */}
-            {markdownContent && (activeAct === 0 || activeAct === 13 || activeAct === 14) && (
-              <div className="absolute top-4 right-2 sm:right-4 z-10">
+            {/* Top Learn and Protect Buttons */}
+            {markdownContent && (
+              <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
+                {showSwordsmanPanel && (
+                  <button
+                    onClick={() => handleProtect(activeAct)}
+                    className="px-2 sm:px-4 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg transition-all duration-200 flex items-center gap-1 flex-shrink-0"
+                    title="Protect the spell (1 ZEC) - Public stake, private knowledge"
+                  >
+                    <span className="text-accent text-xs sm:text-sm font-medium">⚔️ protect</span>
+                  </button>
+                )}
                 <button
                   onClick={copyToClipboard}
-                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
-                  title="Copy story text"
+                  className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
+                  title="Learn the spell (0.01 ZEC) - Public commitment, private fees"
                 >
                   {copied ? (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="text-primary text-xs sm:text-sm font-medium"
+                      className="text-secondary text-xs sm:text-sm font-medium"
                     >
                       cast
                     </motion.div>
                   ) : (
-                    <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
+                    <span className="text-secondary text-xs sm:text-sm font-medium group-hover:text-secondary/80 transition-colors">
                       learn 🧙‍♂️
                     </span>
                   )}
@@ -531,93 +650,86 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 13 && activeAct !== 14 && (
+                {activeAct !== 0 && activeAct !== 13 && (
                   <>
-                    {/* Inscribe and Proverb Cards + Learn Button */}
                     <div className="mb-6">
-                      <div className="flex gap-3 flex-wrap items-start">
-                        <button
-                          onClick={copyProverbText}
-                          className="flex-1 min-w-[200px] bg-surface/60 hover:bg-surface/80 border border-surface/50 rounded-lg p-3 transition-all duration-200 text-left group"
-                          title="Copy proverb"
-                        >
-                          <div className="text-primary/70 text-xs font-medium mb-2">proverb</div>
-                          <div className="min-h-[3rem]">
-                            {copiedProverbText ? (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="text-primary text-xs sm:text-sm font-medium"
-                              >
-                                cast
-                              </motion.div>
-                            ) : (
-                              <div className="text-text italic text-sm leading-relaxed">
-                                {getProverb(activeAct) || "Proverb will appear here"}
+                      <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
+                      <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
+                      {/* Act Video */}
+                      <ActImage act={activeAct} />
+                      {/* Proverb and Inscription Buttons */}
+                      <div className="flex flex-col sm:flex-row gap-3 mb-4 mt-6">
+                        {/* Proverb Inscription Box */}
+                        {getProverb(activeAct) && (
+                          <div className="flex-1">
+                            <button
+                              onClick={copyProverbText}
+                              className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
+                              title="Copy proverb"
+                            >
+                              <div className="text-primary font-semibold text-xs mb-2">
+                                {copiedProverbTop ? (
+                                  <motion.span
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    className="text-primary"
+                                  >
+                                    cast
+                                  </motion.span>
+                                ) : (
+                                  <span className="group-hover:text-primary/80 transition-colors">
+                                    proverb
+                                  </span>
+                                )}
                               </div>
-                            )}
-                          </div>
-                        </button>
-                        <button
-                          onClick={copyInscriptionEmojis}
-                          className="flex-1 min-w-[200px] bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg p-3 transition-all duration-200 text-left group"
-                          title="Copy inscription"
-                        >
-                          <div className="text-primary/70 text-xs font-medium mb-2">inscribe</div>
-                          <div className="min-h-[3rem]">
-                            {copiedInscription ? (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="text-primary text-xs sm:text-sm font-medium"
-                              >
-                                cast
-                              </motion.div>
-                            ) : (
-                              <div className="text-text text-sm font-mono whitespace-pre-line break-words">
-                                {getInscriptionEmojis(activeAct) || "Inscription will appear here"}
+                              <div className="text-text-muted text-sm italic leading-relaxed">
+                                "{getProverb(activeAct)}"
                               </div>
-                            )}
+                            </button>
                           </div>
-                        </button>
-                        {markdownContent && (
-                          <button
-                            onClick={copyToClipboard}
-                            className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0 self-start"
-                            title="Copy story text"
-                          >
-                            {copied ? (
-                              <motion.div
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="text-primary text-xs sm:text-sm font-medium"
-                              >
-                                cast
-                              </motion.div>
-                            ) : (
-                              <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
-                                learn 🧙‍♂️
-                              </span>
-                            )}
-                          </button>
+                        )}
+                        {/* Inscription Button */}
+                        {getInscriptionEmojis(activeAct) && (
+                          <div className="flex-1">
+                            <button
+                              onClick={copyProverb}
+                              className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
+                              title="Copy inscription"
+                            >
+                              <div className="text-primary font-semibold text-xs mb-2">
+                                {copiedProverb ? (
+                                  <motion.span
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    className="text-primary"
+                                  >
+                                    cast
+                                  </motion.span>
+                                ) : (
+                                  <span className="group-hover:text-primary/80 transition-colors">
+                                    inscribe
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line">
+                                {getInscriptionEmojis(activeAct)}
+                              </div>
+                            </button>
+                          </div>
                         )}
                       </div>
-                    </div>
-                    
-                    {/* Image Section */}
-                    <div className="mb-6">
-                      <ActImage act={activeAct} />
                     </div>
                   </>
                 )}
                 
-                {activeAct === 14 ? (
-                  <InscriptionsPage onCopy={copyInscription} />
+                {activeAct === 13 ? (
+                  <InscriptionsPage onCopy={copyInscription} onProtect={handleProtect} />
                 ) : (
-                  <div className="markdown-content">
+                  <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>
                     ) : markdownContent ? (
+                      <>
                       <ReactMarkdown 
                         remarkPlugins={[remarkGfm]}
                         rehypePlugins={[rehypeRaw]}
@@ -643,6 +755,7 @@ export default function StoryPage() {
                       >
                         {markdownContent}
                       </ReactMarkdown>
+                      </>
                     ) : (
                       <p className="text-text-muted text-lg">
                         Content will be available soon...
@@ -651,40 +764,19 @@ export default function StoryPage() {
                   </div>
                 )}
                 
-                {/* Footer for all acts */}
-                {(activeAct === 0 || (activeAct >= 1 && activeAct <= 12) || activeAct === 13) && markdownContent && (
-                  <div className="mt-8 pt-6 border-t border-surface/50 mb-20 sm:mb-0 pr-28 sm:pr-36 md:pr-44 lg:pr-52">
-                    <button
-                      onClick={copyProverb}
-                      className="w-full sm:w-auto inline-flex flex-col sm:flex-row items-start gap-2 sm:gap-4 px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 group text-left"
-                      title="Copy inscription"
-                    >
-                      <div className="text-primary font-semibold text-sm sm:min-w-[90px]">
-                        {copiedProverb ? (
-                          <motion.span
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="text-primary"
-                          >
-                            cast
-                          </motion.span>
-                        ) : (
-                          <span className="group-hover:text-primary/80 transition-colors">
-                            inscribe
-                          </span>
-                        )}
-                      </div>
-                      <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line">
-                        {getInscriptionEmojis(activeAct)}
-                      </div>
-                    </button>
-                  </div>
-                )}
               </motion.div>
             </AnimatePresence>
             
+            {/* ZEC Send Proverbs Button - Bottom Left */}
+            <div className="absolute bottom-6 sm:bottom-8 left-2 sm:left-4 z-10">
+              <UAddressDisplay
+                label="zec"
+                variant="small-button"
+              />
+            </div>
+
             {/* Previous, Copy and Next Buttons */}
-            <div className="absolute bottom-4 right-2 sm:right-4 flex items-center gap-1 sm:gap-2 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
+            <div className="absolute bottom-6 sm:bottom-8 right-2 sm:right-4 flex items-center gap-2 sm:gap-3 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
               {hasPrevious && (
                 <button
                   onClick={goToPrevious}
@@ -706,19 +798,19 @@ export default function StoryPage() {
               {markdownContent && (
                 <button
                   onClick={copyToClipboard}
-                  className="px-2 sm:px-4 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
-                  title="Copy story text"
+                  className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
+                  title="Learn the spell (0.01 ZEC) - Public commitment, private fees"
                 >
                   {copied ? (
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="text-primary text-xs sm:text-sm font-medium"
+                      className="text-secondary text-xs sm:text-sm font-medium"
                     >
                       cast
                     </motion.div>
                   ) : (
-                    <span className="text-primary text-xs sm:text-sm font-medium group-hover:text-primary/80 transition-colors">
+                    <span className="text-secondary text-xs sm:text-sm font-medium group-hover:text-secondary/80 transition-colors">
                       learn 🧙‍♂️
                     </span>
                   )}
