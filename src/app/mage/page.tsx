@@ -846,7 +846,7 @@ What brings you my spellbook?`,
       </nav>
 
       {/* Main Content */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8">
+      <section className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <motion.div
@@ -990,7 +990,7 @@ What brings you my spellbook?`,
           {/* Chat Container */}
           <div className="card bg-surface border-surface/50 min-h-[500px] max-h-[600px] flex flex-col mb-6">
             {/* Messages */}
-            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4" suppressHydrationWarning>
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-4" suppressHydrationWarning>
               {isClient ? (
                 <AnimatePresence>
                   {messages.map((message, index) => {
@@ -1037,7 +1037,7 @@ What brings you my spellbook?`,
             </div>
 
             {/* Input Area */}
-            <div className="border-t border-surface/50 p-4">
+            <div className="border-t border-surface/50 p-3 sm:p-4">
               <div className="flex gap-2">
                 <textarea
                   ref={inputRef}
