@@ -369,11 +369,12 @@ export default function ProverbsPage() {
                       {/* Spell */}
                       {spellMappings[actNum] && (
                         <div className="mt-2 text-[10px] sm:text-xs font-mono text-text-muted">
-                          <div className="overflow-x-auto -mx-1 px-1">
-                            <div className="whitespace-nowrap inline-block min-w-max">
+                          <div className="overflow-x-auto overflow-y-hidden -mx-1 px-1">
+                            <div className="whitespace-nowrap inline-block">
                               {spellMappings[actNum].split('\n').map((line, idx) => (
-                                <div key={idx} className="whitespace-nowrap">
+                                <div key={idx} className="whitespace-nowrap inline-block">
                                   {line}
+                                  {idx < spellMappings[actNum].split('\n').length - 1 && <br />}
                                 </div>
                               ))}
                             </div>
