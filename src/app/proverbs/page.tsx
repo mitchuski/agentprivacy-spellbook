@@ -382,12 +382,7 @@ export default function ProverbsPage() {
                                   key={inscription.txid}
                                   className="p-3 sm:p-4 bg-background/60 border border-surface/40 rounded-lg"
                                 >
-                                  <div className="flex items-start gap-2 sm:gap-3">
-                                    {inscription.emojiSpell && (
-                                      <span className="text-xl sm:text-2xl flex-shrink-0" title="Emoji Spell">
-                                        {inscription.emojiSpell}
-                                      </span>
-                                    )}
+                                  <div className="flex items-start">
                                     <div className="flex-1 min-w-0 overflow-hidden">
                                       <p className="text-sm sm:text-base text-text italic mb-2 leading-relaxed break-words">
                                         "{inscription.proverb}"
