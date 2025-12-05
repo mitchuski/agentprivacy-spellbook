@@ -140,6 +140,7 @@ const getTaleVideo = (tale: number): string | null => {
     1: '/assets/monastryprotectionzk_tale1.mp4', // Tale 1: The Monastery of Hidden Knowledge
     2: '/assets/threetrialsmageswordzero_tale2.mp4', // Tale 2: The Three Trials of Truth
     3: '/assets/soulbaebisenergyconnect_tale3.mp4', // Tale 3: The Silent Messenger
+    4: '/assets/soulbaelearnsinfinitefields.mp4', // Tale 4: The Fields of Finite Wisdom
   };
   return videoMap[tale] || null;
 };
