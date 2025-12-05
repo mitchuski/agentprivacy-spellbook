@@ -27,18 +27,18 @@ const storySpellMappings: { [actNumber: number]: string } = {
 
 const getActVideo = (act: number): string | null => {
   const videoMap: { [key: number]: string } = {
-    1: '/assets/soulbaelearns64sides_act1.mp4', // Act I: Venice - soulbae learns 64 sides
-    2: '/assets/mageswordhandwalking_act2.mp4', // Act II: Dual Ceremony - mage sword hand walking
-    3: '/assets/drakemagic_act3.mp4', // Act III: Drake's Teaching - drake magic
-    4: '/assets/swordsman2slash_act4.mp4', // Act IV: Blade Alone - swordsman 2 slash
-    5: '/assets/mageswordarmor_act5.mp4', // Act V: Light Armour - mage sword armor
-    6: '/assets/trustplanestory_act6.mp4', // Act VI: Trust Graph Plane - trust plane story
-    7: '/assets/mirrormagesoulbae.mp4', // Act VII: The Mirror That Never Completes - mirror mage soulbae
-    8: '/assets/soulbaediscoversitmustbetwo_act8.mp4', // Act VIII: Ancient Rule - soulbae discovers it must be two
-    9: '/assets/soulbisbaecapture7capital_act9.mp4', // Act IX: Zcash Shield - soulbisbae capture 7th capital
-    10: '/assets/topologyravensduo_act10.mp4', // Act X: Topology of Revelation - topology ravens duo
-    11: '/assets/goldenratiospiralpowerswordzkp_act11.mp4', // Act XI: Balanced Spiral of Sovereignty - golden ratio spiral power sword zkp
-    12: '/assets/soulbaereadsinlibrary.mp4', // Act XII: The Forgetting - soulbae reads in library
+    1: '/assets/act1drakefirstwhisper.mp4', // Act I: Venice
+    2: '/assets/act2dualceremony_zypher.mp4', // Act II: Dual Ceremony
+    3: '/assets/act3drakes_zypher.mp4', // Act III: Drake's Teaching
+    4: '/assets/act4_bladealone_zypher.mp4', // Act IV: Blade Alone
+    5: '/assets/act5light_zypher.mp4', // Act V: Light Armour
+    6: '/assets/act6_trustplane_zypher.mp4', // Act VI: Trust Graph Plane
+    7: '/assets/act7mirror_zypher.mp4', // Act VII: The Mirror That Never Completes
+    8: '/assets/act8ruleof2_zypher.mp4', // Act VIII: Ancient Rule
+    9: '/assets/act9forgezcash_zypher.mp4', // Act IX: Zcash Shield
+    10: '/assets/act10revelation_zypher.mp4', // Act X: Topology of Revelation
+    11: '/assets/act11spiral_zypher.mp4', // Act XI: Balanced Spiral of Sovereignty
+    12: '/assets/act12_proverbgene_zypher.mp4', // Act XII: The Forgetting
   };
   return videoMap[act] || null;
 };

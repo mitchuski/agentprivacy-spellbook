@@ -137,10 +137,10 @@ const getActFilename = (act: number): string => {
 
 const getTaleVideo = (tale: number): string | null => {
   const videoMap: { [key: number]: string } = {
-    1: '/assets/monastryprotectionzk_tale1.mp4', // Tale 1: The Monastery of Hidden Knowledge
-    2: '/assets/threetrialsmageswordzero_tale2.mp4', // Tale 2: The Three Trials of Truth
-    3: '/assets/soulbaebisenergyconnect_tale3.mp4', // Tale 3: The Silent Messenger
-    4: '/assets/soulbaelearnsinfinitefields.mp4', // Tale 4: The Fields of Finite Wisdom
+    1: '/assets/tale1_monastry_zypher.mp4', // Tale 1: The Monastery of Hidden Knowledge
+    2: '/assets/tale2threetrials_zypher.mp4', // Tale 2: The Three Trials of Truth
+    3: '/assets/tale3_silentmsg_zypher.mp4', // Tale 3: The Silent Messenger
+    4: '/assets/tale4_fields_zypher.mp4', // Tale 4: The Fields of Finite Wisdom
   };
   return videoMap[tale] || null;
 };
