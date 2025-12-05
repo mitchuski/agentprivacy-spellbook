@@ -191,10 +191,14 @@ export default function ZeroPage() {
         setTalesAvailable(true);
         return;
       }
-      // In production, check if markdown files exist
+      // In production, check if markdown files exist (check both first tale and last page)
       try {
-        const response = await fetch('/zero/markdown/01-tale-01.md');
-        setTalesAvailable(response.ok);
+        const [taleResponse, lastPageResponse] = await Promise.all([
+          fetch('/zero/markdown/01-tale-01.md'),
+          fetch('/zero/markdown/31-zeromage-lastpage.md')
+        ]);
+        // Both files should exist for full spellbook
+        setTalesAvailable(taleResponse.ok && lastPageResponse.ok);
       } catch {
         setTalesAvailable(false);
       }
