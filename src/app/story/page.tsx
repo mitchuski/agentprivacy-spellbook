@@ -278,6 +278,7 @@ const getActFilename = (act: number): string => {
     10: 'topology-of-revelation',
     11: 'act-xi-balanced-spiral-of-sovereignty',
     12: 'act-xii-the-forgetting',
+    111: 'privacymage-lastpage',
     13: 'inscriptions',
   };
   return filenames[act] || '';
@@ -292,17 +293,19 @@ export default function StoryPage() {
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 12 }, (_, i) => i + 1), 13]; // 0 = first page, 1-12 = Acts, 13 = inscriptions
+  const acts = [0, ...Array.from({ length: 12 }, (_, i) => i + 1), 111, 13]; // 0 = first page, 1-12 = Acts, 111 = last page, 13 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-12), or inscriptions (13)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 12) || activeAct === 13) {
+        // Load markdown for first page (0), acts (1-12), last page (111), or inscriptions (13)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 12) || activeAct === 111 || activeAct === 13) {
           let filename: string;
           if (activeAct === 13) {
             filename = '112-inscriptions.md';
+          } else if (activeAct === 111) {
+            filename = '111-privacymage-lastpage.md';
           } else if (activeAct === 0 || activeAct === 7 || activeAct === 10 || activeAct === 11 || activeAct === 12) {
             filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
           } else {
@@ -575,6 +578,7 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
+                  if (actNum === 111) return 'last page';
                   if (actNum === 13) return 'spells';
                   return `Act ${actNum}`;
                 };
@@ -650,7 +654,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 13 && (
+                {activeAct !== 0 && activeAct !== 111 && activeAct !== 13 && (
                   <>
                     <div className="mb-6">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
