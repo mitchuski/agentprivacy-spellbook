@@ -1,12 +1,14 @@
-# AgentPrivacy.ai - The First Person Spellbook
+# AgentPrivacy.ai - The Spellbooks
 
-A privacy-preserving interactive story platform built with Next.js, featuring AI-assisted proverb generation and Zcash integration for private donations.
+A privacy-preserving interactive story platform built with Next.js, featuring three spellbooks (story, zero, canon), AI-assisted proverb generation, and Zcash integration for private donations.
 
 ## 🎯 What Is This?
 
-This is a **spellbook** - an interactive storytelling platform where:
+This is a **spellbook collection** - an interactive storytelling platform featuring:
 
-- **Readers** explore privacy-themed tales (Acts I-XI)
+- **Story Spellbook** - The First Person Spellbook with 12 acts
+- **Zero Spellbook** - Zero Knowledge Spellbook with 30 tales  
+- **Canon Spellbook** - Blockchain history and lineage (11 chapters)
 - **Soulbae** (the Mage) helps craft relationship proverbs through AI conversation
 - **Swordsman Panel** formats proverbs for Zcash shielded transactions
 - **Donations** flow privately through Zcash z→z transactions with encrypted memos
@@ -19,7 +21,9 @@ Think of it as: **Crowdfunding with proof-of-understanding, where privacy is pre
 ┌─────────────────────────────────────────┐
 │  Next.js Static Site (out/)            │
 │  - Landing page (/)                     │
-│  - Story pages (/story)                 │
+│  - Story spellbook (/story)             │
+│  - Zero spellbook (/zero)               │
+│  - Canon spellbook (/canon)              │
 │  - Mage interface (/mage)                │
 │  - Proverbs gallery (/proverbs)         │
 └─────────────────────────────────────────┘
@@ -77,10 +81,11 @@ agentprivacy-ai-firstmage/
 ├── src/
 │   ├── app/                    # Next.js app router pages
 │   │   ├── page.tsx            # Landing page
-│   │   ├── story/page.tsx      # Story reader with acts
+│   │   ├── story/page.tsx      # Story spellbook (12 acts)
+│   │   ├── zero/page.tsx       # Zero spellbook (30 tales)
+│   │   ├── canon/page.tsx      # Canon spellbook (11 chapters)
 │   │   ├── mage/page.tsx       # Soulbae chat interface
-│   │   ├── proverbs/page.tsx   # Proverbs gallery
-│   │   └── zero/page.tsx       # Zero knowledge content
+│   │   └── proverbs/page.tsx   # Proverbs gallery
 │   ├── components/             # React components
 │   │   ├── SwordsmanPanel.tsx  # Donation panel
 │   │   ├── ChatMessage.tsx     # Chat UI
@@ -89,8 +94,10 @@ agentprivacy-ai-firstmage/
 │       ├── soulbae.ts          # Soulbae API client
 │       └── zcash-memo.ts       # Zcash memo formatting
 ├── public/
-│   ├── assets/                 # Images and videos
-│   └── story/markdown/         # Story content (Markdown)
+│   ├── assets/                 # Videos and images
+│   ├── story/markdown/         # Story spellbook content
+│   ├── zero/markdown/          # Zero spellbook content
+│   └── canon/                  # Canon spellbook content
 ├── out/                        # Static export (after build)
 ├── next.config.mjs             # Next.js config
 └── package.json
@@ -98,12 +105,25 @@ agentprivacy-ai-firstmage/
 
 ## 🎨 Key Features
 
-### 1. Interactive Story Reader (`/story`)
+### 1. Three Spellbooks
 
-- **11 Acts** of privacy-themed narrative
+**Story Spellbook (`/story`):**
+- **12 Acts** of privacy-themed narrative
 - **Markdown-based** content in `public/story/markdown/`
 - **Swordsman Panel** for each act (donation interface)
 - **Navigation** between acts with smooth transitions
+
+**Zero Spellbook (`/zero`):**
+- **30 Tales** of zero-knowledge cryptography
+- **Markdown-based** content in `public/zero/markdown/`
+- **Video assets** for key tales
+- **Swordsman Panel** integration
+
+**Canon Spellbook (`/canon`):**
+- **11 Chapters** of blockchain history and lineage
+- **Markdown-based** content in `public/canon/`
+- **Video assets** for each chapter
+- **Historical narrative** from cypherpunks to present
 
 ### 2. Mage Interface (`/mage`)
 
