@@ -219,7 +219,8 @@ const getChapterFilename = (chapter: number): string => {
     9: '09-chapter-nine-open-canon',
     10: '10-chapter-ten-timeline-archive',
     11: '11-chapter-last-privacymage-reflection',
-    12: 'inscriptions',
+    12: '12-guardian_application_canon_privacymage',
+    13: 'inscriptions',
   };
   return filenames[chapter] || '';
 };
@@ -233,13 +234,13 @@ export default function CanonPage() {
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
 
-  const chapters = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12]; // 0 = preface, 1-11 = chapters, 12 = inscriptions
+  const chapters = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12, 13]; // 0 = preface, 1-11 = chapters, 12 = guardian, 13 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        if (activeChapter === 12) {
+        if (activeChapter === 13) {
           // Inscriptions page - no markdown to load
           setMarkdownContent('');
           setOriginalMarkdownContent('');
@@ -399,7 +400,8 @@ export default function CanonPage() {
   const getChapterName = (chapter: number): string => {
     if (chapter === 0) return 'firstpage';
     if (chapter === 11) return 'lastpage';
-    if (chapter === 12) return 'spells';
+    if (chapter === 12) return 'guardian';
+    if (chapter === 13) return 'spells';
     return `chapter ${chapter}`;
   };
 
@@ -507,7 +509,7 @@ export default function CanonPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Learn and Protect Buttons */}
-            {(markdownContent || activeChapter === 12) && (
+            {(markdownContent || activeChapter === 12 || activeChapter === 13) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
                 {showSwordsmanPanel && (
                   <button
@@ -617,7 +619,7 @@ export default function CanonPage() {
                   </div>
                 )}
                 
-                {activeChapter === 12 ? (
+                {activeChapter === 13 ? (
                   <InscriptionsPage 
                     onCopy={copyInscription}
                     onProtect={handleProtect}
@@ -684,7 +686,7 @@ export default function CanonPage() {
                   </svg>
                 </button>
               )}
-              {(markdownContent || activeChapter === 12) && (
+              {(markdownContent || activeChapter === 12 || activeChapter === 13) && (
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
