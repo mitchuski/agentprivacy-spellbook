@@ -762,12 +762,6 @@ export default function StoryPage() {
                   zero
                 </a>
                 <a
-                  href="/canon"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
                   href="/proverbs"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >

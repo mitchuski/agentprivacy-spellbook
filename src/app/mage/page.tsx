@@ -828,12 +828,6 @@ What brings you my spellbook?`,
                   zero
                 </a>
                 <a
-                  href="/canon"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
                   href="/proverbs"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
@@ -946,40 +940,47 @@ What brings you my spellbook?`,
                   </div>
                 </div>
 
-                {/* Canon Spellbook Chapters */}
-                <div>
-                  <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
-                    <span>📜</span>
-                    <span>Canon Spellbook</span>
-                  </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
-                    {[
-                      { num: 1, title: 'The Cypherpunk Whispers' },
-                      { num: 2, title: 'The Early Incantations' },
-                      { num: 3, title: 'The Synthesis' },
-                      { num: 4, title: 'The World Computer' },
-                      { num: 5, title: 'The First Fracture' },
-                      { num: 6, title: 'The Great Schism' },
-                      { num: 7, title: 'The Surveillance Truth' },
-                      { num: 8, title: 'The Missing Primitive' },
-                      { num: 9, title: 'The Open Canon' },
-                      { num: 10, title: 'The Timeline Archive' },
-                      { num: 12, title: 'Guardian' },
-                    ].map((chapter) => {
-                      const chapterId = chapter.num === 12 ? 'guardian' : `canon-chapter-${chapter.num}`;
-                      return (
-                        <a
-                          key={chapterId}
-                          href={`/mage?tale_id=${chapterId}`}
-                          className="p-3 bg-background border border-surface/50 rounded-lg hover:border-primary hover:bg-primary/5 transition-all text-center block"
-                        >
-                          <div className="font-semibold text-text text-sm">
-                            {chapter.num === 12 ? 'Guardian' : `Chapter ${chapter.num}`}
+                {/* Canon Spellbook Chapters - Locked */}
+                <div className="relative opacity-60">
+                  <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center z-10">
+                    <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
+                      <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
+                      <span>📜</span>
+                      <span>Canon Spellbook</span>
+                      <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Coming Soon</span>
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                      {[
+                        { num: 1, title: 'The Cypherpunk Whispers' },
+                        { num: 2, title: 'The Early Incantations' },
+                        { num: 3, title: 'The Synthesis' },
+                        { num: 4, title: 'The World Computer' },
+                        { num: 5, title: 'The First Fracture' },
+                        { num: 6, title: 'The Great Schism' },
+                        { num: 7, title: 'The Surveillance Truth' },
+                        { num: 8, title: 'The Missing Primitive' },
+                        { num: 9, title: 'The Open Canon' },
+                        { num: 10, title: 'The Timeline Archive' },
+                        { num: 12, title: 'Guardian' },
+                      ].map((chapter) => {
+                        const chapterId = chapter.num === 12 ? 'guardian' : `canon-chapter-${chapter.num}`;
+                        return (
+                          <div
+                            key={chapterId}
+                            className="p-3 bg-background border border-surface/50 rounded-lg text-center cursor-not-allowed"
+                          >
+                            <div className="font-semibold text-text text-sm">
+                              {chapter.num === 12 ? 'Guardian' : `Chapter ${chapter.num}`}
+                            </div>
+                            <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
                           </div>
-                          <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
-                        </a>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -41,6 +41,10 @@ next-env.d.ts
 /src/app/zero/
 !/src/app/zero/page.tsx
 
+# canon spellbook (excluded from git)
+/public/canon/
+/src/app/canon/
+
 # sensitive keys and secrets
 oracle-swordsman/PRODUCTION_ZCASH_KEYS.json
 oracle-swordsman/secretsigner-workload-config-with-keys.json

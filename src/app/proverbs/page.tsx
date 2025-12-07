@@ -146,9 +146,6 @@ export default function ProverbsPage() {
                 <Link href="/zero" className="text-text hover:text-primary transition-colors font-medium">
                   zero
                 </Link>
-                <Link href="/canon" className="text-text hover:text-primary transition-colors font-medium">
-                  canon
-                </Link>
                 <Link href="/proverbs" className="text-primary border-b-2 border-primary pb-1 font-medium">
                   proverbs
                 </Link>
