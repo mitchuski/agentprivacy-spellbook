@@ -1,10 +1,6 @@
-# Chapter VII: The Surveillance Truth (2020-2025)
+# The Surveillance Truth (2020-2025)
 
 ## When The Watchers Learned to Read
-
-**Core Proverb:** *"The public ledger was mistaken for privacy because the watchers hadn't yet arrived. When they came with graph analysis and subpoenas, pseudonymity revealed itself as a veil, not a wall."*
-
----
 
 The chamber darkened. The equations on the walls remained, but new symbols appeared alongside them—**eyes**. Watching. Analyzing. Connecting.
 

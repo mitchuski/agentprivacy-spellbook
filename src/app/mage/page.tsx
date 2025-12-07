@@ -883,7 +883,7 @@ What brings you my spellbook?`,
               <div className="card bg-surface border-surface/50">
                 <h2 className="text-2xl font-bold text-text mb-4">Select a Spellbook Tale</h2>
                 <p className="text-text-muted mb-6">
-                  Choose a tale from the Story Spellbook or Zero Knowledge Spellbook to begin your conversation with Soulbae.
+                  Choose a tale from the Story Spellbook, Zero Knowledge Spellbook, or Canon Spellbook to begin your conversation with Soulbae.
                 </p>
 
                 {/* Story Spellbook Acts */}
@@ -912,10 +912,10 @@ What brings you my spellbook?`,
                         <button
                           key={taleId}
                           onClick={() => router.push(`/mage?tale_id=${taleId}`)}
-                          className="p-4 bg-background border border-surface/50 rounded-lg hover:border-primary hover:bg-primary/5 transition-all text-left"
+                          className="p-3 bg-background border border-surface/50 rounded-lg hover:border-primary hover:bg-primary/5 transition-all text-center"
                         >
-                          <div className="font-semibold text-text mb-1">{actTitles[act]}</div>
-                          <div className="text-xs text-text-muted">{taleId}</div>
+                          <div className="font-semibold text-text text-sm">Act {act}</div>
+                          <div className="text-xs text-text-muted mt-1">{actTitles[act]}</div>
                         </button>
                       );
                     })}
@@ -923,7 +923,7 @@ What brings you my spellbook?`,
                 </div>
 
                 {/* Zero Knowledge Spellbook Tales */}
-                <div>
+                <div className="mb-8">
                   <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
                     <span>🔮</span>
                     <span>Zero Knowledge Spellbook</span>
@@ -941,6 +941,43 @@ What brings you my spellbook?`,
                           <div className="font-semibold text-text text-sm">Tale {taleNumber}</div>
                           <div className="text-xs text-text-muted mt-1">{taleTitle}</div>
                         </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Canon Spellbook Chapters */}
+                <div>
+                  <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
+                    <span>📜</span>
+                    <span>Canon Spellbook</span>
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                    {[
+                      { num: 1, title: 'The Cypherpunk Whispers' },
+                      { num: 2, title: 'The Early Incantations' },
+                      { num: 3, title: 'The Synthesis' },
+                      { num: 4, title: 'The World Computer' },
+                      { num: 5, title: 'The First Fracture' },
+                      { num: 6, title: 'The Great Schism' },
+                      { num: 7, title: 'The Surveillance Truth' },
+                      { num: 8, title: 'The Missing Primitive' },
+                      { num: 9, title: 'The Open Canon' },
+                      { num: 10, title: 'The Timeline Archive' },
+                      { num: 12, title: 'Guardian' },
+                    ].map((chapter) => {
+                      const chapterId = chapter.num === 12 ? 'guardian' : `canon-chapter-${chapter.num}`;
+                      return (
+                        <a
+                          key={chapterId}
+                          href={`/mage?tale_id=${chapterId}`}
+                          className="p-3 bg-background border border-surface/50 rounded-lg hover:border-primary hover:bg-primary/5 transition-all text-center block"
+                        >
+                          <div className="font-semibold text-text text-sm">
+                            {chapter.num === 12 ? 'Guardian' : `Chapter ${chapter.num}`}
+                          </div>
+                          <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
+                        </a>
                       );
                     })}
                   </div>
@@ -1089,7 +1126,9 @@ What brings you my spellbook?`,
                   <p className="text-xs text-text-muted">
                     {taleIdParam?.startsWith('zero-tale-') 
                       ? 'This proverb connects your context to the cryptographic concepts in the Zero Knowledge Spellbook. Click "learn" to copy it.'
-                      : 'This proverb was Formed by Soulbae from your conversation. Click "learn" to copy it.'}
+                      : taleIdParam?.startsWith('canon-chapter-') || taleIdParam === 'guardian'
+                      ? 'This proverb connects your understanding of blockchain history and lineage from the Canon Spellbook. Click "learn" to copy it.'
+                      : 'This proverb connects your context to the narrative in the Story Spellbook. Click "learn" to copy it.'}
                   </p>
                 </div>
                 <button

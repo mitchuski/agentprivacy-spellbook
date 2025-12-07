@@ -1,10 +1,6 @@
-# Chapter IX: The Open Canon
+# The Open Canon
 
 ## The Chapters Yet to Be Written
-
-**Core Proverb:** *"The canon is not closed—it is open, awaiting completion by those who build. Past chapters are written. Crucial chapters remain blank. The pen is in your hand."*
-
----
 
 The chamber opened into something vast—not a room but a **library that stretched beyond sight**. Shelves upon shelves of completed volumes: the foundational runes, the early incantations, the synthesis, the fracture, the schism, the surveillance truth.
 

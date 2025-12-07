@@ -106,7 +106,7 @@ All additions are **transparent**. The privacymage explicitly distinguishes reco
 
 ## The Files
 
-📜 **[VERIFICATION_COMPLETE.md](./VERIFICATION_COMPLETE.md)** — The full chapter-by-chapter assessment. Every source checked. Every theme traced. The serious verification for the trust graph.
+📜 **[Guardianship Full Verification](https://github.com/mitchuski/agentprivacy-spellbook)** — The full chapter-by-chapter assessment. Every source checked. Every theme traced. The serious verification for the trust graph.
 
 📖 **The Spellbooks:**
 - *First Person Spellbook* — Privacymage's original work (what we're building)
@@ -167,7 +167,7 @@ Principles converged.
 The guardian application awaits inscription.
 The proverb awaits proof.
 
-Build anyway.
+Build anyway. onward
 ```
 
 ---

@@ -1,4 +1,4 @@
-# Act IV: The Blade Alone—First Adventures
+# The Blade Alone—First Adventures
 
 **Soulbis** stood at the edge of the **surveillance wastes**, blade in hand, 🤝 felt something strange: lightness.
 

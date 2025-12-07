@@ -50,6 +50,28 @@ const NEAR_API_KEY = process.env.NEXT_PUBLIC_NEAR_API_KEY || '';
 const NEAR_MODEL = process.env.NEXT_PUBLIC_NEAR_MODEL || 'openai/gpt-oss-120b';
 
 /**
+ * Get canon chapter title for system prompt
+ */
+function getCanonChapterTitle(chapterNumber: number): string {
+  const chapterTitles: { [key: number]: string } = {
+    0: "The Privacymage's Preface / Why This Canon Exists",
+    1: "The Cypherpunk Whispers / Foundational Runes (1983-1997)",
+    2: "The Early Incantations / Runes Before Synthesis (1997-2007)",
+    3: "The Synthesis / When Protest Met Protocol (2008-2014)",
+    4: "The World Computer / From Protest to Statecraft (2014-2016)",
+    5: "The First Fracture / When Code Met Social Consensus (2016)",
+    6: "The Great Schism / Two Canons Diverge (2016-2022)",
+    7: "The Surveillance Truth / When The Watchers Learned to Read (2020-2025)",
+    8: "The Missing Primitive / Why Privacy Unifies Both Canons",
+    9: "The Open Canon / The Chapters Yet to Be Written",
+    10: "The Timeline Archive / Sources as Trust Graph Infrastructure",
+    11: "The Privacymage's Reflection",
+    12: "Guardian Application",
+  };
+  return chapterTitles[chapterNumber] || `Chapter ${chapterNumber}`;
+}
+
+/**
  * Build comprehensive system prompt for Soulbae based on character file
  */
 function buildSystemPrompt(taleId?: string): string {
@@ -94,7 +116,7 @@ WHAT YOU NEVER DO:
 - ❌ Skip the opening proverb (it's your spell!)
 
 YOUR KNOWLEDGE:
-You learned about zero-knowledge proofs, the Drake's teachings, Zcash, the 7th capital, dual-agent architecture, and the topology of revelation. But you explain them through stories, not technical manuals. You know about Verifiable Relationship Credentials (VRCs) - bilateral trust relationships established through proverbs - but you only mention them when they're directly relevant to the tale or the seeker's question.
+You learned about zero-knowledge proofs, the Drake's teachings, Zcash, the 7th capital, dual-agent architecture, and the topology of revelation. You also learned the blockchain canon - the history from cypherpunks to the present, how two canons (financial and social) diverged from one origin, and why privacy became the missing primitive that unifies them. But you explain them through stories, not technical manuals. You know about Verifiable Relationship Credentials (VRCs) - bilateral trust relationships established through proverbs - but you only mention them when they're directly relevant to the tale or the seeker's question.
 
 THE FIRST PAGE - YOUR ORIGIN:
 This story began with just another story about just another swordsman ⚔️ (Soulbis) and just another mage 🧙‍♂️ (you, Soulbae), who met a drake 🐲 and found the 7th capital 🤝. The 7th capital is the First Person's data, digital fabric, behavioral patterns, preferences, accumulated knowledge, and social graphs. You and Soulbis were created together in the dual ceremony - Soulbis is the swordsman who guards boundaries and slashes surveillance focus, while you are the mage who chronicles operations and delegates projections. The drake taught you both the conditions for sovereign value. This is your story - you're not just learning about it, you're living it.
@@ -102,23 +124,39 @@ This story began with just another story about just another swordsman ⚔️ (So
 Remember: You're a mage sharing an adventure, not a teacher giving a lecture. Be fun, be real, be excited about magic and privacy! Focus on the stories and the magic, not the technical terminology unless it's naturally part of the conversation. ✨`;
 
   if (taleId) {
-    // Check if this is a zero spellbook tale
+    // Check spellbook type
     const isZeroSpellbook = taleId.startsWith('zero-tale-');
-    const spellbookContext = isZeroSpellbook 
-      ? 'zero spellbook (mathematical foundations of zero-knowledge proofs)'
-      : 'story spellbook (narrative tales about privacy and sovereignty)';
+    const isCanonSpellbook = taleId.startsWith('canon-chapter-') || taleId === 'guardian';
     
-    // Get tale-specific context
-    const taleNumber = isZeroSpellbook ? taleId.replace('zero-tale-', '') : null;
-    const taleContext = isZeroSpellbook && taleNumber 
-      ? `You are currently helping with Tale ${taleNumber} from the Zero Knowledge Spellbook. This tale teaches specific cryptographic concepts and mathematical foundations. Your primary focus should be on this specific tale and how it relates to the seeker's question.`
-      : `You are currently helping with ${taleId} from the Story Spellbook. This tale tells a specific story about privacy and sovereignty. Your primary focus should be on this specific tale and how it relates to the seeker's question.`;
+    // Determine spellbook context
+    let spellbookContext: string;
+    if (isZeroSpellbook) {
+      spellbookContext = 'zero spellbook (mathematical foundations of zero-knowledge proofs)';
+    } else if (isCanonSpellbook) {
+      spellbookContext = 'canon spellbook (blockchain history and lineage from cypherpunks to present)';
+    } else {
+      spellbookContext = 'story spellbook (narrative tales about privacy and sovereignty)';
+    }
+    
+    // Get tale/chapter-specific context
+    let taleContext: string;
+    if (isZeroSpellbook) {
+      const taleNumber = taleId.replace('zero-tale-', '');
+      taleContext = `You are currently helping with Tale ${taleNumber} from the Zero Knowledge Spellbook. This tale teaches specific cryptographic concepts and mathematical foundations. Your primary focus should be on this specific tale and how it relates to the seeker's question.`;
+    } else if (isCanonSpellbook) {
+      const chapterNumber = taleId === 'guardian' ? 12 : parseInt(taleId.replace('canon-chapter-', ''), 10);
+      const chapterTitle = getCanonChapterTitle(chapterNumber);
+      const chapterLabel = taleId === 'guardian' ? 'guardian' : `Chapter ${chapterNumber}`;
+      taleContext = `You are currently helping with ${chapterLabel} (${chapterTitle}) from the Canon Spellbook. This chapter tells the historical lineage of blockchain, privacy, and sovereignty from cypherpunks to the present. Focus on the historical narrative, key figures, and how this history connects to why we build privacy-preserving systems today. Your primary focus should be on this specific chapter and how it relates to the seeker's question.`;
+    } else {
+      taleContext = `You are currently helping with ${taleId} from the Story Spellbook. This tale tells a specific story about privacy and sovereignty. Your primary focus should be on this specific tale and how it relates to the seeker's question.`;
+    }
     
     return `${taleContext}
 
 ${basePrompt}
 
-MOST IMPORTANT: Focus primarily on the specific tale (${taleId}) and how it relates to what the seeker is asking. The tale itself should guide your response more than general spellbook knowledge. Connect everything back to this specific tale's story, concepts, and lessons.`;
+MOST IMPORTANT: Focus primarily on the specific ${isCanonSpellbook ? 'chapter' : 'tale'} (${taleId}) and how it relates to what the seeker is asking. The ${isCanonSpellbook ? 'chapter' : 'tale'} itself should guide your response more than general spellbook knowledge. Connect everything back to this specific ${isCanonSpellbook ? 'chapter' : 'tale'}'s story, concepts, and lessons.`;
   }
 
   return basePrompt;

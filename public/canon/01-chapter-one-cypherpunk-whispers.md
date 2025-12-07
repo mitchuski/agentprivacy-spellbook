@@ -1,12 +1,9 @@
-# Chapter I: The Cypherpunk Whispers (1983-1997)
+# The Cypherpunk Whispers (1983-1997)
 
 ## The Foundational Runes
 
-**Core Proverb:** *"The blade was forged in mathematics before it was ever held by hands. Privacy through proof, not through permission—this was the first rune, and it remains the last defense."*
 
----
-
-The Drake led Soulbis 🤝 Soulbae through passages of the Cryptographic Scriptorium that grew older with each step. The equations on the walls shifted from familiar to strange—notations that predated modern cryptographic conventions, proofs scratched in chalk that had been refined a thousand times before achieving their final form.
+The Drake led Soulbis 🤝 Soulbae through winding passages beneath the canals of Venice, finding the Cryptographic Scriptorium, a place that grew older with each step. The equations on the walls shifted from familiar to strange—notations that predated modern cryptographic conventions, proofs scratched in chalk that had been refined a thousand times before achieving their final form.
 
 *"Before there was blockchain,"* the Drake said, *"before there was Bitcoin, before there were protocols for peer-to-peer money—there was an idea. A dangerous idea. An idea that governments would later try to classify as a munition."*
 

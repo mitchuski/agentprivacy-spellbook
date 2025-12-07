@@ -1,4 +1,4 @@
-# Act VIII: The Ancient Rule of Two Rediscovered
+# The Ancient Rule of Two Rediscovered
 
 **The Drake** had shown them the Mirror Plane—where surveillance capitalism chased perfect reconstruction but always stopped at 95%. Where the gap between Soulbis and Soulbae preserved the First Person's irreducibility. Where duality itself was dignity.
 

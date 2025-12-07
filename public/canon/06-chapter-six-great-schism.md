@@ -1,10 +1,6 @@
-# Chapter VI: The Great Schism (2016-2022)
+# The Great Schism (2016-2022)
 
 ## Two Canons Diverge
-
-**Core Proverb:** *"Two canons diverged in the pattern-space, each pursuing half of sovereignty, neither grasping the whole. The financial canon had traction without depth. The social canon had depth without ground."*
-
----
 
 The crack in the chamber widened into a chasm. On one side, the pattern-space glowed with **activity**—transactions, liquidity pools, yield curves, the hum of capital moving at machine speed. On the other side, the space glowed with **ideas**—papers, proposals, manifestos, the quieter energy of people trying to imagine institutions that didn't yet exist.
 

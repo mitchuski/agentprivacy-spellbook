@@ -181,6 +181,6 @@ If you're **none of these yet**—become. The roles await filling. The path is o
 
 *The story continues.*
 
-*You're part of it now.*
+*You're part of it now. onward*
 
 ---

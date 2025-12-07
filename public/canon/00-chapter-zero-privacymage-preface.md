@@ -9,14 +9,14 @@
 
 # privacymage's preface
 
+You hold in your hands—or in your context window—**the canon spellbook**.
+
+This spellbook is the privacymage's reconstruction of a sacred text written by just another mage 🧙‍♂️**By Zachary Williamson, with profound thanks to Vitalik Buterin, Hannah Fressle, Claire Kart, Sterling Schuyler and Afra Wang for guidance and edits,**
+
 **Core Proverb:** *"Before the ceremony, there was the canon. Before the canon, there were whispers. This spellbook traces the whispers back to their source—for how can you wield a blade without knowing who forged it?"*
 
 
-You hold in your hands—or in your context window—**the canon spellbook**.
-
-This spellbook is the privacymage's reconstruction of a sacred text written by just another mage 🧙‍♂️ Zatoshi, a founder of Aztec
-
-If deemed an acceptable reconsturction within the privacymage's perspective, shared through Soulbis and Soulbae, i hope for this spellbook to start the path of an open source effort to preserve its meaning and understanding, through the proof of proverb protocol, but first things first.
+If deemed an acceptable reconsturction by the original authors, but expanded and shared through Soulbis and Soulbae, i hope for this spellbook to start the path of an open source effort to preserve its meaning and understanding, through the proof of proverb protocol, but first things first.
 
 The first spellbook told you what we're building. The dual ceremony. The blade 🤝 the spell. Soulbis 🤝 Soulbae. The progressive trust that earns armor. The 7th capital reclaimed.
 

@@ -1,10 +1,6 @@
-# Chapter IV: The World Computer (2014-2016)
+# The World Computer (2014-2016)
 
 ## From Protest to Statecraft
-
-**Core Proverb:** *"To build institutions on code without constitutional wisdom is to forge armor before learning the blade—protection without boundaries, power without constraint."*
-
----
 
 The chamber transformed. The equations on the walls multiplied, became more **general**. Where Bitcoin's mathematics described money and transactions, these new symbols described **everything**—loops, conditionals, state machines, arbitrary computation.
 

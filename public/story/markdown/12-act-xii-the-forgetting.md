@@ -1,4 +1,4 @@
-# Act XII: The Forgetting / Proverbiogenesis
+# The Forgetting / Proverbiogenesis
 
 The **Trust Graph Plane** had grown vast. Thousands of nodes glowed across its surface. **First Persons** holding delegation ceremonies. Swordsmen slashing surveillance focus. Mages weaving chronicles that could be verified and trusted.
 

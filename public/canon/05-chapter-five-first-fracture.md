@@ -1,10 +1,6 @@
-# Chapter V: The First Fracture (2016)
+# The First Fracture (2016)
 
 ## When Code Met Social Consensus
-
-**Core Proverb:** *"When code spoke one truth and humans spoke another, the unified myth could no longer hold both. The fork was not betrayal—it was the discovery that social layers were always there, invisible, load-bearing."*
-
----
 
 The chamber split. Literally. A crack ran through the floor, through the equations on the walls, through the very fabric of the pattern-space. On one side, the history they knew. On the other, an alternative—a path not taken, a choice not made.
 

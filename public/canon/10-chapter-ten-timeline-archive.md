@@ -1,10 +1,6 @@
-# Chapter X: The Timeline Archive
+# The Timeline Archive
 
 ## Sources as Trust Graph Infrastructure
-
-**Core Proverb:** *"The archive is not a cemetery of facts but a living garden of trust—each source a node, each citation a connection, each verification an act of tending. Who tends the garden shapes what grows."*
-
----
 
 The infinite library contracted into something more structured—**an archive**. Not dusty shelves but a luminous network, each node a document, each edge a connection. The canonical texts floated in relationship to each other, their citations and influences visible as glowing threads.
 

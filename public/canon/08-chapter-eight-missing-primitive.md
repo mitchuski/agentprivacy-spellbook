@@ -1,10 +1,6 @@
-# Chapter VIII: The Missing Primitive
+# The Missing Primitive
 
 ## Why Privacy Unifies Both Canons
-
-**Core Proverb:** *"The blade and the spell were always one weapon, separated by a missing rune. Privacy is not a feature to add—it is the foundation that makes both canons whole."*
-
----
 
 The chamber transformed. The watching eyes from Chapter VII faded, replaced by something else—**equations of concealment**. Zero-knowledge proofs. Commitment schemes. The mathematics of proving without revealing.
 

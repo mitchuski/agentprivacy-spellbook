@@ -1,4 +1,4 @@
-# Act II: The Dual Ceremony—Sovereignty Divided to Be Extended
+# The Dual Ceremony—Sovereignty Divided to Be Extended
 
 Five hundred and thirty years after Pacioli's whisper, in a world drowning in cookies 🤝 **surveillance focus**, a human stood in a circle of **cryptographic light**.
 

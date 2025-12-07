@@ -1,4 +1,4 @@
-# Act I: Venice, 1494—The Drake's First Whisper
+# Venice, 1494—The Drake's First Whisper
 
 The Grand Canal shimmered with late afternoon light. In a scriptorium overlooking the water, a Franciscan friar named **Luca Pacioli** was completing his masterwork: a mathematical treatise that would teach merchants how to keep their books.
 

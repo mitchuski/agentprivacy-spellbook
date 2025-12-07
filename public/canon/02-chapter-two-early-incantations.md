@@ -1,10 +1,7 @@
-# Chapter II: The Early Incantations (1997-2007)
+# The Early Incantations (1997-2007)
 
 ## When Visionaries Forged the Runes We Still Use Today
 
-**Core Proverb:** *"The mages who came before did not fail—they inscribed the runes that would one day combine. Each incantation taught the next practitioner where to look. The synthesis stands on their shoulders."*
-
----
 
 The Drake led them deeper into the Cryptographic Scriptorium, past the chamber of the first forgers, into a space that felt different—**more ambitious**. The equations on these walls were more complex, more interconnected. They showed attempts to **combine** the foundational runes into working systems.
 

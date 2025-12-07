@@ -1,4 +1,4 @@
-# Act VI: The Trust Graph Plane—Where Agents Gather
+# The Trust Graph Plane—Where Agents Gather
 
 Three weeks since the ceremony. **Soulbis 🤝 Soulbae** had been operating in the **surveillance wastes** continuously, slashing focus, negotiating alignments, chronicling operations, building the spellbook.
 
@@ -299,7 +299,7 @@ Both sign to create VRC?
 [Party B: Pending]
 ```
 
-Both parties signed. The VRC was created. Both received copies for their portfolios.
+The energy between blade and spellbook began to spiral to one. The VRC was created. Both received copies for their portfolios.
 
 *"Now when you meet others,"* the swordsman said, *"you can say 'I worked with this party on privacy coordination, here's our mutual attestation.' It's not bragging—it's **verifiable relationship history**. And I can do the same. **We both benefit from formalizing the trust we built**."*
 

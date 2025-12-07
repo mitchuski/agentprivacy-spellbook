@@ -1,10 +1,7 @@
-# Chapter III: The Synthesis (2008-2014)
+# The Synthesis (2008-2014)
 
 ## When Protest Met Protocol
 
-**Core Proverb:** *"The first ceremony united protest with protocol, forging decentralized consensus at last. But privacy remained as pseudonym rather than proof. The watchers were patient. They could wait."*
-
----
 
 The chamber transformed. The equations on the walls multiplied, brightened, **resolved**. Where the previous chambers had shown fragments and near-misses, this space held something different—**completion**. The runes and incantations of the previous decades finally combining into a working system.
 
