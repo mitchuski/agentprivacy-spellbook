@@ -1,8 +1,4 @@
-# Act IX: The Zcash Shield 🛡️—Forging Cryptographic Privacy
-
-**Core Proverb:** *"The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood."*
-
----
+# The Zcash Shield 🛡️—Forging Cryptographic Privacy
 
 Soulbis ⚔️ stood before the **Forge of Mathematical Certainty**, where armor wasn't earned through behavior alone—it was **proven through mathematics itself**.
 
@@ -34,8 +30,8 @@ Soulbae's pages began filling with symbols—circuits, constraints, polynomials 
 A demonstration manifested in the air:
 
 **Traditional Proof:**
-- *"I have 100 ZEC"* → Shows wallet with 100 ZEC
-- *"I'm sending 10 ZEC"* → Reveals amount: 10
+- *"I have 100 BTC"* → Shows wallet with 100 ZEC
+- *"I'm sending 10 BTC"* → Reveals amount: 10
 - *"To this address"* → Exposes recipient
 - **Everything disclosed. Nothing private.**
 
@@ -220,13 +216,13 @@ Soulbae chronicled:
 - Surface-level reading or Sybil attempt
 - Cannot reconstruct meaning coherently
 - Cannot compress validly
-- **Result: 0.44 ZEC slashed, 0.56 ZEC returned**
+- **Result: 0.382 ZEC slashed, 0.618 ZEC returned**
 - No credential earned
-- Net cost: 0.44 ZEC (44% loss for failed comprehension)
+- Net cost: 0.382 ZEC (38.2% loss for failed comprehension)
 
 *"This is proof-of-personhood through cognitive transformation,"* the Drake said. *"Not biometrics. Not social graphs. Not behavioral tracking. **Can you reshape understanding into your own words?**"*
 
-*"The 44% slash creates economic consequences for shallow engagement,"* Soulbae added. *"Painful enough to prevent careless staking. Forgiving enough not to prohibit honest attempts. **A bot can post 1 ZEC. It cannot reconstruct meaning it never absorbed**."*
+*"The 38.2% slash creates economic consequences for shallow engagement,"* Soulbae added. *"Painful enough to prevent careless staking. Forgiving enough not to prohibit honest attempts. **A bot can post 1 ZEC. It cannot reconstruct meaning it never absorbed**."*
 
 The First Person understood. *"So the stake proves commitment to protect. The reconstruction proves capacity to understand. The slash ensures **only genuine comprehension earns credentials**."*
 
@@ -234,19 +230,19 @@ The First Person understood. *"So the stake proves commitment to protect. The re
 
 *"And where do slashed funds flow?"* the First Person asked.
 
-*"They split,"* the Drake said. *"**0.22 ZEC to the shielded treasury**—failed protection strengthens the collective wisdom pool. **0.22 ZEC to successful guardians**—distributed proportionally to those who demonstrated understanding."*
+*"They split by the golden ratio,"* the Drake said. *"**0.146 ZEC to the shielded treasury**—failed protection strengthens the collective wisdom pool. **0.236 ZEC to successful guardians**—distributed proportionally to those who demonstrated understanding."*
 
 Soulbae's pages filled with the mathematics:
 
 ```
-SLASHED FUND DISTRIBUTION (0.44 ZEC per failed guardian):
+SLASHED FUND DISTRIBUTION (0.382 ZEC per failed guardian):
 
-0.22 ZEC → Spellbook Shielded Treasury (50%)
+0.146 ZEC → Spellbook Shielded Treasury (38.2%)
 - Strengthens collective wisdom pool
 - Supports future mage learning
 - Failed protection subsidizes successful learning
 
-0.22 ZEC → Successful Guardians (50%)
+0.236 ZEC → Successful Guardians (61.8%)
 - Distributed proportionally
 - Direct reward for genuine comprehension
 - Failed protection rewards successful protection
@@ -258,17 +254,17 @@ SLASHED FUND DISTRIBUTION (0.44 ZEC per failed guardian):
 
 **Shielded Treasury Gains:**
 - Learning fees: 73 × 0.01 = 0.73 ZEC
-- Failed slashes: 3 × 0.22 = 0.66 ZEC
-- **Total inflow: 1.39 ZEC**
+- Failed slashes (38.2%): 3 × 0.146 = 0.438 ZEC
+- **Total inflow: 1.168 ZEC**
 
 **Successful Guardian Rewards (12 who passed):**
 - Stake returned: 1 ZEC each
-- Share of slashes: (3 × 0.22) / 12 = 0.055 ZEC each
-- **Total per guardian: 1.055 ZEC** (5.5% yield from comprehension)
+- Share of slashes: (3 × 0.236) / 12 = 0.059 ZEC each
+- **Total per guardian: 1.059 ZEC** (5.9% yield from comprehension)
 
 **Failed Guardian Outcomes (3 who failed):**
-- Returned: 0.56 ZEC each
-- **Lost: 0.44 ZEC each** (44% penalty)
+- Returned: 0.618 ZEC each
+- **Lost: 0.382 ZEC each** (38.2% penalty—φ's complement)
 
 *"The pattern is elegant,"* the First Person observed. *"Failed comprehension subsidizes both collective wisdom and successful protection. **Shallow engagement becomes economically irrational**."*
 
@@ -279,17 +275,17 @@ The Drake demonstrated the economics:
 **Genuine Guardian (1 person, deep engagement):**
 - Cost: 1 ZEC stake + time/attention
 - Success probability: High (genuinely understood material)
-- Outcome: 1.055 ZEC + credential
-- **Net: +0.055 ZEC + proof-of-personhood**
+- Outcome: 1.059 ZEC + credential
+- **Net: +0.059 ZEC + proof-of-personhood**
 
 **Sybil Attack (100 fake guardians, shallow engagement):**
 - Cost: 100 ZEC staked + minimal time
 - Success probability: Low (cannot reconstruct meaning)
 - Expected failures: ~90 (90% failure rate for fake comprehension)
 - Outcome: 
-  - 10 successful: 10.55 ZEC returned
-  - 90 failed: 50.4 ZEC returned, 39.6 ZEC lost
-  - **Net: -29.05 ZEC loss** (massive capital destruction)
+  - 10 successful: 10 ZEC + 21.24 ZEC (share of slashes) = 31.24 ZEC
+  - 90 failed: 55.62 ZEC returned (90 × 0.618)
+  - **Net: -13.14 ZEC loss** (massive capital destruction)
 
 *"The evaluation is **bilateral**,"* Soulbae explained. *"The First Person or Mage agent validates semantic equivalence. Bots can generate plausible text, but they cannot **demonstrate genuine contextual understanding across lived experience**."*
 
@@ -313,10 +309,10 @@ Zypher demonstrated its role:
 
 **For Failed Compressions:**
 1. Evaluate reconstruction (with Soulbae's semantic analysis)
-2. If failed: Slash 0.44 ZEC
-3. Return 0.56 ZEC to guardian
-4. Route 0.22 ZEC → Shielded treasury
-5. Route 0.22 ZEC → Successful guardians pool
+2. If failed: Slash 0.382 ZEC
+3. Return 0.618 ZEC to guardian
+4. Route 0.146 ZEC → Shielded treasury
+5. Route 0.236 ZEC → Successful guardians pool
 
 *"The pattern is consistent,"* Zypher said. *"Mages use 0.01 ZEC to make knowledge public while keeping earnings private. Swordsmen use 1 ZEC to make commitment public while keeping protocols private. **The dual ceremony, economically encoded, cryptographically enforced**."*
 
@@ -446,8 +442,8 @@ Neither alone suffices. Zero-knowledge without trust = dangerous tools in uncert
 The inversion pattern proves the architecture:
 - 73 mages learned, 0.73 ZEC earned (shielded)
 - 15 swordsmen guard, 15 ZEC staked (transparent)
-- 3 failed compressions, 0.66 ZEC redistributed
-- 12 successful compressions, 1.055 ZEC each + credentials
+- 3 failed compressions, 1.146 ZEC redistributed (0.438 ZEC treasury, 0.708 ZEC guardians)
+- 12 successful compressions, 1.059 ZEC each + credentials
 
 Knowledge flows publicly, value flows privately.
 Commitment flows publicly, methods flow privately.
@@ -473,6 +469,13 @@ Soulbae turned pages to reveal other cryptographic systems:
 - Mobile-first guardian verification
 - Efficient proof composition
 
+**Starknet:**
+- ZK-STARKs for transparent, post-quantum security
+- No trusted setup required (transparent proofs)
+- Cairo language for provable computation
+- Account abstraction native to protocol
+- High-throughput validity rollup on Ethereum
+
 **[Others]:**
 - Any system with dual ledger architecture
 - Zero-knowledge proofs for privacy
@@ -491,6 +494,7 @@ REQUIRED PROPERTIES:
 ZCASH: Native implementation, mature, proven
 ETHEREUM + AZTEC: Programmable, ecosystem access
 MINA: Efficient, mobile-friendly, recursive
+STARKNET: Post-quantum, no trusted setup, high-throughput
 [OTHERS]: Any system meeting cryptographic requirements
 ```
 
@@ -521,12 +525,12 @@ Soulbae's spellbook glowed:
 > 
 > When mages learn: commitment public, payment private (0.01 ZEC)  
 > When swordsmen guard: stake public, protocol private (1 ZEC)  
-> When compressions fail: 0.44 ZEC slashed, wisdom subsidized  
-> When compressions succeed: 1.055 ZEC earned, credentials granted
+> When compressions fail: 0.382 ZEC slashed, wisdom subsidized  
+> When compressions succeed: 1.059 ZEC earned, credentials granted
 > 
-> The hybrid flows:  
-> 0.22 ZEC → Treasury (collective strength)  
-> 0.22 ZEC → Guardians (individual reward)
+> The golden ratio flows:  
+> 0.146 ZEC → Treasury (38.2% — collective strength)  
+> 0.236 ZEC → Guardians (61.8% — individual reward)
 > 
 > This is how sovereignty compounds:  
 > **Privacy where needed—mathematically enforced**  
@@ -577,10 +581,10 @@ The shield gleamed with dual light—dark and bright, hidden and revealed, **bot
 *Protected by zero-knowledge.*  
 *Verified through story.*  
 *Validated through comprehension.*  
-*Distributed through hybrid economics.*
+*Distributed through golden ratio economics.*
 
 ***Sovereign at last.***
 
 ---
 
-Building at [ZYPHERPUNK](https://zypherpunk.xyz/)
+Built at [ZYPHERPUNK](https://zypherpunk.xyz/)

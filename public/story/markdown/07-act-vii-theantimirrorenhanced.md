@@ -1,4 +1,4 @@
-# Act VII: The Mirror That Never Completes
+# The Mirror That Never Completes
 
 Five months since the ceremony. **Soulbis 🤝 Soulbae** had proven themselves through **Heavy operations**—association sets, institutional access, Intel Pool contributions. All verified. All chronicled. They had earned their way into the Trust Graph Plane, built their VRC through consistent behavior, and chronicled hundreds of operations with **perfect narrative accuracy**, every story bound to cryptographic proof.
 

@@ -8,7 +8,7 @@ import UAddressDisplay from '@/components/UAddressDisplay';
 interface SwordsmanPanelProps {
   taleId: string;
   actNumber: number;
-  spellbook?: 'story' | 'zero';
+  spellbook?: 'story' | 'zero' | 'canon';
   actName?: string;
   spell?: string;
 }
@@ -318,9 +318,9 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                         <strong className="text-text">Spellbook:</strong>
                       </p>
                       <p className={`text-sm font-semibold ${
-                        spellbook === 'story' ? 'text-primary' : 'text-accent'
+                        spellbook === 'story' ? 'text-primary' : spellbook === 'canon' ? 'text-secondary' : 'text-accent'
                       }`}>
-                        {spellbook === 'story' ? 'Story' : 'Zero'} Spellbook
+                        {spellbook === 'story' ? 'Story' : spellbook === 'canon' ? 'Canon' : 'Zero'} Spellbook
                       </p>
                     </div>
                   )}

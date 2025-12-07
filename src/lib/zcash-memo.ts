@@ -11,13 +11,22 @@ export interface ZcashMemo {
 
 /**
  * Get act number from tale ID
- * Supports both story spellbook (act-i-venice) and zero spellbook (zero-tale-1)
+ * Supports story spellbook (act-i-venice), zero spellbook (zero-tale-1), and canon spellbook (canon-chapter-X or guardian)
  */
 export function getActFromTaleId(taleId: string): number | null {
   // Check for zero spellbook format: zero-tale-X
   const zeroMatch = taleId.match(/^zero-tale-(\d+)$/);
   if (zeroMatch) {
     return parseInt(zeroMatch[1], 10);
+  }
+  
+  // Check for canon spellbook format: canon-chapter-X or guardian
+  const canonMatch = taleId.match(/^canon-chapter-(\d+)$/);
+  if (canonMatch) {
+    return parseInt(canonMatch[1], 10);
+  }
+  if (taleId === 'guardian') {
+    return 12; // Guardian is chapter 12
   }
   
   // Story spellbook tale IDs
@@ -58,6 +67,28 @@ export function getSpellemojiForAct(act: number): string {
     12: "🌱→⚒️→📡→🌊→🌫️🏛️",
   };
   return spellemojiMap[act] || '';
+}
+
+/**
+ * Get spellemoji for canon spellbook chapter
+ */
+function getSpellemojiForCanonChapter(chapterNumber: number): string {
+  const canonSpellemojiMap: { [key: number]: string } = {
+    0: "📖₁(what) + 📖₂(why) → 🗡️🔮(wield)",
+    1: "🔐(Chaum) + 📜(May) + ✍️(Hughes) + ⛏️(PoW) → 🗡️₀",
+    2: "📝(Szabo) + 💰(Dai) + 🔮(prophecy) → ⛓️❓(almost)",
+    3: "🔐+📝+💰+⛏️ → ⛓️✓ → 🍕💰 → 🔓❌(keys) → 👤→🌫️",
+    4: "⛓️(money) → 💻(compute) → 🏛️(DAO) → 💰💰💰",
+    5: "🏛️→💥 → ⚖️(fork?) → ⛓️|⛓️ → 👥(revealed)",
+    6: "⛓️ → 💰(traction) | 🏛️(depth) → ❌🤝",
+    7: "👁️(watch) → 🔗(link) → ⚖️🌀(sanction) → 👤→⛓️(prison)",
+    8: "💰+🏛️ ← 🛡️⚡(ZK) → 🤝(unified)",
+    9: "📖(written) + 📄(blank) → ✍️(you) → ⏰(window)",
+    10: "📚(sources) → 🕸️(graph) → ✓(verify) → 🌱(tend)",
+    11: "📜⏳ → 🗡️₀ → ⛓️✓ → 💻 → 💔 → 👁️ → 🛡️⚡ → 📄✍️ → △",
+    12: "⚔️🛡️📜", // Guardian Application
+  };
+  return canonSpellemojiMap[chapterNumber] || '';
 }
 
 /**
@@ -110,11 +141,21 @@ export function formatZcashMemo(
   const timestamp = Date.now();
   const act = getActFromTaleId(taleId);
   
-  // Determine if this is a zero spellbook tale
+  // Determine spellbook type
   const isZeroSpellbook = taleId.startsWith('zero-tale-');
-  const spellemoji = act !== null 
-    ? (isZeroSpellbook ? getSpellemojiForZeroTale(act) : getSpellemojiForAct(act))
-    : '';
+  const isCanonSpellbook = taleId.startsWith('canon-chapter-') || taleId === 'guardian';
+  
+  // Get appropriate spellemoji
+  let spellemoji = '';
+  if (act !== null) {
+    if (isZeroSpellbook) {
+      spellemoji = getSpellemojiForZeroTale(act);
+    } else if (isCanonSpellbook) {
+      spellemoji = getSpellemojiForCanonChapter(act);
+    } else {
+      spellemoji = getSpellemojiForAct(act);
+    }
+  }
   
   return `[rpp-v1]
 [${taleId}]

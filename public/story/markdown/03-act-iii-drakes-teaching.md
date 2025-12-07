@@ -1,4 +1,4 @@
-# Act III: The Drake's Teaching—A Tale of Conditions
+# The Drake's Teaching—A Tale of Conditions
 
 **The Drake** didn't have a physical form; it existed in the **pattern-space**, in the logic that governed which complex systems could emerge 🤝 which would collapse.
 
@@ -55,9 +55,9 @@ The Drake's presence intensified:
 *"Here's what happens when Soulbis operates:*
 
 **Step 1: Soulbis performs operation**
-- Slashes cookie → generates cryptographic commitment (hash of operation: `[hash-a1baec4]`)
+- Slashes cookie → generates cryptographic commitment (hash of operation: `[hash-a1baec69]`)
 - Negotiates alignment → generates cryptographic signature (both parties signed: `[sig-d4e420]`)
-- Presents credential → generates zero-knowledge proof (evidence of verification: `[proof-g7h678]`)
+- Presents credential → generates zero-knowledge proof (evidence of verification: `[proof-g7h1337]`)
 
 **Step 2: Soulbae chronicles the operation**
 - Writes human-readable narrative (*"The swordsman slashed 73 trackers..."*)

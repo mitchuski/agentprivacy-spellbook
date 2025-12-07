@@ -1,4 +1,4 @@
-# Act 10: The Topology of Revelation 
+# The Topology of Revelation 
 
 or, how Soulbis learned that privacy is geometry 🧬
 

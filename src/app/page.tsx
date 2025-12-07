@@ -107,6 +107,12 @@ export default function LandingPage() {
                   zero
                 </a>
                 <a
+                  href="/canon"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  canon
+                </a>
+                <a
                   href="/proverbs"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >

@@ -1,4 +1,4 @@
-# Act V: Light Armour—Multi-Site Coordination
+# Light Armour—Multi-Site Coordination
 
 After two weeks of consistent focus-slashing, of alignment negotiations, of verification through focus flows and narrative chronicles, something new appeared:
 
