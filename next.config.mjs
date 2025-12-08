@@ -11,6 +11,9 @@ const nextConfig = {
   async generateBuildId() {
     return 'static-build';
   },
+  turbopack: {
+    root: process.cwd(),
+  },
 };
 
 export default nextConfig;
