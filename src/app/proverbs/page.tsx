@@ -6,7 +6,7 @@ import Link from 'next/link';
 import SwordsmanPanel from '@/components/SwordsmanPanel';
 import UAddressDisplay from '@/components/UAddressDisplay';
 import TAddressDisplay from '@/components/TAddressDisplay';
-import { getTaleIdFromAct } from '@/lib/zcash-memo';
+import { getTaleIdFromAct, getSpellemojiForAct } from '@/lib/zcash-memo';
 import { getInscriptions } from '@/lib/oracle-api';
 
 // Onchain inscription from the inscription indexer
@@ -73,6 +73,8 @@ export default function ProverbsPage() {
   const [inscriptionCountByAct, setInscriptionCountByAct] = useState<Record<number, number>>({});
   const [expandedActs, setExpandedActs] = useState<Set<number>>(new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])); // Expand all acts by default
   const [donationAct, setDonationAct] = useState<number | null>(null);
+  const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
+  const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
 
   // Fetch onchain inscriptions
   useEffect(() => {
@@ -106,6 +108,49 @@ export default function ProverbsPage() {
     });
   };
 
+  const handleCopySpell = async (emojiString: string, actNum: number) => {
+    if (emojiString) {
+      try {
+        await navigator.clipboard.writeText(emojiString);
+        setCopiedSpellIndex(actNum);
+        setTimeout(() => setCopiedSpellIndex(null), 2000);
+      } catch (err) {
+        console.error('Failed to copy spell:', err);
+      }
+    }
+  };
+
+  const getOracleProverb = (actNum: number): string => {
+    const oracleProverbs: { [key: number]: string } = {
+      1: "The swordsman who never strikes guards nothing; the mage who never casts commands nothing.",
+      2: "What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable; what both accomplish, the spellbook verifies.",
+      3: "the swordsman alone rages, mage alone dreams, action alone blinds—sovereignty demands all three to intertwine.",
+      4: "Trust begins unarmored—the swordsman and mage test small betrayals before the first person may grant the keys to more powerful treasures.",
+      5: "Solo combat sets the terms and proves the swordsman; coordinated spells prove the mage; spellbooks weave both into campaigns worthy of legend.",
+      6: "The guild admits only verified identities and authentic deeds—one impostor poisons the entire covenant.",
+      7: "One mirror observing both swordsman and mage collapses dignity into surveillance; two mirrors, each watching the other, preserve dignity through mutual witness.",
+      8: "When one holds the sword, the vault, and the pen, corruption conceals itself—divide these across swordsman and mage, and betrayal becomes impossible to hide.",
+      9: "The two-faced shield is not duplicitous but sovereign—for true power lies not in choosing privacy or transparency, but in wielding both with mathematical certainty, where comprehension proves personhood.",
+      10: "The ravens fly 🐦‍⬛. The tree dreams 🌳. The All-Father wakes △.",
+      11: "The blade that becomes the spell loses both edges.",
+      12: "The mage's spell, once spoken, becomes the village weather.",
+    };
+    return oracleProverbs[actNum] || "";
+  };
+
+  const handleCopyProverb = async (actNum: number) => {
+    const proverb = getOracleProverb(actNum);
+    if (proverb) {
+      try {
+        await navigator.clipboard.writeText(proverb);
+        setCopiedProverbIndex(actNum);
+        setTimeout(() => setCopiedProverbIndex(null), 2000);
+      } catch (err) {
+        console.error('Failed to copy proverb:', err);
+      }
+    }
+  };
+
   // Get act info for donation panel
   const donationActInfo = donationAct ? {
     actNumber: donationAct,
@@ -135,21 +180,21 @@ export default function ProverbsPage() {
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-8">
-              <Link href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
+            <div className="flex items-center gap-4 sm:gap-8 min-w-0">
+              <Link href="/" className="text-lg sm:text-xl font-bold text-text hover:text-primary transition-colors flex-shrink-0">
                 agentprivacy
               </Link>
-              <div className="flex items-center gap-6">
-                <Link href="/story" className="text-text hover:text-primary transition-colors font-medium">
+              <div className="flex items-center gap-3 sm:gap-6 overflow-x-auto">
+                <Link href="/story" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
                   story
                 </Link>
-                <Link href="/zero" className="text-text hover:text-primary transition-colors font-medium">
+                <Link href="/zero" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
                   zero
                 </Link>
-                <Link href="/proverbs" className="text-primary border-b-2 border-primary pb-1 font-medium">
+                <Link href="/proverbs" className="text-sm sm:text-base text-primary border-b-2 border-primary pb-1 font-medium whitespace-nowrap">
                   proverbs
                 </Link>
-                <Link href="/mage" className="text-text hover:text-primary transition-colors font-medium">
+                <Link href="/mage" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
                   mage
                 </Link>
               </div>
@@ -326,13 +371,15 @@ export default function ProverbsPage() {
                   const actInscriptions = inscriptions.filter(i => i.actNumber === actNum);
                   const isExpanded = expandedActs.has(actNum);
                   const hasInscriptions = actInscriptions.length > 0;
+                  // Only show spell for Act 1
+                  const showSpell = actNum === 1;
 
                   return (
                     <motion.div
                       key={`act-${actNum}`}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`p-4 rounded-lg border transition-colors ${
+                      className={`p-3 sm:p-4 rounded-lg border transition-colors overflow-hidden ${
                         hasInscriptions
                           ? 'bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/30 hover:border-primary/50'
                           : 'bg-surface/20 border-surface/30 opacity-60'
@@ -340,36 +387,84 @@ export default function ProverbsPage() {
                     >
                       {/* Act Header */}
                       <div
-                        className="flex items-center justify-between cursor-pointer"
+                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 cursor-pointer"
                         onClick={() => toggleAct(actNum)}
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 min-w-0">
                           <span className={`text-lg font-bold ${hasInscriptions ? 'text-primary' : 'text-text-muted'}`}>
                             Act {getRomanNumeral(actNum)}
                           </span>
-                          <span className="text-text-muted">•</span>
-                          <span className={`text-sm ${hasInscriptions ? 'text-text' : 'text-text-muted'}`}>
+                          <span className="hidden sm:inline text-text-muted">•</span>
+                          <span className={`text-sm ${hasInscriptions ? 'text-text' : 'text-text-muted'} truncate`}>
                             {actTitles[actNum]?.split(' / ')[0] || `Act ${actNum}`}
                           </span>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded ${
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {/* Inscribe and Proverb buttons */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCopySpell(getSpellemojiForAct(actNum), actNum);
+                            }}
+                            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/5 hover:bg-primary/10 border border-primary/20 text-primary transition-all duration-200 whitespace-nowrap"
+                            title="Copy emoji spell"
+                          >
+                            {copiedSpellIndex === actNum ? (
+                              <motion.span
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary"
+                              >
+                                cast
+                              </motion.span>
+                            ) : (
+                              "inscribe"
+                            )}
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCopyProverb(actNum);
+                            }}
+                            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/5 hover:bg-primary/10 border border-primary/20 text-primary transition-all duration-200 whitespace-nowrap"
+                            title="Copy oracle proverb"
+                          >
+                            {copiedProverbIndex === actNum ? (
+                              <motion.span
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="text-primary"
+                              >
+                                cast
+                              </motion.span>
+                            ) : (
+                              "proverb"
+                            )}
+                          </button>
+                          <span className={`px-2 py-1 text-xs font-semibold rounded whitespace-nowrap ${
                             hasInscriptions
                               ? 'bg-primary/20 text-primary border border-primary/30'
                               : 'bg-surface/30 text-text-muted border border-surface/30'
                           }`}>
                             {actInscriptions.length} inscription{actInscriptions.length !== 1 ? 's' : ''}
                           </span>
-                          <span className="text-text-muted text-sm">
+                          <span className="text-text-muted text-sm flex-shrink-0">
                             {isExpanded ? '▼' : '▶'}
                           </span>
                         </div>
                       </div>
 
-                      {/* Spell */}
-                      {spellMappings[actNum] && (
-                        <div className="mt-2 text-xs font-mono text-text-muted">
-                          {spellMappings[actNum]}
+                      {/* Emoji Spell String - Under act title, above proverb tiles */}
+                      {isExpanded && (
+                        <div className="mt-3 pt-3 border-t border-surface/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs text-text-muted font-medium">Spell:</span>
+                            <div className="flex-1 overflow-x-auto scrollbar-hide">
+                              <p className="text-sm sm:text-base text-text font-mono whitespace-nowrap min-w-max">
+                                {getSpellemojiForAct(actNum)}
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       )}
 
@@ -384,27 +479,32 @@ export default function ProverbsPage() {
                             className="overflow-hidden"
                           >
                             <div className="mt-4 pt-4 border-t border-surface/30 space-y-3">
-                              {actInscriptions.map((inscription) => (
-                                <div
-                                  key={inscription.txid}
-                                  className="p-3 bg-background/60 border border-surface/40 rounded-lg"
-                                >
-                                  <div className="flex items-start gap-3">
-                                    {inscription.emojiSpell && (
-                                      <span className="text-2xl flex-shrink-0" title="Emoji Spell">
-                                        {inscription.emojiSpell}
-                                      </span>
-                                    )}
-                                    <div className="flex-1 min-w-0">
-                                      <p className="text-text italic mb-2 leading-relaxed">
-                                        "{inscription.proverb}"
+                              {actInscriptions.map((inscription, idx) => {
+                                // Ensure we use the unique txid for each inscription
+                                // For Act 1, if txid equals refTxid, it might be incorrectly using the reference
+                                // But we'll use txid as-is since it should be unique per inscription
+                                const displayTxid = inscription.txid || inscription.refTxid;
+                                
+                                return (
+                                  <div
+                                    key={`${inscription.txid || inscription.refTxid}-${idx}-${inscription.blockHeight}`}
+                                    className="p-3 sm:p-4 bg-background/60 border border-surface/40 rounded-lg"
+                                  >
+                                    <div className="flex-1 min-w-0 overflow-hidden">
+                                      {/* Clean proverb quote - remove emoji prefix if present */}
+                                      <p className="text-sm sm:text-base text-text italic mb-3 leading-relaxed break-words">
+                                        {(() => {
+                                          const proverb = inscription.proverb || '';
+                                          // If proverb contains |, take the part after the last |
+                                          if (proverb.includes('|')) {
+                                            const parts = proverb.split('|');
+                                            const cleanQuote = parts[parts.length - 1].trim();
+                                            return `"${cleanQuote}"`;
+                                          }
+                                          return `"${proverb.trim()}"`;
+                                        })()}
                                       </p>
-                                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
-                                        {inscription.matchScore > 0 && (
-                                          <span title="Match Score">
-                                            Score: {(inscription.matchScore * 100).toFixed(0)}%
-                                          </span>
-                                        )}
+                                      <div className="flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1 text-xs text-text-muted">
                                         <span title="Block Height">
                                           Block: {inscription.blockHeight.toLocaleString()}
                                         </span>
@@ -412,20 +512,20 @@ export default function ProverbsPage() {
                                           {inscription.confirmations.toLocaleString()} conf.
                                         </span>
                                         <a
-                                          href={`https://mainnet.zcashexplorer.app/transactions/${inscription.txid}`}
+                                          href={`https://mainnet.zcashexplorer.app/transactions/${displayTxid}`}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="font-mono text-primary hover:text-primary/80 transition-colors"
-                                          title={inscription.txid}
+                                          className="font-mono text-primary hover:text-primary/80 transition-colors break-all"
+                                          title={displayTxid}
                                           onClick={(e) => e.stopPropagation()}
                                         >
-                                          {inscription.txid.substring(0, 12)}...
+                                          {displayTxid.substring(0, 12)}...
                                         </a>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              ))}
+                                );
+                              })}
                             </div>
                           </motion.div>
                         )}

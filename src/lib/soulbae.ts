@@ -208,21 +208,50 @@ export async function chatWithSoulbae(
     });
 
     // Use proxy route in development (Next.js dev server) to bypass CORS
-    // In static builds, always use direct API
+    // In static builds, we need a proxy because NEAR AI blocks CORS
     const isDevelopment = getIsDevelopment();
-    let endpoint = isDevelopment 
-      ? '/api/near-ai/chat'  // Try proxy in development first
-      : `${NEAR_API_URL}/chat/completions`;
+    
+    // Check if we have a proxy URL configured (Cloudflare Worker or backend proxy)
+    const PROXY_URL = process.env.NEXT_PUBLIC_NEAR_PROXY_URL || '';
+    
+    // Determine endpoint
+    let endpoint: string;
+    if (isDevelopment) {
+      endpoint = '/api/near-ai/chat';  // Try proxy in development first
+    } else if (PROXY_URL) {
+      endpoint = `${PROXY_URL}/v1/chat/completions`;  // Use configured proxy (Cloudflare Worker)
+    } else {
+      endpoint = `${NEAR_API_URL}/chat/completions`;  // Direct (will have CORS issues)
+      console.warn('⚠️ Using direct NEAR API - CORS will block this. Set NEXT_PUBLIC_NEAR_PROXY_URL for production.');
+    }
     
     // In development (proxy), don't send API key (handled server-side)
-    // In production, send API key in headers
-    let requestHeaders: HeadersInit = isDevelopment
-      ? { 'Content-Type': 'application/json' }
-      : headers;
+    // In production with proxy, don't send API key (handled by Worker)
+    // In production direct, send API key in headers (but CORS will block)
+    let requestHeaders: HeadersInit = (isDevelopment || PROXY_URL)
+      ? { 'Content-Type': 'application/json' }  // Proxy handles auth
+      : headers;  // Direct call needs auth
+    
+    // Log for debugging
+    if (!isDevelopment) {
+      console.log('Using NEAR API endpoint:', endpoint);
+      console.log('API Key present:', !!NEAR_API_KEY);
+      console.log('Proxy URL configured:', !!PROXY_URL);
+      if (!NEAR_API_KEY && !PROXY_URL) {
+        console.error('❌ NEAR_API_KEY is missing! Make sure NEXT_PUBLIC_NEAR_API_KEY is set in Cloudflare Pages environment variables.');
+      }
+      if (!PROXY_URL) {
+        console.error('❌ CORS will block direct API calls. Set NEXT_PUBLIC_NEAR_PROXY_URL to use a proxy (Cloudflare Worker).');
+      }
+    }
 
     // Try the request - if proxy fails (404), fall back to direct API
     let response: Response;
     try {
+      // Add timeout for production requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      
       response = await fetch(endpoint, {
         method: 'POST',
         headers: requestHeaders,
@@ -235,7 +264,10 @@ export async function chatWithSoulbae(
         }),
         mode: 'cors',
         credentials: 'omit',
+        signal: controller.signal,
       });
+      
+      clearTimeout(timeoutId);
 
       // If proxy route doesn't exist (404), fall back to direct API
       if (response.status === 404 && isDevelopment && endpoint === '/api/near-ai/chat') {

@@ -35,11 +35,9 @@ build-output.log
 *.tsbuildinfo
 next-env.d.ts
 
-# zero spellbook (excluded from git, except first page)
-/public/zero/
-!/public/zero/markdown/00-zeromage-firstpage.md
-/src/app/zero/
-!/src/app/zero/page.tsx
+# zero spellbook - now fully released with all tales
+# /public/zero/ - removed exclusion, all files now tracked
+# /src/app/zero/ - removed exclusion, all files now tracked
 
 # canon spellbook (excluded from git)
 /public/canon/
