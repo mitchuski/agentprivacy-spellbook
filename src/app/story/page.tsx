@@ -111,7 +111,7 @@ function ActAudioPlayer({ act }: { act: number }) {
 
     // Create audio element with src set immediately
     const audioElement = new Audio();
-    audioElement.crossOrigin = 'anonymous'; // Required for CORS with R2 bucket
+    
     audioElement.preload = 'auto';
     audioElement.src = audioSrc;
     
