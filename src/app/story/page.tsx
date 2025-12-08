@@ -111,9 +111,9 @@ function ActAudioPlayer({ act }: { act: number }) {
 
     // Create audio element with src set immediately
     const audioElement = new Audio();
-    audioElement.src = audioSrc;
-    audioElement.preload = 'auto';
     audioElement.crossOrigin = 'anonymous'; // Required for CORS with R2 bucket
+    audioElement.preload = 'auto';
+    audioElement.src = audioSrc;
     
     const handleError = (e: Event) => {
       if (process.env.NODE_ENV === 'development') {
@@ -1116,4 +1116,5 @@ export default function StoryPage() {
     </div>
   );
 }
+
 
