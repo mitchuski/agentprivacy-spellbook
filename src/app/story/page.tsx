@@ -44,21 +44,24 @@ const getActVideo = (act: number): string | null => {
 };
 
 const getActAudio = (act: number): string | null => {
+  // R2 bucket base URL for audio files
+  const R2_BASE_URL = 'https://voice.agentprivacy.ai';
+  
   const audioMap: { [key: number]: string } = {
-    0: '/audio_soulbae/00_firstpage.mp3', // First page
-    1: '/audio_soulbae/01_Venice, 1494—The Drake\'s First Whisper.mp3', // Act I: Venice
-    2: '/audio_soulbae/02_The Dual Ceremony—Sovereignty Divided to Be Extended.mp3', // Act II: Dual Ceremony
-    3: '/audio_soulbae/03_The Drake\'s Teaching—A Tale of Conditions.mp3', // Act III: Drake's Teaching
-    4: '/audio_soulbae/04_The Blade Alone—First Adventures.mp3', // Act IV: Blade Alone
-    5: '/audio_soulbae/05_Light Armour—Multi-Site Coordination.mp3', // Act V: Light Armour
-    6: '/audio_soulbae/06_The Trust Graph Plane—Where Agents Gather.mp3', // Act VI: Trust Graph Plane
-    7: '/audio_soulbae/07_The Mirror That Never Completes.mp3', // Act VII: Mirror Enhanced
-    8: '/audio_soulbae/08_The Ancient Rule of Two Rediscovered.mp3', // Act VIII: Ancient Rule
-    9: '/audio_soulbae/09_The Zcash Shield-Forging Cryptographic Privacy.mp3', // Act IX: Zcash Shield
-    10: '/audio_soulbae/10_The Topology of Revelation.mp3', // Act X: Topology of Revelation
-    11: '/audio_soulbae/11_Balanced Spiral of Sovereignty.mp3', // Act XI: Balanced Spiral
-    12: '/audio_soulbae/12_Forgetting_Proverbiogenesis.mp3', // Act XII: The Forgetting
-    14: '/audio_soulbae/13_lastpage.mp3', // Last page
+    0: `${R2_BASE_URL}/00_firstpage.mp3`, // First page
+    1: `${R2_BASE_URL}/01_Venice_1494_The_Drakes_First_Whisper.mp3`, // Act I: Venice
+    2: `${R2_BASE_URL}/02_The_Dual_Ceremony_Sovereignty_Divided_to_Be_Extended.mp3`, // Act II: Dual Ceremony
+    3: `${R2_BASE_URL}/03_The_Drakes_Teaching_A_Tale_of_Conditions.mp3`, // Act III: Drake's Teaching
+    4: `${R2_BASE_URL}/04_The_Blade_Alone_First_Adventures.mp3`, // Act IV: Blade Alone
+    5: `${R2_BASE_URL}/05_Light_Armour_Multi_Site_Coordination.mp3`, // Act V: Light Armour
+    6: `${R2_BASE_URL}/06_The_Trust_Graph_Plane_Where_Agents_Gather.mp3`, // Act VI: Trust Graph Plane
+    7: `${R2_BASE_URL}/07_The_Mirror_That_Never_Completes.mp3`, // Act VII: Mirror Enhanced
+    8: `${R2_BASE_URL}/08_The_Ancient_Rule_of_Two_Rediscovered.mp3`, // Act VIII: Ancient Rule
+    9: `${R2_BASE_URL}/09_The_Zcash_Shield_Forging_Cryptographic_Privacy.mp3`, // Act IX: Zcash Shield
+    10: `${R2_BASE_URL}/10_The_Topology_of_Revelation.mp3`, // Act X: Topology of Revelation
+    11: `${R2_BASE_URL}/11_Balanced_Spiral_of_Sovereignty.mp3`, // Act XI: Balanced Spiral
+    12: `${R2_BASE_URL}/12_Forgetting_Proverbiogenesis.mp3`, // Act XII: The Forgetting
+    14: `${R2_BASE_URL}/13_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -110,6 +113,7 @@ function ActAudioPlayer({ act }: { act: number }) {
     const audioElement = new Audio();
     audioElement.src = audioSrc;
     audioElement.preload = 'auto';
+    audioElement.crossOrigin = 'anonymous'; // Required for CORS with R2 bucket
     
     const handleError = (e: Event) => {
       if (process.env.NODE_ENV === 'development') {
