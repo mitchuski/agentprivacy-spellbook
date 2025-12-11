@@ -91,7 +91,7 @@ The Oracle Swordsman now verifies proverbs from shielded transactions against th
 
 2. **4.0.0-Canonical Format Support**
    - Handles nested spellbook structure:
-     - `spellbooks.story.acts` (11 acts)
+     - `spellbooks.story.acts` (13 acts)
      - `spellbooks.zero.parts[].tales[]` (30 tales)
    - Extracts proverbs from both structures
    - Normalizes into flat `acts` array for verification

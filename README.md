@@ -218,7 +218,7 @@ agentprivacy_zypher/
 │   └── inscribe-act*.js          # Inscription scripts
 │
 ├── public/
-│   ├── story/markdown/           # 12 Acts content
+│   ├── story/markdown/           # 13 Acts content
 │   └── zero/markdown/            # 30 Tales content
 │
 └── spellbook/                    # Canonical proverbs (JSON)
@@ -329,7 +329,7 @@ This implementation aligns with the 0xagentprivacy living documentation:
 
 - **Version**: 4.0.0-canonical
 - **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
-- **Content**: 12 Acts + 30 Tales
+- **Content**: 13 Acts + 30 Tales
 
 ### Collaborators
 

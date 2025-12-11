@@ -82,7 +82,7 @@ User clicks "Talk to Soulbae" in SwordsmanPanel
   ↓
 Opens /mage (or /mage?tale_id=act-i-venice) in new window
   ↓
-If no tale selected: Shows tale selection UI (11 story acts + 30 zero tales)
+If no tale selected: Shows tale selection UI (13 story acts + 30 zero tales)
   ↓
 User selects a tale (or one is pre-selected)
   ↓

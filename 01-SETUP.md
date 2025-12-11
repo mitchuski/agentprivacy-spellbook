@@ -503,7 +503,7 @@ The spellbook is already created and uploaded to IPFS:
 - **Location**: `spellbook/spellbook-acts.json`
 
 The spellbook contains:
-- **Story Spellbook**: 11 acts teaching privacy and delegation architecture
+- **Story Spellbook**: 13 acts teaching privacy and delegation architecture
 - **Zero Knowledge Spellbook**: Additional privacy concepts
 - **Relationship Proverb Protocol**: Integration for AI verification
 

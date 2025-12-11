@@ -175,7 +175,7 @@ Viewing keys see, spending keys act, neither alone can corrupt.
 | Component | Status | Notes |
 |-----------|--------|-------|
 | Landing Page (`/`) | ✅ Production | Modern UI |
-| Story Reader (`/story`) | ✅ Production | 12 acts + 30 tales |
+| Story Reader (`/story`) | ✅ Production | 13 acts + 30 tales |
 | Mage Chat (`/mage`) | ✅ Production | NEAR Cloud AI |
 | Proverbs Gallery (`/proverbs`) | ✅ Production | Onchain VRC viewer |
 | Signal Flow | ✅ Production | 5-step guided process |
