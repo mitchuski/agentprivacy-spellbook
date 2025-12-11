@@ -43,6 +43,7 @@ export function getActFromTaleId(taleId: string): number | null {
     'topology-of-revelation': 10,
     'act-xi-balanced-spiral-of-sovereignty': 11,
     'act-xii-the-forgetting': 12,
+    'act-xiii-book-of-promises': 13,
   };
   return taleMap[taleId] || null;
 }
@@ -65,6 +66,7 @@ export function getSpellemojiForAct(act: number): string {
     10: "🌳 ⊥ 🐦‍⬛🧠 → 🐦‍⬛💭 → △{🌳, 🐦‍⬛💭, 🐦‍⬛🧠}",
     11: "⚔️ ➗ 📖 = 🌀",
     12: "🌱→⚒️→📡→🌊→🌫️🏛️",
+    13: "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
   };
   return spellemojiMap[act] || '';
 }
@@ -240,6 +242,7 @@ export function getTaleIdFromAct(act: number): string {
     10: 'topology-of-revelation',
     11: 'act-xi-balanced-spiral-of-sovereignty',
     12: 'act-xii-the-forgetting',
+    13: 'act-xiii-book-of-promises',
   };
   return taleMap[act] || `act-${act}`;
 }

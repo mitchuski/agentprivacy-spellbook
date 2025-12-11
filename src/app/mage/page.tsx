@@ -887,7 +887,7 @@ What brings you my spellbook?`,
                     <span>Story Spellbook</span>
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((act) => {
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((act) => {
                       const taleId = getTaleIdFromAct(act);
                       const actTitles: { [key: number]: string } = {
                         1: 'Act I: Venice',
@@ -901,6 +901,8 @@ What brings you my spellbook?`,
                         9: 'Act IX: Zcash Shield',
                         10: 'Act X: Topology of Revelation',
                         11: 'Act XI: Balanced Spiral of Sovereignty',
+                        12: 'Act XII: The Forgetting',
+                        13: 'Act XIII: The Book of Promises',
                       };
                       return (
                         <button

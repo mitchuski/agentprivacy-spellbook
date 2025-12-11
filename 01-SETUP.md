@@ -244,7 +244,7 @@ NEAR_MODEL=gpt oss 120b
 # ============================================
 PINATA_JWT=your_pinata_jwt_here
 PINATA_GATEWAY=https://your-gateway.mypinata.cloud
-SPELLBOOK_CID=bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq  # Current: v4.0.0-canonical
+SPELLBOOK_CID=bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4  # Current: v4.3.0-canonical
 
 # ============================================
 # Zcash Configuration
@@ -497,8 +497,8 @@ curl -X POST https://faucet.zecpages.com/api/claim \
 ### Current Spellbook
 
 The spellbook is already created and uploaded to IPFS:
-- **Version**: 4.0.0-canonical
-- **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
+- **Version**: 4.3.0-canonical
+- **IPFS CID**: `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
 - **Description**: Complete Spellbook - Canonical Edition combining First Person Spellbook and Zero Knowledge Spellbook with Relationship Proverb Protocol inscriptions
 - **Location**: `spellbook/spellbook-acts.json`
 
@@ -511,7 +511,7 @@ To update the spellbook, edit `spellbook/spellbook-acts.json` and re-upload to P
 
 ### Upload to IPFS
 
-**Current Status**: Spellbook is already uploaded with CID `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
+**Current Status**: Spellbook is already uploaded with CID `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
 
 **To Update Spellbook**:
 
@@ -559,10 +559,10 @@ curl -X POST https://api.pinata.cloud/pinning/pinFileToIPFS \
 
 ```bash
 # Test retrieval (current spellbook)
-curl https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq
+curl https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
 
 # Or use your gateway:
-curl https://YOUR_GATEWAY.mypinata.cloud/ipfs/bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq
+curl https://YOUR_GATEWAY.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
 
 # Should return your JSON file with version 4.0.0-canonical
 ```
