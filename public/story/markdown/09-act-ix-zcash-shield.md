@@ -30,7 +30,7 @@ Soulbae's pages began filling with symbols—circuits, constraints, polynomials 
 A demonstration manifested in the air:
 
 **Traditional Proof:**
-- *"I have 100 BTC"* → Shows wallet with 100 ZEC
+- *"I have 100 BTC"* → Shows wallet with 100 BTC
 - *"I'm sending 10 BTC"* → Reveals amount: 10
 - *"To this address"* → Exposes recipient
 - **Everything disclosed. Nothing private.**
