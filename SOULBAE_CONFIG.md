@@ -21,7 +21,7 @@ Soulbae runs in a Trusted Execution Environment (AWS Nitro) and is trained on th
 ✅ **Hardware-attested privacy** - AWS Nitro TEE  
 ✅ **No data persistence** - Conversations never stored  
 ✅ **Information bounds** - Never sees amounts, wallets, or timing  
-✅ **RAG-trained** - Understands all 30 spellbook tales  
+✅ **RAG-trained** - Understands Story Spellbook (13 acts) and Zero Knowledge Spellbook (30 tales)  
 ✅ **Proverb compression** - Helps create 512-byte inscriptions  
 ✅ **RPP format** - Provides proverbs in `[RPP] proverb: '...'` or `[RPP] proverb: "..."` format (supports both quote styles)
 
@@ -301,7 +301,7 @@ deployment:
 
 ### Key Training Elements
 
-**Tale Content:** Each of 30 tales fully embedded
+**Tale Content:** Story Spellbook (13 acts) and Zero Knowledge Spellbook (30 tales) fully embedded
 - Story narrative
 - Core principles
 - Key metaphors
@@ -632,7 +632,7 @@ Before deploying Soulbae:
 - [ ] NEAR account created: `soulbae.YOUR_ACCOUNT.near`
 - [ ] AWS Nitro TEE configured
 - [ ] `shade-agent-config.yml` edited with your account
-- [ ] `soulbae-character.md` includes all 30 tales
+- [ ] `soulbae-character.md` includes Story Spellbook (13 acts) and Zero Knowledge Spellbook (30 tales)
 - [ ] `spellbook-rag.json` embeddings generated
 - [ ] Domain DNS configured: `mage.agentprivacy.ai`
 - [ ] SSL certificate active
