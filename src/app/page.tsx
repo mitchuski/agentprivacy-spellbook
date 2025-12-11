@@ -234,12 +234,12 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="card bg-secondary/10 border-secondary/30"
+              className="card bg-accent/10 border-accent/30"
             >
-              <div className="text-4xl mb-4">🧙‍♂️</div>
-              <h3 className="text-xl font-semibold text-text mb-3">Mage Agent</h3>
+              <div className="text-4xl mb-4">🤝</div>
+              <h3 className="text-xl font-semibold text-text mb-3">MyTerms, a promise</h3>
               <p className="text-text-muted">
-                Knowledge and information privacy agent for managing storage, identity, confidential compute, ZK credential composition.
+                Cookie slashing and privacy negotiation. Maintain sovereignty over your data.
               </p>
             </motion.div>
 
@@ -248,12 +248,12 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="card bg-accent/10 border-accent/30"
+              className="card bg-secondary/10 border-secondary/30"
             >
-              <div className="text-4xl mb-4">🤝</div>
-              <h3 className="text-xl font-semibold text-text mb-3">MyTerms</h3>
+              <div className="text-4xl mb-4">🧙‍♂️</div>
+              <h3 className="text-xl font-semibold text-text mb-3">Mage Agent</h3>
               <p className="text-text-muted">
-                Cookie slashing and privacy negotiation. Maintain sovereignty over your data.
+                Knowledge and information privacy agent for managing storage, identity, confidential compute, ZK credential composition.
               </p>
             </motion.div>
           </div>
