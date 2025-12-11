@@ -44,7 +44,7 @@ This spellbook is a living document—part technical manual, part narrative fict
 
 **Three Ways to Read:**
 
-1. **Narrative Journey**: Read the Story Spellbook (12 Acts) sequentially to follow Soulbis (Swordsman ⚔️) and Soulbae (Mage 🧙‍♂️) through their story
+1. **Narrative Journey**: Read the Story Spellbook (13 Acts) sequentially to follow Soulbis (Swordsman ⚔️) and Soulbae (Mage 🧙‍♂️) through their story
 2. **Technical Reference**: Study the Zero Knowledge Spellbook (30 Tales) for cryptographic foundations and proof systems
 3. **Protocol Learning**: Study the RPP embedded throughout to understand how knowledge protects itself
 
@@ -156,9 +156,9 @@ The Relationship Proverb Protocol operates through three stages:
 
 ---
 
-# Part II: The Story Spellbook — Acts 1-12
+# Part II: The Story Spellbook — Acts 1-13
 
-*The journey from ceremony to sovereignty — twelve acts teaching the architecture of privacy and delegation*
+*The journey from ceremony to sovereignty — thirteen acts teaching the architecture of privacy and delegation*
 
 **Opening Spell:** `😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌`
 
@@ -1194,7 +1194,7 @@ The following JSON represents the complete canonical encoding of both spellbooks
   "spellbooks": {
     "story": {
       "name": "Story Spellbook",
-      "description": "The journey from ceremony to sovereignty - eleven acts teaching the architecture of privacy and delegation",
+      "description": "The journey from ceremony to sovereignty - thirteen acts teaching the architecture of privacy and delegation",
       "opening": {
         "spell": "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
         "proverb": "just another swordsman ⚔️🤝🧙‍♂️ just another mage"

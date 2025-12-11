@@ -30,7 +30,7 @@
 │   │   └── Signals, ceremonies, trust tiers
 │   │
 │   ├── spellbook_v4_0_1_canonical.md ────── Narrative framework
-│   │   └── 12 Acts + 30 Tales, symbolic system
+│   │   └── 13 Acts + 30 Tales, symbolic system
 │   │
 │   ├── VISUAL_ARCHITECTURE_GUIDE_v1_1.md ── Diagrams & flows
 │   │   └── Quick visual reference
