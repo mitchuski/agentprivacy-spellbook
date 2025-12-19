@@ -834,6 +834,12 @@ What brings you my spellbook?`,
                   canon
                 </a>
                 <a
+                  href="/society"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
                   href="/proverbs"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >

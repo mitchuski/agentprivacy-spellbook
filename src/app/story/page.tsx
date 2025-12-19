@@ -768,6 +768,12 @@ export default function StoryPage() {
                   canon
                 </a>
                 <a
+                  href="/society"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
                   href="/proverbs"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >

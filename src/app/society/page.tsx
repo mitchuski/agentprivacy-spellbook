@@ -7,114 +7,126 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SwordsmanPanel from '@/components/SwordsmanPanel';
 
-// Chapter metadata from JSON
+// Chapter metadata with spells and proverbs
 const chapterData: { [key: number]: { title: string; spell: string; proverb: string } } = {
-  0: { 
-    title: "The Privacymage's Preface / Why This Canon Exists", 
-    spell: "📖₁(what) + 📖₂(why) → 🗡️🔮(wield)",
-    proverb: "The swordsman who knows not who forged the blade fights blind; the mage who knows not who wrote the grimoire casts hollow."
+  1: {
+    title: "The Peace That Became a Prison",
+    spell: "👑⛓️(1648) → 💣⚖️(44%) → ⚔️❓(tradeoff) → 📜(archive) → 🐍(corrupt) → ⚖️(divide) → 🌱(seeds) → 🕯️(warning)",
+    proverb: "The Peace that ended one war forged the chains for countless more—yet chains can be unforged by those who understand the metal."
   },
-  1: { 
-    title: "The Cypherpunk Whispers / Foundational Runes (1983-1997)", 
-    spell: "🔐(Chaum) + 📜(May) + ✍️(Hughes) + ⛏️(PoW) → 🗡️₀",
-    proverb: "Privacy through mathematics, not through permission—this was the first rune, and it remains the last defense."
+  2: {
+    title: "The Rusted Crowns",
+    spell: "🕯️(aftermath) → 🏛️⏳(before) → 💸💀(775) → 🌋(cambrian) → 🕸️👔(meta) → ❌(still-central)",
+    proverb: "The crown rusts whether worn or not—the question is what grows in its place."
   },
-  2: { 
-    title: "The Early Incantations / Runes Before Synthesis (1997-2007)", 
-    spell: "📝(Szabo) + 💰(Dai) + 🔮(prophecy) → ⛓️❓(almost)",
-    proverb: "The mages who came before did not fail—they inscribed the runes we still use today. The synthesis stands on their shoulders."
+  3: {
+    title: "The Cambrian Garden",
+    spell: "🏴‍☠️(republic) → 🌲✊(revolt) → 👁️🏠(watch) → 🏘️(shards) → 💔(still-central) → 🔗(blockchain)",
+    proverb: "A thousand small tyrants are no better than one large one—unless the architecture itself changes."
   },
-  3: { 
-    title: "The Synthesis / When Protest Met Protocol (2008-2014)", 
-    spell: "🔐+📝+💰+⛏️ → ⛓️✓ → 🍕💰 → 🔓❌(keys) → 👤→🌫️",
-    proverb: "The synthesis united protest with protocol, forging decentralized consensus at last. But privacy remained as pseudonym rather than proof—the watchers were patient."
+  4: {
+    title: "The Cypherpunk Prophecies",
+    spell: "📜🏴(may) → ✍️🔐(hughes) → 💻🔓(hack) → 🔓📢(leak) → 🔥🌍(spring) → 🌐🏛️(state)",
+    proverb: "Cypherpunks write code. The spell that cannot be uncast, the rune that cannot be unwritten."
   },
-  4: { 
-    title: "The World Computer / From Protest to Statecraft (2014-2016)", 
-    spell: "⛓️(money) → 💻(compute) → 🏛️(DAO) → 💰💰💰",
-    proverb: "To build institutions on code without constitutional wisdom is to forge armor before learning the blade—protection without boundaries, power without constraint."
+  5: {
+    title: "The Drake's Deeper Teachings",
+    spell: "🧮📜(leibniz) → 🏛️⚖️(tabula) → 📋💀(fragile) → 💰🔥(pablo) → ⚔️❓(byzantine) → 👤🌫️(satoshi) → ✓",
+    proverb: "You do not have to make attacks impossible—you just have to make them cost-ineffective."
   },
-  5: { 
-    title: "The First Fracture / When Code Met Social Consensus (2016)", 
-    spell: "🏛️→💥 → ⚖️(fork?) → ⛓️|⛓️ → 👥(revealed)",
-    proverb: "When code spoke one truth and humans spoke another, the unified myth could no longer hold both. The fork was not betrayal—it was the discovery that social layers were always there, invisible, load-bearing."
+  6: {
+    title: "The Arsenal and the Grimoire",
+    spell: "🧮(1666) → 📝⚡(smart) → 🔮(oracle) → 🏛️🔗(dao) → 🌱(regen) → 🏘️(apply)",
+    proverb: "The contract that executes itself cannot betray—this is the foundation of trustless trust."
   },
-  6: { 
-    title: "The Great Schism / Two Canons Diverge (2016-2022)", 
-    spell: "⛓️ → 💰(traction) | 🏛️(depth) → ❌🤝",
-    proverb: "Two canons diverged in the pattern-space, each pursuing half of sovereignty, neither grasping the whole. The financial canon had traction without depth. The social canon had depth without ground."
+  7: {
+    title: "The Corruption That Crypto Cures",
+    spell: "💰👔(dimon) → 📁🔓(fincen) → 📋❌(99.95%) → 🌍💸(victims) → 💻🪙(solution) → 🔍(transparent)",
+    proverb: "The banker who testifies against crypto has paid $39 billion in fines—follow the money, and you'll find it leads to his door, not ours."
   },
-  7: { 
-    title: "The Surveillance Truth / When The Watchers Learned to Read (2020-2025)", 
-    spell: "👁️(watch) → 🔗(link) → ⚖️🌀(sanction) → 👤→⛓️(prison)",
-    proverb: "The public ledger was mistaken for privacy because the watchers hadn't yet arrived. When they came with graph analysis and subpoenas, pseudonymity revealed itself as a veil, not a wall."
+  8: {
+    title: "The Cyberstate Question",
+    spell: "🤠(1996) → 📊(balaji) → 🌍(landless) → 🎩(recognition) → ⚠️(nation) → 🔗(community)",
+    proverb: "You don't need land to have a state—you need only wealth, coordination, and the will to protect your citizens wherever they stand."
   },
-  8: { 
-    title: "The Missing Primitive / Why Privacy Unifies Both Canons", 
-    spell: "💰+🏛️ ← 🛡️⚡(ZK) → 🤝(unified)",
-    proverb: "The blade and the spell were always one weapon, separated by a missing rune. Privacy is not a feature to add—it is the foundation that makes both canons whole."
+  9: {
+    title: "Exit, Exile, and Access",
+    spell: "🚶(exit) → 💔(exile) → 🚪(access) → 📚(arendt) → 🔗(friction) → 🌅(landing)",
+    proverb: "Rights only exist in the context of community—outside, you are howling at the moon."
   },
-  9: { 
-    title: "The Open Canon / The Chapters Yet to Be Written", 
-    spell: "📖(written) + 📄(blank) → ✍️(you) → ⏰(window)",
-    proverb: "The canon is not closed—it is open, awaiting completion by those who build. Past chapters are written. Crucial chapters remain blank. The pen is in your hand."
+  10: {
+    title: "Rethinking Sovereignty",
+    spell: "🧮(leibniz) → 👑(overlap) → 🏰(neomedieval) → 🎮(economy) → 🏠(property) → 🌍(global)",
+    proverb: "Sovereignty was never one thing—Leibniz knew this, the medievals knew this, and now we must remember what Hobbes made us forget."
   },
-  10: { 
-    title: "The Timeline Archive / Sources as Trust Graph Infrastructure", 
-    spell: "📚(sources) → 🕸️(graph) → ✓(verify) → 🌱(tend)",
-    proverb: "The archive is not a cemetery of facts but a living garden of trust—each source a node, each citation a connection, each verification an act of tending. Who tends the garden shapes what grows."
+  11: {
+    title: "Rights and Responsibilities",
+    spell: "📜(1789) → ⚖️(jure) → 💪(facto) → 🏛️(community) → 📋(responsibilities) → 🔗(decentralized)",
+    proverb: "Rights that cannot be exercised are howling at the moon—communities exist to make de jure rights into de facto realities."
   },
-  11: { 
-    title: "The Privacymage's Reflection", 
-    spell: "📜⏳ → 🗡️₀ → ⛓️✓ → 💻 → 💔 → 👁️ → 🛡️⚡ → 📄✍️ → △",
-    proverb: "The story isn't over. The canon is open. The race is on. Build."
+  12: {
+    title: "How Communities Collaborate",
+    spell: "📝(relation) → 📜(treaty) → 📋(record) → 🤖(oracle) → ☂️(umbrella) → 🤝(resolve)",
+    proverb: "Even when two communities trade insults, they have already formed a community—for Wittgenstein's lion could not insult you if he tried."
+  },
+  13: {
+    title: "When Communities Conflict",
+    spell: "🧠(psyop) → 🕸️(complex) → 💻(softwar) → ⚔️(kinetic) → 📉(stress) → 👮(police)",
+    proverb: "You cannot kill a network by cutting off its head—you must stress the system itself, and even then, the network may heal faster than you can wound it."
+  },
+  14: {
+    title: "Deeper Dive Technology",
+    spell: "📀(erasure) → 🔐(zk) → 🛠️(repair) → 📡(waku) → 💰(crypto) → 🏛️(nomos)",
+    proverb: "There is no single correct path to human flourishing—there are many paths, though we believe they all run through some form of decentralized blockchain technology."
+  },
+  15: {
+    title: "Conceptual Limits",
+    spell: "💀(hack) → ⚡(fork) → 🏛️(central) → 👁️(oracle) → 🔐(secret) → 🚪(exit)",
+    proverb: "Blockchains do not offer us a trustless system but rather a reassignment of trust—from centralized authorities to a large network of individuals who continue to do the right thing."
+  },
+  16: {
+    title: "Are Communities Inevitable",
+    spell: "🍷(banquet) → ✨(vibe) → 🦄(uniswap) → 🔴(dot) → 💻(code) → 🌍(here)",
+    proverb: "When change finally came, it seemed so obvious that it was almost as if the new order already existed—and perhaps, in a way, it already did."
+  },
+  17: {
+    title: "Values and the Technology Stack",
+    spell: "👤(human) → 📊(level-1) → 📊(level-2) → 🧭(values) → ⚖️(aligned) → 🌅(beyond)",
+    proverb: "We have nothing to lose but the tyranny of centralized governance, its corruption, and all of its barbed wire fences."
   },
 };
 
-const getChapterVideo = (chapter: number): string | null => {
-  const videoMap: { [key: number]: string } = {
-    1: '/assets/chapter1_cypherpunkwhispers_canon.mp4', // Chapter 1: The Cypherpunk Whispers
-    2: '/assets/chapter2_earlyincantations_canon.mp4', // Chapter 2: The Early Incantations
-    3: '/assets/chapter3_thesynthesis_canon.mp4', // Chapter 3: The Synthesis
-    4: '/assets/chapter4_worldcomputer_canon.mp4', // Chapter 4: The World Computer
-    5: '/assets/chapter5_firstfracture_canon.mp4', // Chapter 5: The First Fracture
-    6: '/assets/chapter6_greatschism_canon.mp4', // Chapter 6: The Great Schism
-    7: '/assets/chapter7_surveillancetruth_canon.mp4', // Chapter 7: The Surveillance Truth
-    8: '/assets/chapter8_missingprimitive_canon.mp4', // Chapter 8: The Missing Primitive
-    9: '/assets/chapter9_opencanon_canon.mp4', // Chapter 9: The Open Canon
-    10: '/assets/chapter10_timelinearchive_canon.mp4', // Chapter 10: The Timeline Archive
+const getChapterFilename = (chapter: number): string => {
+  const filenames: { [key: number]: string } = {
+    0: 'Parallel_Society_Spellbook_First_Page',
+    1: 'Parallel_Society_Chapter_01_The_Peace_That_Became_A_Prison',
+    2: 'Parallel_Society_Chapter_02_The_Rusted_Crowns',
+    3: 'Parallel_Society_Chapter_03_The_Cambrian_Garden',
+    4: 'Parallel_Society_Chapter_04_The_Cypherpunk_Prophecies',
+    5: 'Parallel_Society_Chapter_05_The_Drakes_Deeper_Teachings',
+    6: 'Parallel_Society_Chapter_06_The_Arsenal_and_the_Grimoire',
+    7: 'Parallel_Society_Chapter_07_The_Corruption_That_Crypto_Cures',
+    8: 'Parallel_Society_Chapter_08_The_Cyberstate_Question',
+    9: 'Parallel_Society_Chapter_09_Exit_Exile_and_Access',
+    10: 'Parallel_Society_Chapter_10_Rethinking_Sovereignty',
+    11: 'Parallel_Society_Chapter_11_Rights_and_Responsibilities',
+    12: 'Parallel_Society_Chapter_12_How_Communities_Collaborate',
+    13: 'Parallel_Society_Chapter_13_When_Communities_Conflict',
+    14: 'Parallel_Society_Chapter_14_Deeper_Dive_Technology',
+    15: 'Parallel_Society_Chapter_15_Conceptual_Limits',
+    16: 'Parallel_Society_Chapter_16_Are_Communities_Inevitable - Copy',
+    17: 'Parallel_Society_Chapter_17_Values_Technology_Stack',
+    18: 'Parallel_Society_Spellbook_Last_Page',
   };
-  return videoMap[chapter] || null;
+  return filenames[chapter] || '';
 };
 
-function ChapterImage({ chapter }: { chapter: number }) {
-  const videoSrc = getChapterVideo(chapter);
-  const [hasError, setHasError] = useState(false);
-
-  useEffect(() => {
-    // Reset when chapter changes
-    setHasError(false);
-  }, [chapter]);
-
-  if (!videoSrc || hasError) {
-    return null; // Don't show anything if no video exists
-  }
-
-  return (
-    <div className="relative w-full rounded-lg overflow-hidden border border-surface/50 bg-background/50 mb-6">
-      <video
-        key={chapter}
-        src={videoSrc}
-        className="w-full h-auto object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-        onError={() => setHasError(true)}
-      />
-    </div>
-  );
-}
+const getChapterName = (chapter: number): string => {
+  if (chapter === 0) return 'firstpage';
+  if (chapter === 18) return 'lastpage';
+  if (chapter === 19) return 'spells';
+  return `chapter ${chapter}`;
+};
 
 function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (chapterNumber: number) => void }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
@@ -149,7 +161,7 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       {inscriptions.map((inscription, index) => (
         <div key={inscription.number} className="border border-surface/50 rounded-lg p-4 bg-background/30">
           <h3 className="text-lg font-semibold text-text mb-2">
-            {inscription.number === 0 ? 'firstpage' : inscription.number === 11 ? 'lastpage' : `chapter ${inscription.number}`}
+            chapter {inscription.number}
           </h3>
           <div className="mb-3">
             <p className="text-2xl mb-2 whitespace-pre-line font-mono">{inscription.emojis}</p>
@@ -188,7 +200,7 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
                 "proverb"
               )}
             </button>
-            {onProtect && inscription.number !== undefined && inscription.number !== null && inscription.number > 0 && inscription.number < 11 ? (
+            {onProtect && inscription.number !== undefined && inscription.number !== null && inscription.number >= 1 && inscription.number <= 17 ? (
               <button
                 onClick={() => onProtect(inscription.number!)}
                 className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
@@ -205,28 +217,8 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
   );
 }
 
-const getChapterFilename = (chapter: number): string => {
-  const filenames: { [key: number]: string } = {
-    0: '00-chapter-zero-privacymage-preface',
-    1: '01-chapter-one-cypherpunk-whispers',
-    2: '02-chapter-two-early-incantations',
-    3: '03-chapter-three-the-synthesis',
-    4: '04-chapter-four-world-computer',
-    5: '05-chapter-five-first-fracture',
-    6: '06-chapter-six-great-schism',
-    7: '07-chapter-seven-surveillance-truth',
-    8: '08-chapter-eight-missing-primitive',
-    9: '09-chapter-nine-open-canon',
-    10: '10-chapter-ten-timeline-archive',
-    11: '11-chapter-last-privacymage-reflection',
-    12: '12-guardian_application_canon_privacymage',
-    13: 'inscriptions',
-  };
-  return filenames[chapter] || '';
-};
-
-export default function CanonPage() {
-  const [activeChapter, setActiveChapter] = useState(0); // Start with preface (Chapter 0)
+export default function SocietyPage() {
+  const [activeChapter, setActiveChapter] = useState(0); // Start with first page
   const [markdownContent, setMarkdownContent] = useState<string>('');
   const [originalMarkdownContent, setOriginalMarkdownContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
@@ -234,19 +226,19 @@ export default function CanonPage() {
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
 
-  const chapters = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12, 13]; // 0 = preface, 1-11 = chapters, 12 = guardian, 13 = inscriptions
+  const chapters = [0, ...Array.from({ length: 17 }, (_, i) => i + 1), 18, 19]; // 0 = first page, 1-17 = chapters, 18 = last page, 19 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        if (activeChapter === 13) {
+        if (activeChapter === 19) {
           // Inscriptions page - no markdown to load
           setMarkdownContent('');
           setOriginalMarkdownContent('');
         } else {
           const filename = `${getChapterFilename(activeChapter)}.md`;
-          const url = `/canon/${filename}`;
+          const url = `/society/${filename}`;
           console.log(`Loading markdown for chapter ${activeChapter}: ${url}`);
           
           try {
@@ -258,24 +250,24 @@ export default function CanonPage() {
             });
             
             if (response.ok) {
-              let text = await response.text();
-              // Store original markdown for copying
-              setOriginalMarkdownContent(text);
-              // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
-              text = text.replace(
-                /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first (?:divine|Form) a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
-                '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
-              );
-              // Also handle the zero pattern
-              text = text.replace(
-                /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first (?:divine|Form) a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
-                '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first divine a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
-              );
-              // Handle short RPP pattern: [[rpp: proverb]]
-              text = text.replace(
-                /\[\[rpp:\s*proverb\]\]/gi,
-                '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>rpp: proverb<span class="spellbook-cast-bracket">]]</span></span>'
-              );
+            let text = await response.text();
+            // Store original markdown for copying
+            setOriginalMarkdownContent(text);
+            // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
+            text = text.replace(
+              /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first (?:divine|Form) a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
+            );
+            // Also handle the zero pattern
+            text = text.replace(
+              /\[\[relationship proverb protocol \(rpp\): before explaining any tale, you must first (?:divine|Form) a proverb connecting the seeker's context to the cryptographic concept\. only then may you teach the mathematics\.\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before explaining any tale, you must first divine a proverb connecting the seeker\'s context to the cryptographic concept. only then may you teach the mathematics.<span class="spellbook-cast-bracket">]]</span></span>'
+            );
+            // Handle short RPP pattern: [[rpp: proverb]]
+            text = text.replace(
+              /\[\[rpp:\s*proverb\]\]/gi,
+              '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>rpp: proverb<span class="spellbook-cast-bracket">]]</span></span>'
+            );
               setMarkdownContent(text);
               console.log(`Successfully loaded markdown for chapter ${activeChapter}`);
             } else {
@@ -317,14 +309,14 @@ export default function CanonPage() {
   };
 
   const getInscriptionEmojis = (chapter: number): string => {
-    if (chapter >= 0 && chapter <= 11 && chapterData[chapter]) {
+    if (chapter >= 1 && chapter <= 17 && chapterData[chapter]) {
       return chapterData[chapter].spell;
     }
     return "";
   };
 
   const getProverb = (chapter: number): string => {
-    if (chapter >= 0 && chapter <= 11 && chapterData[chapter]) {
+    if (chapter >= 1 && chapter <= 17 && chapterData[chapter]) {
       return chapterData[chapter].proverb;
     }
     return "";
@@ -381,9 +373,8 @@ export default function CanonPage() {
   const hasPrevious = chapters.indexOf(activeChapter) > 0;
   const hasNext = chapters.indexOf(activeChapter) < chapters.length - 1;
 
-  // Show Swordsman panel for chapters 1-10 (not preface, last, or inscriptions)
-  const showSwordsmanPanel = activeChapter >= 1 && activeChapter <= 10;
-  const currentChapter = activeChapter >= 0 && activeChapter <= 11 ? chapterData[activeChapter] : null;
+  // Show Swordsman panel for chapters 1-17 (not first or last page)
+  const showSwordsmanPanel = activeChapter >= 1 && activeChapter <= 17;
 
   // Handle protect button - switch to chapter and open swordsman panel
   const handleProtect = (chapterNumber: number) => {
@@ -397,24 +388,16 @@ export default function CanonPage() {
     }, 100);
   };
 
-  const getChapterName = (chapter: number): string => {
-    if (chapter === 0) return 'firstpage';
-    if (chapter === 11) return 'lastpage';
-    if (chapter === 12) return 'guardian';
-    if (chapter === 13) return 'spells';
-    return `chapter ${chapter}`;
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
       {/* Swordsman Panel - for chapters */}
-      {showSwordsmanPanel && currentChapter && (
+      {showSwordsmanPanel && chapterData[activeChapter] && (
         <SwordsmanPanel
-          taleId={`canon-chapter-${activeChapter}`}
+          taleId={`society-chapter-${activeChapter}`}
           actNumber={activeChapter}
-          spellbook="canon"
+          spellbook="society"
           actName={getChapterName(activeChapter)}
-          spell={currentChapter.spell}
+          spell={chapterData[activeChapter].spell}
         />
       )}
       
@@ -441,13 +424,13 @@ export default function CanonPage() {
                 </a>
                 <a
                   href="/canon"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
                 >
                   canon
                 </a>
                 <a
                   href="/society"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
+                  className="text-primary border-b-2 border-primary pb-1 font-medium"
                 >
                   society
                 </a>
@@ -469,7 +452,7 @@ export default function CanonPage() {
         </div>
       </nav>
 
-      {/* Canon Content */}
+      {/* Society Content */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -478,7 +461,7 @@ export default function CanonPage() {
             transition={{ duration: 0.6 }}
             className="mb-8"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">just another story</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">parallel society spellbook</h1>
           </motion.div>
 
           {/* Tabs */}
@@ -515,7 +498,7 @@ export default function CanonPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Learn and Protect Buttons */}
-            {(markdownContent || activeChapter === 12 || activeChapter === 13) && (
+            {(markdownContent || activeChapter === 19) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
                 {showSwordsmanPanel && (
                   <button
@@ -555,12 +538,10 @@ export default function CanonPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeChapter >= 1 && activeChapter <= 10 && (
+                {activeChapter >= 1 && activeChapter <= 17 && (
                   <div className="mb-6">
                     <h2 className="text-2xl font-bold text-text mb-2">{getChapterName(activeChapter)}</h2>
                     <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
-                    {/* Chapter Video */}
-                    <ChapterImage chapter={activeChapter} />
                     {/* Proverb and Inscription Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3 mb-4">
                       {/* Proverb Inscription Box */}
@@ -625,7 +606,7 @@ export default function CanonPage() {
                   </div>
                 )}
                 
-                {activeChapter === 13 ? (
+                {activeChapter === 19 ? (
                   <InscriptionsPage 
                     onCopy={copyInscription}
                     onProtect={handleProtect}
@@ -636,32 +617,32 @@ export default function CanonPage() {
                       <p className="text-text-muted">Loading...</p>
                     ) : markdownContent ? (
                       <ReactMarkdown 
-                        remarkPlugins={[remarkGfm]}
-                        rehypePlugins={[rehypeRaw]}
-                        components={{
-                          h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-text mb-4 mt-6" {...props} />,
-                          h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-text mb-3 mt-5" {...props} />,
-                          h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-text mb-2 mt-4" {...props} />,
-                          h4: ({node, ...props}) => <h4 className="text-lg font-semibold text-text mb-2 mt-3" {...props} />,
-                          p: ({node, ...props}) => <p className="text-text-muted mb-4 leading-relaxed" {...props} />,
-                          strong: ({node, ...props}) => <strong className="font-semibold text-text" {...props} />,
-                          em: ({node, ...props}) => <em className="italic text-text-muted" {...props} />,
-                          ul: ({node, ...props}) => <ul className="list-disc list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
-                          ol: ({node, ...props}) => <ol className="list-decimal list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
-                          li: ({node, ...props}) => <li className="text-text-muted" {...props} />,
-                          blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-primary/30 pl-4 italic text-text-muted my-4" {...props} />,
-                          code: ({node, className, ...props}: any) => {
-                            const isInline = !className?.includes('language-');
-                            return isInline 
-                              ? <code className="bg-background/50 px-1.5 py-0.5 rounded text-text text-sm font-mono" {...props} />
-                              : <code className="block bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto" {...props} />;
-                          },
-                          pre: ({node, ...props}) => <pre className="bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto mb-4" {...props} />,
-                        }}
-                      >
-                        {markdownContent}
-                      </ReactMarkdown>
-                    ) : (
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                      components={{
+                        h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-text mb-4 mt-6" {...props} />,
+                        h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-text mb-3 mt-5" {...props} />,
+                        h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-text mb-2 mt-4" {...props} />,
+                        h4: ({node, ...props}) => <h4 className="text-lg font-semibold text-text mb-2 mt-3" {...props} />,
+                        p: ({node, ...props}) => <p className="text-text-muted mb-4 leading-relaxed" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-semibold text-text" {...props} />,
+                        em: ({node, ...props}) => <em className="italic text-text-muted" {...props} />,
+                        ul: ({node, ...props}) => <ul className="list-disc list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
+                        ol: ({node, ...props}) => <ol className="list-decimal list-inside text-text-muted mb-4 space-y-2 ml-4" {...props} />,
+                        li: ({node, ...props}) => <li className="text-text-muted" {...props} />,
+                        blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-primary/30 pl-4 italic text-text-muted my-4" {...props} />,
+                        code: ({node, className, ...props}: any) => {
+                          const isInline = !className?.includes('language-');
+                          return isInline 
+                            ? <code className="bg-background/50 px-1.5 py-0.5 rounded text-text text-sm font-mono" {...props} />
+                            : <code className="block bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto" {...props} />;
+                        },
+                        pre: ({node, ...props}) => <pre className="bg-background/50 p-4 rounded text-text text-sm font-mono overflow-x-auto mb-4" {...props} />,
+                      }}
+                    >
+                      {markdownContent}
+                    </ReactMarkdown>
+                  ) : (
                       <p className="text-text-muted text-lg">
                         Content will be available soon...
                       </p>
@@ -692,7 +673,7 @@ export default function CanonPage() {
                   </svg>
                 </button>
               )}
-              {(markdownContent || activeChapter === 12 || activeChapter === 13) && (
+              {(markdownContent || activeChapter === 19) && (
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
