@@ -453,6 +453,18 @@ export default function ZeroPage() {
                   canon
                 </a>
                 <a
+                  href="/society"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
+                  href="/plurality"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  plurality
+                </a>
+                <a
                   href="/proverbs"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >

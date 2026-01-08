@@ -152,6 +152,9 @@ export default function ProverbsPage() {
                 <Link href="/society" className="text-text hover:text-primary transition-colors font-medium">
                   society
                 </Link>
+                <Link href="/plurality" className="text-text hover:text-primary transition-colors font-medium">
+                  plurality
+                </Link>
                 <Link href="/proverbs" className="text-primary border-b-2 border-primary pb-1 font-medium">
                   proverbs
                 </Link>

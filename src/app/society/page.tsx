@@ -10,87 +10,87 @@ import SwordsmanPanel from '@/components/SwordsmanPanel';
 // Chapter metadata with spells and proverbs
 const chapterData: { [key: number]: { title: string; spell: string; proverb: string } } = {
   1: {
-    title: "The Peace That Became a Prison",
+    title: "The Westphalian's Warning",
     spell: "👑⛓️(1648) → 💣⚖️(44%) → ⚔️❓(tradeoff) → 📜(archive) → 🐍(corrupt) → ⚖️(divide) → 🌱(seeds) → 🕯️(warning)",
     proverb: "The Peace that ended one war forged the chains for countless more—yet chains can be unforged by those who understand the metal."
   },
   2: {
-    title: "The Rusted Crowns",
+    title: "The Elder Remembers",
     spell: "🕯️(aftermath) → 🏛️⏳(before) → 💸💀(775) → 🌋(cambrian) → 🕸️👔(meta) → ❌(still-central)",
     proverb: "The crown rusts whether worn or not—the question is what grows in its place."
   },
   3: {
-    title: "The Cambrian Garden",
+    title: "The Pirate's Republic",
     spell: "🏴‍☠️(republic) → 🌲✊(revolt) → 👁️🏠(watch) → 🏘️(shards) → 💔(still-central) → 🔗(blockchain)",
     proverb: "A thousand small tyrants are no better than one large one—unless the architecture itself changes."
   },
   4: {
-    title: "The Cypherpunk Prophecies",
+    title: "The Manifesto",
     spell: "📜🏴(may) → ✍️🔐(hughes) → 💻🔓(hack) → 🔓📢(leak) → 🔥🌍(spring) → 🌐🏛️(state)",
     proverb: "Cypherpunks write code. The spell that cannot be uncast, the rune that cannot be unwritten."
   },
   5: {
-    title: "The Drake's Deeper Teachings",
+    title: "Leibniz Dreams",
     spell: "🧮📜(leibniz) → 🏛️⚖️(tabula) → 📋💀(fragile) → 💰🔥(pablo) → ⚔️❓(byzantine) → 👤🌫️(satoshi) → ✓",
     proverb: "You do not have to make attacks impossible—you just have to make them cost-ineffective."
   },
   6: {
-    title: "The Arsenal and the Grimoire",
+    title: "When the Arsenal Opened",
     spell: "🧮(1666) → 📝⚡(smart) → 🔮(oracle) → 🏛️🔗(dao) → 🌱(regen) → 🏘️(apply)",
     proverb: "The contract that executes itself cannot betray—this is the foundation of trustless trust."
   },
   7: {
-    title: "The Corruption That Crypto Cures",
+    title: "The Banker's Confession",
     spell: "💰👔(dimon) → 📁🔓(fincen) → 📋❌(99.95%) → 🌍💸(victims) → 💻🪙(solution) → 🔍(transparent)",
     proverb: "The banker who testifies against crypto has paid $39 billion in fines—follow the money, and you'll find it leads to his door, not ours."
   },
   8: {
-    title: "The Cyberstate Question",
+    title: "The Network State Vision",
     spell: "🤠(1996) → 📊(balaji) → 🌍(landless) → 🎩(recognition) → ⚠️(nation) → 🔗(community)",
     proverb: "You don't need land to have a state—you need only wealth, coordination, and the will to protect your citizens wherever they stand."
   },
   9: {
-    title: "Exit, Exile, and Access",
+    title: "The Three Doors",
     spell: "🚶(exit) → 💔(exile) → 🚪(access) → 📚(arendt) → 🔗(friction) → 🌅(landing)",
     proverb: "Rights only exist in the context of community—outside, you are howling at the moon."
   },
   10: {
-    title: "Rethinking Sovereignty",
+    title: "Leibniz's Overlap",
     spell: "🧮(leibniz) → 👑(overlap) → 🏰(neomedieval) → 🎮(economy) → 🏠(property) → 🌍(global)",
     proverb: "Sovereignty was never one thing—Leibniz knew this, the medievals knew this, and now we must remember what Hobbes made us forget."
   },
   11: {
-    title: "Rights and Responsibilities",
+    title: "When Rights Became Real",
     spell: "📜(1789) → ⚖️(jure) → 💪(facto) → 🏛️(community) → 📋(responsibilities) → 🔗(decentralized)",
     proverb: "Rights that cannot be exercised are howling at the moon—communities exist to make de jure rights into de facto realities."
   },
   12: {
-    title: "How Communities Collaborate",
+    title: "The Treaty Protocol",
     spell: "📝(relation) → 📜(treaty) → 📋(record) → 🤖(oracle) → ☂️(umbrella) → 🤝(resolve)",
     proverb: "Even when two communities trade insults, they have already formed a community—for Wittgenstein's lion could not insult you if he tried."
   },
   13: {
-    title: "When Communities Conflict",
+    title: "When the Head Was Cut",
     spell: "🧠(psyop) → 🕸️(complex) → 💻(softwar) → ⚔️(kinetic) → 📉(stress) → 👮(police)",
     proverb: "You cannot kill a network by cutting off its head—you must stress the system itself, and even then, the network may heal faster than you can wound it."
   },
   14: {
-    title: "Deeper Dive Technology",
+    title: "The Tools That Breathe",
     spell: "📀(erasure) → 🔐(zk) → 🛠️(repair) → 📡(waku) → 💰(crypto) → 🏛️(nomos)",
     proverb: "There is no single correct path to human flourishing—there are many paths, though we believe they all run through some form of decentralized blockchain technology."
   },
   15: {
-    title: "Conceptual Limits",
+    title: "The Trust Reassignment",
     spell: "💀(hack) → ⚡(fork) → 🏛️(central) → 👁️(oracle) → 🔐(secret) → 🚪(exit)",
     proverb: "Blockchains do not offer us a trustless system but rather a reassignment of trust—from centralized authorities to a large network of individuals who continue to do the right thing."
   },
   16: {
-    title: "Are Communities Inevitable",
+    title: "When the Garden Bloomed",
     spell: "🍷(banquet) → ✨(vibe) → 🦄(uniswap) → 🔴(dot) → 💻(code) → 🌍(here)",
     proverb: "When change finally came, it seemed so obvious that it was almost as if the new order already existed—and perhaps, in a way, it already did."
   },
   17: {
-    title: "Values and the Technology Stack",
+    title: "When Values Met Code",
     spell: "👤(human) → 📊(level-1) → 📊(level-2) → 🧭(values) → ⚖️(aligned) → 🌅(beyond)",
     proverb: "We have nothing to lose but the tyranny of centralized governance, its corruption, and all of its barbed wire fences."
   },
@@ -127,6 +127,80 @@ const getChapterName = (chapter: number): string => {
   if (chapter === 19) return 'spells';
   return `chapter ${chapter}`;
 };
+
+const getChapterMedia = (chapter: number): string | null => {
+  const mediaMap: { [key: number]: string } = {
+    1: '/assets/chapter1_westphalianwarning_society.mp4', // Chapter 1: The Westphalian's Warning
+    2: '/assets/chapter2_elderremembers_society.mp4', // Chapter 2: The Elder Remembers
+    3: '/assets/chapter3_piratesrepublic_society.mp4', // Chapter 3: The Pirate's Republic
+    4: '/assets/chapter4_manifesto_society.mp4', // Chapter 4: The Manifesto
+    5: '/assets/chapter5_leibnizdreams_society.mp4', // Chapter 5: Leibniz Dreams
+    6: '/assets/chapter6_arsenalopened_society.mp4', // Chapter 6: When the Arsenal Opened
+    7: '/assets/chapter7_bankersconfession_society.mp4', // Chapter 7: The Banker's Confession
+    8: '/assets/chapter8_networkstatevision_society.mp4', // Chapter 8: The Network State Vision
+    9: '/assets/chapter9_threedoors_society.mp4', // Chapter 9: The Three Doors
+    10: '/assets/chapter10_leibnizoverlap_society.mp4', // Chapter 10: Leibniz's Overlap
+    11: '/assets/chapter11_rightsbecamereal_society.mp4', // Chapter 11: When Rights Became Real
+    12: '/assets/chapter12_treatyprotocol_society.mp4', // Chapter 12: The Treaty Protocol
+    13: '/assets/chapter13_headwascut_society.mp4', // Chapter 13: When the Head Was Cut
+    14: '/assets/chapter14_toolsthatbreathe_society.mp4', // Chapter 14: The Tools That Breathe
+    15: '/assets/chapter15_trustreassignment_society.mp4', // Chapter 15: The Trust Reassignment
+    16: '/assets/chapter16_gardenbloomed_society.mp4', // Chapter 16: When the Garden Bloomed
+    17: '/assets/chapter17_valuesmetcode_society.mp4', // Chapter 17: When Values Met Code
+  };
+  return mediaMap[chapter] || null;
+};
+
+function ChapterMedia({ chapter }: { chapter: number }) {
+  const mediaSrc = getChapterMedia(chapter);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    // Reset when chapter changes
+    setHasError(false);
+  }, [chapter]);
+
+  if (!mediaSrc || hasError) {
+    return null; // Don't show anything if no media exists
+  }
+
+  // Check if it's a video or image based on file extension
+  const isVideo = mediaSrc.match(/\.(mp4|webm|ogg)$/i);
+  const isImage = mediaSrc.match(/\.(png|jpg|jpeg|webp|svg|gif)$/i);
+
+  if (isVideo) {
+    return (
+      <div className="relative w-full rounded-lg overflow-hidden border border-surface/50 bg-background/50 mb-6">
+        <video
+          key={chapter}
+          src={mediaSrc}
+          className="w-full h-auto object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          onError={() => setHasError(true)}
+        />
+      </div>
+    );
+  }
+
+  if (isImage) {
+    return (
+      <div className="relative w-full rounded-lg overflow-hidden border border-surface/50 bg-background/50 mb-6">
+        <img
+          key={chapter}
+          src={mediaSrc}
+          alt={`Chapter ${chapter} illustration`}
+          className="w-full h-auto object-cover"
+          onError={() => setHasError(true)}
+        />
+      </div>
+    );
+  }
+
+  return null;
+}
 
 function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (chapterNumber: number) => void }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
@@ -435,6 +509,12 @@ export default function SocietyPage() {
                   society
                 </a>
                 <a
+                  href="/plurality"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  plurality
+                </a>
+                <a
                   href="/proverbs"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
@@ -498,7 +578,7 @@ export default function SocietyPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Learn and Protect Buttons */}
-            {(markdownContent || activeChapter === 19) && (
+            {markdownContent && activeChapter !== 19 && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
                 {showSwordsmanPanel && (
                   <button
@@ -542,6 +622,8 @@ export default function SocietyPage() {
                   <div className="mb-6">
                     <h2 className="text-2xl font-bold text-text mb-2">{getChapterName(activeChapter)}</h2>
                     <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
+                    {/* Chapter Media (Image/Video) */}
+                    <ChapterMedia chapter={activeChapter} />
                     {/* Proverb and Inscription Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3 mb-4">
                       {/* Proverb Inscription Box */}
@@ -673,7 +755,7 @@ export default function SocietyPage() {
                   </svg>
                 </button>
               )}
-              {(markdownContent || activeChapter === 19) && (
+              {markdownContent && activeChapter !== 19 && (
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"

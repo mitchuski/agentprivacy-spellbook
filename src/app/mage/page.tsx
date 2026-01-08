@@ -840,6 +840,12 @@ What brings you my spellbook?`,
                   society
                 </a>
                 <a
+                  href="/plurality"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  plurality
+                </a>
+                <a
                   href="/proverbs"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >

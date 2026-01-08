@@ -27,18 +27,18 @@ const storySpellMappings: { [actNumber: number]: string } = {
 
 const getActVideo = (act: number): string | null => {
   const videoMap: { [key: number]: string } = {
-    1: '/assets/act1drakefirstwhisper.mp4', // Act I: Venice - drake first whisper
-    2: '/assets/act2dualceremony_zypher.mp4', // Act II: Dual Ceremony - dual ceremony zypher
-    3: '/assets/act3drakes_zypher.mp4', // Act III: Drake's Teaching - drakes zypher
-    4: '/assets/act4_bladealone_zypher.mp4', // Act IV: Blade Alone - blade alone zypher
-    5: '/assets/act5light_zypher.mp4', // Act V: Light Armour - light zypher
-    6: '/assets/act6_trustplane_zypher.mp4', // Act VI: Trust Graph Plane - trust plane zypher
-    7: '/assets/act7mirror_zypher.mp4', // Act VII: The Mirror That Never Completes - mirror zypher
-    8: '/assets/act8ruleof2_zypher.mp4', // Act VIII: Ancient Rule - rule of 2 zypher
-    9: '/assets/act9forgezcash_zypher.mp4', // Act IX: Zcash Shield - forge zcash zypher
-    10: '/assets/act10revelation_zypher.mp4', // Act X: Topology of Revelation - revelation zypher
-    11: '/assets/act11spiral_zypher.mp4', // Act XI: Balanced Spiral of Sovereignty - spiral zypher
-    12: '/assets/act12_proverbgene_zypher.mp4', // Act XII: The Forgetting - proverb gene zypher
+    1: '/assets/act1_venice_story.mp4', // Act I: Venice
+    2: '/assets/act2_dualceremony_story.mp4', // Act II: Dual Ceremony
+    3: '/assets/act3_drakesteaching_story.mp4', // Act III: Drake's Teaching
+    4: '/assets/act4_bladealone_story.mp4', // Act IV: Blade Alone
+    5: '/assets/act5_lightarmour_story.mp4', // Act V: Light Armour
+    6: '/assets/act6_trustgraphplane_story.mp4', // Act VI: Trust Graph Plane
+    7: '/assets/act7_mirrorenhanced_story.mp4', // Act VII: Mirror Enhanced
+    8: '/assets/act8_ancientrule_story.mp4', // Act VIII: Ancient Rule
+    9: '/assets/act9_zcashshield_story.mp4', // Act IX: Zcash Shield
+    10: '/assets/act10_topologyofrevelation_story.mp4', // Act X: Topology of Revelation
+    11: '/assets/act11_balancedspiral_story.mp4', // Act XI: Balanced Spiral
+    12: '/assets/act12_forgetting_story.mp4', // Act XII: The Forgetting
   };
   return videoMap[act] || null;
 };
@@ -772,6 +772,12 @@ export default function StoryPage() {
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
                   society
+                </a>
+                <a
+                  href="/plurality"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  plurality
                 </a>
                 <a
                   href="/proverbs"

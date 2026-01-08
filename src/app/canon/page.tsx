@@ -452,6 +452,12 @@ export default function CanonPage() {
                   society
                 </a>
                 <a
+                  href="/plurality"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  plurality
+                </a>
+                <a
                   href="/proverbs"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >

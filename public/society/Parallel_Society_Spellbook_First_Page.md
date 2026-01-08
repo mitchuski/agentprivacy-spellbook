@@ -115,96 +115,25 @@ Their story begins where the Old Kingdoms began to fail, in a place where the Pe
 
 ## The Parallel Society Spellbook Structure
 
-| Chapter | File | Core Theme |
-|---------|------|------------|
-| **Prologue** | `00_Prologue.md` | Gateway to the Spellbook |
-| **I** | `Chapter_01_The_Peace_That_Became_A_Prison.md` | Westphalia's obsolescence |
-| **II** | `Chapter_02_The_Rusted_Crowns.md` | Nation-states as failed technology |
-| **III** | `Chapter_03_The_Cambrian_Garden.md` | Post-state governance experiments |
-| **IV** | `Chapter_04_The_Cypherpunk_Prophecies.md` | DigiCash, cypherpunks, Satoshi |
-| **V** | `Chapter_05_The_Drakes_Deeper_Teachings.md` | Byzantine Generals, Paxos, archives |
-| **VI** | `Chapter_06_The_Arsenal_and_the_Grimoire.md` | DAOs, smart contracts, oracles |
-| **VII** | `Chapter_07_The_Corruption_That_Crypto_Cures.md` | AML failure, JPMorgan, trustless finance |
-| **VIII** | `Chapter_08_The_Cyberstate_Question.md` | Network states vs blockchain communities |
-| **IX** | `Chapter_09_Exit_Exile_and_Access.md` | The three fundamental rights |
-| **X** | `Chapter_10_Rethinking_Sovereignty.md` | Leibniz, neomedievalism, five-place relation |
-| **XI** | `Chapter_11_Rights_and_Responsibilities.md` | Declaration of Rights of Communities |
-| **XII** | `Chapter_12_How_Communities_Collaborate.md` | Relational contracts, treaty DAOs, Wittgenstein's Lion |
-| **XIII** | `Chapter_13_When_Communities_Conflict.md` | PSYOP, softwar, decentralized police |
-| **XIV** | `Chapter_14_Deeper_Dive_Technology.md` | Reed-Solomon, zk-SNARKs, Waku, Nomos |
-| **XV** | `Chapter_15_Conceptual_Limits.md` | Nothing is 100% trustless or decentralized |
-| **XVI** | `Chapter_16_Are_Communities_Inevitable.md` | 1847 banquets, Edison's lesson, already-here |
-| **XVII** | `Chapter_17_Values_Technology_Stack.md` | Level-one and level-two values |
-| **Epilogue** | `18_Epilogue.md` | The farewell becomes a greeting |
-
----
-
-## Complete Character Registry (All 17 Chapters)
-
-### The Three Guides
-| Guide | Symbol | Role |
-|-------|--------|------|
-| **The Drake** | 🐲 | Voice of Hope & Ludlow's scholarship |
-| **Soulbis** | 🗡️ | The Swordsman—boundaries, privacy, protection |
-| **Soulbae** | 🧙‍♂️ | The Mage—delegation, projection, wisdom |
-
-### Characters by Chapter
-
-**Chapters 1-4: The Failure of Nation States**
-| Character | Symbol | Role |
-|-----------|--------|------|
-| The Westphalian Ghost | 🏰👻 | The dying order of 1648 |
-| The Thirty Years' War | ⚔️🔥 | 8 million dead, the catalyst |
-| The Failed State | 💀🏛️ | When governance collapses |
-| The Kettled Citizen | 🧍⛓️ | Those trapped by borders |
-| The Cherán Council | 🌲👥 | Mexican town that expelled politicians |
-| The Pirate Code | ☠️📜 | Democratic governance at sea |
-| David Chaum | 🔢💳 | DigiCash inventor |
-| Satoshi's Ghost | 👤₿ | The anonymous founder |
-
-**Chapters 5-7: The Technology of Liberation**
-| Character | Symbol | Role |
-|-----------|--------|------|
-| The Byzantine General | ⚔️🏛️ | Consensus among traitors |
-| The Paxos Parliament | 🏛️🗳️ | Lamport's solution |
-| The DAO | 🏛️🔗 | Decentralized autonomous organization |
-| The Smart Contract | 📜⚡ | Self-executing agreements |
-| The Oracle | 👁️🌐 | Bridge to real world |
-| JPMorgan's Shadow | 🏦💀 | $39 billion in fines |
-| The Unbanked Billion | 👥🚫 | Those excluded by AML |
-
-**Chapters 8-11: The Architecture of Exit**
-| Character | Symbol | Role |
-|-----------|--------|------|
-| The Cyberstate | 🌐🏛️ | Blockchain community as state |
-| The Exit Door | 🚪✨ | The fundamental right |
-| Leibniz's Return | 🧮👑 | Overlapping sovereignties |
-| The Global Registry | 🌍📋 | Property beyond nation states |
-| Lafayette's Ghost | 🇫🇷⚔️ | Declaration of Rights |
-| The Community Voice | 🏛️🗣️ | Democratic participation |
-
-**Chapters 12-15: Conflict and Resolution**
-| Character | Symbol | Role |
-|-----------|--------|------|
-| The Relational Contract | 📝🤝 | Dell and FedEx discover relationships |
-| The Treaty DAO | 🌐📜 | Smart contract treaties |
-| Wittgenstein's Lion | 🦁❓ | Limits of communication |
-| The PSYOP Manual | 📕🧠 | Asymmetric warfare |
-| Major Lowery's Thesis | ⚔️💻 | Softwar and proof of value |
-| Reed-Solomon | 🧮📀 | Erasure coding from 1960 |
-| The Zero-Knowledge Proof | 🎭🔐 | Prove without revealing |
-| The DAO Hack | 💀💰 | $50 million lesson |
-| Shamir's Secret | 🔐✂️ | Decentralized secret keeping |
-
-**Chapters 16-17: The Inevitable Future**
-| Character | Symbol | Role |
-|-----------|--------|------|
-| The Banquet of 1847 | 🍷⚡ | Vibes that sparked revolutions |
-| The FWB Vibe | ✨🤝 | NFT community as nascent cyberstate |
-| The Uniswap DAO | 🦄🏛️ | Trading platform becoming governance |
-| The Pathetic Dot | 🔴🗺️ | Lessig's figure for constrained existence |
-| The Schwartz Taxonomy | 🧭💎 | 56 universal values |
-| Beyond Westphalia | 🌅🗺️ | The vision of what is possible |
+| Ch | Title | Core Theme |
+|----|-------|------------|
+| **I** | The Westphalian's Warning | The ghost at the crossroads, the law bomb, Immaculée's testimony |
+| **II** | The Elder Remembers | The graveyard of 775 failed states, the Cambrian explosion |
+| **III** | The Cambrian Garden | Pirates, Cherán, the architecture that must change |
+| **IV** | The Cypherpunk Prophecies | The manifestos, the hacktivists, the cyberstate vision |
+| **V** | The Drake's Deeper Teachings | Leibniz's archives, the General's problem solved |
+| **VI** | The Arsenal and the Grimoire | Self-executing contracts, oracles, the DAO emerges |
+| **VII** | The Corruption That Crypto Cures | FinCEN files, the 99.95% failure, programmable cure |
+| **VIII** | The Cyberstate Question | Balaji's vision, the landless state, the word we must abandon |
+| **IX** | The Three Doors | Exit, exile, access—the fundamental rights |
+| **X** | Leibniz's Overlap | The five-place relation, neomedievalism, shared sovereignty |
+| **XI** | When Rights Became Real | Lafayette's gift, the seventeen articles, community rights |
+| **XII** | The Treaty Protocol | Relational contracts, the lion we cannot understand |
+| **XIII** | When the Head Was Cut | PSYOP, softwar, the network that heals itself |
+| **XIV** | The Tools That Breathe | Reed-Solomon, zk-SNARKs, Waku, Nomos |
+| **XV** | The Trust Reassignment | The DAO hack, when code stopped being law |
+| **XVI** | When the Garden Bloomed | The banquet of 1847, the future already here |
+| **XVII** | When Values Met Code | The two floors of the house, when barbed wire falls |
 
 ---
 
@@ -230,4 +159,4 @@ Their story begins where the Old Kingdoms began to fail, in a place where the Pe
 
 *Adapted for the agentprivacy universe by the privacymage*
 
-*All 17 chapters complete. December 2025.*
+*All 17 chapters complete. January 2026.*
