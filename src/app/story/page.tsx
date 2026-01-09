@@ -24,23 +24,25 @@ const storySpellMappings: { [actNumber: number]: string } = {
   11: '⚔️ ➗ 📖 = 🌀',
   12: '🌱→⚒️→📡→🌊→🌫️🏛️',
   13: '🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️',
+  14: '🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞',
 };
 
 const getActVideo = (act: number): string | null => {
   const videoMap: { [key: number]: string } = {
-    1: '/assets/act1drakefirstwhisper.mp4', // Act I: Venice - drake first whisper
-    2: '/assets/act2dualceremony_zypher.mp4', // Act II: Dual Ceremony - dual ceremony zypher
-    3: '/assets/act3drakes_zypher.mp4', // Act III: Drake's Teaching - drakes zypher
-    4: '/assets/act4_bladealone_zypher.mp4', // Act IV: Blade Alone - blade alone zypher
-    5: '/assets/act5light_zypher.mp4', // Act V: Light Armour - light zypher
-    6: '/assets/act6_trustplane_zypher.mp4', // Act VI: Trust Graph Plane - trust plane zypher
-    7: '/assets/act7mirror_zypher.mp4', // Act VII: The Mirror That Never Completes - mirror zypher
-    8: '/assets/act8ruleof2_zypher.mp4', // Act VIII: Ancient Rule - rule of 2 zypher
-    9: '/assets/act9forgezcash_zypher.mp4', // Act IX: Zcash Shield - forge zcash zypher
-    10: '/assets/act10revelation_zypher.mp4', // Act X: Topology of Revelation - revelation zypher
-    11: '/assets/act11spiral_zypher.mp4', // Act XI: Balanced Spiral of Sovereignty - spiral zypher
-    12: '/assets/act12_proverbgene_zypher.mp4', // Act XII: The Forgetting - proverb gene zypher
-    13: '/assets/act13_bookofpromise.mp4', // Act XIII: The Book of Promises - book of promise
+    1: '/assets/act1_venice_story.mp4', // Act I: Venice
+    2: '/assets/act2_dualceremony_story.mp4', // Act II: Dual Ceremony
+    3: '/assets/act3_drakesteaching_story.mp4', // Act III: Drake's Teaching
+    4: '/assets/act4_bladealone_story.mp4', // Act IV: Blade Alone
+    5: '/assets/act5_lightarmour_story.mp4', // Act V: Light Armour
+    6: '/assets/act6_trustgraphplane_story.mp4', // Act VI: Trust Graph Plane
+    7: '/assets/act7_mirrorenhanced_story.mp4', // Act VII: The Mirror That Never Completes
+    8: '/assets/act8_ancientrule_story.mp4', // Act VIII: Ancient Rule
+    9: '/assets/act9_zcashshield_story.mp4', // Act IX: Zcash Shield
+    10: '/assets/act10_topologyofrevelation_story.mp4', // Act X: Topology of Revelation
+    11: '/assets/act11_balancedspiral_story.mp4', // Act XI: Balanced Spiral of Sovereignty
+    12: '/assets/act12_forgetting_story.mp4', // Act XII: The Forgetting
+    13: '/assets/act13_bookofpromise_story.mp4', // Act XIII: The Book of Promises
+    14: '/assets/act14_rainonthemountain_story.mp4', // Act XIV: Rain on the Mountain of Entropy
   };
   return videoMap[act] || null;
 };
@@ -64,6 +66,7 @@ const getActAudio = (act: number): string | null => {
     11: `${R2_BASE_URL}/11_Balanced_Spiral_of_Sovereignty.mp3`, // Act XI: Balanced Spiral
     12: `${R2_BASE_URL}/12_Forgetting_Proverbiogenesis.mp3`, // Act XII: The Forgetting
     13: `${R2_BASE_URL}/13_The_Book_of_Promises.mp3`, // Act XIII: The Book of Promises
+    14: `${R2_BASE_URL}/14_Rain_on_the_Mountain_of_Entropy.mp3`, // Act XIV: Rain on the Mountain
     15: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
@@ -309,6 +312,7 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       11: "The blade that becomes the spell loses both edges.",
       12: "The mage's spell, once spoken, becomes the village weather.",
       13: "When sovereigns meet, they explore before they bind—promises flow freely, never forced, never blind. Two wills aligned make cooperation's highest art: architects of fate through the spells they freely impart.",
+      14: "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest.",
     };
     return proverbs[act] || "";
   };
@@ -397,6 +401,12 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       actNumber: 13,
       emojis: "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
       quote: getProverbForInscription(13)
+    },
+    {
+      title: "Act XIV: Rain on the Mountain",
+      actNumber: 14,
+      emojis: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
+      quote: getProverbForInscription(14)
     },
     {
       title: "Closing Spell",
@@ -489,21 +499,21 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
 
 const getActFilename = (act: number): string => {
   const filenames: { [key: number]: string } = {
-    0: 'privacymage-firstpage',
-    1: 'i-venice',
-    2: 'ii-dual-ceremony',
-    3: 'iii-drakes-teaching',
-    4: 'iv-blade-alone',
-    5: 'v-light-armour',
-    6: 'vi-trust-graph-plane',
-    7: 'act-vii-theantimirrorenhanced',
-    8: 'viii-ancient-rule',
-    9: 'ix-zcash-shield',
-    10: 'topology-of-revelation',
-    11: 'act-xi-balanced-spiral-of-sovereignty',
-    12: 'act-xii-the-forgetting',
-    13: 'act-xiii-book-of-promises',
-    14: 'inscriptions',
+    0: '00-privacymage-firstpage',
+    1: '01-act-i-venice',
+    2: '02-act-ii-dual-ceremony',
+    3: '03-act-iii-drakes-teaching',
+    4: '04-act-iv-blade-alone',
+    5: '05-act-v-light-armour',
+    6: '06-act-vi-trust-graph-plane',
+    7: '07-act-vii-theantimirrorenhanced',
+    8: '08-act-viii-ancient-rule',
+    9: '09-act-ix-zcash-shield',
+    10: '10-act-x-topology-of-revelation',
+    11: '11-act-xi-balanced-spiral-of-sovereignty',
+    12: '12-act-xii-the-forgetting',
+    13: '13-act-xiii-book-of-promises',
+    14: '14-act-xiv-rain-on-mountain',
   };
   return filenames[act] || '';
 };
@@ -517,26 +527,24 @@ export default function StoryPage() {
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 13 }, (_, i) => i + 1), 15, 14]; // 0 = first page, 1-13 = Acts, 15 = last page, 14 = inscriptions
+  const acts = [0, ...Array.from({ length: 14 }, (_, i) => i + 1), 15, 16]; // 0 = first page, 1-14 = Acts, 15 = last page, 16 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-13), last page (15), or inscriptions (14)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 13) || activeAct === 15 || activeAct === 14) {
+        // Load markdown for first page (0), acts (1-14), last page (15), or inscriptions (16)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 14) || activeAct === 15 || activeAct === 16) {
           let filename: string;
-          if (activeAct === 14) {
+          if (activeAct === 16) {
             filename = '112-inscriptions.md';
           } else if (activeAct === 15) {
             filename = '111-privacymage-lastpage.md';
-          } else if (activeAct === 0 || activeAct === 7 || activeAct === 10 || activeAct === 11 || activeAct === 12 || activeAct === 13) {
-            filename = `${String(activeAct).padStart(2, '0')}-${getActFilename(activeAct)}.md`;
           } else {
-            filename = `0${activeAct}-act-${getActFilename(activeAct)}.md`;
+            filename = `${getActFilename(activeAct)}.md`;
           }
-          
-          const url = `/story/markdown/${filename}`;
+
+          const url = `/story/${filename}`;
           
           try {
             const response = await fetch(url, {
@@ -621,6 +629,7 @@ export default function StoryPage() {
       11: "⚔️ ➗ 📖 = 🌀 = 1.618",
       12: "🌱→⚒️→📡→🌊→🌫️🏛️",
       13: "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
+      14: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
     };
     return inscriptions[act] || "";
   };
@@ -641,6 +650,7 @@ export default function StoryPage() {
       11: "The blade that becomes the spell loses both edges.",
       12: "The mage's spell, once spoken, becomes the village weather.",
       13: "When sovereigns meet, they explore before they bind—promises flow freely, never forced, never blind. Two wills aligned make cooperation's highest art: architects of fate through the spells they freely impart.",
+      14: "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest.",
     };
     return proverbs[act] || "";
   };
@@ -704,14 +714,14 @@ export default function StoryPage() {
 
   // Get tale ID for current act
   const getCurrentTaleId = (): string => {
-    if (activeAct === 0 || activeAct === 14 || activeAct === 15) {
+    if (activeAct === 0 || activeAct === 16 || activeAct === 15) {
       return 'act-i-venice'; // Default
     }
     return getTaleIdFromAct(activeAct);
   };
 
   // Show Swordsman panel only for actual acts (not first page or inscriptions)
-  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 13;
+  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 14;
 
   // Get act name for current act
   const getActName = (act: number): string => {
@@ -729,6 +739,7 @@ export default function StoryPage() {
       11: 'Act XI: Balanced Spiral',
       12: 'Act XII: The Forgetting',
       13: 'Act XIII: The Book of Promises',
+      14: 'Act XIV: Rain on the Mountain of Entropy',
     };
     return actNames[act] || `Act ${act}`;
   };
@@ -766,7 +777,7 @@ export default function StoryPage() {
               <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
                 agentprivacy
               </a>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
                 <a
                   href="/story"
                   className="text-primary border-b-2 border-primary pb-1 font-medium"
@@ -778,6 +789,24 @@ export default function StoryPage() {
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
                   zero
+                </a>
+                <a
+                  href="/canon"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  canon
+                </a>
+                <a
+                  href="/society"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
+                  href="/plurality"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  plural
                 </a>
                 <a
                   href="/proverbs"
@@ -816,7 +845,7 @@ export default function StoryPage() {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
                   if (actNum === 15) return 'last page';
-                  if (actNum === 14) return 'spells';
+                  if (actNum === 16) return 'spells';
                   return `Act ${actNum}`;
                 };
                 
@@ -851,7 +880,7 @@ export default function StoryPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Audio Player and Learn/Protect Buttons */}
-            {((activeAct >= 1 && activeAct <= 13) || activeAct === 0 || activeAct === 15) && (
+            {((activeAct >= 1 && activeAct <= 14) || activeAct === 0 || activeAct === 15) && (
               <div className="absolute top-2 sm:top-4 right-2 sm:right-4 left-2 sm:left-auto z-10 flex flex-col sm:flex-row items-end sm:items-center gap-2">
                 {/* Audio Player - Right side, before buttons */}
                 {markdownContent && (
@@ -903,7 +932,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 14 && activeAct !== 15 && (
+                {activeAct !== 0 && activeAct !== 15 && activeAct !== 16 && (
                   <>
                     <div className="mb-6 pt-16 sm:pt-0">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -975,7 +1004,7 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                {activeAct === 14 ? (
+                {activeAct === 16 ? (
                   <InscriptionsPage onCopy={copyInscription} onProtect={handleProtect} />
                 ) : activeAct === 15 ? (
                   <div className="markdown-content pb-24 sm:pb-28">

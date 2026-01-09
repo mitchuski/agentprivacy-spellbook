@@ -137,10 +137,10 @@ const getActFilename = (act: number): string => {
 
 const getTaleVideo = (tale: number): string | null => {
   const videoMap: { [key: number]: string } = {
-    1: '/assets/tale1_monastry_zypher.mp4', // Tale 1: The Monastery of Hidden Knowledge
-    2: '/assets/tale2threetrials_zypher.mp4', // Tale 2: The Three Trials of Truth
-    3: '/assets/tale3_silentmsg_zypher.mp4', // Tale 3: The Silent Messenger
-    4: '/assets/tale4_fields_zypher.mp4', // Tale 4: The Fields of Finite Wisdom
+    1: '/assets/tale1_monastry_zero.mp4', // Tale 1: The Monastery of Hidden Knowledge
+    2: '/assets/tale2_threetrials_zero.mp4', // Tale 2: The Three Trials of Truth
+    3: '/assets/tale3_silentmsg_zero.mp4', // Tale 3: The Silent Messenger
+    4: '/assets/tale4_fields_zero.mp4', // Tale 4: The Fields of Finite Wisdom
   };
   return videoMap[tale] || null;
 };
@@ -437,7 +437,7 @@ export default function ZeroPage() {
               <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
                 agentprivacy
               </a>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
                 <a
                   href="/story"
                   className="text-text-muted hover:text-text transition-colors font-medium"
@@ -449,6 +449,24 @@ export default function ZeroPage() {
                   className="text-primary border-b-2 border-primary pb-1 font-medium"
                 >
                   zero
+                </a>
+                <a
+                  href="/canon"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  canon
+                </a>
+                <a
+                  href="/society"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
+                  href="/plurality"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  plural
                 </a>
                 <a
                   href="/proverbs"

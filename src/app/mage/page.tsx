@@ -814,7 +814,7 @@ What brings you my spellbook?`,
               <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
                 agentprivacy
               </a>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
                 <a
                   href="/story"
                   className="text-text hover:text-primary transition-colors font-medium"
@@ -826,6 +826,24 @@ What brings you my spellbook?`,
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
                   zero
+                </a>
+                <a
+                  href="/canon"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  canon
+                </a>
+                <a
+                  href="/society"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
+                  href="/plurality"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  plural
                 </a>
                 <a
                   href="/proverbs"
@@ -877,7 +895,7 @@ What brings you my spellbook?`,
               <div className="card bg-surface border-surface/50">
                 <h2 className="text-2xl font-bold text-text mb-4">Select a Spellbook Tale</h2>
                 <p className="text-text-muted mb-6">
-                  Choose a tale from the Story Spellbook, Zero Knowledge Spellbook, or Canon Spellbook to begin your conversation with Soulbae.
+                  Choose a tale from the Story Spellbook or Zero Knowledge Spellbook to begin your conversation with Soulbae. Canon, Society, and Plurality spellbooks coming soon.
                 </p>
 
                 {/* Story Spellbook Acts */}
@@ -887,7 +905,7 @@ What brings you my spellbook?`,
                     <span>Story Spellbook</span>
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((act) => {
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((act) => {
                       const taleId = getTaleIdFromAct(act);
                       const actTitles: { [key: number]: string } = {
                         1: 'Act I: Venice',
@@ -903,6 +921,7 @@ What brings you my spellbook?`,
                         11: 'Act XI: Balanced Spiral of Sovereignty',
                         12: 'Act XII: The Forgetting',
                         13: 'Act XIII: The Book of Promises',
+                        14: 'Act XIV: Rain on the Mountain of Entropy',
                       };
                       return (
                         <button
@@ -943,7 +962,7 @@ What brings you my spellbook?`,
                 </div>
 
                 {/* Canon Spellbook Chapters - Locked */}
-                <div className="relative opacity-60">
+                <div className="relative opacity-60 mb-8">
                   <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center z-10">
                     <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
                       <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
@@ -982,6 +1001,77 @@ What brings you my spellbook?`,
                           </div>
                         );
                       })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Society Spellbook Chapters - Locked */}
+                <div className="relative opacity-60 mb-8">
+                  <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center z-10">
+                    <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
+                      <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
+                      <span>🏛️</span>
+                      <span>Society Spellbook</span>
+                      <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Coming Soon</span>
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                      {[
+                        { num: 1, title: 'The Monastery' },
+                        { num: 2, title: 'The Courtyard' },
+                        { num: 3, title: 'The Warning' },
+                        { num: 4, title: 'The Garden' },
+                        { num: 5, title: 'The Gatekeeper' },
+                        { num: 6, title: 'The Masks' },
+                        { num: 7, title: 'The Markets' },
+                        { num: 8, title: 'The Binding' },
+                        { num: 9, title: 'The Witness' },
+                        { num: 10, title: 'The Forgetting' },
+                        { num: 11, title: 'The Trust' },
+                        { num: 12, title: 'The Judgment' },
+                        { num: 13, title: 'The Head Was Cut' },
+                        { num: 14, title: 'The Many' },
+                        { num: 15, title: 'The Gathering' },
+                        { num: 16, title: 'The Choosing' },
+                        { num: 17, title: 'The Sovereign' },
+                      ].map((chapter) => (
+                        <div
+                          key={`society-${chapter.num}`}
+                          className="p-3 bg-background border border-surface/50 rounded-lg text-center cursor-not-allowed"
+                        >
+                          <div className="font-semibold text-text text-sm">Chapter {chapter.num}</div>
+                          <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Plurality Spellbook Acts - Locked */}
+                <div className="relative opacity-60">
+                  <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center z-10">
+                    <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
+                      <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
+                      <span>🌐</span>
+                      <span>Plurality Spellbook</span>
+                      <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Coming Soon</span>
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                      {Array.from({ length: 30 }, (_, i) => i + 1).map((actNum) => (
+                        <div
+                          key={`plurality-${actNum}`}
+                          className="p-3 bg-background border border-surface/50 rounded-lg text-center cursor-not-allowed"
+                        >
+                          <div className="font-semibold text-text text-sm">Act {actNum}</div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

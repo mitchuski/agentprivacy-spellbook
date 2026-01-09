@@ -44,6 +44,7 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xi-balanced-spiral-of-sovereignty': 11,
     'act-xii-the-forgetting': 12,
     'act-xiii-book-of-promises': 13,
+    'act-xiv-rain-on-mountain': 14,
   };
   return taleMap[taleId] || null;
 }
@@ -67,6 +68,7 @@ export function getSpellemojiForAct(act: number): string {
     11: "⚔️ ➗ 📖 = 🌀",
     12: "🌱→⚒️→📡→🌊→🌫️🏛️",
     13: "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
+    14: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
   };
   return spellemojiMap[act] || '';
 }
@@ -243,6 +245,7 @@ export function getTaleIdFromAct(act: number): string {
     11: 'act-xi-balanced-spiral-of-sovereignty',
     12: 'act-xii-the-forgetting',
     13: 'act-xiii-book-of-promises',
+    14: 'act-xiv-rain-on-mountain',
   };
   return taleMap[act] || `act-${act}`;
 }

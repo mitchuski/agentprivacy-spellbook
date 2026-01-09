@@ -426,7 +426,7 @@ export default function CanonPage() {
               <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
                 agentprivacy
               </a>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
                 <a
                   href="/story"
                   className="text-text-muted hover:text-text transition-colors font-medium"
@@ -444,6 +444,18 @@ export default function CanonPage() {
                   className="text-primary border-b-2 border-primary pb-1 font-medium"
                 >
                   canon
+                </a>
+                <a
+                  href="/society"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
+                  href="/plurality"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  plural
                 </a>
                 <a
                   href="/proverbs"

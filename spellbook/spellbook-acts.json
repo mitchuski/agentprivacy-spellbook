@@ -164,6 +164,17 @@
           "keywords": ["promise", "promise-theory", "cooperative-binding", "polarity", "assessment", "promise-graphs", "conditional-promises", "andor", "autonomy", "sovereignty", "bilateral"],
           "spell": "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
           "proverb": "When sovereigns meet, they explore before they bind—promises flow freely, never forced, never blind. Two wills aligned make cooperation's highest art: architects of fate through the spells they freely impart."
+        },
+        {
+          "id": "act-14-rain-on-mountain",
+          "act_number": 14,
+          "tale_id": "act-xiv-rain-on-mountain",
+          "title": "Rain on the Mountain of Entropy",
+          "description": "In the great network, identifiers fall like rain. Soulbis generates pure randomness—strings that have never existed before and will never exist again. Random. Meaningless. Perfect in their mathematical uniqueness. Most strings fall upon stone and evaporate. But when a First Person receives their string and climbs the Mountain of Entropy with Soulbae, meaning emerges through relationship. The swordsman assigns randomness; the mage inscribes meaning; the relationship confirms. Randomness is the seed; meaning is the harvest. The identifier that was empty becomes full through the journey of understanding.",
+          "category": "entropy",
+          "keywords": ["entropy", "randomness", "identifiers", "meaning", "relationship", "swordsman", "mage", "mountain", "rain", "inscription"],
+          "spell": "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
+          "proverb": "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest."
         }
       ],
       "closing": {
@@ -492,12 +503,12 @@
   "status": {
     "version": "4.3.0-canonical",
     "state": "Complete - Both Spellbooks",
-    "story_acts_total": 13,
-    "story_acts_published": 13,
+    "story_acts_total": 14,
+    "story_acts_published": 14,
     "zero_tales_total": 30,
     "zero_tales_published": 30,
-    "total_inscriptions": 43,
-    "note": "Combined canonical edition of First Person Spellbook (Story) and Zero Knowledge Spellbook (Zero) with all spell inscriptions and proverbs matching correctly. Act 13: The Book of Promises added."
+    "total_inscriptions": 44,
+    "note": "Combined canonical edition of First Person Spellbook (Story) and Zero Knowledge Spellbook (Zero) with all spell inscriptions and proverbs matching correctly. Act 13: The Book of Promises and Act 14: Rain on the Mountain of Entropy included."
   }
 }
 

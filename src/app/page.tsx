@@ -93,7 +93,7 @@ export default function LandingPage() {
               <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
                 agentprivacy
               </a>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
                 <a
                   href="/story"
                   className="text-text hover:text-primary transition-colors font-medium"
@@ -105,6 +105,24 @@ export default function LandingPage() {
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
                   zero
+                </a>
+                <a
+                  href="/canon"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  canon
+                </a>
+                <a
+                  href="/society"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  society
+                </a>
+                <a
+                  href="/plurality"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  plural
                 </a>
                 <a
                   href="/proverbs"

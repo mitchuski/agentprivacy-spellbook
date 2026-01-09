@@ -191,6 +191,15 @@ export default function ProverbsPage() {
                 <Link href="/zero" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
                   zero
                 </Link>
+                <Link href="/canon" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                  canon
+                </Link>
+                <Link href="/society" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                  society
+                </Link>
+                <Link href="/plurality" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                  plural
+                </Link>
                 <Link href="/proverbs" className="text-sm sm:text-base text-primary border-b-2 border-primary pb-1 font-medium whitespace-nowrap">
                   proverbs
                 </Link>
