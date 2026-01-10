@@ -233,6 +233,7 @@ export default function CanonPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const chapters = [0, ...Array.from({ length: 11 }, (_, i) => i + 1), 12, 13]; // 0 = preface, 1-11 = chapters, 12 = guardian, 13 = inscriptions
 
@@ -422,11 +423,12 @@ export default function CanonPage() {
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4 md:gap-8">
               <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
                 agentprivacy
               </a>
-              <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
+              {/* Desktop Navigation */}
+              <div className="hidden md:flex items-center gap-4 sm:gap-6">
                 <a
                   href="/story"
                   className="text-text-muted hover:text-text transition-colors font-medium"
@@ -471,7 +473,92 @@ export default function CanonPage() {
                 </a>
               </div>
             </div>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-text hover:text-primary transition-colors"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {mobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden overflow-hidden"
+              >
+                <div className="py-4 space-y-3 border-t border-surface/50">
+                  <a
+                    href="/story"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    story
+                  </a>
+                  <a
+                    href="/zero"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    zero
+                  </a>
+                  <a
+                    href="/canon"
+                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    canon
+                  </a>
+                  <a
+                    href="/society"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    society
+                  </a>
+                  <a
+                    href="/plurality"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    plural
+                  </a>
+                  <a
+                    href="/proverbs"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
+                  </a>
+                  <a
+                    href="/mage"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    mage
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
 

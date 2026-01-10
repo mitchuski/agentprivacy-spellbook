@@ -75,6 +75,7 @@ export default function ProverbsPage() {
   const [donationAct, setDonationAct] = useState<number | null>(null);
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Fetch onchain inscriptions
   useEffect(() => {
@@ -180,35 +181,121 @@ export default function ProverbsPage() {
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 sm:gap-8 min-w-0">
-              <Link href="/" className="text-lg sm:text-xl font-bold text-text hover:text-primary transition-colors flex-shrink-0">
+            <div className="flex items-center gap-4 md:gap-8">
+              <Link href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
                 agentprivacy
               </Link>
-              <div className="flex items-center gap-3 sm:gap-6 overflow-x-auto">
-                <Link href="/story" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+              {/* Desktop Navigation */}
+              <div className="hidden md:flex items-center gap-4 sm:gap-6">
+                <Link href="/story" className="text-text hover:text-primary transition-colors font-medium">
                   story
                 </Link>
-                <Link href="/zero" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                <Link href="/zero" className="text-text hover:text-primary transition-colors font-medium">
                   zero
                 </Link>
-                <Link href="/canon" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                <Link href="/canon" className="text-text hover:text-primary transition-colors font-medium">
                   canon
                 </Link>
-                <Link href="/society" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                <Link href="/society" className="text-text hover:text-primary transition-colors font-medium">
                   society
                 </Link>
-                <Link href="/plurality" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                <Link href="/plurality" className="text-text hover:text-primary transition-colors font-medium">
                   plural
                 </Link>
-                <Link href="/proverbs" className="text-sm sm:text-base text-primary border-b-2 border-primary pb-1 font-medium whitespace-nowrap">
+                <Link href="/proverbs" className="text-primary border-b-2 border-primary pb-1 font-medium">
                   proverbs
                 </Link>
-                <Link href="/mage" className="text-sm sm:text-base text-text hover:text-primary transition-colors font-medium whitespace-nowrap">
+                <Link href="/mage" className="text-text hover:text-primary transition-colors font-medium">
                   mage
                 </Link>
               </div>
             </div>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-text hover:text-primary transition-colors"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {mobileMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden overflow-hidden"
+              >
+                <div className="py-4 space-y-3 border-t border-surface/50">
+                  <Link
+                    href="/story"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    story
+                  </Link>
+                  <Link
+                    href="/zero"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    zero
+                  </Link>
+                  <Link
+                    href="/canon"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    canon
+                  </Link>
+                  <Link
+                    href="/society"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    society
+                  </Link>
+                  <Link
+                    href="/plurality"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    plural
+                  </Link>
+                  <Link
+                    href="/proverbs"
+                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
+                  </Link>
+                  <Link
+                    href="/mage"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    mage
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
 
