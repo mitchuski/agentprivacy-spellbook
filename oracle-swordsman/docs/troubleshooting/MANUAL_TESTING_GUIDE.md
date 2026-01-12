@@ -301,7 +301,7 @@ ORDER BY s.created_at DESC;
 
 3. **Check IPFS access**:
    ```bash
-   curl -s "https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4" | jq '.version'
+   curl -s "https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy" | jq '.version'
    ```
 
 ### Database Issues

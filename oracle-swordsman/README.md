@@ -120,8 +120,8 @@ See `.env.example` for all required variables.
 - `NEAR_API_KEY` - Mage agent API key (frontend/website, required)
 - `NEAR_SWORDSMAN_API_KEY` - Swordsman agent API key (oracle verification, **MUST be separate from mage key**, required)
 - `NEAR_MODEL` - AI model (default: `openai/gpt-oss-120b`)
-- `SPELLBOOK_URL` - Direct IPFS URL to spellbook (default: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`)
-- `SPELLBOOK_CID` - IPFS content ID (default: `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`)
+- `SPELLBOOK_URL` - Direct IPFS URL to spellbook (default: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`)
+- `SPELLBOOK_CID` - IPFS content ID (default: `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`)
 - `PINATA_JWT` - IPFS access (optional, only needed for uploading)
 - `PINATA_GATEWAY` - IPFS gateway URL (default: `https://red-acute-chinchilla-216.mypinata.cloud`)
 - `DATABASE_URL` - PostgreSQL connection (required)
@@ -148,7 +148,7 @@ See `.env.example` for all required variables.
 - ⏳ Nillion TEE integration (optional, pending API key)
 - ⏳ Main Oracle loop (ready for testing)
 
-**Current Spellbook**: IPFS CID `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
+**Current Spellbook**: IPFS CID `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
 
 ## Documentation
 

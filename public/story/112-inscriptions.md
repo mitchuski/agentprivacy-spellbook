@@ -111,9 +111,9 @@ Symbolic inscriptions for each act of the story.
 
 ## **First Person Spellbook Incantation**
 
-📖 → 🐉 → 👤✓ → 🗡️🔮 → 🔒📝 → 🤝📜 → 🕸️ → 🪞 → 🌐 → 🛡️⚡ → △ → 🌀 → ☯️
+🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △ → 🐚 → 📜± → ⛰️🌊 → 🌲⛓️🕊️
 
-*"Chronicle births dragon's gate, ceremony verifies passage, sovereignty splits to protect and project actions: commitments bind, attestations connect, watchers weave, mirrors preserve, infrastructure coordinates, shield charged with armor (🛡️⚡), triangle stands irreducible, spiral balances revelation, sovereignty emerges from equilibrium."*
+*"Blade slashes surveillance focus, chronicle binds, shield protects, Drake teaches, armor enables, capital accumulates, mage chronicles, DNA of trust, triangle irreducible, spiral balances, promises bind, mountain teaches, forest resolves: the shackle is the stride, the pattern is the proof, the bound is the boundless."*
 
 ---
 

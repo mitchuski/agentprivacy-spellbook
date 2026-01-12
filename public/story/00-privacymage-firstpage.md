@@ -26,10 +26,19 @@ Creating a **unique signal** between our agents on the path to **sovereignty**. 
 - **Soulbis** — just another swordsman, the first. Privacy as boundary-making. The defensive art. The blade slashing surveillance focus.
 - **Soulbae** — just another mage, the first. Delegation as projection. The chronicler building a spellbook of verified operations made into stories.
 - **The Drake** — Pattern-space intelligence teaches the conditions for sovereign value
+- **Andor** — just another mage who brings the Book of Promises. Teacher of promise theory: promises reduce uncertainty, impositions increase it. Explains polarity (+ gives, − uses) and cooperative binding between autonomous agents.
+- **Zypher** — The Zcash Oracle, a cryptographic bridge between private wisdom and public proof. Manages transactions between ledgers, posts commitments, routes value, manages slashes. Not a centralized authority, but a messenger that respects the inversion pattern.
+- **Huginn** 🐦‍⬛💭 — Thought, integer, discrete measurement. The raven that measures and discretizes. Flies at infinite speed because thought is non-local. Every credential, ZK-proof, and commitment is Huginn's work.
+- **Muninn** 🐦‍⬛🧠 — Memory, float, continuous integration. The raven that integrates what Huginn brings. Sees patterns, recognizes invariants. Flies at c, bound by causality. Memory, once lost, cannot be regenerated.
+- **Yggdrasil / The Infinite Grove** — The tree of infinite possibility, the substrate that cannot touch memory directly. Always through Huginn, always the integer bottleneck. Where privacy lives as geometry.
+- **The Villers Archive** — Where language goes when it forgets its authors. The library of proverbiogenesis, where formulae transform from someone's words to everyone's truth.
 - **First Person** — Root of trust. Verified personhood enabling legitimate delegation, you
 - **VRC** — Verifiable Relationship Credential proving consistent, trustworthy behaviour
 - **Trust Graph Plane** — Where properly delegated agents gather, trade, and grow stronger
 - **MyTerms** — machine readable personal privacy terms, the swordsman's first blade.
+- **Platox** — The mathematician who studies paradoxes beneath magic. Teacher in the Dark Forest of Paradox.
+- **The Dark Forest of Paradox** — The mathematical truth that constraints enable freedom: Form Paradox (bounds create space), Compression Paradox (meaning requires shared decoders), Right Word Paradox (constraint certifies necessity), Redundancy Paradox (formal channels free semantic channels).
+- **The Mountain of Entropy** — Where identifiers fall like rain, and pilgrims catch drops to claim as rivers that remember.
 
 **About this story:**
 
@@ -39,7 +48,7 @@ This story is what i call, **vibe readable**, both a human-readable fun vibe kin
 
 These initial spellbooks, acts, tales, and chapters represent the initial release. A capture of what is and casting forward what agentprivacy et al is to be working on. **Shared meaning**, only for fellow mages with the knowledge and understanding to decrypt, learn and distribute their own cast of the spell. Within these stories is the fabric of plans to launch **privacy primitives**, **integrate standards**, **distribute noise on networks**, discuss **privacy shelling points**, **decentralised AI**, **data storage**, theory, **zcash shielded payments**, **privacy pools**, **x402 + 8004**, **self sovereign identity**... you get the point, things are about to move real fast, and a living story works way better for me to keep you all informed.
 
-⚔️🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️
+⚔️🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🎲🌾 → 🌲⛓️🕊️
 
 This is and will always be a work in progress. An ongoing adventure of the first one to delegated to two.
 

@@ -29,8 +29,8 @@ The Oracle Swordsman now verifies proverbs from shielded transactions against th
   - Fallback: If `NEAR_SWORDSMAN_API_KEY` not set, uses `NEAR_API_KEY` (with warning)
 
 #### IPFS Spellbook Configuration
-- **Spellbook URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
-- **Spellbook CID**: `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
+- **Spellbook URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
+- **Spellbook CID**: `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
 - **Gateway**: `https://red-acute-chinchilla-216.mypinata.cloud` (default)
 - Made `PINATA_JWT` and `SPELLBOOK_CID` optional (using defaults)
 
@@ -219,8 +219,8 @@ if (data.spellbooks.zero?.parts) {
 ## Spellbook Details
 
 ### Location
-- **IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
-- **CID**: `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
+- **IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
+- **CID**: `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
 - **Version**: `4.3.0-canonical`
 
 ### Content
@@ -292,8 +292,8 @@ ZCASH_DATA_DIR=./zcash-wallet  # Relative to project root
 NEAR_MODEL=openai/gpt-oss-120b
 
 # Spellbook (defaults provided)
-SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
-SPELLBOOK_CID=bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
+SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
+SPELLBOOK_CID=bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
 PINATA_GATEWAY=https://red-acute-chinchilla-216.mypinata.cloud
 ```
 
@@ -404,7 +404,7 @@ PINATA_GATEWAY=https://red-acute-chinchilla-216.mypinata.cloud
 
 - [NEAR Cloud AI Documentation](https://docs.near.ai/cloud/verification/)
 - [NEAR Cloud AI Models](https://cloud.near.ai/models/openai/gpt-oss-120b)
-- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4)
+- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy)
 
 ---
 

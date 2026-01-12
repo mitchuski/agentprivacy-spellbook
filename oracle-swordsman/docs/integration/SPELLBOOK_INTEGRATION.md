@@ -6,9 +6,9 @@ The Oracle Swordsman uses the canonical spellbook stored on IPFS to verify prove
 
 ## Spellbook Location
 
-**IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
+**IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
 
-**CID**: `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
+**CID**: `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
 
 **Version**: `4.3.0-canonical`
 
@@ -125,8 +125,8 @@ near: {
 }
 
 ipfs: {
-  spellbookUrl: 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4',
-  spellbookCid: 'bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4',
+  spellbookUrl: 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy',
+  spellbookCid: 'bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy',
 }
 ```
 
@@ -145,8 +145,8 @@ NEAR_SWORDSMAN_API_KEY=your_near_swordsman_api_key_here
 NEAR_MODEL=openai/gpt-oss-120b
 
 # Spellbook (optional - defaults provided)
-SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
-SPELLBOOK_CID=bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
+SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
+SPELLBOOK_CID=bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
 ```
 
 ## Testing
@@ -197,7 +197,7 @@ The Oracle Swordsman enforces this by:
 
 ## References
 
-- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4)
+- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy)
 - [NEAR Cloud AI Documentation](https://docs.near.ai/cloud/verification/)
 - [NEAR Cloud AI Models](https://cloud.near.ai/models/openai/gpt-oss-120b)
 

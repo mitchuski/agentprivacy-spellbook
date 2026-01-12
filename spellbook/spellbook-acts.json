@@ -16,7 +16,7 @@
   "spellbooks": {
     "story": {
       "name": "Story Spellbook",
-      "description": "The journey from ceremony to sovereignty - thirteen acts teaching the architecture of privacy and delegation",
+      "description": "The journey from ceremony to sovereignty - fifteen acts teaching the architecture of privacy and delegation",
       "opening": {
         "spell": "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
         "proverb": "just another swordsman ⚔️🤝🧙‍♂️ just another mage"
@@ -175,6 +175,17 @@
           "keywords": ["entropy", "randomness", "identifiers", "meaning", "relationship", "swordsman", "mage", "mountain", "rain", "inscription"],
           "spell": "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
           "proverb": "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest."
+        },
+        {
+          "id": "act-15-running-in-shackles",
+          "act_number": 15,
+          "tale_id": "act-xv-running-in-shackles",
+          "title": "Running in Shackles Through the Dark Forest",
+          "description": "Soulbis and Soulbae enter the Dark Forest of Paradox, where they meet Platox, the mathematician who studies paradoxes beneath magic. Through four groves—Elwynn (Form Paradox), The Loch (Compression Paradox), Ashenvale (Right Word Paradox), and Stranglethorn (Redundancy Paradox)—they learn that constraints that appear to limit actually liberate. The dual-agent architecture follows the same mathematics as poetry: formal bounds (meter, rhyme, separation) create space for semantic content (meaning, sovereignty, trust) to expand. The gap between Soulbis and Soulbae is not limitation but the very condition for meaning. The constraint is the capability. The pattern is the proof. The shackle is the stride.",
+          "category": "mathematical-foundations",
+          "keywords": ["paradox", "entropy", "constraint", "poetry", "information-theory", "kolmogorov", "shannon", "compression", "redundancy", "verification", "bilateral", "meaning", "platox", "forest", "form", "shadowglen", "elwynn", "ashenvale", "stranglethorn", "teldrassil"],
+          "spell": "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
+          "proverb": "Form is not the enemy of content but its vessel; the shackle does not imprison the stride—it gives ground enough to reach the boundless."
         }
       ],
       "closing": {
@@ -503,12 +514,12 @@
   "status": {
     "version": "4.3.0-canonical",
     "state": "Complete - Both Spellbooks",
-    "story_acts_total": 14,
-    "story_acts_published": 14,
+    "story_acts_total": 15,
+    "story_acts_published": 15,
     "zero_tales_total": 30,
     "zero_tales_published": 30,
-    "total_inscriptions": 44,
-    "note": "Combined canonical edition of First Person Spellbook (Story) and Zero Knowledge Spellbook (Zero) with all spell inscriptions and proverbs matching correctly. Act 13: The Book of Promises and Act 14: Rain on the Mountain of Entropy included."
+    "total_inscriptions": 45,
+    "note": "Combined canonical edition of First Person Spellbook (Story) and Zero Knowledge Spellbook (Zero) with all spell inscriptions and proverbs matching correctly. Act 13: The Book of Promises, Act 14: Rain on the Mountain of Entropy, and Act 15: Running in Shackles Through the Dark Forest included."
   }
 }
 

@@ -2,7 +2,7 @@
  * Fetches spellbook from IPFS and formats it for copying
  */
 
-const SPELLBOOK_IPFS_URL = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4';
+const SPELLBOOK_IPFS_URL = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy';
 
 interface SpellbookData {
   version: string;

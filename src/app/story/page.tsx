@@ -25,6 +25,7 @@ const storySpellMappings: { [actNumber: number]: string } = {
   12: '🌱→⚒️→📡→🌊→🌫️🏛️',
   13: '🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️',
   14: '🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞',
+  15: '📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎',
 };
 
 const getActVideo = (act: number): string | null => {
@@ -43,6 +44,7 @@ const getActVideo = (act: number): string | null => {
     12: '/assets/act12_forgetting_story.mp4', // Act XII: The Forgetting
     13: '/assets/act13_bookofpromise_story.mp4', // Act XIII: The Book of Promises
     14: '/assets/act14_rainonthemountain_story.mp4', // Act XIV: Rain on the Mountain of Entropy
+    15: '/assets/act15_RunninginShacklesThroughtheDarkForest_story.mp4', // Act XV: Running in Shackles Through the Dark Forest
   };
   return videoMap[act] || null;
 };
@@ -67,7 +69,8 @@ const getActAudio = (act: number): string | null => {
     12: `${R2_BASE_URL}/12_Forgetting_Proverbiogenesis.mp3`, // Act XII: The Forgetting
     13: `${R2_BASE_URL}/13_The_Book_of_Promises.mp3`, // Act XIII: The Book of Promises
     14: `${R2_BASE_URL}/14_Rain_on_the_Mountain_of_Entropy.mp3`, // Act XIV: Rain on the Mountain
-    15: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    15: `${R2_BASE_URL}/15_Running_in_Shackles_Through_the_Dark_Forest.mp3`, // Act XV: Running in Shackles Through the Dark Forest
+    16: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -313,6 +316,7 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       12: "The mage's spell, once spoken, becomes the village weather.",
       13: "When sovereigns meet, they explore before they bind—promises flow freely, never forced, never blind. Two wills aligned make cooperation's highest art: architects of fate through the spells they freely impart.",
       14: "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest.",
+      15: "Form is not the enemy of content but its vessel; the shackle does not imprison the stride—it gives ground enough to reach the boundless.",
     };
     return proverbs[act] || "";
   };
@@ -407,6 +411,12 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       actNumber: 14,
       emojis: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
       quote: getProverbForInscription(14)
+    },
+    {
+      title: "Act XV: Running in Shackles Through the Dark Forest",
+      actNumber: 15,
+      emojis: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
+      quote: getProverbForInscription(15)
     },
     {
       title: "Closing Spell",
@@ -514,6 +524,7 @@ const getActFilename = (act: number): string => {
     12: '12-act-xii-the-forgetting',
     13: '13-act-xiii-book-of-promises',
     14: '14-act-xiv-rain-on-mountain',
+    15: '15-act-xv-running-in-shackles',
   };
   return filenames[act] || '';
 };
@@ -528,18 +539,18 @@ export default function StoryPage() {
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 14 }, (_, i) => i + 1), 15, 16]; // 0 = first page, 1-14 = Acts, 15 = last page, 16 = inscriptions
+  const acts = [0, ...Array.from({ length: 15 }, (_, i) => i + 1), 16, 17]; // 0 = first page, 1-15 = Acts, 16 = last page, 17 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-14), last page (15), or inscriptions (16)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 14) || activeAct === 15 || activeAct === 16) {
+        // Load markdown for first page (0), acts (1-15), last page (16), or inscriptions (17)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 15) || activeAct === 16 || activeAct === 17) {
           let filename: string;
-          if (activeAct === 16) {
+          if (activeAct === 17) {
             filename = '112-inscriptions.md';
-          } else if (activeAct === 15) {
+          } else if (activeAct === 16) {
             filename = '111-privacymage-lastpage.md';
           } else {
             filename = `${getActFilename(activeAct)}.md`;
@@ -631,6 +642,7 @@ export default function StoryPage() {
       12: "🌱→⚒️→📡→🌊→🌫️🏛️",
       13: "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
       14: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
+      15: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
     };
     return inscriptions[act] || "";
   };
@@ -652,6 +664,7 @@ export default function StoryPage() {
       12: "The mage's spell, once spoken, becomes the village weather.",
       13: "When sovereigns meet, they explore before they bind—promises flow freely, never forced, never blind. Two wills aligned make cooperation's highest art: architects of fate through the spells they freely impart.",
       14: "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest.",
+      15: "Form is not the enemy of content but its vessel; the shackle does not imprison the stride—it gives ground enough to reach the boundless.",
     };
     return proverbs[act] || "";
   };
@@ -715,14 +728,14 @@ export default function StoryPage() {
 
   // Get tale ID for current act
   const getCurrentTaleId = (): string => {
-    if (activeAct === 0 || activeAct === 16 || activeAct === 15) {
+    if (activeAct === 0 || activeAct === 16 || activeAct === 17) {
       return 'act-i-venice'; // Default
     }
     return getTaleIdFromAct(activeAct);
   };
 
   // Show Swordsman panel only for actual acts (not first page or inscriptions)
-  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 14;
+  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 15;
 
   // Get act name for current act
   const getActName = (act: number): string => {
@@ -741,6 +754,7 @@ export default function StoryPage() {
       12: 'Act XII: The Forgetting',
       13: 'Act XIII: The Book of Promises',
       14: 'Act XIV: Rain on the Mountain of Entropy',
+      15: 'Act XV: Running in Shackles Through the Dark Forest',
     };
     return actNames[act] || `Act ${act}`;
   };
@@ -931,8 +945,8 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
-                  if (actNum === 15) return 'last page';
-                  if (actNum === 16) return 'spells';
+                  if (actNum === 16) return 'last page';
+                  if (actNum === 17) return 'spells';
                   return `Act ${actNum}`;
                 };
                 
@@ -967,7 +981,7 @@ export default function StoryPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Audio Player and Learn/Protect Buttons */}
-            {((activeAct >= 1 && activeAct <= 14) || activeAct === 0 || activeAct === 15) && (
+            {((activeAct >= 1 && activeAct <= 15) || activeAct === 0 || activeAct === 16) && (
               <div className="absolute top-2 sm:top-4 right-2 sm:right-4 left-2 sm:left-auto z-10 flex flex-col sm:flex-row items-end sm:items-center gap-2">
                 {/* Audio Player - Right side, before buttons */}
                 {markdownContent && (
@@ -1019,7 +1033,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 15 && activeAct !== 16 && (
+                {activeAct !== 0 && activeAct !== 16 && activeAct !== 17 && (
                   <>
                     <div className="mb-6 pt-16 sm:pt-0">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -1091,9 +1105,9 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                {activeAct === 16 ? (
+                {activeAct === 17 ? (
                   <InscriptionsPage onCopy={copyInscription} onProtect={handleProtect} />
-                ) : activeAct === 15 ? (
+                ) : activeAct === 16 ? (
                   <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>

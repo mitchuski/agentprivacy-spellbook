@@ -244,7 +244,7 @@ NEAR_MODEL=gpt oss 120b
 # ============================================
 PINATA_JWT=your_pinata_jwt_here
 PINATA_GATEWAY=https://your-gateway.mypinata.cloud
-SPELLBOOK_CID=bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4  # Current: v4.3.0-canonical
+SPELLBOOK_CID=bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy  # Current: v7.0.0-canonical
 
 # ============================================
 # Zcash Configuration
@@ -498,7 +498,7 @@ curl -X POST https://faucet.zecpages.com/api/claim \
 
 The spellbook is already created and uploaded to IPFS:
 - **Version**: 4.3.0-canonical
-- **IPFS CID**: `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
+- **IPFS CID**: `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
 - **Description**: Complete Spellbook - Canonical Edition combining First Person Spellbook and Zero Knowledge Spellbook with Relationship Proverb Protocol inscriptions
 - **Location**: `spellbook/spellbook-acts.json`
 
@@ -511,7 +511,7 @@ To update the spellbook, edit `spellbook/spellbook-acts.json` and re-upload to P
 
 ### Upload to IPFS
 
-**Current Status**: Spellbook is already uploaded with CID `bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4`
+**Current Status**: Spellbook is already uploaded with CID `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
 
 **To Update Spellbook**:
 
@@ -559,10 +559,10 @@ curl -X POST https://api.pinata.cloud/pinning/pinFileToIPFS \
 
 ```bash
 # Test retrieval (current spellbook)
-curl https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
+curl https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
 
 # Or use your gateway:
-curl https://YOUR_GATEWAY.mypinata.cloud/ipfs/bafkreib4r25sdoxlc3t4rzrlmk2my4yvgonnij5jswu5l5y2u622vbwgp4
+curl https://YOUR_GATEWAY.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
 
 # Should return your JSON file with version 4.0.0-canonical
 ```

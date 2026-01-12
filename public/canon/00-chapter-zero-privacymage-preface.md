@@ -1,4 +1,4 @@
-# The Privacymage's Preface
+# just another story, the privacymage's preface to the blockchain canon
 
 *In which we learn why this spellbook exists, how two canons diverged from one origin, and why understanding the forge is necessary to wield the blade...*
 
