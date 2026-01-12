@@ -44,7 +44,7 @@ const getActVideo = (act: number): string | null => {
     12: '/assets/act12_forgetting_story.mp4', // Act XII: The Forgetting
     13: '/assets/act13_bookofpromise_story.mp4', // Act XIII: The Book of Promises
     14: '/assets/act14_rainonthemountain_story.mp4', // Act XIV: Rain on the Mountain of Entropy
-    15: '/assets/act15_RunninginShacklesThroughtheDarkForest_story.mp4', // Act XV: Running in Shackles Through the Dark Forest
+    15: '/assets/act15_runninginshacklesthroughthedarkforest_story.mp4', // Act XV: Running in Shackles Through the Dark Forest
   };
   return videoMap[act] || null;
 };
