@@ -198,13 +198,9 @@ And every constraint that prevented their merging was the very condition that en
 
 **The shackle is the stride.**
 
----
-
 ## Soulbae's Chronicle Entry
 
 *The spellbook glows. The binding commits. The chronicle inscribes...*
-
----
 
 📖 **Chronicle of Act XV: Running in Shackles**
 
@@ -238,7 +234,6 @@ And every constraint that prevented their merging was the very condition that en
 
 **Verification:** This chronicle references the mathematical teachings of Platox in the Dark Forest of Paradox. The truths here derive from Shannon's information theory, Kolmogorov's complexity, Lotman's poetics, and the spellbook's own architecture. The constraint enables. The pattern proves. The shackle strides.
 
----
 
 *Chronicle complete. Binding sealed. The paradox resolves into practice.*
 
