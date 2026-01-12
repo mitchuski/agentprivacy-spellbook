@@ -78,10 +78,12 @@ const getActAudio = (act: number): string | null => {
 function ActImage({ act }: { act: number }) {
   const videoSrc = getActVideo(act);
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Reset when act changes
     setHasError(false);
+    setIsLoading(true);
   }, [act]);
 
   if (!videoSrc || hasError) {
@@ -90,6 +92,11 @@ function ActImage({ act }: { act: number }) {
 
   return (
     <div className="relative w-full rounded-lg overflow-hidden border border-surface/50 bg-background/50">
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-background/80 z-10">
+          <div className="text-text-muted text-sm">Loading video...</div>
+        </div>
+      )}
       <video
         key={act}
         src={videoSrc}
@@ -98,7 +105,11 @@ function ActImage({ act }: { act: number }) {
         loop
         muted
         playsInline
-        onError={() => setHasError(true)}
+        onLoadedData={() => setIsLoading(false)}
+        onError={() => {
+          setHasError(true);
+          setIsLoading(false);
+        }}
       />
     </div>
   );
@@ -149,14 +160,28 @@ function ActAudioPlayer({ act }: { act: number }) {
     });
     
     audioElement.addEventListener('loadedmetadata', () => {
-      setDuration(audioElement.duration);
+      const dur = audioElement.duration;
+      if (isFinite(dur) && dur > 0) {
+        setDuration(dur);
+      }
+    });
+    
+    audioElement.addEventListener('loadeddata', () => {
+      const dur = audioElement.duration;
+      if (isFinite(dur) && dur > 0 && duration === 0) {
+        setDuration(dur);
+      }
     });
     
     audioElement.addEventListener('timeupdate', () => {
       const current = audioElement.currentTime;
-      const total = audioElement.duration || 0;
+      const total = audioElement.duration || duration || 0;
       setCurrentTime(current);
       setProgress(total > 0 ? (current / total) * 100 : 0);
+      // Update duration if it wasn't set yet
+      if (total > 0 && duration === 0) {
+        setDuration(total);
+      }
     });
     
     // Load the audio
@@ -288,7 +313,7 @@ function ActAudioPlayer({ act }: { act: number }) {
         {/* Time Display */}
         <div className="flex items-center justify-between text-[9px] sm:text-[10px] text-text-muted leading-tight">
           <span>{formatTime(currentTime)}</span>
-          <span className="hidden sm:inline">{formatTime(duration)}</span>
+          <span>{formatTime(duration)}</span>
         </div>
       </div>
     </div>

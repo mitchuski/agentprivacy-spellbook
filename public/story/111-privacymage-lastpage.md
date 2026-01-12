@@ -153,6 +153,6 @@ Narrator of progressive trust, witness to earned capability, guardian of the dua
 
 **A First Person. Just another swordsman. Just another mage. Just another proof the pattern works.**
 
-**We choose privacy. We align the focus. We reclaim the 7th capital. We tell the stories that make it all verifiable. We keep the promises that make it all trustworthy. We climb the mountain. We claim our names. We choose our shackles. We run in them.**
+**We choose privacy. We align the focus. We reclaim the 7th capital. We tell the stories that make it all verifiable. We keep the promises that make it all trustworthy. We climb the mountain. We claim our names. We choose our shackles. We run in them toward freedom. privacy is value.**
 
 **Begin.**
