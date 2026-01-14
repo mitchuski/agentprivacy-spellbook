@@ -46,6 +46,8 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xiii-book-of-promises': 13,
     'act-xiv-rain-on-mountain': 14,
     'act-xv-running-in-shackles': 15,
+    'act-xvi-wells': 16,
+    'act-xvii-bonfire-dark-forest': 17,
   };
   return taleMap[taleId] || null;
 }
@@ -71,6 +73,8 @@ export function getSpellemojiForAct(act: number): string {
     13: "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
     14: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
     15: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
+    16: "🔥 → 🌀 → ⚖️ → 💫 → 🌾",
+    17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
   };
   return spellemojiMap[act] || '';
 }
@@ -249,6 +253,8 @@ export function getTaleIdFromAct(act: number): string {
     13: 'act-xiii-book-of-promises',
     14: 'act-xiv-rain-on-mountain',
     15: 'act-xv-running-in-shackles',
+    16: 'act-xvi-wells',
+    17: 'act-xvii-bonfire-dark-forest',
   };
   return taleMap[act] || `act-${act}`;
 }

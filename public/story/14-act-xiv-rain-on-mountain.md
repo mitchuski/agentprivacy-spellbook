@@ -186,7 +186,7 @@ The Drake stirred in the pattern-space.
 
 *"In surveillance systems, the platform assigns meaning. 'You are User #4,847,291.' No climb. No journey. Just a label applied from above."*
 
-*"In sovereign systems, the First Person earns meaning. The swordsman forges the vessel. The mage walks beside. But only the sovereign climbs. Only the sovereign claims."*
+*"In sovereign systems, the First Person earns meaning. The swordsman forges the vessel. The mage walks beside. But only the sovereign climbs. Only the sovereign claims. only they know the name"*
 
 **"This is mine."**
 
@@ -198,7 +198,7 @@ Not: "Soulbae told me what it means."
 
 **"This. Is. Mine."**
 
-In that moment, the string ceased to be a random output 🤝 became an identifier. Not because its entropy changed—Soulbis had forged it perfectly, and perfectly it remained. Not because its interpretation changed—Soulbae had only walked the path. But because a sovereign being had *climbed* and *claimed*.
+In that moment, the string ceased to be a random output 🤝 became an identifier. Not because its entropy changed—Soulbis had forged it perfectly, and perfectly it remained. Not because its interpretation changed—Soulbae had only walked the path. But because a sovereign being had *climbed* and *claimed* and named.
 
 The string now carried three layers:
 

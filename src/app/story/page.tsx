@@ -26,6 +26,8 @@ const storySpellMappings: { [actNumber: number]: string } = {
   13: '🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️',
   14: '🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞',
   15: '📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎',
+  16: '🔥 → 🌀 → ⚖️ → 💫 → 🌾',
+  17: '🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥',
 };
 
 const getActVideo = (act: number): string | null => {
@@ -45,6 +47,8 @@ const getActVideo = (act: number): string | null => {
     13: '/assets/act13_bookofpromise_story.mp4', // Act XIII: The Book of Promises
     14: '/assets/act14_rainonthemountain_story.mp4', // Act XIV: Rain on the Mountain of Entropy
     15: '/assets/act15_runninginshacklesthroughthedarkforest_story.mp4', // Act XV: Running in Shackles Through the Dark Forest
+    16: '/assets/act16_whenpoolsbecomewells.mp4', // Act XVI: When Pools Become Wells
+    17: '/assets/act17_bonfireinthedarkforest.mp4', // Act XVII: Bonfire in the Dark Forest
   };
   return videoMap[act] || null;
 };
@@ -70,7 +74,9 @@ const getActAudio = (act: number): string | null => {
     13: `${R2_BASE_URL}/13_The_Book_of_Promises.mp3`, // Act XIII: The Book of Promises
     14: `${R2_BASE_URL}/14_Rain_on_the_Mountain_of_Entropy.mp3`, // Act XIV: Rain on the Mountain
     15: `${R2_BASE_URL}/15_Running_in_Shackles_Through_the_Dark_Forest.mp3`, // Act XV: Running in Shackles Through the Dark Forest
-    16: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    16: `${R2_BASE_URL}/16_When_Pools_Become_Wells.mp3`, // Act XVI: When Pools Become Wells
+    17: `${R2_BASE_URL}/17_Bonfire_in_the_Dark_Forest.mp3`, // Act XVII: Bonfire in the Dark Forest
+    18: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -342,6 +348,8 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       13: "When sovereigns meet, they explore before they bind—promises flow freely, never forced, never blind. Two wills aligned make cooperation's highest art: architects of fate through the spells they freely impart.",
       14: "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest.",
       15: "Form is not the enemy of content but its vessel; the shackle does not imprison the stride—it gives ground enough to reach the boundless.",
+      16: "The idea that pools with no other ideas floats alone in the void; mass is earned through retrieval, not declared.",
+      17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
     };
     return proverbs[act] || "";
   };
@@ -442,6 +450,18 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       actNumber: 15,
       emojis: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
       quote: getProverbForInscription(15)
+    },
+    {
+      title: "Act XVI: When Pools Become Wells",
+      actNumber: 16,
+      emojis: "🔥 → 🌀 → ⚖️ → 💫 → 🌾",
+      quote: getProverbForInscription(16)
+    },
+    {
+      title: "Act XVII: Bonfire in the Dark Forest",
+      actNumber: 17,
+      emojis: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
+      quote: getProverbForInscription(17)
     },
     {
       title: "Closing Spell",
@@ -550,6 +570,8 @@ const getActFilename = (act: number): string => {
     13: '13-act-xiii-book-of-promises',
     14: '14-act-xiv-rain-on-mountain',
     15: '15-act-xv-running-in-shackles',
+    16: '16-act-xvi-when-pools-become-wells',
+    17: '17-act-xvii-bonfire-in-the-dark-forest',
   };
   return filenames[act] || '';
 };
@@ -564,18 +586,18 @@ export default function StoryPage() {
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 15 }, (_, i) => i + 1), 16, 17]; // 0 = first page, 1-15 = Acts, 16 = last page, 17 = inscriptions
+  const acts = [0, ...Array.from({ length: 17 }, (_, i) => i + 1), 18, 19]; // 0 = first page, 1-17 = Acts, 18 = last page, 19 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-15), last page (16), or inscriptions (17)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 15) || activeAct === 16 || activeAct === 17) {
+        // Load markdown for first page (0), acts (1-17), last page (18), or inscriptions (19)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 17) || activeAct === 18 || activeAct === 19) {
           let filename: string;
-          if (activeAct === 17) {
+          if (activeAct === 19) {
             filename = '112-inscriptions.md';
-          } else if (activeAct === 16) {
+          } else if (activeAct === 18) {
             filename = '111-privacymage-lastpage.md';
           } else {
             filename = `${getActFilename(activeAct)}.md`;
@@ -668,6 +690,8 @@ export default function StoryPage() {
       13: "🧙‍♂️²🤝→⚡🎯→📜±→🔮🔍→🛡️⚖️→✨🔗→🗣️📿→🌅🏗️",
       14: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
       15: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
+      16: "🔥 → 🌀 → ⚖️ → 💫 → 🌾",
+      17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
     };
     return inscriptions[act] || "";
   };
@@ -690,6 +714,8 @@ export default function StoryPage() {
       13: "When sovereigns meet, they explore before they bind—promises flow freely, never forced, never blind. Two wills aligned make cooperation's highest art: architects of fate through the spells they freely impart.",
       14: "What the machine assigns, the mage inscribes. What the mage inscribes, the relationship confirms. Randomness is the seed; meaning is the harvest.",
       15: "Form is not the enemy of content but its vessel; the shackle does not imprison the stride—it gives ground enough to reach the boundless.",
+      16: "The idea that pools with no other ideas floats alone in the void; mass is earned through retrieval, not declared.",
+      17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
     };
     return proverbs[act] || "";
   };
@@ -753,14 +779,14 @@ export default function StoryPage() {
 
   // Get tale ID for current act
   const getCurrentTaleId = (): string => {
-    if (activeAct === 0 || activeAct === 16 || activeAct === 17) {
+    if (activeAct === 0 || activeAct === 18 || activeAct === 19) {
       return 'act-i-venice'; // Default
     }
     return getTaleIdFromAct(activeAct);
   };
 
   // Show Swordsman panel only for actual acts (not first page or inscriptions)
-  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 15;
+  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 17;
 
   // Get act name for current act
   const getActName = (act: number): string => {
@@ -780,6 +806,8 @@ export default function StoryPage() {
       13: 'Act XIII: The Book of Promises',
       14: 'Act XIV: Rain on the Mountain of Entropy',
       15: 'Act XV: Running in Shackles Through the Dark Forest',
+      16: 'Act XVI: When Pools Become Wells',
+      17: 'Act XVII: Bonfire in the Dark Forest',
     };
     return actNames[act] || `Act ${act}`;
   };
@@ -970,8 +998,8 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
-                  if (actNum === 16) return 'last page';
-                  if (actNum === 17) return 'spells';
+                  if (actNum === 18) return 'last page';
+                  if (actNum === 19) return 'spells';
                   return `Act ${actNum}`;
                 };
                 
@@ -1006,7 +1034,7 @@ export default function StoryPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Audio Player and Learn/Protect Buttons */}
-            {((activeAct >= 1 && activeAct <= 15) || activeAct === 0 || activeAct === 16) && (
+            {((activeAct >= 1 && activeAct <= 17) || activeAct === 0 || activeAct === 18) && (
               <div className="absolute top-2 sm:top-4 right-2 sm:right-4 left-2 sm:left-auto z-10 flex flex-col sm:flex-row items-end sm:items-center gap-2">
                 {/* Audio Player - Right side, before buttons */}
                 {markdownContent && (
@@ -1058,7 +1086,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 16 && activeAct !== 17 && (
+                {activeAct !== 0 && activeAct !== 18 && activeAct !== 19 && (
                   <>
                     <div className="mb-6 pt-16 sm:pt-0">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -1130,9 +1158,9 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                {activeAct === 17 ? (
+                {activeAct === 19 ? (
                   <InscriptionsPage onCopy={copyInscription} onProtect={handleProtect} />
-                ) : activeAct === 16 ? (
+                ) : activeAct === 18 ? (
                   <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>

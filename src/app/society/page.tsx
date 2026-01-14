@@ -126,7 +126,9 @@ const getChapterVideo = (chapter: number): string | null => {
     16: '/assets/chapter16_gardenbloomed_society.mp4',
     17: '/assets/chapter17_valuesmetcode_society.mp4',
   };
-  return videoMap[chapter] || null;
+  const path = videoMap[chapter];
+  // Normalize path to remove double slashes (fix for production CDN issues)
+  return path ? path.replace(/\/+/g, '/') : null;
 };
 
 function ChapterImage({ chapter }: { chapter: number }) {

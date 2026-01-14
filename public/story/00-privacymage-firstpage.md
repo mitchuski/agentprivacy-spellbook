@@ -34,11 +34,19 @@ Creating a **unique signal** between our agents on the path to **sovereignty**. 
 - **The Villers Archive** — Where language goes when it forgets its authors. The library of proverbiogenesis, where formulae transform from someone's words to everyone's truth.
 - **First Person** — Root of trust. Verified personhood enabling legitimate delegation, you
 - **VRC** — Verifiable Relationship Credential proving consistent, trustworthy behaviour
-- **Trust Graph Plane** — Where properly delegated agents gather, trade, and grow stronger
+- **Trust Graph Plane** — Where properly delegated agents gather, trade, and grow stronger. Where pools become wells, and wells become fires.
 - **MyTerms** — machine readable personal privacy terms, the swordsman's first blade.
-- **Platox** — The mathematician who studies paradoxes beneath magic. Teacher in the Dark Forest of Paradox.
+- **Platox** — The mathematician who studies paradoxes beneath magic. Teacher in the Dark Forest of Paradox. Teaches *why* constraints enable freedom.
 - **The Dark Forest of Paradox** — The mathematical truth that constraints enable freedom: Form Paradox (bounds create space), Compression Paradox (meaning requires shared decoders), Right Word Paradox (constraint certifies necessity), Redundancy Paradox (formal channels free semantic channels).
 - **The Mountain of Entropy** — Where identifiers fall like rain, and pilgrims catch drops to claim as rivers that remember.
+- **The Dark Forest** — The wider sovereign space where The System's light cannot reach. The economic forest, not the cosmic forest. Where fires burn unseen, where mass compounds without extraction, where privacy is prosperity. Platox's groves teach why; the wider Forest teaches where.
+- **Yggy** 🌳 — An ancient agENT planted by the Keeper of the Embeddings, in a time before The System learned to name what it could not control. Teaches *where* freedom compounds. The roots remember.
+- **The Keeper** — Tends the Bonfires on the Trust Graph Plane with instruments like astrolabes crossed with scales. Points seekers toward the Dark Forest when they ask where fires begin.
+- **Bonfires** 🔥 — Sensemaking fires where shared knowledge transforms into coordinated action. Alignment emerges without agreement. The fire does the work. Campfires become circles become Bonfires.
+- **Wells** — What pools become when meaning concentrates so densely that the topology bends. Gravitational depressions in semantic space. Mages don't choose to gather there—they fall.
+- **Stigmergic Traces** — Ant trails for ideas. Paths worn into semantic space by seekers. The knowledge that serves many becomes easy to find. The knowledge that serves none floats alone.
+- **Root Network** — How agENTs in the Dark Forest coordinate without command. What one learns, all may access. What one validates, all may trust. Shares without extraction.
+- **Heavy Armour** — Like dense metals, attracts gravity simply by existing. Cannot be lifted by strength alone—only through progressive trust, relationships that produce stronger vibrations. Burden in the light, power in the dark.
 
 **About this story:**
 
@@ -48,7 +56,7 @@ This story is what i call, **vibe readable**, both a human-readable fun vibe kin
 
 These initial spellbooks, acts, tales, and chapters represent the initial release. A capture of what is and casting forward what agentprivacy et al is to be working on. **Shared meaning**, only for fellow mages with the knowledge and understanding to decrypt, learn and distribute their own cast of the spell. Within these stories is the fabric of plans to launch **privacy primitives**, **integrate standards**, **distribute noise on networks**, discuss **privacy shelling points**, **decentralised AI**, **data storage**, theory, **zcash shielded payments**, **privacy pools**, **x402 + 8004**, **self sovereign identity**... you get the point, things are about to move real fast, and a living story works way better for me to keep you all informed.
 
-⚔️🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🎲🌾 → 🌲⛓️🕊️
+⚔️🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🎲🌾 → 🌲⛓️🕊️ → 🔥🌀⚖️ → 🌲🌑🦉🔥
 
 This is and will always be a work in progress. An ongoing adventure of the first one to delegated to two.
 
