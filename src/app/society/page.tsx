@@ -127,8 +127,12 @@ const getChapterVideo = (chapter: number): string | null => {
     17: '/assets/chapter17_valuesmetcode_society.mp4',
   };
   const path = videoMap[chapter];
+  if (!path) return null;
   // Normalize path to remove double slashes (fix for production CDN issues)
-  return path ? path.replace(/\/+/g, '/') : null;
+  // Replace multiple consecutive slashes with a single slash, but preserve leading slash
+  const normalized = path.replace(/\/+/g, '/');
+  // Ensure it doesn't start with // (protocol-relative URL issue)
+  return normalized.startsWith('//') ? normalized.substring(1) : normalized;
 };
 
 function ChapterImage({ chapter }: { chapter: number }) {
