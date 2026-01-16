@@ -28,6 +28,7 @@ const storySpellMappings: { [actNumber: number]: string } = {
   15: '📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎',
   16: '🔥 → 🌀 → ⚖️ → 💫 → 🌾',
   17: '🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥',
+  18: '🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️',
 };
 
 const getActVideo = (act: number): string | null => {
@@ -49,6 +50,7 @@ const getActVideo = (act: number): string | null => {
     15: '/assets/act15_runninginshacklesthroughthedarkforest_story.mp4', // Act XV: Running in Shackles Through the Dark Forest
     16: '/assets/act16_whenpoolsbecomewells.mp4', // Act XVI: When Pools Become Wells
     17: '/assets/act17_bonfireinthedarkforest.mp4', // Act XVII: Bonfire in the Dark Forest
+    18: '/assets/act18_AMirrorinDustVibedintoScryingGlass.mp4', // Act XVIII: A Mirror in Dust
   };
   return videoMap[act] || null;
 };
@@ -76,7 +78,8 @@ const getActAudio = (act: number): string | null => {
     15: `${R2_BASE_URL}/15_Running_in_Shackles_Through_the_Dark_Forest.mp3`, // Act XV: Running in Shackles Through the Dark Forest
     16: `${R2_BASE_URL}/16_When_Pools_Become_Wells.mp3`, // Act XVI: When Pools Become Wells
     17: `${R2_BASE_URL}/17_Bonfire_in_the_Dark_Forest.mp3`, // Act XVII: Bonfire in the Dark Forest
-    18: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    18: `${R2_BASE_URL}/act18_A_Mirror_in_Dust,_Vibed_into_Scrying_Glass.mp3`, // Act XVIII: A Mirror in Dust, Vibed into Scrying Glass
+    19: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -350,6 +353,7 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       15: "Form is not the enemy of content but its vessel; the shackle does not imprison the stride—it gives ground enough to reach the boundless.",
       16: "The idea that pools with no other ideas floats alone in the void; mass is earned through retrieval, not declared.",
       17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
+      18: "The mirror that only shows the whole scroll past reveals nothing; the scrying that shows affinity—entering your spellbook from the scroll—is where the seeker becomes the mage.",
     };
     return proverbs[act] || "";
   };
@@ -464,6 +468,12 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
       quote: getProverbForInscription(17)
     },
     {
+      title: "Act XVIII: A Mirror in Dust, Vibed into Scrying Glass",
+      actNumber: 18,
+      emojis: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
+      quote: getProverbForInscription(18)
+    },
+    {
       title: "Closing Spell",
       actNumber: 0,
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -572,6 +582,7 @@ const getActFilename = (act: number): string => {
     15: '15-act-xv-running-in-shackles',
     16: '16-act-xvi-when-pools-become-wells',
     17: '17-act-xvii-bonfire-in-the-dark-forest',
+    18: '18-act-viii-mirror-in-dust',
   };
   return filenames[act] || '';
 };
@@ -586,18 +597,18 @@ export default function StoryPage() {
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 17 }, (_, i) => i + 1), 18, 19]; // 0 = first page, 1-17 = Acts, 18 = last page, 19 = inscriptions
+  const acts = [0, ...Array.from({ length: 18 }, (_, i) => i + 1), 19, 20]; // 0 = first page, 1-18 = Acts, 19 = last page, 20 = inscriptions
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-17), last page (18), or inscriptions (19)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 17) || activeAct === 18 || activeAct === 19) {
+        // Load markdown for first page (0), acts (1-18), last page (19), or inscriptions (20)
+        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 18) || activeAct === 19 || activeAct === 20) {
           let filename: string;
-          if (activeAct === 19) {
+          if (activeAct === 20) {
             filename = '112-inscriptions.md';
-          } else if (activeAct === 18) {
+          } else if (activeAct === 19) {
             filename = '111-privacymage-lastpage.md';
           } else {
             filename = `${getActFilename(activeAct)}.md`;
@@ -692,6 +703,7 @@ export default function StoryPage() {
       15: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
       16: "🔥 → 🌀 → ⚖️ → 💫 → 🌾",
       17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
+      18: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
     };
     return inscriptions[act] || "";
   };
@@ -716,6 +728,7 @@ export default function StoryPage() {
       15: "Form is not the enemy of content but its vessel; the shackle does not imprison the stride—it gives ground enough to reach the boundless.",
       16: "The idea that pools with no other ideas floats alone in the void; mass is earned through retrieval, not declared.",
       17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
+      18: "The mirror that only shows the whole scroll past reveals nothing; the scrying that shows affinity—entering your spellbook from the scroll—is where the seeker becomes the mage.",
     };
     return proverbs[act] || "";
   };
@@ -779,14 +792,14 @@ export default function StoryPage() {
 
   // Get tale ID for current act
   const getCurrentTaleId = (): string => {
-    if (activeAct === 0 || activeAct === 18 || activeAct === 19) {
+    if (activeAct === 0 || activeAct === 19 || activeAct === 20) {
       return 'act-i-venice'; // Default
     }
     return getTaleIdFromAct(activeAct);
   };
 
   // Show Swordsman panel only for actual acts (not first page or inscriptions)
-  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 17;
+  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 18;
 
   // Get act name for current act
   const getActName = (act: number): string => {
@@ -808,6 +821,7 @@ export default function StoryPage() {
       15: 'Act XV: Running in Shackles Through the Dark Forest',
       16: 'Act XVI: When Pools Become Wells',
       17: 'Act XVII: Bonfire in the Dark Forest',
+      18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
     };
     return actNames[act] || `Act ${act}`;
   };
@@ -998,9 +1012,14 @@ export default function StoryPage() {
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
                   if (actNum === 0) return 'first page';
-                  if (actNum === 18) return 'last page';
-                  if (actNum === 19) return 'spells';
-                  return `Act ${actNum}`;
+                  if (actNum === 19) return 'last page';
+                  if (actNum === 20) return 'spells';
+                  const romanNumerals: { [key: number]: string } = {
+                    1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
+                    9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
+                    16: 'XVI', 17: 'XVII', 18: 'XVIII'
+                  };
+                  return `Act ${romanNumerals[actNum] || actNum}`;
                 };
                 
                 return (
@@ -1034,7 +1053,7 @@ export default function StoryPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Audio Player and Learn/Protect Buttons */}
-            {((activeAct >= 1 && activeAct <= 17) || activeAct === 0 || activeAct === 18) && (
+            {((activeAct >= 1 && activeAct <= 18) || activeAct === 0 || activeAct === 19) && (
               <div className="absolute top-2 sm:top-4 right-2 sm:right-4 left-2 sm:left-auto z-10 flex flex-col sm:flex-row items-end sm:items-center gap-2">
                 {/* Audio Player - Right side, before buttons */}
                 {markdownContent && (
@@ -1086,7 +1105,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 18 && activeAct !== 19 && (
+                {activeAct !== 0 && activeAct !== 19 && activeAct !== 20 && (
                   <>
                     <div className="mb-6 pt-16 sm:pt-0">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -1158,9 +1177,9 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                {activeAct === 19 ? (
+                {activeAct === 20 ? (
                   <InscriptionsPage onCopy={copyInscription} onProtect={handleProtect} />
-                ) : activeAct === 18 ? (
+                ) : activeAct === 19 ? (
                   <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>

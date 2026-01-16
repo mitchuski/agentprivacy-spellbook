@@ -1,4 +1,4 @@
-# Leibniz's Overlap
+# Overlap ⿻
 
 *In which Leibniz teaches overlapping powers, medieval kingdoms return as neomedievalism, and we learn that sovereignty was never singular—and never should be...*
 

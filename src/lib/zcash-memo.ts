@@ -48,6 +48,7 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xv-running-in-shackles': 15,
     'act-xvi-wells': 16,
     'act-xvii-bonfire-dark-forest': 17,
+    'act-xviii-mirror-in-dust': 18,
   };
   return taleMap[taleId] || null;
 }
@@ -75,6 +76,7 @@ export function getSpellemojiForAct(act: number): string {
     15: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
     16: "🔥 → 🌀 → ⚖️ → 💫 → 🌾",
     17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
+    18: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
   };
   return spellemojiMap[act] || '';
 }

@@ -10,6 +10,7 @@
     "build": "next build && echo Build completed successfully",
     "postbuild": "node -e \"const fs = require('fs'); const path = require('path'); console.log('Checking for out directory...'); console.log('Current working directory:', process.cwd()); console.log('Directory listing:', fs.readdirSync('.').join(', ')); if (!fs.existsSync('out')) { console.error('ERROR: out directory not found after build'); process.exit(1); } else { console.log('✓ out directory created successfully'); console.log('out directory contents:', fs.readdirSync('out').slice(0, 10).join(', ')); }\"",
     "start": "serve out -p 8000 -c serve.json",
+    "serve:local": "node server.js",
     "lint": "next lint"
   },
   "dependencies": {
