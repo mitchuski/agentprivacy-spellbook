@@ -78,7 +78,7 @@ const getActAudio = (act: number): string | null => {
     15: `${R2_BASE_URL}/15_Running_in_Shackles_Through_the_Dark_Forest.mp3`, // Act XV: Running in Shackles Through the Dark Forest
     16: `${R2_BASE_URL}/16_When_Pools_Become_Wells.mp3`, // Act XVI: When Pools Become Wells
     17: `${R2_BASE_URL}/17_Bonfire_in_the_Dark_Forest.mp3`, // Act XVII: Bonfire in the Dark Forest
-    18: `${R2_BASE_URL}/act18_A_Mirror_in_Dust,_Vibed_into_Scrying_Glass.mp3`, // Act XVIII: A Mirror in Dust, Vibed into Scrying Glass
+    18: `${R2_BASE_URL}/18_A_Mirror_in_Dust,_Vibed_into_Scrying_Glass.mp3`, // Act XVIII: A Mirror in Dust, Vibed into Scrying Glass
     19: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
