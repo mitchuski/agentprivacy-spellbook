@@ -471,6 +471,12 @@ export default function CanonPage() {
                 >
                   mage
                 </a>
+                <a
+                  href="/privacy"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  privacy
+                </a>
               </div>
             </div>
             {/* Mobile Menu Button */}
@@ -554,6 +560,13 @@ export default function CanonPage() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     mage
+                  </a>
+                  <a
+                    href="/privacy"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    privacy
                   </a>
                 </div>
               </motion.div>

@@ -51,6 +51,12 @@ export default function TheFirstPage() {
                 >
                   mage
                 </Link>
+                <Link
+                  href="/privacy"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  privacy
+                </Link>
               </div>
             </div>
           </div>

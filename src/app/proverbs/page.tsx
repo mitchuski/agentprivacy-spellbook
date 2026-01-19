@@ -208,6 +208,9 @@ export default function ProverbsPage() {
                 <Link href="/mage" className="text-text hover:text-primary transition-colors font-medium">
                   mage
                 </Link>
+                <Link href="/privacy" className="text-text hover:text-primary transition-colors font-medium">
+                  privacy
+                </Link>
               </div>
             </div>
             {/* Mobile Menu Button */}
@@ -291,6 +294,13 @@ export default function ProverbsPage() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     mage
+                  </Link>
+                  <Link
+                    href="/privacy"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    privacy
                   </Link>
                 </div>
               </motion.div>

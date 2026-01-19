@@ -664,6 +664,13 @@ export default function PluralityPage() {
                   >
                     mage
                   </a>
+                  <a
+                    href="/privacy"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    privacy
+                  </a>
                 </div>
               </motion.div>
             )}

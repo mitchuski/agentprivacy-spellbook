@@ -859,6 +859,12 @@ What brings you my spellbook?`,
                 >
                   mage
                 </a>
+                <a
+                  href="/privacy"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  privacy
+                </a>
               </div>
             </div>
             {/* Mobile Menu Button */}
@@ -942,6 +948,13 @@ What brings you my spellbook?`,
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     mage
+                  </a>
+                  <a
+                    href="/privacy"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    privacy
                   </a>
                 </div>
               </motion.div>
