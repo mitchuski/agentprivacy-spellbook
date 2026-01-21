@@ -450,17 +450,33 @@ export default function MagePanel({ taleId, actNumber, actName }: MagePanelProps
     setIsClient(true);
   }, [taleId]);
 
-  // Prevent body scroll when panel is open on mobile
+  // Prevent body scroll when panel is open on mobile only
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      if (isOpen && isMobile) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    };
+    
     if (isOpen) {
-      // Prevent body scroll on mobile
-      const originalStyle = window.getComputedStyle(document.body).overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = originalStyle;
-      };
+      // Only prevent body scroll on mobile devices (screen width < 768px)
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        const originalStyle = window.getComputedStyle(document.body).overflow;
+        document.body.style.overflow = 'hidden';
+        
+        window.addEventListener('resize', handleResize);
+        
+        return () => {
+          document.body.style.overflow = originalStyle;
+          window.removeEventListener('resize', handleResize);
+        };
+      }
     }
   }, [isOpen]);
 
