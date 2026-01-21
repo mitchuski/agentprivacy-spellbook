@@ -818,12 +818,12 @@ What would you like to explore?`;
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={`fixed right-0 top-0 h-full bg-surface border-l border-surface/50 z-[60] shadow-2xl flex flex-col transition-all duration-300 overflow-hidden ${
+              className={`fixed right-0 top-0 bg-surface border-l border-surface/50 z-[60] shadow-2xl flex flex-col transition-all duration-300 overflow-hidden ${
                 isExpanded ? 'w-3/4 sm:w-2/3 md:w-1/2' : 'w-[90vw] sm:w-96 max-w-full'
               }`}
               style={{ 
-                maxHeight: '100vh',
-                height: '100vh',
+                height: '100dvh',
+                maxHeight: '100dvh',
                 paddingBottom: 'env(safe-area-inset-bottom, 0px)'
               }}
             >
@@ -911,33 +911,7 @@ What would you like to explore?`;
                 </div>
               </div>
 
-              {/* Input Area - Below proverb */}
-              <div className="border-b border-surface/50 p-4 pb-4 flex-shrink-0" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}>
-                <div className="flex gap-2">
-                  <textarea
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder={
-                      privacyBudget <= 0
-                        ? 'Privacy budget exhausted'
-                        : 'Ask about the story...'
-                    }
-                    disabled={isLoading || privacyBudget <= 0}
-                    rows={2}
-                    className="flex-1 px-3 py-2 bg-background border border-surface/50 rounded-lg text-sm text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                  <button
-                    onClick={handleSend}
-                    disabled={!input.trim() || isLoading || privacyBudget <= 0}
-                    className="btn-primary px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm whitespace-nowrap"
-                  >
-                    Send
-                  </button>
-                </div>
-              </div>
-
-              {/* Chat Container */}
+              {/* Chat Container - Scrollable */}
               <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-3 min-h-0">
                 {isClient ? (
                   <AnimatePresence>
@@ -978,11 +952,39 @@ What would you like to explore?`;
                   />
                 )}
 
-                  <div ref={messagesEndRef} />
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Bottom Section - Always Visible */}
+              <div className="flex-shrink-0 flex flex-col">
+                {/* Input Area */}
+                <div className="border-t border-surface/50 p-4 flex-shrink-0">
+                  <div className="flex gap-2">
+                    <textarea
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder={
+                        privacyBudget <= 0
+                          ? 'Privacy budget exhausted'
+                          : 'Ask about the story...'
+                      }
+                      disabled={isLoading || privacyBudget <= 0}
+                      rows={2}
+                      className="flex-1 px-3 py-2 bg-background border border-surface/50 rounded-lg text-sm text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    />
+                    <button
+                      onClick={handleSend}
+                      disabled={!input.trim() || isLoading || privacyBudget <= 0}
+                      className="btn-primary px-4 py-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm whitespace-nowrap"
+                    >
+                      Send
+                    </button>
+                  </div>
                 </div>
 
                 {/* Evoke Your Proverb Section - Collapsible */}
-                <div className="border-t border-surface/50 flex-shrink-0 border-l-2 border-r-2 border-b-2 border-primary/30 shadow-[0_0_15px_rgba(59,130,246,0.3),0_0_30px_rgba(59,130,246,0.15)] overflow-hidden">
+                <div className="border-t border-surface/50 flex-shrink-0 border-l-2 border-r-2 border-b-2 border-primary/30 shadow-[0_0_15px_rgba(59,130,246,0.3),0_0_30px_rgba(59,130,246,0.15)] overflow-hidden" style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}>
                 <button
                   onClick={() => setIsEvokeExpanded(!isEvokeExpanded)}
                   className="w-full p-4 flex items-center justify-between hover:bg-surface/50 transition-colors"
@@ -1004,7 +1006,7 @@ What would you like to explore?`;
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-3 sm:px-4 pb-4 overflow-x-hidden" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}>
+                    <div className="px-3 sm:px-4 pb-4 overflow-x-hidden overflow-y-auto max-h-[40vh] sm:max-h-[50vh]" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}>
                       <p className="text-xs text-text-muted mb-3">
                         serendipity in understanding are the acts of creation.
                       </p>
@@ -1012,6 +1014,7 @@ What would you like to explore?`;
                     </div>
                   </motion.div>
                 )}
+              </div>
               </div>
             </motion.div>
           </>
