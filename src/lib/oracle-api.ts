@@ -150,45 +150,15 @@ function getStaticInscriptions(): {
 }
 
 /**
- * Get onchain inscriptions from the inscription indexer
- * Hybrid approach: Try API first, fallback to static data
+ * Get onchain inscriptions from static data file
+ * Manual updates: Update /public/data/inscriptions.json when new inscriptions are received
  */
 export async function getInscriptions(): Promise<{
   inscriptions: any[];
   total: number;
   countByAct: Record<number, number>;
 } | null> {
-  // Try API first (if ORACLE_API_URL is set)
-  // On localhost, we'll try the API but with a shorter timeout
-  const isProduction = typeof window !== 'undefined' && 
-    !window.location.hostname.includes('localhost') &&
-    !window.location.hostname.includes('127.0.0.1');
-  
-  if (ORACLE_API_URL) {
-    try {
-      const response = await fetch(`${ORACLE_API_URL}/api/inscriptions`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // Shorter timeout for localhost, longer for production
-        signal: AbortSignal.timeout(isProduction ? 5000 : 2000), // 2s localhost, 5s production
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(`Loaded inscriptions from API: ${ORACLE_API_URL}`);
-        return data;
-      } else {
-        console.warn(`Oracle API returned ${response.status}, falling back to static data`);
-      }
-    } catch (error: any) {
-      // API unavailable (offline, timeout, etc.), fall back to static data
-      console.warn(`Oracle API unavailable (${ORACLE_API_URL}), using static data:`, error.message);
-    }
-  }
-
-  // Fallback: Try to load static data from JSON file
+  // Load static data from JSON file
   // In Next.js static export, public/ files are served from root
   try {
     const response = await fetch('/data/inscriptions.json', {
@@ -204,14 +174,15 @@ export async function getInscriptions(): Promise<{
       console.log('Loaded inscriptions from static data');
       return data;
     } else {
-      console.warn(`Static data file returned ${response.status}: ${response.statusText}`);
+      // File doesn't exist yet, return empty data
+      console.log('No inscriptions data file found, returning empty data');
     }
   } catch (error: any) {
-    // Static file also unavailable
-    console.warn('Static inscriptions data unavailable:', error.message);
+    // Static file unavailable, return empty data
+    console.log('Static inscriptions data unavailable, returning empty data');
   }
 
-  // Final fallback: return empty data
+  // Return empty data structure
   return getStaticInscriptions();
 }
 

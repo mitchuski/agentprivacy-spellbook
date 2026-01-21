@@ -122,22 +122,35 @@ function ProverbsPageContent() {
 
   // Fetch onchain inscriptions
   useEffect(() => {
+    let isMounted = true;
+    
     const loadInscriptions = async () => {
       try {
         setInscriptionsLoading(true);
         const data = await getInscriptions();
-        if (data) {
+        if (isMounted && data) {
           setInscriptions(data.inscriptions || []);
           setInscriptionCountByAct(data.countByAct || {});
         }
       } catch (error) {
         console.error('Error loading inscriptions:', error);
+        // Set empty data on error to prevent infinite loading
+        if (isMounted) {
+          setInscriptions([]);
+          setInscriptionCountByAct({});
+        }
       } finally {
-        setInscriptionsLoading(false);
+        if (isMounted) {
+          setInscriptionsLoading(false);
+        }
       }
     };
 
     loadInscriptions();
+    
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const toggleAct = (actNumber: number) => {

@@ -168,33 +168,46 @@ export async function chatWithSoulbae(
     // Check if we have a proxy URL configured (Cloudflare Worker or backend proxy)
     const PROXY_URL = process.env.NEXT_PUBLIC_NEAR_PROXY_URL || '';
     
+    // Check if we're in a static export (no Next.js API routes available)
+    // In static exports, even on localhost, we can't use /api routes
+    const isStaticExport = typeof window !== 'undefined' && 
+      (window.location.pathname.includes('.html') || 
+       !window.location.pathname.startsWith('/api'));
+    
     // Determine endpoint
     let endpoint: string;
-    if (isDevelopment) {
+    if (isDevelopment && !isStaticExport) {
+      // Only use Next.js API route in actual Next.js dev server (not static export)
       endpoint = '/api/near-ai/chat';  // Try proxy in development first
     } else if (PROXY_URL) {
       endpoint = `${PROXY_URL}/v1/chat/completions`;  // Use configured proxy (Cloudflare Worker)
+      console.log('✅ Using NEAR API proxy:', PROXY_URL);
     } else {
       endpoint = `${NEAR_API_URL}/chat/completions`;  // Direct (will have CORS issues)
-      console.warn('⚠️ Using direct NEAR API - CORS will block this. Set NEXT_PUBLIC_NEAR_PROXY_URL for production.');
+      // Only warn in development/local - in production, proxy should be configured
+      if (isDevelopment || isStaticExport) {
+        console.warn('⚠️ Using direct NEAR API (local only) - CORS will block this. Set NEXT_PUBLIC_NEAR_PROXY_URL for production.');
+      }
     }
     
     // In development (proxy), don't send API key (handled server-side)
     // In production with proxy, don't send API key (handled by Worker)
     // In production direct, send API key in headers (but CORS will block)
-    let requestHeaders: HeadersInit = (isDevelopment || PROXY_URL)
+    let requestHeaders: HeadersInit = ((isDevelopment && !isStaticExport) || PROXY_URL)
       ? { 'Content-Type': 'application/json' }  // Proxy handles auth
       : headers;  // Direct call needs auth
     
     // Log for debugging
     if (!isDevelopment) {
       console.log('Using NEAR API endpoint:', endpoint);
-      console.log('API Key present:', !!NEAR_API_KEY);
-      console.log('Proxy URL configured:', !!PROXY_URL);
-      if (!NEAR_API_KEY && !PROXY_URL) {
-        console.error('❌ NEAR_API_KEY is missing! Make sure NEXT_PUBLIC_NEAR_API_KEY is set in Cloudflare Pages environment variables.');
-      }
-      if (!PROXY_URL) {
+      if (PROXY_URL) {
+        console.log('✅ Proxy configured - API key handled server-side by Cloudflare Worker');
+        console.log('   (Client API key not needed when using proxy)');
+      } else {
+        console.log('API Key present:', !!NEAR_API_KEY);
+        if (!NEAR_API_KEY) {
+          console.error('❌ NEAR_API_KEY is missing! Make sure NEXT_PUBLIC_NEAR_API_KEY is set in Cloudflare Pages environment variables.');
+        }
         console.error('❌ CORS will block direct API calls. Set NEXT_PUBLIC_NEAR_PROXY_URL to use a proxy (Cloudflare Worker).');
       }
     }
@@ -226,7 +239,7 @@ export async function chatWithSoulbae(
       clearTimeout(timeoutId);
 
       // If proxy route doesn't exist (404), fall back to direct API
-      if (response.status === 404 && isDevelopment && endpoint === '/api/near-ai/chat') {
+      if (response.status === 404 && isDevelopment && !isStaticExport && endpoint === '/api/near-ai/chat') {
         console.warn('Proxy route not available, falling back to direct NEAR API');
         endpoint = `${NEAR_API_URL}/chat/completions`;
         requestHeaders = headers;
@@ -247,7 +260,7 @@ export async function chatWithSoulbae(
       }
     } catch (fetchError: any) {
       // If fetch fails and we were using proxy, try direct API
-      if (isDevelopment && endpoint === '/api/near-ai/chat') {
+      if (isDevelopment && !isStaticExport && endpoint === '/api/near-ai/chat') {
         console.warn('Proxy route failed, falling back to direct NEAR API:', fetchError.message);
         endpoint = `${NEAR_API_URL}/chat/completions`;
         requestHeaders = headers;
