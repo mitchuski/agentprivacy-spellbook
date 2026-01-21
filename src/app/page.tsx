@@ -127,10 +127,10 @@ export default function LandingPage() {
                   plural
                 </a>
                 <a
-                  href="/proverbs"
+                  href="/privacy"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
@@ -139,10 +139,16 @@ export default function LandingPage() {
                   mage
                 </a>
                 <a
-                  href="/privacy"
+                  href="/evoke"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
-                  privacy
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  proverbs
                 </a>
               </div>
             </div>
@@ -234,6 +240,13 @@ export default function LandingPage() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     privacy
+                  </a>
+                  <a
+                    href="/evoke"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    evoke
                   </a>
                 </div>
               </motion.div>

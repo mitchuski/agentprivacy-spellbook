@@ -7,7 +7,7 @@ const axios = require('axios');
 
 const DEEPSEEK_API_KEY = 'sk-d806db862b0a43288baf6bf1f34519b3';
 const DEEPSEEK_MODEL = 'deepseek-ai/DeepSeek-V3.1';
-const SPELLBOOK_IPFS = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy';
+const SPELLBOOK_IPFS = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm';
 
 const actNumber = parseInt(process.argv[2]) || 10;
 const submittedProverb = process.argv[3] || '';

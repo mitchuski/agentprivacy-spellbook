@@ -34,6 +34,42 @@ export default function TheFirstPage() {
                   zero
                 </Link>
                 <Link
+                  href="/canon"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  canon
+                </Link>
+                <Link
+                  href="/society"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  society
+                </Link>
+                <Link
+                  href="/plurality"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  plural
+                </Link>
+                <Link
+                  href="/privacy"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  privacy
+                </Link>
+                <Link
+                  href="/mage"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  mage
+                </Link>
+                <Link
+                  href="/evoke"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  evoke
+                </Link>
+                <Link
                   href="/proverbs"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
@@ -44,18 +80,6 @@ export default function TheFirstPage() {
                   className="text-primary border-b-2 border-primary pb-1 font-medium"
                 >
                   the first
-                </Link>
-                <Link
-                  href="/mage"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  mage
-                </Link>
-                <Link
-                  href="/privacy"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  privacy
                 </Link>
               </div>
             </div>

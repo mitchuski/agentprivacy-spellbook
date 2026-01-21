@@ -6,11 +6,11 @@ The Oracle Swordsman uses the canonical spellbook stored on IPFS to verify prove
 
 ## Spellbook Location
 
-**IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
+**IPFS URL**: `https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm`
 
-**CID**: `bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy`
+**CID**: `bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm`
 
-**Version**: `4.3.0-canonical`
+**Version**: `8.0.0-canonical`
 
 ## Architecture
 
@@ -62,7 +62,7 @@ The spellbook JSON contains:
 
 ```json
 {
-  "version": "4.3.0-canonical",
+  "version": "8.0.0-canonical",
   "spellbooks": {
     "story": {
       "acts": [
@@ -125,8 +125,8 @@ near: {
 }
 
 ipfs: {
-  spellbookUrl: 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy',
-  spellbookCid: 'bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy',
+  spellbookUrl: 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm',
+  spellbookCid: 'bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm',
 }
 ```
 
@@ -145,8 +145,8 @@ NEAR_SWORDSMAN_API_KEY=your_near_swordsman_api_key_here
 NEAR_MODEL=openai/gpt-oss-120b
 
 # Spellbook (optional - defaults provided)
-SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
-SPELLBOOK_CID=bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy
+SPELLBOOK_URL=https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm
+SPELLBOOK_CID=bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm
 ```
 
 ## Testing
@@ -197,7 +197,7 @@ The Oracle Swordsman enforces this by:
 
 ## References
 
-- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy)
+- [Spellbook IPFS](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm)
 - [NEAR Cloud AI Documentation](https://docs.near.ai/cloud/verification/)
 - [NEAR Cloud AI Models](https://cloud.near.ai/models/openai/gpt-oss-120b)
 

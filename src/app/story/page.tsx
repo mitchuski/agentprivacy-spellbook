@@ -1,11 +1,11 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import SwordsmanPanel from '@/components/SwordsmanPanel';
+import MagePanel from '@/components/MagePanel';
 import UAddressDisplay from '@/components/UAddressDisplay';
 import { getTaleIdFromAct } from '@/lib/zcash-memo';
 
@@ -88,12 +88,22 @@ function ActImage({ act }: { act: number }) {
   const videoSrc = getActVideo(act);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     // Reset when act changes
     setHasError(false);
     setIsLoading(true);
   }, [act]);
+
+  useEffect(() => {
+    // Check if video is already loaded (cached)
+    if (videoRef.current) {
+      if (videoRef.current.readyState >= 2) {
+        setIsLoading(false);
+      }
+    }
+  }, [videoSrc]);
 
   if (!videoSrc || hasError) {
     return null; // Don't show anything if no video exists
@@ -107,6 +117,7 @@ function ActImage({ act }: { act: number }) {
         </div>
       )}
       <video
+        ref={videoRef}
         key={act}
         src={videoSrc}
         className="w-full h-auto object-cover"
@@ -115,6 +126,7 @@ function ActImage({ act }: { act: number }) {
         muted
         playsInline
         onLoadedData={() => setIsLoading(false)}
+        onCanPlay={() => setIsLoading(false)}
         onError={() => {
           setHasError(true);
           setIsLoading(false);
@@ -329,7 +341,11 @@ function ActAudioPlayer({ act }: { act: number }) {
   );
 }
 
-function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (actNumber: number) => void }) {
+function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
+  const handleProtect = (actNumber: number) => {
+    // Navigate to proverbs page with the act selected - swordsman work happens there
+    window.location.href = `/proverbs?act=${actNumber}`;
+  };
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
 
@@ -546,10 +562,11 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
                 "proverb"
               )}
             </button>
-            {onProtect && inscription.actNumber !== undefined && inscription.actNumber !== null && inscription.actNumber > 0 ? (
+            {inscription.actNumber !== undefined && inscription.actNumber !== null && inscription.actNumber > 0 ? (
               <button
-                onClick={() => onProtect(inscription.actNumber!)}
+                onClick={() => handleProtect(inscription.actNumber!)}
                 className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
+                title="Protect the spell - Submit proof on proverbs page"
               >
                 <span>⚔️</span>
                 <span>protect</span>
@@ -798,8 +815,9 @@ export default function StoryPage() {
     return getTaleIdFromAct(activeAct);
   };
 
-  // Show Swordsman panel only for actual acts (not first page or inscriptions)
-  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 18;
+  // Show Mage panel only for actual acts (not first page or inscriptions)
+  // Show Mage panel for first page (0), acts (1-18), and last page (19)
+  const showMagePanel = activeAct === 0 || (activeAct >= 1 && activeAct <= 18) || activeAct === 19;
 
   // Get act name for current act
   const getActName = (act: number): string => {
@@ -826,28 +844,14 @@ export default function StoryPage() {
     return actNames[act] || `Act ${act}`;
   };
 
-  // Handle protect button - switch to act and open swordsman panel
-  const handleProtect = (actNumber: number) => {
-    setActiveAct(actNumber);
-    // Open swordsman panel after a short delay to allow render
-    setTimeout(() => {
-      const swordsmanButton = document.querySelector('[data-swordsman-toggle]');
-      if (swordsmanButton) {
-        (swordsmanButton as HTMLElement).click();
-      }
-    }, 100);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Swordsman Panel - Right Side */}
-      {showSwordsmanPanel && (
-        <SwordsmanPanel
-          taleId={getCurrentTaleId()}
-          actNumber={activeAct}
-          spellbook="story"
-          actName={getActName(activeAct)}
-          spell={storySpellMappings[activeAct]}
+      {/* Mage Panel - Right Side */}
+      {showMagePanel && (
+        <MagePanel
+          taleId={activeAct === 0 ? 'story-firstpage' : activeAct === 19 ? 'story-lastpage' : getCurrentTaleId()}
+          actNumber={activeAct === 0 || activeAct === 19 ? undefined : activeAct}
+          actName={activeAct === 0 ? 'first page' : activeAct === 19 ? 'last page' : getActName(activeAct)}
         />
       )}
 
@@ -892,10 +896,10 @@ export default function StoryPage() {
                   plural
                 </a>
                 <a
-                  href="/proverbs"
+                  href="/privacy"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
@@ -904,10 +908,16 @@ export default function StoryPage() {
                   mage
                 </a>
                 <a
-                  href="/privacy"
+                  href="/evoke"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
-                  privacy
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  proverbs
                 </a>
               </div>
             </div>
@@ -980,11 +990,11 @@ export default function StoryPage() {
                     plural
                   </a>
                   <a
-                    href="/proverbs"
+                    href="/privacy"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    proverbs
+                    privacy
                   </a>
                   <a
                     href="/mage"
@@ -994,11 +1004,18 @@ export default function StoryPage() {
                     mage
                   </a>
                   <a
-                    href="/privacy"
+                    href="/evoke"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    privacy
+                    evoke
+                  </a>
+                  <a
+                    href="/proverbs"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
                   </a>
                 </div>
               </motion.div>
@@ -1075,22 +1092,13 @@ export default function StoryPage() {
                   </div>
                 )}
                 
-                {/* Learn and Protect Buttons */}
+                {/* Learn Button */}
                 {markdownContent && (
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    {showSwordsmanPanel && (
-                      <button
-                        onClick={() => handleProtect(activeAct)}
-                        className="px-2 sm:px-4 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg transition-all duration-200 flex items-center gap-1 flex-shrink-0"
-                        title="Protect the spell (1 ZEC) - Public stake, private knowledge"
-                      >
-                        <span className="text-accent text-xs sm:text-sm font-medium">⚔️ protect</span>
-                      </button>
-                    )}
                     <button
                       onClick={copyToClipboard}
                       className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
-                      title="Learn the spell (0.01 ZEC) - Public commitment, private fees"
+                      title="Learn the spell - Copy the full story content"
                     >
                       {copied ? (
                         <motion.div
@@ -1191,7 +1199,7 @@ export default function StoryPage() {
                 )}
                 
                 {activeAct === 20 ? (
-                  <InscriptionsPage onCopy={copyInscription} onProtect={handleProtect} />
+                  <InscriptionsPage onCopy={copyInscription} />
                 ) : activeAct === 19 ? (
                   <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
@@ -1303,7 +1311,7 @@ export default function StoryPage() {
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
-                  title="Learn the spell (0.01 ZEC) - Public commitment, private fees"
+                  title="Learn the spell - Copy the full story content"
                 >
                   {copied ? (
                     <motion.div

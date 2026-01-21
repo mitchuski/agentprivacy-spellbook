@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import SwordsmanPanel from '@/components/SwordsmanPanel';
+import MagePanel from '@/components/MagePanel';
 
 // Chapter metadata from JSON
 const chapterData: { [key: number]: { title: string; spell: string; proverb: string } } = {
@@ -116,7 +116,7 @@ function ChapterImage({ chapter }: { chapter: number }) {
   );
 }
 
-function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (chapterNumber: number) => void }) {
+function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
 
@@ -188,15 +188,15 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
                 "proverb"
               )}
             </button>
-            {onProtect && inscription.number !== undefined && inscription.number !== null && inscription.number > 0 && inscription.number < 11 ? (
-              <button
-                onClick={() => onProtect(inscription.number!)}
+            {inscription.number !== undefined && inscription.number !== null && inscription.number > 0 && inscription.number < 11 ? (
+              <a
+                href={`/proverbs?act=${inscription.number}`}
                 className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
-                title="Protect the spell (1 ZEC) - Public stake, private knowledge"
+                title="Protect this knowledge - Submit proverb proof"
               >
                 <span>⚔️</span>
                 <span>protect</span>
-              </button>
+              </a>
             ) : null}
           </div>
         </div>
@@ -382,21 +382,9 @@ export default function CanonPage() {
   const hasPrevious = chapters.indexOf(activeChapter) > 0;
   const hasNext = chapters.indexOf(activeChapter) < chapters.length - 1;
 
-  // Show Swordsman panel for chapters 1-10 (not preface, last, or inscriptions)
-  const showSwordsmanPanel = activeChapter >= 1 && activeChapter <= 10;
-  const currentChapter = activeChapter >= 0 && activeChapter <= 11 ? chapterData[activeChapter] : null;
-
-  // Handle protect button - switch to chapter and open swordsman panel
-  const handleProtect = (chapterNumber: number) => {
-    setActiveChapter(chapterNumber);
-    // Open swordsman panel after a short delay to allow render
-    setTimeout(() => {
-      const swordsmanButton = document.querySelector('[data-swordsman-toggle]');
-      if (swordsmanButton) {
-        (swordsmanButton as HTMLElement).click();
-      }
-    }, 100);
-  };
+  // Show Mage panel for first page (0), chapters 1-11, and last page (12)
+  const showMagePanel = activeChapter === 0 || (activeChapter >= 1 && activeChapter <= 11) || activeChapter === 12;
+  const currentChapter = activeChapter >= 0 && activeChapter <= 12 ? chapterData[activeChapter] : null;
 
   const getChapterName = (chapter: number): string => {
     if (chapter === 0) return 'firstpage';
@@ -408,14 +396,26 @@ export default function CanonPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Swordsman Panel - for chapters */}
-      {showSwordsmanPanel && currentChapter && (
-        <SwordsmanPanel
-          taleId={`canon-chapter-${activeChapter}`}
-          actNumber={activeChapter}
-          spellbook="canon"
-          actName={getChapterName(activeChapter)}
-          spell={currentChapter.spell}
+      {/* Mage Panel - for chapters */}
+      {showMagePanel && (
+        <MagePanel
+          taleId={
+            activeChapter === 0 
+              ? 'canon-firstpage' 
+              : activeChapter === 12 
+              ? 'canon-lastpage' 
+              : `canon-chapter-${activeChapter}`
+          }
+          actNumber={activeChapter === 0 || activeChapter === 12 ? undefined : activeChapter}
+          actName={
+            activeChapter === 0 
+              ? 'first page' 
+              : activeChapter === 12 
+              ? 'last page' 
+              : currentChapter 
+              ? `Chapter ${activeChapter}: ${currentChapter.title}` 
+              : undefined
+          }
         />
       )}
       
@@ -460,10 +460,10 @@ export default function CanonPage() {
                   plural
                 </a>
                 <a
-                  href="/proverbs"
+                  href="/privacy"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
@@ -472,10 +472,16 @@ export default function CanonPage() {
                   mage
                 </a>
                 <a
-                  href="/privacy"
+                  href="/evoke"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
-                  privacy
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  proverbs
                 </a>
               </div>
             </div>
@@ -548,11 +554,11 @@ export default function CanonPage() {
                     plural
                   </a>
                   <a
-                    href="/proverbs"
+                    href="/privacy"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    proverbs
+                    privacy
                   </a>
                   <a
                     href="/mage"
@@ -562,11 +568,18 @@ export default function CanonPage() {
                     mage
                   </a>
                   <a
-                    href="/privacy"
+                    href="/evoke"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    privacy
+                    evoke
+                  </a>
+                  <a
+                    href="/proverbs"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
                   </a>
                 </div>
               </motion.div>
@@ -620,18 +633,9 @@ export default function CanonPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
-            {/* Top Learn and Protect Buttons */}
+            {/* Top Learn Button */}
             {(markdownContent || activeChapter === 12 || activeChapter === 13) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
-                {showSwordsmanPanel && (
-                  <button
-                    onClick={() => handleProtect(activeChapter)}
-                    className="px-2 sm:px-4 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg transition-all duration-200 flex items-center gap-1 flex-shrink-0"
-                    title="Protect the spell (1 ZEC) - Public stake, private knowledge"
-                  >
-                    <span className="text-accent text-xs sm:text-sm font-medium">⚔️ protect</span>
-                  </button>
-                )}
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
@@ -734,7 +738,6 @@ export default function CanonPage() {
                 {activeChapter === 13 ? (
                   <InscriptionsPage 
                     onCopy={copyInscription}
-                    onProtect={handleProtect}
                   />
                 ) : (
                   <div className="markdown-content pb-24 sm:pb-28">

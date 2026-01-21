@@ -1,12 +1,13 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import SwordsmanPanel from '@/components/SwordsmanPanel';
+import MagePanel from '@/components/MagePanel';
 import UAddressDisplay from '@/components/UAddressDisplay';
 import TAddressDisplay from '@/components/TAddressDisplay';
-import { getTaleIdFromAct, getSpellemojiForAct } from '@/lib/zcash-memo';
+import { getTaleIdFromAct, getSpellemojiForAct, formatZcashMemo } from '@/lib/zcash-memo';
 import { getInscriptions } from '@/lib/oracle-api';
 
 // Onchain inscription from the inscription indexer
@@ -56,6 +57,12 @@ const actTitles: { [actNumber: number]: string } = {
   10: 'Topology of Revelation / Triangle Geometry',
   11: 'Balanced Spiral of Sovereignty / The Golden Ratio',
   12: 'The Forgetting / Proverbiogenesis',
+  13: 'The Book of Promises',
+  14: 'Rain on the Mountain of Entropy',
+  15: 'Running in Shackles Through the Dark Forest',
+  16: 'When Pools Become Wells',
+  17: 'Bonfire in the Dark Forest',
+  18: 'A Mirror in Dust, Vibed into Scrying Glass',
 };
 
 // Helper to get Roman numeral
@@ -63,11 +70,13 @@ function getRomanNumeral(num: number): string {
   const roman: { [key: number]: string } = {
     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI',
     7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X', 11: 'XI', 12: 'XII',
+    13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII',
   };
   return roman[num] || String(num);
 }
 
-export default function ProverbsPage() {
+function ProverbsPageContent() {
+  const searchParams = useSearchParams();
   const [inscriptions, setInscriptions] = useState<Inscription[]>([]);
   const [inscriptionsLoading, setInscriptionsLoading] = useState(true);
   const [inscriptionCountByAct, setInscriptionCountByAct] = useState<Record<number, number>>({});
@@ -76,6 +85,40 @@ export default function ProverbsPage() {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [zashiProverb, setZashiProverb] = useState('');
+  const [zashiMemoCopied, setZashiMemoCopied] = useState(false);
+
+  // Listen for proverb from MagePanel
+  useEffect(() => {
+    const handleProverbDetected = (event: CustomEvent) => {
+      if (event.detail?.proverb) {
+        setZashiProverb(event.detail.proverb);
+      }
+    };
+
+    window.addEventListener('mage-proverb-detected', handleProverbDetected as EventListener);
+    return () => {
+      window.removeEventListener('mage-proverb-detected', handleProverbDetected as EventListener);
+    };
+  }, []);
+
+  // Read act parameter from URL
+  useEffect(() => {
+    const actParam = searchParams.get('act');
+    if (actParam) {
+      const actNum = parseInt(actParam, 10);
+      if (!isNaN(actNum) && actNum >= 1 && actNum <= 18) {
+        setDonationAct(actNum);
+        // Open the panel after a short delay
+        setTimeout(() => {
+          const panelButton = document.querySelector('[data-proverb-submission-toggle]');
+          if (panelButton) {
+            (panelButton as HTMLElement).click();
+          }
+        }, 300);
+      }
+    }
+  }, [searchParams]);
 
   // Fetch onchain inscriptions
   useEffect(() => {
@@ -166,17 +209,6 @@ export default function ProverbsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Swordsman Panel */}
-      {donationActInfo && (
-        <SwordsmanPanel
-          taleId={donationActInfo.taleId}
-          actNumber={donationActInfo.actNumber}
-          spellbook="story"
-          actName={donationActInfo.actName}
-          spell={donationActInfo.spell}
-        />
-      )}
-
       {/* Navigation Header */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -202,14 +234,17 @@ export default function ProverbsPage() {
                 <Link href="/plurality" className="text-text hover:text-primary transition-colors font-medium">
                   plural
                 </Link>
-                <Link href="/proverbs" className="text-primary border-b-2 border-primary pb-1 font-medium">
-                  proverbs
+                <Link href="/privacy" className="text-text hover:text-primary transition-colors font-medium">
+                  privacy
                 </Link>
                 <Link href="/mage" className="text-text hover:text-primary transition-colors font-medium">
                   mage
                 </Link>
-                <Link href="/privacy" className="text-text hover:text-primary transition-colors font-medium">
-                  privacy
+                <Link href="/evoke" className="text-text hover:text-primary transition-colors font-medium">
+                  evoke
+                </Link>
+                <Link href="/proverbs" className="text-primary border-b-2 border-primary pb-1 font-medium">
+                  proverbs
                 </Link>
               </div>
             </div>
@@ -282,11 +317,11 @@ export default function ProverbsPage() {
                     plural
                   </Link>
                   <Link
-                    href="/proverbs"
-                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
+                    href="/privacy"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    proverbs
+                    privacy
                   </Link>
                   <Link
                     href="/mage"
@@ -296,11 +331,18 @@ export default function ProverbsPage() {
                     mage
                   </Link>
                   <Link
-                    href="/privacy"
+                    href="/evoke"
                     className="block text-text hover:text-primary transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    privacy
+                    evoke
+                  </Link>
+                  <Link
+                    href="/proverbs"
+                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
                   </Link>
                 </div>
               </motion.div>
@@ -339,6 +381,7 @@ export default function ProverbsPage() {
               <TAddressDisplay variant="proverb-button" label="inscription address" />
             </div>
           </motion.div>
+
 
           {/* VRC System Info */}
           <motion.div
@@ -448,8 +491,110 @@ export default function ProverbsPage() {
                 )}
               </div>
               <p className="text-xs text-text-muted">
-                Select an act to open the Swordsman Panel and submit your proverb proof (0.01 ZEC)
+                Select an act to open the Proverb Submission Panel and submit your proverb proof
               </p>
+            </div>
+          </motion.div>
+
+          {/* Zashi Conversion Panel - Extra Donation Flow */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.225 }}
+            className="mb-8"
+          >
+            <div className="card bg-secondary/10 border-secondary/30">
+              <h3 className="text-lg font-semibold text-text mb-3 flex items-center gap-2">
+                <span>⚔️</span>
+                <span>Submit Proverb</span>
+              </h3>
+              <p className="text-sm text-text-muted mb-2">
+                Share your understanding
+              </p>
+              <p className="text-sm text-text-muted mb-4">
+                Protect this knowledge. A donation to the story flow (0.01 ZEC) gives you a proof of understanding.
+              </p>
+              
+              <div className="mb-4">
+                <label className="block text-xs text-text-muted mb-2">
+                  Select Act (required for memo format):
+                </label>
+                <select
+                  value={donationAct || ''}
+                  onChange={(e) => setDonationAct(e.target.value ? parseInt(e.target.value) : null)}
+                  className="w-full px-3 py-2 bg-background border border-secondary/50 rounded text-text text-sm focus:outline-none focus:ring-2 focus:ring-secondary mb-3"
+                >
+                  <option value="">Select Act...</option>
+                  {Array.from({ length: 18 }, (_, i) => i + 1).map(actNum => (
+                    <option key={actNum} value={actNum}>
+                      Act {getRomanNumeral(actNum)}: {actTitles[actNum]?.split(' / ')[0] || `Act ${actNum}`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-xs text-text-muted mb-2">
+                  Your Proverb:
+                </label>
+                <textarea
+                  value={zashiProverb}
+                  onChange={(e) => setZashiProverb(e.target.value)}
+                  placeholder="Paste your proverb from the Mage Panel here..."
+                  rows={3}
+                  className="w-full px-3 py-2 bg-background border border-secondary/50 rounded text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-secondary resize-none"
+                />
+              </div>
+
+              {donationAct && zashiProverb.trim() && (
+                <div className="mb-4">
+                  <button
+                    onClick={async () => {
+                      const taleId = getTaleIdFromAct(donationAct);
+                      const memo = formatZcashMemo(taleId, zashiProverb.trim());
+                      try {
+                        await navigator.clipboard.writeText(memo);
+                        setZashiMemoCopied(true);
+                        setTimeout(() => setZashiMemoCopied(false), 3000);
+                      } catch (err) {
+                        console.error('Failed to copy memo:', err);
+                      }
+                    }}
+                    className="w-full btn-secondary py-3 flex items-center justify-center gap-2"
+                  >
+                    {zashiMemoCopied ? (
+                      <>
+                        <motion.span
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="text-lg"
+                        >
+                          ✓
+                        </motion.span>
+                        <span>Copied to Clipboard!</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>📋</span>
+                        <span>Copy Memo to Zashi</span>
+                      </>
+                    )}
+                  </button>
+                  <p className="text-xs text-text-muted mt-3 mb-2">
+                    Paste the memo into your Zashi wallet, set amount to <strong className="text-secondary">0.01 ZEC</strong>, and send as a shielded transaction to:
+                  </p>
+                  <div className="mt-2">
+                    <UAddressDisplay
+                      label="zec"
+                      variant="small-button"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="p-3 bg-secondary/10 border border-secondary/30 rounded text-xs text-text-muted">
+                <strong className="text-text">Your signal:</strong> This is your proof of understanding—a compressed proverb that demonstrates you've engaged with the spellbook content. The Oracle will verify and inscribe it on the blockchain.
+              </div>
             </div>
           </motion.div>
 
@@ -685,6 +830,30 @@ export default function ProverbsPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Mage Panel - Available on proverbs page for users to get proverbs */}
+      {donationActInfo && (
+        <MagePanel
+          taleId={donationActInfo.taleId}
+          actNumber={donationActInfo.actNumber}
+          actName={donationActInfo.actName}
+        />
+      )}
     </div>
+  );
+}
+
+export default function ProverbsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-text-muted">Loading...</p>
+        </div>
+      </div>
+    }>
+      <ProverbsPageContent />
+    </Suspense>
   );
 }

@@ -3,8 +3,8 @@
  */
 
 // Reading speed: ~200-250 words per minute = ~4-5 characters per second
-// Add small delay between chunks to make it readable
-const READING_SPEED_DELAY = 30; // milliseconds per character (adjustable)
+// Add small delay between chunks to make it readable (paced like natural speech)
+const READING_SPEED_DELAY = 50; // milliseconds per character (adjustable)
 
 export async function* streamChatCompletion(
   reader: ReadableStreamDefaultReader<Uint8Array>
@@ -43,9 +43,12 @@ export async function* streamChatCompletion(
             const json = JSON.parse(data);
             const content = json.choices?.[0]?.delta?.content || '';
             if (content) {
-              // Add delay based on content length to simulate reading speed
-              const delay = content.length * READING_SPEED_DELAY;
-              await new Promise(resolve => setTimeout(resolve, Math.min(delay, 100))); // Cap at 100ms per chunk
+              // Add delay based on content length to simulate natural pacing
+              // Use a base delay plus per-character delay for more natural flow
+              const baseDelay = 20; // Base delay for each chunk
+              const charDelay = content.length * (READING_SPEED_DELAY / 10); // Slower per character
+              const delay = baseDelay + charDelay;
+              await new Promise(resolve => setTimeout(resolve, Math.min(delay, 150))); // Cap at 150ms per chunk
               yield content;
             }
           } catch (e) {

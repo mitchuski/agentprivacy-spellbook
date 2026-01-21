@@ -1,0 +1,11 @@
+name = "agentprivacy-email"
+main = "cloudflare-worker-email.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+vars = { }
+
+# Environment variables are set via:
+# wrangler secret put RESEND_API_KEY
+# Or in Cloudflare Dashboard > Workers > Settings > Variables
+

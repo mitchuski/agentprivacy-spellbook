@@ -132,10 +132,10 @@ function MagePageContent() {
   });
   const [proverbSuggestions, setProverbSuggestions] = useState<string[]>([]);
   const [selectedProverb, setSelectedProverb] = useState<string>('');
-  const [proverbForMemo, setProverbForMemo] = useState<string>(''); // Dedicated field for memo generation
   const [copied, setCopied] = useState(false);
   const [learnCopied, setLearnCopied] = useState(false);
   const [detectedProverb, setDetectedProverb] = useState<string | null>(null); // Store proverb when detected
+  const [proverbForMemo, setProverbForMemo] = useState<string>(''); // For Zcash memo generation
 
   // Extract proverb text from RPP format - match everything between [RPP Proverb: and ]
   const extractProverbText = (text: string): string | null => {
@@ -197,6 +197,13 @@ function MagePageContent() {
 
   const currentProverb = detectedProverb || extractProverbFromMessages();
   const hasProverb = currentProverb !== null && currentProverb.trim().length > 0 && !isLoading;
+  
+  // Auto-fill proverbForMemo when proverb is detected
+  useEffect(() => {
+    if (currentProverb && !proverbForMemo) {
+      setProverbForMemo(currentProverb);
+    }
+  }, [currentProverb]);
   
   // Debug: log when proverb is found (remove in production)
   useEffect(() => {
@@ -775,9 +782,10 @@ What brings you my spellbook?`,
 
   // Handle copy to Zashi
   const handleCopyToZashi = async () => {
-    if (!proverbForMemo.trim() || !hasTaleSelected || !taleIdParam) return;
+    const proverb = proverbForMemo.trim() || currentProverb;
+    if (!proverb || !hasTaleSelected || !taleIdParam) return;
 
-    const memo = formatZcashMemo(taleIdParam, proverbForMemo.trim());
+    const memo = formatZcashMemo(taleIdParam, proverb);
     
     try {
       await navigator.clipboard.writeText(memo);
@@ -848,10 +856,10 @@ What brings you my spellbook?`,
                   plural
                 </a>
                 <a
-                  href="/proverbs"
+                  href="/privacy"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
@@ -860,10 +868,16 @@ What brings you my spellbook?`,
                   mage
                 </a>
                 <a
-                  href="/privacy"
+                  href="/evoke"
                   className="text-text hover:text-primary transition-colors font-medium"
                 >
-                  privacy
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  proverbs
                 </a>
               </div>
             </div>
@@ -936,11 +950,11 @@ What brings you my spellbook?`,
                     plural
                   </a>
                   <a
-                    href="/proverbs"
+                    href="/privacy"
                     className="block text-text hover:text-primary transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    proverbs
+                    privacy
                   </a>
                   <a
                     href="/mage"
@@ -950,11 +964,18 @@ What brings you my spellbook?`,
                     mage
                   </a>
                   <a
-                    href="/privacy"
+                    href="/evoke"
                     className="block text-text hover:text-primary transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    privacy
+                    evoke
+                  </a>
+                  <a
+                    href="/proverbs"
+                    className="block text-text hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
                   </a>
                 </div>
               </motion.div>
@@ -995,7 +1016,7 @@ What brings you my spellbook?`,
               <div className="card bg-surface border-surface/50">
                 <h2 className="text-2xl font-bold text-text mb-4">Select a Spellbook Tale</h2>
                 <p className="text-text-muted mb-6">
-                  Choose a tale from the Story Spellbook or Zero Knowledge Spellbook to begin your conversation with Soulbae. Canon, Society, and Plurality spellbooks coming soon.
+                  Choose a tale from the Story, Zero Knowledge, Canon, or Society Spellbook to begin your conversation with Soulbae. Plurality spellbook coming soon.
                 </p>
 
                 {/* Story Spellbook Acts */}
@@ -1065,92 +1086,78 @@ What brings you my spellbook?`,
                   </div>
                 </div>
 
-                {/* Canon Spellbook Chapters - Locked */}
-                <div className="relative opacity-60 mb-8">
-                  <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center z-10">
-                    <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
-                      <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
-                      <span>📜</span>
-                      <span>Canon Spellbook</span>
-                      <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Coming Soon</span>
-                    </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
-                      {[
-                        { num: 1, title: 'The Cypherpunk Whispers' },
-                        { num: 2, title: 'The Early Incantations' },
-                        { num: 3, title: 'The Synthesis' },
-                        { num: 4, title: 'The World Computer' },
-                        { num: 5, title: 'The First Fracture' },
-                        { num: 6, title: 'The Great Schism' },
-                        { num: 7, title: 'The Surveillance Truth' },
-                        { num: 8, title: 'The Missing Primitive' },
-                        { num: 9, title: 'The Open Canon' },
-                        { num: 10, title: 'The Timeline Archive' },
-                        { num: 12, title: 'Guardian' },
-                      ].map((chapter) => {
-                        const chapterId = chapter.num === 12 ? 'guardian' : `canon-chapter-${chapter.num}`;
-                        return (
-                          <div
-                            key={chapterId}
-                            className="p-3 bg-background border border-surface/50 rounded-lg text-center cursor-not-allowed"
-                          >
-                            <div className="font-semibold text-text text-sm">
-                              {chapter.num === 12 ? 'Guardian' : `Chapter ${chapter.num}`}
-                            </div>
-                            <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
+                {/* Canon Spellbook Chapters */}
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
+                    <span>📜</span>
+                    <span>Canon Spellbook</span>
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                    {[
+                      { num: 1, title: 'The Cypherpunk Whispers' },
+                      { num: 2, title: 'The Early Incantations' },
+                      { num: 3, title: 'The Synthesis' },
+                      { num: 4, title: 'The World Computer' },
+                      { num: 5, title: 'The First Fracture' },
+                      { num: 6, title: 'The Great Schism' },
+                      { num: 7, title: 'The Surveillance Truth' },
+                      { num: 8, title: 'The Missing Primitive' },
+                      { num: 9, title: 'The Open Canon' },
+                      { num: 10, title: 'The Timeline Archive' },
+                      { num: 12, title: 'Guardian' },
+                    ].map((chapter) => {
+                      const chapterId = chapter.num === 12 ? 'guardian' : `canon-chapter-${chapter.num}`;
+                      return (
+                        <button
+                          key={chapterId}
+                          onClick={() => router.push(`/mage?tale_id=${chapterId}`)}
+                          className="p-3 bg-background border border-surface/50 rounded-lg hover:border-primary hover:bg-primary/5 transition-all text-center"
+                        >
+                          <div className="font-semibold text-text text-sm">
+                            {chapter.num === 12 ? 'Guardian' : `Chapter ${chapter.num}`}
                           </div>
-                        );
-                      })}
-                    </div>
+                          <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Society Spellbook Chapters - Locked */}
-                <div className="relative opacity-60 mb-8">
-                  <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center z-10">
-                    <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
-                      <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
-                      <span>🏛️</span>
-                      <span>Society Spellbook</span>
-                      <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Coming Soon</span>
-                    </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
-                      {[
-                        { num: 1, title: 'The Monastery' },
-                        { num: 2, title: 'The Courtyard' },
-                        { num: 3, title: 'The Warning' },
-                        { num: 4, title: 'The Garden' },
-                        { num: 5, title: 'The Gatekeeper' },
-                        { num: 6, title: 'The Masks' },
-                        { num: 7, title: 'The Markets' },
-                        { num: 8, title: 'The Binding' },
-                        { num: 9, title: 'The Witness' },
-                        { num: 10, title: 'The Forgetting' },
-                        { num: 11, title: 'The Trust' },
-                        { num: 12, title: 'The Judgment' },
-                        { num: 13, title: 'The Head Was Cut' },
-                        { num: 14, title: 'The Many' },
-                        { num: 15, title: 'The Gathering' },
-                        { num: 16, title: 'The Choosing' },
-                        { num: 17, title: 'The Sovereign' },
-                      ].map((chapter) => (
-                        <div
-                          key={`society-${chapter.num}`}
-                          className="p-3 bg-background border border-surface/50 rounded-lg text-center cursor-not-allowed"
-                        >
-                          <div className="font-semibold text-text text-sm">Chapter {chapter.num}</div>
-                          <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
-                        </div>
-                      ))}
-                    </div>
+                {/* Society Spellbook Chapters */}
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
+                    <span>🏛️</span>
+                    <span>Society Spellbook</span>
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                    {[
+                      { num: 1, title: 'The Westphalian Warning' },
+                      { num: 2, title: 'The Elder Remembers' },
+                      { num: 3, title: 'The Pirate\'s Republic' },
+                      { num: 4, title: 'The Manifesto' },
+                      { num: 5, title: 'Leibniz Dreams' },
+                      { num: 6, title: 'The Arsenal Opened' },
+                      { num: 7, title: 'The Banker\'s Confession' },
+                      { num: 8, title: 'The Network State Vision' },
+                      { num: 9, title: 'Three Doors' },
+                      { num: 10, title: 'Leibniz Overlap' },
+                      { num: 11, title: 'Rights Became Real' },
+                      { num: 12, title: 'Treaty Protocol' },
+                      { num: 13, title: 'Head Was Cut' },
+                      { num: 14, title: 'Tools That Breathe' },
+                      { num: 15, title: 'Trust Reassignment' },
+                      { num: 16, title: 'Garden Bloomed' },
+                      { num: 17, title: 'Values Met Code' },
+                    ].map((chapter) => (
+                      <button
+                        key={`society-${chapter.num}`}
+                        onClick={() => router.push(`/mage?tale_id=society-chapter-${chapter.num}`)}
+                        className="p-3 bg-background border border-surface/50 rounded-lg hover:border-primary hover:bg-primary/5 transition-all text-center"
+                      >
+                        <div className="font-semibold text-text text-sm">Chapter {chapter.num}</div>
+                        <div className="text-xs text-text-muted mt-1">{chapter.title}</div>
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -1364,89 +1371,6 @@ What brings you my spellbook?`,
             </motion.div>
           )}
 
-          {/* Step 1: Enter Your Proverb */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="card bg-surface border-surface/50 mb-6"
-          >
-            <h3 className="text-lg font-semibold text-text mb-3 flex items-center gap-2">
-              <span>📝</span>
-              <span>Step 1: Enter Your Formed Proverb</span>
-            </h3>
-            <p className="text-sm text-text-muted mb-4">
-              Type or paste the proverb you Formed from your conversation with Soulbae. This will be used to generate the Zcash memo.
-            </p>
-            <textarea
-              value={proverbForMemo}
-              onChange={(e) => setProverbForMemo(e.target.value)}
-              placeholder="Paste your proverbial wisdom here..."
-              rows={4}
-              className="w-full px-4 py-3 bg-background border border-surface/50 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-            />
-            {proverbSuggestions.length > 0 && (
-              <div className="mt-3">
-                <p className="text-xs text-text-muted mb-2">Or select from suggestions:</p>
-                <ProverbSuggestions
-                  suggestions={proverbSuggestions}
-                  onSelect={(proverb) => {
-                    setProverbForMemo(proverb);
-                    setSelectedProverb(proverb);
-                  }}
-                />
-              </div>
-            )}
-          </motion.div>
-
-          {/* Step 2: Copy Memo to Zashi */}
-          {proverbForMemo.trim() && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="card bg-secondary/10 border-secondary/30"
-            >
-              <h3 className="text-lg font-semibold text-text mb-3 flex items-center gap-2">
-                <span>💰</span>
-                <span>Step 2: Send Shielded Transaction (0.01 ZEC)</span>
-              </h3>
-              <p className="text-sm text-text-muted mb-4">
-                Copy the formatted memo to paste into your Zashi wallet. Set the amount to <strong className="text-secondary">0.01 ZEC</strong> and send as a shielded transaction to the spellbook address.
-              </p>
-              <div className="mb-4 p-3 bg-secondary/10 border border-secondary/30 rounded text-xs text-text-muted">
-                <strong className="text-text">Your signal:</strong> This is your proof of understanding—a compressed proverb that demonstrates you've engaged with the spellbook content. The Oracle will verify and inscribe it on the blockchain.
-              </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleCopyToZashi}
-                  className="btn-secondary px-6 py-3 flex items-center gap-2"
-                >
-                  {copied ? (
-                    <>
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="text-secondary"
-                      >
-                        ✓
-                      </motion.span>
-                      <span>Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>📋</span>
-                      <span>Copy Memo to Zashi</span>
-                    </>
-                  )}
-                </button>
-                <a
-                  href="/story"
-                  className="btn-primary px-6 py-3"
-                >
-                  Back to Story
-                </a>
-              </div>
-            </motion.div>
-          )}
             </>
           )}
         </div>

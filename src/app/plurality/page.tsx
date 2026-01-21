@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SwordsmanPanel from '@/components/SwordsmanPanel';
+import MagePanel from '@/components/MagePanel';
 
 // Act metadata
 const actData: { [key: number]: { title: string; spell: string; proverb: string } } = {
@@ -351,6 +352,9 @@ export default function PluralityPage() {
 
   // Only show first page for now - other acts coming soon
   const acts = [0]; // 0 = firstpage only (acts 1-30, lastpage, inscriptions hidden for launch)
+  
+  // Show Mage panel for first page (0), acts (1-30), and last page (31)
+  const showMagePanel = activeAct === 0 || (activeAct >= 1 && activeAct <= 30) || activeAct === 31;
 
   useEffect(() => {
     const loadMarkdown = async () => {
@@ -517,6 +521,27 @@ export default function PluralityPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+      {/* Mage Panel - for first page, acts, and last page */}
+      {showMagePanel && (
+        <MagePanel
+          taleId={
+            activeAct === 0 
+              ? 'plurality-firstpage' 
+              : activeAct === 31 
+              ? 'plurality-lastpage' 
+              : `plurality-act-${activeAct}`
+          }
+          actNumber={activeAct === 0 || activeAct === 31 ? undefined : activeAct}
+          actName={
+            activeAct === 0 
+              ? 'first page' 
+              : activeAct === 31 
+              ? 'last page' 
+              : `Act ${activeAct}`
+          }
+        />
+      )}
+
       {/* Swordsman Panel - for acts */}
       {showSwordsmanPanel && currentAct && (
         <SwordsmanPanel
@@ -569,16 +594,28 @@ export default function PluralityPage() {
                   plural
                 </a>
                 <a
-                  href="/proverbs"
+                  href="/privacy"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
                   mage
+                </a>
+                <a
+                  href="/evoke"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  proverbs
                 </a>
               </div>
             </div>
@@ -651,11 +688,11 @@ export default function PluralityPage() {
                     plural
                   </a>
                   <a
-                    href="/proverbs"
+                    href="/privacy"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    proverbs
+                    privacy
                   </a>
                   <a
                     href="/mage"
@@ -665,11 +702,18 @@ export default function PluralityPage() {
                     mage
                   </a>
                   <a
-                    href="/privacy"
+                    href="/evoke"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    privacy
+                    evoke
+                  </a>
+                  <a
+                    href="/proverbs"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
                   </a>
                 </div>
               </motion.div>

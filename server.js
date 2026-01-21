@@ -19,6 +19,13 @@ const routeMap = {
 const server = http.createServer((req, res) => {
   let filePath = req.url.split('?')[0]; // Remove query string
   
+  // Silently handle Next.js RSC (React Server Components) requests - these don't exist in static exports
+  if (filePath.includes('__next.') && filePath.includes('.__PAGE__.txt')) {
+    res.writeHead(204, { 'Content-Type': 'text/plain' });
+    res.end();
+    return;
+  }
+  
   // Handle route mappings
   if (routeMap[filePath]) {
     filePath = routeMap[filePath];

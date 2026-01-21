@@ -1,15 +1,26 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { motion, AnimatePresence } from 'framer-motion';
+import MagePanel from '@/components/MagePanel';
 
 function PrivacyVideo() {
   const videoSrc = '/assets/privacymage_weather.mp4';
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Check if video is already loaded (cached)
+    if (videoRef.current) {
+      if (videoRef.current.readyState >= 2) {
+        setIsLoading(false);
+      }
+    }
+  }, []);
 
   if (hasError) {
     return null;
@@ -23,6 +34,7 @@ function PrivacyVideo() {
         </div>
       )}
       <video
+        ref={videoRef}
         src={videoSrc}
         className="w-full h-auto object-cover"
         autoPlay
@@ -30,6 +42,7 @@ function PrivacyVideo() {
         muted
         playsInline
         onLoadedData={() => setIsLoading(false)}
+        onCanPlay={() => setIsLoading(false)}
         onError={() => {
           setHasError(true);
           setIsLoading(false);
@@ -252,6 +265,8 @@ export default function PrivacyPage() {
   const [copiedInscription1, setCopiedInscription1] = useState(false);
   const [copiedInscription2, setCopiedInscription2] = useState(false);
 
+  const actName = "privacymage origins";
+
   const proverb1 = "Whispers of raindrops, roars of thunder, glimmers of focused light, must first find symphony within.";
   const proverb2 = "Then, only then, may the mage's spell, when spoken, become the village weather.";
   const incantation = "I scatter to become sky. I separate to stay whole. I promise to receive. I protect to carry forward.";
@@ -370,6 +385,13 @@ export default function PrivacyPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+      {/* Mage Panel */}
+      <MagePanel
+        taleId="privacy-origins"
+        actNumber={undefined}
+        actName={actName}
+      />
+
       {/* Navigation Header */}
       <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -411,10 +433,10 @@ export default function PrivacyPage() {
                   plural
                 </a>
                 <a
-                  href="/proverbs"
-                  className="text-text hover:text-primary transition-colors font-medium"
+                  href="/privacy"
+                  className="text-primary border-b-2 border-primary pb-1 font-medium"
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
@@ -423,10 +445,16 @@ export default function PrivacyPage() {
                   mage
                 </a>
                 <a
-                  href="/privacy"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
+                  href="/evoke"
+                  className="text-text hover:text-primary transition-colors font-medium"
                 >
-                  privacy
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text hover:text-primary transition-colors font-medium"
+                >
+                  proverbs
                 </a>
               </div>
             </div>
@@ -493,11 +521,11 @@ export default function PrivacyPage() {
                   plural
                 </a>
                 <a
-                  href="/proverbs"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
+                  href="/privacy"
+                  className="text-primary border-b-2 border-primary pb-1 font-medium px-4"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
@@ -507,11 +535,18 @@ export default function PrivacyPage() {
                   mage
                 </a>
                 <a
-                  href="/privacy"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium px-4"
+                  href="/evoke"
+                  className="text-text hover:text-primary transition-colors font-medium px-4"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  privacy
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text hover:text-primary transition-colors font-medium px-4"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  proverbs
                 </a>
               </div>
             </div>

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import SwordsmanPanel from '@/components/SwordsmanPanel';
+import MagePanel from '@/components/MagePanel';
 
 // Tale metadata from manifest
 const taleData: { [key: number]: { title: string; spell: string; proverb: string } } = {
@@ -41,7 +41,11 @@ const taleData: { [key: number]: { title: string; spell: string; proverb: string
   30: { title: "The Eternal Sovereignty", spell: "Sovereign Agent = {Identity, Swordsman, Mage, Reflect, Connect, Capital, Intelligence}", proverb: "The complete sovereignty system is a symphony of zero-knowledge proofs: boundary proving privacy, delegation proving agency, memory proving continuity, network proving connection, capital proving compliance, intelligence proving learning. Every component modular, every interaction provable, every privacy preserved. The eternal sovereignty emerges not from any single proof but from their mathematical harmony across all six dimensions of the crystalline lattice." },
 };
 
-function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (taleNumber: number) => void }) {
+function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
+  const handleProtect = (taleNumber: number) => {
+    // Navigate to proverbs page - zero tales can be submitted there
+    window.location.href = `/proverbs`;
+  };
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
 
@@ -111,16 +115,14 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
                 "proverb"
               )}
             </button>
-            {onProtect && (
-              <button
-                onClick={() => onProtect(inscription.number)}
-                className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
-                title="Protect the spell (1 ZEC) - Public stake, private knowledge"
-              >
-                <span>⚔️</span>
-                <span>protect</span>
-              </button>
-            )}
+            <button
+              onClick={() => handleProtect(inscription.number)}
+              className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
+              title="Protect the spell - Submit proof on proverbs page"
+            >
+              <span>⚔️</span>
+              <span>protect</span>
+            </button>
           </div>
         </div>
       ))}
@@ -401,32 +403,32 @@ export default function ZeroPage() {
   const hasPrevious = acts.indexOf(activeAct) > 0;
   const hasNext = acts.indexOf(activeAct) < acts.length - 1;
 
-  // Show Swordsman panel for tales (1-30)
-  const showSwordsmanPanel = activeAct >= 1 && activeAct <= 30;
+  // Show Mage panel for first page (0), tales (1-30), and last page (31)
+  const showMagePanel = activeAct === 0 || (activeAct >= 1 && activeAct <= 30) || activeAct === 31;
   const currentTale = activeAct >= 1 && activeAct <= 30 ? taleData[activeAct] : null;
-
-  // Handle protect button - switch to tale and open swordsman panel
-  const handleProtect = (taleNumber: number) => {
-    setActiveAct(taleNumber);
-    // Open swordsman panel after a short delay to allow render
-    setTimeout(() => {
-      const swordsmanButton = document.querySelector('[data-swordsman-toggle]');
-      if (swordsmanButton) {
-        (swordsmanButton as HTMLElement).click();
-      }
-    }, 100);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Swordsman Panel - for tales */}
-      {showSwordsmanPanel && currentTale && (
-        <SwordsmanPanel
-          taleId={`zero-tale-${activeAct}`}
-          actNumber={activeAct}
-          spellbook="zero"
-          actName={`Tale ${activeAct}`}
-          spell={currentTale.spell}
+      {/* Mage Panel - for first page, tales, and last page */}
+      {showMagePanel && (
+        <MagePanel
+          taleId={
+            activeAct === 0 
+              ? 'zero-firstpage' 
+              : activeAct === 31 
+              ? 'zero-lastpage' 
+              : `zero-tale-${activeAct}`
+          }
+          actNumber={activeAct === 0 || activeAct === 31 ? undefined : activeAct}
+          actName={
+            activeAct === 0 
+              ? 'first page' 
+              : activeAct === 31 
+              ? 'last page' 
+              : currentTale 
+              ? `Tale ${activeAct}: ${currentTale.title}` 
+              : undefined
+          }
         />
       )}
       
@@ -471,10 +473,10 @@ export default function ZeroPage() {
                   plural
                 </a>
                 <a
-                  href="/proverbs"
+                  href="/privacy"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
-                  proverbs
+                  privacy
                 </a>
                 <a
                   href="/mage"
@@ -483,10 +485,16 @@ export default function ZeroPage() {
                   mage
                 </a>
                 <a
-                  href="/privacy"
+                  href="/evoke"
                   className="text-text-muted hover:text-text transition-colors font-medium"
                 >
-                  privacy
+                  evoke
+                </a>
+                <a
+                  href="/proverbs"
+                  className="text-text-muted hover:text-text transition-colors font-medium"
+                >
+                  proverbs
                 </a>
               </div>
             </div>
@@ -559,11 +567,11 @@ export default function ZeroPage() {
                     plural
                   </a>
                   <a
-                    href="/proverbs"
+                    href="/privacy"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    proverbs
+                    privacy
                   </a>
                   <a
                     href="/mage"
@@ -573,11 +581,18 @@ export default function ZeroPage() {
                     mage
                   </a>
                   <a
-                    href="/privacy"
+                    href="/evoke"
                     className="block text-text-muted hover:text-text transition-colors font-medium py-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    privacy
+                    evoke
+                  </a>
+                  <a
+                    href="/proverbs"
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    proverbs
                   </a>
                 </div>
               </motion.div>
@@ -638,22 +653,13 @@ export default function ZeroPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
-            {/* Top Learn and Protect Buttons */}
+            {/* Top Learn Button */}
             {(markdownContent || activeAct === 32) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
-                {showSwordsmanPanel && (
-                  <button
-                    onClick={() => handleProtect(activeAct)}
-                    className="px-2 sm:px-4 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg transition-all duration-200 flex items-center gap-1 flex-shrink-0"
-                    title="Protect the spell (1 ZEC) - Public stake, private knowledge"
-                  >
-                    <span className="text-accent text-xs sm:text-sm font-medium">⚔️ protect</span>
-                  </button>
-                )}
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
-                  title="Learn the spell (0.01 ZEC) - Public commitment, private fees"
+                  title="Learn the spell - Copy the full story content"
                 >
                   {copied ? (
                     <motion.div
@@ -752,7 +758,6 @@ export default function ZeroPage() {
                 {activeAct === 32 ? (
                   <InscriptionsPage 
                     onCopy={copyInscription}
-                    onProtect={handleProtect}
                   />
                 ) : (
                   <div className="markdown-content pb-24 sm:pb-28">
