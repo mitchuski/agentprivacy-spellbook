@@ -6,6 +6,7 @@ import { chatWithSoulbae, generateSessionId, type SoulbaeMessage } from '@/lib/s
 import { streamChatCompletion } from '@/lib/stream-utils';
 import ChatMessage from '@/components/ChatMessage';
 import ProverbSuggestions from '@/components/ProverbSuggestions';
+import { getSpellemojiForAct, getActFromTaleId } from '@/lib/zcash-memo';
 
 // Spellbook structures for feedback form
 type SpellbookType = 'story' | 'zero' | 'canon' | 'society' | 'plurality' | null;
@@ -412,6 +413,7 @@ export default function MagePanel({ taleId, actNumber, actName }: MagePanelProps
   const [userProverb, setUserProverb] = useState('');
   const [proverbCopied, setProverbCopied] = useState(false);
   const [isEvokeExpanded, setIsEvokeExpanded] = useState(false);
+  const [inscriptionCopied, setInscriptionCopied] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -754,6 +756,30 @@ What would you like to explore?`;
     }
   };
 
+  // Get emoji inscription for current story/act
+  const getEmojiInscription = (): string => {
+    if (actNumber && actNumber > 0) {
+      return getSpellemojiForAct(actNumber);
+    }
+    const act = getActFromTaleId(taleId);
+    if (act !== null) {
+      return getSpellemojiForAct(act);
+    }
+    return '';
+  };
+
+  const handleCopyInscription = async () => {
+    const inscription = getEmojiInscription();
+    if (!inscription.trim()) return;
+    try {
+      await navigator.clipboard.writeText(inscription.trim());
+      setInscriptionCopied(true);
+      setTimeout(() => setInscriptionCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy inscription:', err);
+    }
+  };
+
   // Handle reset context - clear conversation and start fresh
   const handleResetContext = () => {
     if (typeof window === 'undefined') return;
@@ -1015,6 +1041,36 @@ What would you like to explore?`;
                   </motion.div>
                 )}
               </div>
+
+              {/* Footer - Emoji Inscription Copy Button */}
+              {getEmojiInscription() && (
+                <div className="border-t border-surface/50 flex-shrink-0 p-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}>
+                  <button
+                    onClick={handleCopyInscription}
+                    className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
+                    title="Copy emoji inscription"
+                  >
+                    <div className="text-primary font-semibold text-xs mb-2">
+                      {inscriptionCopied ? (
+                        <motion.span
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="text-primary"
+                        >
+                          cast
+                        </motion.span>
+                      ) : (
+                        <span className="group-hover:text-primary/80 transition-colors">
+                          inscribe
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-text-muted text-sm flex-1 break-words max-w-full whitespace-pre-line font-mono">
+                      {getEmojiInscription()}
+                    </div>
+                  </button>
+                </div>
+              )}
               </div>
             </motion.div>
           </>
