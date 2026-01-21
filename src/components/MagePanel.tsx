@@ -987,7 +987,7 @@ What would you like to explore?`;
                   >
                     <div className="px-4 pb-4">
                       <p className="text-xs text-text-muted mb-3">
-                        share your proverb, share understanding, any feedback is welcome fellow mage.
+                        serendipity in understanding are the acts of creation.
                       </p>
                       <ShareProverbForm taleId={taleId} actNumber={actNumber} actName={actName} />
                     </div>
