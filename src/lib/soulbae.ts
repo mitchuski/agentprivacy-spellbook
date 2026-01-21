@@ -174,14 +174,15 @@ export async function chatWithSoulbae(
       (window.location.pathname.includes('.html') || 
        !window.location.pathname.startsWith('/api'));
     
-    // Determine endpoint
+    // Determine endpoint - PROXY_URL takes priority (works in production)
     let endpoint: string;
-    if (isDevelopment && !isStaticExport) {
-      // Only use Next.js API route in actual Next.js dev server (not static export)
-      endpoint = '/api/near-ai/chat';  // Try proxy in development first
-    } else if (PROXY_URL) {
+    if (PROXY_URL) {
+      // Always use proxy if configured (production or local)
       endpoint = `${PROXY_URL}/v1/chat/completions`;  // Use configured proxy (Cloudflare Worker)
       console.log('✅ Using NEAR API proxy:', PROXY_URL);
+    } else if (isDevelopment && !isStaticExport) {
+      // Only use Next.js API route in actual Next.js dev server (not static export)
+      endpoint = '/api/near-ai/chat';  // Try proxy in development first
     } else {
       endpoint = `${NEAR_API_URL}/chat/completions`;  // Direct (will have CORS issues)
       // Only warn in development/local - in production, proxy should be configured
@@ -259,13 +260,26 @@ export async function chatWithSoulbae(
         });
       }
     } catch (fetchError: any) {
-      // If fetch fails and we were using proxy, try direct API
+      // Clear timeout if it was set
+      if (typeof timeoutId !== 'undefined') {
+        clearTimeout(timeoutId);
+      }
+      
+      // Check if it's a CORS or abort error
+      const isCorsError = fetchError.name === 'TypeError' || fetchError.message?.includes('CORS');
+      const isAbortError = fetchError.name === 'AbortError' || fetchError.message?.includes('aborted');
+      
+      // If fetch fails and we were using proxy, try direct API (only in Next.js dev server)
       if (isDevelopment && !isStaticExport && endpoint === '/api/near-ai/chat') {
         console.warn('Proxy route failed, falling back to direct NEAR API:', fetchError.message);
         endpoint = `${NEAR_API_URL}/chat/completions`;
         requestHeaders = headers;
         
         try {
+          // Create new AbortController for retry
+          const retryController = new AbortController();
+          const retryTimeoutId = setTimeout(() => retryController.abort(), 30000);
+          
           response = await fetch(endpoint, {
             method: 'POST',
             headers: requestHeaders,
@@ -278,11 +292,28 @@ export async function chatWithSoulbae(
             }),
             mode: 'cors',
             credentials: 'omit',
+            signal: retryController.signal,
           });
+          
+          clearTimeout(retryTimeoutId);
         } catch (retryError: any) {
+          // Direct API also failed - likely CORS
+          if (retryError.name === 'AbortError' || retryError.message?.includes('aborted') || retryError.message?.includes('CORS')) {
+            throw new Error('CORS blocked: Direct API calls are not allowed. Please use NEXT_PUBLIC_NEAR_PROXY_URL or run Next.js dev server.');
+          }
           throw new Error(`Failed to connect to NEAR API: ${retryError.message}`);
         }
       } else {
+        // Handle CORS/abort errors with better messaging
+        const isCorsError = fetchError.name === 'TypeError' && fetchError.message?.includes('Failed to fetch');
+        const isAbortError = fetchError.name === 'AbortError' || fetchError.message?.includes('aborted');
+        
+        if ((isCorsError || isAbortError) && !PROXY_URL && !isDevelopment) {
+          throw new Error('CORS blocked: Direct API calls are not allowed. Please configure NEXT_PUBLIC_NEAR_PROXY_URL for production.');
+        } else if (isAbortError && !PROXY_URL) {
+          throw new Error('Request blocked: CORS is preventing direct API calls. Please configure NEXT_PUBLIC_NEAR_PROXY_URL or use Next.js dev server.');
+        }
+        // Re-throw the original error with more context
         throw fetchError;
       }
     }
