@@ -320,6 +320,25 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
           {error}
         </div>
       )}
+      <button
+        type="submit"
+        disabled={!feedbackMessage.trim() || !userEmail.trim() || isSending || sent}
+        className="w-full px-3 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center justify-center gap-2"
+      >
+        {isSending ? (
+          <>
+            <span className="animate-spin">⏳</span>
+            <span>Sending...</span>
+          </>
+        ) : sent ? (
+          <>
+            <span>✓</span>
+            <span>Sent!</span>
+          </>
+        ) : (
+          <span>Send</span>
+        )}
+      </button>
       <div>
         <label className="block text-xs text-text-muted mb-2">Optional:</label>
         <div className="space-y-3">
@@ -370,25 +389,6 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
           </div>
         </div>
       </div>
-      <button
-        type="submit"
-        disabled={!feedbackMessage.trim() || !userEmail.trim() || isSending || sent}
-        className="w-full px-3 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium flex items-center justify-center gap-2"
-      >
-        {isSending ? (
-          <>
-            <span className="animate-spin">⏳</span>
-            <span>Sending...</span>
-          </>
-        ) : sent ? (
-          <>
-            <span>✓</span>
-            <span>Sent!</span>
-          </>
-        ) : (
-          <span>Send</span>
-        )}
-      </button>
     </form>
   );
 }
