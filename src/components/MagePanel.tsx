@@ -179,12 +179,26 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
   // Get available items for selected spellbook
   const availableItems = selectedSpellbook ? getSpellbookItems(selectedSpellbook) : null;
 
-  // Reset act selection when spellbook changes (but preserve if it's the same spellbook)
+  // Auto-fill act when actNumber or taleId changes (user navigated to different act)
   useEffect(() => {
-    if (selectedSpellbook !== initialSpellbook) {
-      setSelectedAct(null);
+    if (actNumber && actNumber > 0) {
+      setSelectedAct(actNumber);
     }
-  }, [selectedSpellbook]);
+    // Ensure spellbook is set based on taleId
+    if (initialSpellbook && !selectedSpellbook) {
+      setSelectedSpellbook(initialSpellbook);
+    }
+  }, [actNumber, taleId, initialSpellbook]);
+
+  // Reset act selection when spellbook changes to a different one
+  useEffect(() => {
+    if (selectedSpellbook && selectedSpellbook !== initialSpellbook) {
+      setSelectedAct(null);
+    } else if (selectedSpellbook === initialSpellbook && actNumber && actNumber > 0) {
+      // Restore act if spellbook matches the initial one
+      setSelectedAct(actNumber);
+    }
+  }, [selectedSpellbook, initialSpellbook, actNumber]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
