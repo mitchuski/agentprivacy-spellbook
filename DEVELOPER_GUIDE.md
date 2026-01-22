@@ -221,7 +221,7 @@ This balances:
 ## Project Structure
 
 ```
-agentprivacy_zypher/
+agentprivacy_master/
 ├── oracle-swordsman/          # Oracle backend
 │   ├── src/                   # TypeScript source
 │   │   ├── config.ts         # Configuration
@@ -1018,8 +1018,7 @@ MIT License - See [LICENSE](./LICENSE) file for details.
 
 **Project**: Proof of Proverb Revelation Protocol  
 **Parent Project**: 0xagentprivacy  
-**Event**: Zypherpunk Hack 2025  
-**Status**: ✅ Production (Acts 1-7 live on mainnet)  
+**Status**: ✅ Production (Acts 1-12 live on mainnet)  
 **GitHub**: github.com/mitchuski/agentprivacy
 
 ---

@@ -178,7 +178,7 @@ ready to submit your spell? here's the ritual:
 ## Project Structure
 
 ```
-agentprivacy_zypher/
+agentprivacy_master/
 ├── oracle-swordsman/          # Oracle backend (the Swordsman ⚔️)
 │   ├── src/                   # TypeScript source
 │   │   ├── config.ts         # Configuration
@@ -261,7 +261,7 @@ agentprivacy_zypher/
 ```bash
 # Clone repo
 git clone https://github.com/mitchuski/agentprivacy
-cd agentprivacy_zypher
+cd agentprivacy_master
 
 # Install dependencies
 npm install

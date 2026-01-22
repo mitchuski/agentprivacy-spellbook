@@ -2,14 +2,13 @@
 
 **Generated**: December 2025  
 **Project**: 0xagentprivacy — Privacy-preserving AI agents on Zcash  
-**Event**: Zypherpunk Hack 2025  
 **Status**: ✅ **PRODUCTION — Acts 1-12 Live on Mainnet**
 
 ---
 
 ## 📋 Executive Summary
 
-The **Proof of Proverb Revelation Protocol** is the Zypherpunk Hack 2025 implementation of the broader **0xagentprivacy** project. This **production system** demonstrates privacy-preserving AI verification through a novel proof-of-understanding protocol.
+The **Proof of Proverb Revelation Protocol** is the first production implementation of the broader **0xagentprivacy** project. This **production system** demonstrates privacy-preserving AI verification through a novel proof-of-understanding protocol.
 
 **What We Built**: The first concrete expression of the dual-agent architecture—proving that cryptographic separation of viewing and spending authority enables new forms of privacy-preserving AI agent interactions.
 

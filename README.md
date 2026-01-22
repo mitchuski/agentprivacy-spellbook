@@ -1,7 +1,6 @@
 # Proof of Proverb Revelation Protocol
 ## Privacy-Preserving AI Verification on Zcash
 
-**Implementation**: Zypherpunk Hack 2025  
 **Project**: 0xagentprivacy  
 **Status**: ✅ Production-Ready  
 **Version**: 1.0
@@ -420,7 +419,6 @@ This implementation aligns with the 0xagentprivacy living documentation:
 - First Person Network
 - Kwaai AI
 - MyTerms / Customer Commons
-- Zypherpunks
 
 ---
 

@@ -252,7 +252,7 @@ SPELLBOOK_CID=bafkreietjoihzy4wnyvhtdfpn2g5n4j2rdcadanu5yinhkqyr2ax27znhy  # Cur
 # Testnet
 ZCASH_NETWORK=testnet
 ZCASH_SERVER=https://zec.rocks:443
-ZCASH_DATA_DIR=C:\Users\yourusername\agentprivacy_zypher\zcash-wallet  # Windows path
+ZCASH_DATA_DIR=C:\Users\yourusername\agentprivacy_master\zcash-wallet  # Windows path
 # ZCASH_DATA_DIR=/home/yourusername/proverb-protocol/zcash-wallet  # Linux/macOS path
 
 # Addresses (get from wallet setup)
@@ -448,7 +448,7 @@ zecwallet-cli --server https://zec.rocks:443 \
 **Windows:**
 ```powershell
 # Create wallet directory
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\agentprivacy_zypher\zcash-wallet"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\agentprivacy_master\zcash-wallet"
 
 # Start light client (testnet)
 # Note: Some versions don't support --data-dir flag

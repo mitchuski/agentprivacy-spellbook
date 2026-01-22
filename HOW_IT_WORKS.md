@@ -2,7 +2,7 @@
 
 **A technical overview of the Proof of Proverb Revelation Protocol architecture and data flow.**
 
-**Project Context**: This is the Zypherpunk Hack 2025 implementation of the broader AgentPrivacy project, demonstrating the dual-agent architecture through a privacy-preserving AI verification system.
+**Project Context**: This is the first production implementation of the broader AgentPrivacy project, demonstrating the dual-agent architecture through a privacy-preserving AI verification system.
 
 ---
 

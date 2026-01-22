@@ -2,8 +2,6 @@
 ## NEAR Cloud AI (Soulbae) + Zcash Integration
 
 **Version:** 1.0  
-**Event:** Zypherpunk Hack 2025  
-**Bounty:** Privacy-Preserving AI & Computation  
 **Status:** Production-Ready
 
 **Document Alignment**: [Whitepaper v4.3], [Tokenomics v2.0], [Glossary v2.1], [Spellbook v4.0.1-canonical]

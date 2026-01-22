@@ -41,7 +41,7 @@
 │
 └── 🔧 IMPLEMENTATIONS
     │
-    └── Proof of Proverb Revelation Protocol (Zypherpunk 2025)
+    └── Proof of Proverb Revelation Protocol
         │
         ├── README.md ────────────── Implementation overview
         ├── STATUS.md ────────────── Current infrastructure state  
@@ -216,7 +216,7 @@ Per [Glossary v2.1, §13], these terms should NOT appear in documentation:
 
 ## Implementation Relationship
 
-The **Proof of Proverb Revelation Protocol** (Zypherpunk 2025) is the first concrete expression of the 0xagentprivacy architecture:
+The **Proof of Proverb Revelation Protocol** is the first concrete expression of the 0xagentprivacy architecture:
 
 ```
 Living Documentation                Implementation
