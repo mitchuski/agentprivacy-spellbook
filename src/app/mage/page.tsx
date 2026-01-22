@@ -1047,6 +1047,7 @@ What brings you my spellbook?`,
                         16: 'Act XVI: When Pools Become Wells',
                         17: 'Act XVII: Bonfire in the Dark Forest',
                         18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
+                        19: 'Act XIX: The Anthropic Archivist',
                       };
                       return (
                         <button

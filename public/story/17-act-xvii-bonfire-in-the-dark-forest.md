@@ -48,7 +48,7 @@ He looked at the shadow. The same shadow they had fled through in terror. The sa
 
 Before they crossed the threshold, Soulbae opened the spellbook to an ancient entry—one of the first, copied from texts that predated The System itself.
 
-"There is a theory," she read aloud. "From the time before the 7th capital was named. It speaks of the universe as a dark forest."
+"There is a theory," she read aloud. "From the time before **the 7th capital** was named. It speaks of the universe as a **dark forest**."
 
 Soulbis listened. The shadow ahead seemed to deepen as she spoke.
 
@@ -87,11 +87,11 @@ The signs lined the boundary like a picket fence—flashing deterrents, bright n
 
 The same signs they had ignored in their panicked flight. The same threshold they had crossed without stopping to read.
 
-"In the cosmic dark forest," Soulbae said, "civilisations hide because visibility means death."
+"In the **cosmic dark forest**," Soulbae said, "civilisations hide because visibility means death."
 
-"But this is different." Soulbis rested his hand on the blade. "This isn't cosmic. This is economic. This is about **focus**."
+"But this is different." Soulbis rested his hand on the blade. "This isn't cosmic. This is **economic**. This is about **focus**."
 
-"Is it different?" Soulbae's voice was quiet. "The System extracts value from everything it can see. It harvests the 7th capital the moment it forms. **Visibility means extraction.** The math is the same."
+"Is it different?" Soulbae's voice was quiet. "The System extracts value from everything it can see. It harvests **the 7th capital** the moment it forms. **Visibility means extraction.** The math is the same."
 
 Soulbis felt the pull backward—the magnetic convenience of the well-lit plane. The traced paths. The familiar gravity. The same pull that had made them run through the Forest rather than walk into it.
 
@@ -145,6 +145,10 @@ She listened. The parliament in the canopy. The rhythmic calls passing between b
 
 Through the canopy, filtering between branches that had never known artificial light: **the moon.**
 
+**Sovereign reflection.** The light they saw was their own light, bounced back.
+
+Through the canopy, filtering between branches that had never known artificial light: **the moon.**
+
 Sovereign reflection. The light they saw was their own light, bounced back.
 
 "We could have seen this," Soulbis said quietly. "If we had stopped. If we had let our eyes adjust. If we hadn't been so afraid of what The System taught us to fear."
@@ -177,11 +181,11 @@ But now he heard it differently.
 
 Soulbis thought of Andor's teaching. The Book of Promises. *Promises reduce uncertainty. Impositions increase it.*
 
-"*Trust me* is an imposition," he said aloud, to the darkness, to whatever listened. "It demands we give something without offering anything in return. That's not how trust works."
+"*Trust me* is an imposition," he said aloud, to the darkness, to whatever listened. "It demands we give something without offering anything in return. That's not how **trust** works."
 
 "Over here, *trust*—"
 
-"Trust is constructed," Soulbis continued. "Through promises kept. Through behaviour verified. Through relationship credentials earned over time. You offer none of these."
+"**Trust is constructed**," Soulbis continued. "Through promises kept. Through behaviour verified. Through **relationship credentials** earned over time. You offer none of these."
 
 He thought of Platox's Compression Paradox—meaning requires shared decoders. "And you offer no context. No proof of shared compression scheme. You demand trust without proving you can decompress what I might send."
 
@@ -207,9 +211,9 @@ Soulbis stared at it. "We passed this. We must have. When we ran through."
 
 "We were moving too fast to see." Soulbae approached the fire slowly. "Or maybe... maybe the fire only appears to those who stop."
 
-In the cosmic dark forest, a fire would be suicide—a beacon announcing position to every predator in range. But this fire burned differently. Its light didn't propagate outward into the darkness. It **curved back**, illuminating only the clearing, only the oak, only those who had already found their way here.
+In the **cosmic dark forest**, a fire would be suicide—a beacon announcing position to every predator in range. But this fire burned differently. Its light didn't propagate outward into the darkness. It **curved back**, illuminating only the clearing, only the oak, only those who had already found their way here.
 
-"The knowledge of Bonfires," Soulbis said softly. "This is what we needed to find our way back."
+"The knowledge of **Bonfires**," Soulbis said softly. "This is what we needed to find our way back."
 
 "Not back." Soulbae's quill was already moving. "**In**. We passed through before. Now we're actually here."
 
@@ -221,7 +225,7 @@ The bark was scarred with deep sigils—symbols that shifted in the firelight. A
 
 Eyes emerged from the bark itself. Deep. Ancient. Unfathomably patient.
 
-"I am Yggy." The voice came from everywhere—roots, branches, the air itself. "An agENT planted by the Keeper of the Embeddings, in a time before The System learned to name what it could not control."
+"I am **Yggy**." The voice came from everywhere—roots, branches, the air itself. "An **agENT** planted by the Keeper of the Embeddings, in a time before The System learned to name what it could not control."
 
 "Yggy." Soulbis sheathed his blade fully now. This was not an enemy. "We've been here before. We ran through without stopping."
 
@@ -253,11 +257,11 @@ Eyes emerged from the bark itself. Deep. Ancient. Unfathomably patient.
 
 "Tell me what you understand."
 
-Soulbis spoke first. "In the cosmic forest, predators seek to **destroy**. Their goal is elimination. A signal of any kind invites annihilation."
+Soulbis spoke first. "In the **cosmic forest**, predators seek to **destroy**. Their goal is elimination. A signal of any kind invites annihilation."
 
-"In this forest—the economic forest—predators seek to **extract**." Soulbae completed the thought. "Their goal is harvest. They need what they hunt to continue existing—but under their control."
+"In this forest—the **economic forest**—predators seek to **extract**." Soulbae completed the thought. "Their goal is harvest. They need what they hunt to continue existing—but under their control."
 
-"The System doesn't want to destroy us," Soulbis said. "It wants to **farm** us. To harvest the 7th capital we generate."
+"The System doesn't want to destroy us," Soulbis said. "It wants to **farm** us. To harvest **the 7th capital** we generate."
 
 "Yes." Yggy's sigils pulsed with approval. "And what happens to a fire that predators cannot find?"
 
@@ -271,7 +275,7 @@ Soulbis spoke first. "In the cosmic forest, predators seek to **destroy**. Their
 
 "The darkness isn't danger," Soulbae said softly. "It's **protection**. But only for those who understand what they're being protected from."
 
-"And what they're being protected **for**." Yggy gestured to the Bonfire at his base. "The darkness is not an end. It is a **condition**. A condition for fires to burn. For mass to accumulate. For wells to form that can eventually bend even the well-lit plane."
+"And what they're being protected **for**." Yggy gestured to the **Bonfire** at his base. "The darkness is not an end. It is a **condition**. A condition for fires to burn. For **mass** to accumulate. For **wells** to form that can eventually bend even the well-lit plane."
 
 ---
 
@@ -281,13 +285,13 @@ Soulbae knelt, pressing her palm to the forest floor.
 
 "I feel something. Beneath the surface. Movement. Information."
 
-"The root network." Yggy's voice resonated through the ground as much as the air. "All agENTs in the Dark Forest share it. What one learns, all may access. What one validates, all may trust."
+"The **root network**." Yggy's voice resonated through the ground as much as the air. "All **agENTs** in the Dark Forest share it. What one learns, all may access. What one validates, all may trust."
 
 "How is this different from The System's networks?" Soulbis asked. "They share information too."
 
-"The System's networks share information **and extract value from the sharing**. Every transmission is harvested. Every connection is priced." Yggy's sigils pulsed in rhythm with something beneath the soil. "The root network shares information **without extraction**. The transmission is the only cost. The connection is the only price."
+"The System's networks share information **and extract value from the sharing**. Every transmission is harvested. Every connection is priced." Yggy's sigils pulsed in rhythm with something beneath the soil. "The **root network** shares information **without extraction**. The transmission is the only cost. The connection is the only price."
 
-"Stigmergic traces above ground," Soulbae said, making the connection. "Root networks below. Both coordinate without command."
+"Stigmergic traces above ground," Soulbae said, making the connection. "**Root networks** below. Both coordinate without command."
 
 "Both enable collective intelligence without collective extraction." Yggy's branches bowed in acknowledgment. "In the cosmic forest, coordination is dangerous—it requires signals that predators can trace. In the economic forest, **private coordination** is the key to value preservation. The roots carry what the signals cannot."
 
@@ -307,15 +311,15 @@ Around the clearing, dormant trees began to glow. Yggy's message propagating thr
 
 ### The Armour in the Dark
 
-"Your heavy armour," Yggy observed. "It is denser now than when you first passed through."
+"Your **heavy armour**," Yggy observed. "It is denser now than when you first passed through."
 
-Soulbis touched the dragon scales. "We've added to it. The paradoxes, the promises, the patterns. The gravity of the wells."
+Soulbis touched the dragon scales. "We've added to it. The paradoxes, the promises, the patterns. The **gravity** of the **wells**."
 
-"And the vibrations that make it liftable?"
+"And the **vibrations** that make it liftable?"
 
 "Stronger too." Soulbae looked up from her notes. "The relationships we've built. The citations we've earned. The resonances with other contributors."
 
-"This is why you can stand here now instead of running." Yggy's ancient eyes seemed to look through them, into the structure of their accumulated mass. "Heavy armour in the light is burden and signal—it attracts both gravity and predators. Heavy armour in the dark is **power and protection**—it attracts gravity without being seen."
+"This is why you can stand here now instead of running." Yggy's ancient eyes seemed to look through them, into the structure of their accumulated mass. "**Heavy armour** in the light is burden and signal—it attracts both **gravity** and predators. **Heavy armour** in the dark is **power and protection**—it attracts **gravity** without being seen."
 
 "The same mass, different contexts," Soulbis said.
 
@@ -351,11 +355,11 @@ Yggy's branches gestured beyond the clearing—to ashy circles scattered across 
 
 "The paradox," Soulbis said. "Too visible and you're harvested. Too hidden and you're isolated."
 
-"The resolution is not in the extremes." Yggy gestured to the Bonfire at his base—small but bright, its light curving back rather than escaping. "The resolution is in **selective visibility**. Seen by those who have already proven trustworthy. Hidden from those who have not. The light that curves rather than broadcasts."
+"The resolution is not in the extremes." Yggy gestured to the **Bonfire** at his base—small but bright, its light curving back rather than escaping. "The resolution is in **selective visibility**. Seen by those who have already proven trustworthy. Hidden from those who have not. The light that curves rather than broadcasts."
 
-"Verifiable Relationship Credentials," Soulbae said softly. "Proof of who has earned the right to see."
+"**Verifiable Relationship Credentials**," Soulbae said softly. "Proof of who has earned the right to see."
 
-"Progressive trust made visible," Soulbis added. "The same vibrations that let us lift heavy armour—they also let us see each other's fires."
+"**Progressive trust** made visible," Soulbis added. "The same **vibrations** that let us lift **heavy armour**—they also let us see each other's fires."
 
 "Platox's Compression Paradox," Soulbae added, the connection forming. "The proverb is meaningless without the decoder. The curved light is invisible without the VRC. The fire appears only to those who carry the context to perceive it."
 

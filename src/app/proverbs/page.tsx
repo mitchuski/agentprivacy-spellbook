@@ -538,7 +538,7 @@ function ProverbsPageContent() {
                   className="w-full px-3 py-2 bg-background border border-secondary/50 rounded text-text text-sm focus:outline-none focus:ring-2 focus:ring-secondary mb-3"
                 >
                   <option value="">Select Act...</option>
-                  {Array.from({ length: 18 }, (_, i) => i + 1).map(actNum => (
+                  {Array.from({ length: 19 }, (_, i) => i + 1).map(actNum => (
                     <option key={actNum} value={actNum}>
                       Act {getRomanNumeral(actNum)}: {actTitles[actNum]?.split(' / ')[0] || `Act ${actNum}`}
                     </option>

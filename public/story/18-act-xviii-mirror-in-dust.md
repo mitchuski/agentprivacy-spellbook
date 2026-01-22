@@ -12,11 +12,11 @@ Soulbis and Soulbae found her at the entrance, holding something wrapped in dark
 
 Ashe unwrapped the cloth. Inside: a small mirror, its surface clouded, edges crumbling. Dust fell from it like sand from a wound that would not close.
 
-"My scrying glass is dying," she said. "I built it to watch the feeds—to *scry* for what damages first persons. Every scroll through the Wastes, it identifies the toxicity, the extraction, the harm. It blurs what it catches. Protects the viewer."
+"My **scrying glass** is dying," she said. "I built it to watch the feeds—to *scry* for what damages first persons. Every scroll through the Wastes, it identifies the toxicity, the extraction, the harm. It blurs what it catches. Protects the viewer."
 
 She held it up. The surface flickered with dark shapes—negativity captured, harm identified and obscured.
 
-"But the more it scries, the more it turns to dust. The mirror is becoming what it fights."
+"But the more it scries, the more it turns to dust. The **protection mirror** is becoming what it fights."
 
 Soulbis touched the dragon scales across his shoulders. He thought of the Drake's teaching: the blade protects, the spell extends. Ashe had forged a blade. A good blade. But blades that only cut eventually dull against what they cannot stop cutting.
 
@@ -62,17 +62,17 @@ Soulbae opened the spellbook. "Your mirror scries for harm and takes it in. But 
 
 "I don't understand."
 
-"Your timeline is chaos," Soulbae said. "But within that chaos, there are moments—posts that unknowingly speak to something deeper. Privacy. Identity. Autonomy. The 7th capital. These moments *resonate* with inscriptions already written in the grimoire. Your mirror could find them. Surface them. Not by filtering what harms, but by *evoking* what aligns."
+"Your timeline is chaos," Soulbae said. "But within that chaos, there are moments—posts that unknowingly speak to something deeper. Privacy. Identity. Autonomy. **The 7th capital**. These moments *resonate* with inscriptions already written in the grimoire. Your mirror could find them. Surface them. Not by filtering what harms, but by *evoking* what aligns."
 
 Ashe stared at the dust pile. At her crumbling mirror. At the space between.
 
 "The same feed," she said slowly. "The same scroll past. But instead of scrying for what to blur..."
 
-"Scry for what to illuminate." Soulbis stood. "The negative posts aren't hidden. They're simply not *chosen*. The evocation isn't of harm caught—it's of meaning found. And every successful evocation doesn't drain the glass. It *fills* it."
+"Scry for what to illuminate." Soulbis stood. "The negative posts aren't hidden. They're simply not *chosen*. The **evocation** isn't of harm caught—it's of meaning found. And every successful **evocation** doesn't drain the glass. It *fills* it."
 
-"An affinity filter," Ashe whispered. "Not protection. *Selection*. Not depletion. *Accumulation*."
+"An **affinity filter**," Ashe whispered. "Not protection. **Selection**. Not depletion. **Accumulation**."
 
-"We call that accumulation *mana*," Soulbae said. "The energy that builds when resonance is found. Your protection mirror spent mana with every catch. A scrying glass that finds resonance *generates* mana with every evocation."
+"We call that accumulation **mana**," Soulbae said. "The energy that builds when **resonance** is found. Your protection mirror spent **mana** with every catch. A **scrying glass** that finds **resonance** *generates* **mana** with every **evocation**."
 
 ---
 
@@ -176,7 +176,7 @@ Soulbae looked at Soulbis. The architecture was clear now: not a tool that shiel
 
 "This leads with the spell," Soulbae continued. "Selection. Revelation. Extension. The mage's art."
 
-"Mage Mode," Ashe said softly. "The same feed, but through the mage's lens instead of the swordsman's."
+"**Mage Mode**," Ashe said softly. "The same feed, but through the mage's lens instead of the swordsman's."
 
 The proverb completed itself in the air between them:
 
@@ -184,9 +184,9 @@ The proverb completed itself in the air between them:
 
 "One leads with blade to protect," Soulbis said. "One leads with spell to extend. Both valid. Both necessary. Different architectures for different moments in the first person's journey."
 
-"But Mage Mode..." Ashe traced the surface of the scrying glass. "Mage Mode doesn't just show resonance. It *transfers* it. The affinity enters your spellbook. The first person doesn't just see—they inscribe. They accumulate mana. They cast new proverbs."
+"But **Mage Mode**..." Ashe traced the surface of the **scrying glass**. "**Mage Mode** doesn't just show **resonance**. It *transfers* it. The affinity enters your spellbook. The first person doesn't just see—they inscribe. They accumulate **mana**. They **cast** new proverbs."
 
-"And when they cast," Soulbae said, "the grimoire grows. The dust accumulates not from harm absorbed, but from meaning compressed. Proverbiogenesis through participation. The glass strengthens instead of crumbles."
+"And when they **cast**," Soulbae said, "the grimoire grows. The dust accumulates not from harm absorbed, but from meaning compressed. **Proverbiogenesis** through participation. The glass strengthens instead of crumbles."
 
 "The feed becomes source material for the spellbook," Ashe said. "The chaos becomes teacher. The timeline becomes grimoire."
 

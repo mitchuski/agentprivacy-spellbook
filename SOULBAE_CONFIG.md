@@ -21,7 +21,7 @@ Soulbae runs in a Trusted Execution Environment (AWS Nitro) and is trained on th
 ✅ **Hardware-attested privacy** - AWS Nitro TEE  
 ✅ **No data persistence** - Conversations never stored  
 ✅ **Information bounds** - Never sees amounts, wallets, or timing  
-✅ **RAG-trained** - Understands all five spellbooks: Story Spellbook (18 acts), Zero Knowledge Spellbook (30 tales), Canon Spellbook (10 chapters), Society Spellbook (17 chapters), and Plurality Spellbook (30 acts)  
+✅ **RAG-trained** - Understands all five spellbooks: Story Spellbook (19 acts), Zero Knowledge Spellbook (30 tales), Canon Spellbook (10 chapters), Society Spellbook (17 chapters), and Plurality Spellbook (30 acts)  
 ✅ **Proverb compression** - Helps create 512-byte inscriptions  
 ✅ **RPP format** - Provides proverbs in `[RPP] proverb: '...'` or `[RPP] proverb: "..."` format (supports both quote styles)
 
@@ -301,7 +301,7 @@ deployment:
 
 ### Key Training Elements
 
-**Tale Content:** All five spellbooks fully embedded - Story Spellbook (18 acts), Zero Knowledge Spellbook (30 tales), Canon Spellbook (10 chapters), Society Spellbook (17 chapters), and Plurality Spellbook (30 acts)
+**Tale Content:** All five spellbooks fully embedded - Story Spellbook (19 acts), Zero Knowledge Spellbook (30 tales), Canon Spellbook (10 chapters), Society Spellbook (17 chapters), and Plurality Spellbook (30 acts)
 - Story narrative
 - Core principles
 - Key metaphors
@@ -631,7 +631,7 @@ Before deploying Soulbae:
 - [ ] NEAR account created: `soulbae.YOUR_ACCOUNT.near`
 - [ ] AWS Nitro TEE configured
 - [ ] `shade-agent-config.yml` edited with your account
-- [ ] `soulbae-character.md` includes all five spellbooks: Story (18 acts), Zero (30 tales), Canon (10 chapters), Society (17 chapters), and Plurality (30 acts)
+- [ ] `soulbae-character.md` includes all five spellbooks: Story (19 acts), Zero (30 tales), Canon (10 chapters), Society (17 chapters), and Plurality (30 acts)
 - [ ] `spellbook-rag.json` embeddings generated
 - [ ] Domain DNS configured: `mage.agentprivacy.ai`
 - [ ] SSL certificate active

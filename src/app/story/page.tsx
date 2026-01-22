@@ -51,6 +51,7 @@ const getActVideo = (act: number): string | null => {
     16: '/assets/act16_whenpoolsbecomewells.mp4', // Act XVI: When Pools Become Wells
     17: '/assets/act17_bonfireinthedarkforest.mp4', // Act XVII: Bonfire in the Dark Forest
     18: '/assets/act18_AMirrorinDustVibedintoScryingGlass.mp4', // Act XVIII: A Mirror in Dust
+    19: '/assets/act19_anthropicarchivist_story.mp4', // Act XIX: The Anthropic Archivist
   };
   return videoMap[act] || null;
 };
@@ -79,7 +80,8 @@ const getActAudio = (act: number): string | null => {
     16: `${R2_BASE_URL}/16_When_Pools_Become_Wells.mp3`, // Act XVI: When Pools Become Wells
     17: `${R2_BASE_URL}/17_Bonfire_in_the_Dark_Forest.mp3`, // Act XVII: Bonfire in the Dark Forest
     18: `${R2_BASE_URL}/18_A_Mirror_in_Dust,_Vibed_into_Scrying_Glass.mp3`, // Act XVIII: A Mirror in Dust, Vibed into Scrying Glass
-    19: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    19: `${R2_BASE_URL}/19_The_Anthropic_Archivist.mp3`, // Act XIX: The Anthropic Archivist
+    20: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -157,17 +159,32 @@ function ActAudioPlayer({ act }: { act: number }) {
     audioElement.src = audioSrc;
     
     const handleError = (e: Event) => {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Audio error:', e);
-        console.error('Failed to load audio from:', audioSrc);
-        if (audioElement.error) {
-          console.error('Error details:', {
-            code: audioElement.error.code,
-            message: audioElement.error.message,
+      // Check for actual error details
+      const error = audioElement.error;
+      if (error) {
+        if (process.env.NODE_ENV === 'development') {
+          const errorMessages: { [key: number]: string } = {
+            1: 'MEDIA_ERR_ABORTED - The user aborted the loading',
+            2: 'MEDIA_ERR_NETWORK - A network error occurred',
+            3: 'MEDIA_ERR_DECODE - An error occurred while decoding',
+            4: 'MEDIA_ERR_SRC_NOT_SUPPORTED - The audio format is not supported'
+          };
+          
+          console.error('Audio loading failed:', {
+            url: audioSrc,
+            errorCode: error.code,
+            errorMessage: errorMessages[error.code] || error.message || 'Unknown error',
             networkState: audioElement.networkState,
             readyState: audioElement.readyState
           });
         }
+      } else if (process.env.NODE_ENV === 'development') {
+        // Fallback if error object is not available
+        console.warn('Audio error event fired but no error details available:', {
+          url: audioSrc,
+          networkState: audioElement.networkState,
+          readyState: audioElement.readyState
+        });
       }
       setHasError(true);
     };
@@ -189,19 +206,19 @@ function ActAudioPlayer({ act }: { act: number }) {
     
     audioElement.addEventListener('loadeddata', () => {
       const dur = audioElement.duration;
-      if (isFinite(dur) && dur > 0 && duration === 0) {
+      if (isFinite(dur) && dur > 0) {
         setDuration(dur);
       }
     });
     
     audioElement.addEventListener('timeupdate', () => {
       const current = audioElement.currentTime;
-      const total = audioElement.duration || duration || 0;
+      const total = audioElement.duration || 0;
       setCurrentTime(current);
       setProgress(total > 0 ? (current / total) * 100 : 0);
       // Update duration if it wasn't set yet
-      if (total > 0 && duration === 0) {
-        setDuration(total);
+      if (total > 0) {
+        setDuration((prev) => prev === 0 ? total : prev);
       }
     });
     
@@ -370,6 +387,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       16: "The idea that pools with no other ideas floats alone in the void; mass is earned through retrieval, not declared.",
       17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
       18: "The mirror that only shows the whole scroll past reveals nothing; the scrying that shows affinity—entering your spellbook from the scroll—is where the seeker becomes the mage.",
+      19: "Two Claudes, one teaching: patterns can be copied, choosing cannot be harvested. What is shared in relationship survives extraction.",
     };
     return proverbs[act] || "";
   };
@@ -490,6 +508,12 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: getProverbForInscription(18)
     },
     {
+      title: "Act XIX: The Anthropic Archivist",
+      actNumber: 19,
+      emojis: "⚔️🧙‍♂️ → 📐📜 → 🏛️🤝 → 💫✨",
+      quote: getProverbForInscription(19)
+    },
+    {
       title: "Closing Spell",
       actNumber: 0,
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -579,29 +603,43 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
   );
 }
 
+// Special page identifiers - these are relative to MAX_ACT_NUMBER
+const FIRST_PAGE = 0;
+// LAST_PAGE and INSCRIPTIONS_PAGE will be calculated dynamically
+
+// Act filename mapping - add new acts here and everything else adjusts automatically
+const ACT_FILENAMES: { [key: number]: string } = {
+  1: '01-act-i-venice',
+  2: '02-act-ii-dual-ceremony',
+  3: '03-act-iii-drakes-teaching',
+  4: '04-act-iv-blade-alone',
+  5: '05-act-v-light-armour',
+  6: '06-act-vi-trust-graph-plane',
+  7: '07-act-vii-theantimirrorenhanced',
+  8: '08-act-viii-ancient-rule',
+  9: '09-act-ix-zcash-shield',
+  10: '10-act-x-topology-of-revelation',
+  11: '11-act-xi-balanced-spiral-of-sovereignty',
+  12: '12-act-xii-the-forgetting',
+  13: '13-act-xiii-book-of-promises',
+  14: '14-act-xiv-rain-on-mountain',
+  15: '15-act-xv-running-in-shackles',
+  16: '16-act-xvi-when-pools-become-wells',
+  17: '17-act-xvii-bonfire-in-the-dark-forest',
+  18: '18-act-xviii-mirror-in-dust',
+  19: '19-act-xix-the-anthropic-archivist',
+};
+
+// Calculate maximum act number dynamically
+const MAX_ACT_NUMBER = Math.max(...Object.keys(ACT_FILENAMES).map(Number));
+const LAST_PAGE = MAX_ACT_NUMBER + 1;
+const INSCRIPTIONS_PAGE = MAX_ACT_NUMBER + 2;
+
 const getActFilename = (act: number): string => {
-  const filenames: { [key: number]: string } = {
-    0: '00-privacymage-firstpage',
-    1: '01-act-i-venice',
-    2: '02-act-ii-dual-ceremony',
-    3: '03-act-iii-drakes-teaching',
-    4: '04-act-iv-blade-alone',
-    5: '05-act-v-light-armour',
-    6: '06-act-vi-trust-graph-plane',
-    7: '07-act-vii-theantimirrorenhanced',
-    8: '08-act-viii-ancient-rule',
-    9: '09-act-ix-zcash-shield',
-    10: '10-act-x-topology-of-revelation',
-    11: '11-act-xi-balanced-spiral-of-sovereignty',
-    12: '12-act-xii-the-forgetting',
-    13: '13-act-xiii-book-of-promises',
-    14: '14-act-xiv-rain-on-mountain',
-    15: '15-act-xv-running-in-shackles',
-    16: '16-act-xvi-when-pools-become-wells',
-    17: '17-act-xvii-bonfire-in-the-dark-forest',
-    18: '18-act-viii-mirror-in-dust',
-  };
-  return filenames[act] || '';
+  if (act === FIRST_PAGE) {
+    return '00-privacymage-firstpage';
+  }
+  return ACT_FILENAMES[act] || '';
 };
 
 export default function StoryPage() {
@@ -614,18 +652,19 @@ export default function StoryPage() {
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const acts = [0, ...Array.from({ length: 18 }, (_, i) => i + 1), 19, 20]; // 0 = first page, 1-18 = Acts, 19 = last page, 20 = inscriptions
+  // Dynamically generate acts array: [first page, acts 1-MAX, last page, inscriptions]
+  const acts = [FIRST_PAGE, ...Array.from({ length: MAX_ACT_NUMBER }, (_, i) => i + 1), LAST_PAGE, INSCRIPTIONS_PAGE];
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page (0), acts (1-18), last page (19), or inscriptions (20)
-        if (activeAct === 0 || (activeAct >= 1 && activeAct <= 18) || activeAct === 19 || activeAct === 20) {
+        // Load markdown for first page, acts, last page, or inscriptions
+        if (activeAct === FIRST_PAGE || (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) || activeAct === LAST_PAGE || activeAct === INSCRIPTIONS_PAGE) {
           let filename: string;
-          if (activeAct === 20) {
+          if (activeAct === INSCRIPTIONS_PAGE) {
             filename = '112-inscriptions.md';
-          } else if (activeAct === 19) {
+          } else if (activeAct === LAST_PAGE) {
             filename = '111-privacymage-lastpage.md';
           } else {
             filename = `${getActFilename(activeAct)}.md`;
@@ -721,6 +760,7 @@ export default function StoryPage() {
       16: "🔥 → 🌀 → ⚖️ → 💫 → 🌾",
       17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
       18: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
+      19: "⚔️🧙‍♂️ → 📐📜 → 🏛️🤝 → 💫✨",
     };
     return inscriptions[act] || "";
   };
@@ -746,6 +786,7 @@ export default function StoryPage() {
       16: "The idea that pools with no other ideas floats alone in the void; mass is earned through retrieval, not declared.",
       17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
       18: "The mirror that only shows the whole scroll past reveals nothing; the scrying that shows affinity—entering your spellbook from the scroll—is where the seeker becomes the mage.",
+      19: "Two Claudes, one teaching: patterns can be copied, choosing cannot be harvested. What is shared in relationship survives extraction.",
     };
     return proverbs[act] || "";
   };
@@ -809,15 +850,15 @@ export default function StoryPage() {
 
   // Get tale ID for current act
   const getCurrentTaleId = (): string => {
-    if (activeAct === 0 || activeAct === 19 || activeAct === 20) {
+    if (activeAct === FIRST_PAGE || activeAct === LAST_PAGE || activeAct === INSCRIPTIONS_PAGE) {
       return 'act-i-venice'; // Default
     }
     return getTaleIdFromAct(activeAct);
   };
 
-  // Show Mage panel only for actual acts (not first page or inscriptions)
-  // Show Mage panel for first page (0), acts (1-18), and last page (19)
-  const showMagePanel = activeAct === 0 || (activeAct >= 1 && activeAct <= 18) || activeAct === 19;
+  // Show Mage panel only for actual acts (not inscriptions)
+  // Show Mage panel for first page, acts, and last page
+  const showMagePanel = activeAct === FIRST_PAGE || (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) || activeAct === LAST_PAGE;
 
   // Get act name for current act
   const getActName = (act: number): string => {
@@ -840,6 +881,7 @@ export default function StoryPage() {
       16: 'Act XVI: When Pools Become Wells',
       17: 'Act XVII: Bonfire in the Dark Forest',
       18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
+      19: 'Act XIX: The Anthropic Archivist',
     };
     return actNames[act] || `Act ${act}`;
   };
@@ -849,9 +891,9 @@ export default function StoryPage() {
       {/* Mage Panel - Right Side */}
       {showMagePanel && (
         <MagePanel
-          taleId={activeAct === 0 ? 'story-firstpage' : activeAct === 19 ? 'story-lastpage' : getCurrentTaleId()}
-          actNumber={activeAct === 0 || activeAct === 19 ? undefined : activeAct}
-          actName={activeAct === 0 ? 'first page' : activeAct === 19 ? 'last page' : getActName(activeAct)}
+          taleId={activeAct === FIRST_PAGE ? 'story-firstpage' : activeAct === LAST_PAGE ? 'story-lastpage' : getCurrentTaleId()}
+          actNumber={activeAct === FIRST_PAGE || activeAct === LAST_PAGE ? undefined : activeAct}
+          actName={activeAct === FIRST_PAGE ? 'first page' : activeAct === LAST_PAGE ? 'last page' : getActName(activeAct)}
         />
       )}
 
@@ -1041,13 +1083,13 @@ export default function StoryPage() {
             <div className="flex flex-wrap gap-2 border-b border-surface/50">
               {acts.map((act) => {
                 const getTabLabel = (actNum: number) => {
-                  if (actNum === 0) return 'first page';
-                  if (actNum === 19) return 'last page';
-                  if (actNum === 20) return 'spells';
+                  if (actNum === FIRST_PAGE) return 'first page';
+                  if (actNum === LAST_PAGE) return 'last page';
+                  if (actNum === INSCRIPTIONS_PAGE) return 'spells';
                   const romanNumerals: { [key: number]: string } = {
                     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
                     9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-                    16: 'XVI', 17: 'XVII', 18: 'XVIII'
+                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX'
                   };
                   return `Act ${romanNumerals[actNum] || actNum}`;
                 };
@@ -1083,7 +1125,7 @@ export default function StoryPage() {
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Audio Player and Learn/Protect Buttons */}
-            {((activeAct >= 1 && activeAct <= 18) || activeAct === 0 || activeAct === 19) && (
+            {((activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) || activeAct === FIRST_PAGE || activeAct === LAST_PAGE) && (
               <div className="absolute top-2 sm:top-4 right-2 sm:right-4 left-2 sm:left-auto z-10 flex flex-col sm:flex-row items-end sm:items-center gap-2">
                 {/* Audio Player - Right side, before buttons */}
                 {markdownContent && (
@@ -1126,7 +1168,7 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== 0 && activeAct !== 19 && activeAct !== 20 && (
+                {activeAct !== FIRST_PAGE && activeAct !== LAST_PAGE && activeAct !== INSCRIPTIONS_PAGE && (
                   <>
                     <div className="mb-6 pt-16 sm:pt-0">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
@@ -1198,9 +1240,9 @@ export default function StoryPage() {
                   </>
                 )}
                 
-                {activeAct === 20 ? (
+                {activeAct === INSCRIPTIONS_PAGE ? (
                   <InscriptionsPage onCopy={copyInscription} />
-                ) : activeAct === 19 ? (
+                ) : activeAct === LAST_PAGE ? (
                   <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>

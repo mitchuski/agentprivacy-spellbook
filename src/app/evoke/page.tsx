@@ -95,7 +95,7 @@ const spellbookOptions: { value: SpellbookType; label: string }[] = [
   { value: 'plurality', label: 'Plurality' },
 ];
 
-// Story acts (1-18)
+// Story acts (1-19)
 const storyActs: { [key: number]: string } = {
   1: 'Act I: Venice',
   2: 'Act II: Dual Ceremony',
@@ -115,6 +115,7 @@ const storyActs: { [key: number]: string } = {
   16: 'Act XVI: When Pools Become Wells',
   17: 'Act XVII: Bonfire in the Dark Forest',
   18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
+  19: 'Act XIX: The Anthropic Archivist',
 };
 
 // Zero tales (1-30)
