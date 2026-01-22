@@ -1,5 +1,5 @@
 # Proof of Proverb Revelation Protocol
-## Privacy-Preserving AI Verification on Zcash
+## Evoke: The Primary Mage Interface | Zcash: The Swordsman's Shield
 
 **Project**: 0xagentprivacy  
 **Status**: ✅ Production-Ready  
@@ -13,11 +13,11 @@
 
 ## Overview
 
-The **Proof of Proverb Revelation Protocol** is the first concrete implementation of the [0xagentprivacy](https://agentprivacy.ai) dual-agent architecture. It demonstrates privacy-preserving AI verification through a novel proof-of-understanding protocol on Zcash.
+The **Proof of Proverb Revelation Protocol** is the first concrete implementation of the [0xagentprivacy](https://agentprivacy.ai) dual-agent architecture. It demonstrates privacy-preserving AI interaction through **Evoke**—the primary Mage interface where First Persons form proverbs with Soulbae's assistance—protected by **Zcash**—the Swordsman's infrastructure that verifies and inscribes proofs onchain.
 
-**What It Does**: First Persons (humans) prove comprehension of privacy concepts by forming proverbs. These proverbs are verified by AI (without seeing transaction data), then inscribed onchain as immutable proof of understanding—creating Verifiable Relationship Credentials (VRCs) through demonstrated comprehension rather than surveillance.
+**What It Does**: First Persons interact with **Soulbae (the Mage)** through the **Evoke interface** (`/evoke`) to form proverbs that express their understanding of privacy concepts. These proverbs are then protected and verified by **Zcash (the Swordsman)**—inscribed onchain as immutable proof of understanding, creating Verifiable Relationship Credentials (VRCs) through demonstrated comprehension rather than surveillance.
 
-**Why It Matters**: This is infrastructure for the relationship economy where trust comes from understanding, not data extraction.
+**Why It Matters**: This is infrastructure for the relationship economy where trust comes from understanding, not data extraction. The Mage (Evoke) enables comprehension; the Swordsman (Zcash) protects the spell.
 
 ---
 
@@ -63,13 +63,15 @@ This hackathon implementation proves the architecture works:
               ▼                               ▼
       ┌───────────────┐               ┌───────────────┐
       │  SWORDSMAN ⚔️  │               │    MAGE 🧙    │
-      │   (Oracle)    │               │  (Frontend)   │
+      │    Zcash      │               │    Evoke      │
+      │  (Protection) │               │  (Primary)    │
       │   Soulbis     │               │   Soulbae     │
       └───────────────┘               └───────────────┘
               │                               │
-      Holds viewing key           Helps craft proverbs
-      Verifies proverbs           Optional assistance
-      Enforces boundaries         Never sees transactions
+      Protects the spell        Primary interaction
+      Verifies proverbs         Forms proverbs
+      Inscribes onchain         AI assistance
+      Enforces boundaries       Never sees transactions
               │                               │
               └───────────────┬───────────────┘
                               │
@@ -77,6 +79,10 @@ This hackathon implementation proves the architecture works:
                               │
                Separation preserves sovereignty
 ```
+
+**The Architecture**:
+- **Mage (Evoke)**: The primary interface where First Persons interact with Soulbae to form proverbs. This is where understanding happens, where the spell is crafted.
+- **Swordsman (Zcash)**: The protection layer that verifies proverbs, inscribes them onchain, and enforces boundaries. The Swordsman protects what the Mage creates.
 
 **Mathematical Guarantee** [Research Paper v3.2]:
 - `I(X; Y_S, Y_M) = I(X; Y_S) + I(X; Y_M)` — Information leakage is additive, not multiplicative
@@ -87,14 +93,29 @@ This hackathon implementation proves the architecture works:
 
 ## How It Works
 
-### The Signal Flow
+### The Flow: Evoke → Zcash Protection
 
 ```
-First Person reads Spellbook
+First Person visits /evoke
          │
          ▼
-    Forms proverb (RPP compression)
-    Using own model/context for uniqueness
+    Interacts with Soulbae (Mage)
+    Reads spellbook content
+    Forms proverb with AI assistance
+         │
+         ▼
+┌─────────────────────────────────────────┐
+│         EVOKE (Mage Interface)          │
+│                                         │
+│  • Primary interaction with Soulbae    │
+│  • Context-aware AI assistance          │
+│  • Proverb formation and refinement    │
+│  • Privacy-preserving: no transaction  │
+│    data, no wallet addresses            │
+└─────────────────────────────────────────┘
+         │
+         ▼
+    Proverb ready for protection
          │
          ▼
     Sends shielded z→z transaction
@@ -102,7 +123,7 @@ First Person reads Spellbook
          │
          ▼
 ┌─────────────────────────────────────────┐
-│            ORACLE (Swordsman)           │
+│      ZCASH (Swordsman Protection)        │
 │                                         │
 │  1. Viewing key decrypts memo           │
 │  2. Fetches canonical proverb (IPFS)    │
@@ -110,6 +131,8 @@ First Person reads Spellbook
 │     (AI NEVER sees amounts/addresses)   │
 │  4. Calculates golden split (61.8/38.2) │
 │  5. Inscribes proof onchain            │
+│                                         │
+│  The Swordsman protects the spell       │
 └─────────────────────────────────────────┘
          │
          ▼
@@ -134,12 +157,14 @@ First Person reads Spellbook
 
 | Component | Description |
 |-----------|-------------|
-| **Frontend** | Next.js 16 with story reader, Mage chat, signal flow |
+| **Evoke Interface** | Primary Mage interaction—Soulbae AI assistance for proverb formation |
+| **Zcash Protection** | Swordsman infrastructure—verifies and inscribes proverbs onchain |
+| **Frontend** | Next.js 16 with story reader, Evoke interface, spellbook navigation |
 | **Backend** | Oracle with transaction monitoring, AI verification |
 | **Blockchain** | Zebra + Zallet integration, inscription system |
 | **AI Verification** | NEAR Cloud AI (privacy-preserving) |
 | **Golden Split** | 61.8% transparent / 38.2% shielded |
-| **Inscriptions** | Act 1 confirmed on mainnet |
+| **Inscriptions** | Acts 1-12 confirmed on mainnet |
 
 ### ⏸️ On Hold
 
@@ -182,18 +207,20 @@ npm run oracle           # Backend (port 3001)
 
 ### First Person Flow
 
-1. **Read Spellbook**: Visit `/story`, `/zero`, `/canon`, `/society`, or `/plurality` to read spellbook content
-2. **Learn Content**: Click "Learn 🧙‍♂️" to copy content into your context
-3. **Form Proverb**: Create a proverb connecting your understanding to the tale
-4. **Get Assistance** (Optional): Open `/mage` for Soulbae AI assistance with context-aware responses
-5. **Format Signal**: Use the "Share Proverb" form to format your memo with:
+1. **Visit Evoke**: Go to `/evoke`—the primary Mage interface for interacting with Soulbae
+2. **Read Spellbook**: Browse spellbook content from any of the 5 grimoires
+3. **Interact with Soulbae**: Use the Mage panel to get context-aware AI assistance
+4. **Form Proverb**: Create a proverb connecting your understanding to the tale with Soulbae's help
+5. **Protect the Spell**: When ready, format your proverb for protection:
    - Spellbook type (Story, Zero, Canon, Society, Plurality)
    - Act/Tale/Chapter number
    - Your proverb
    - Spellemoji (auto-generated)
-6. **Send Transaction**: Copy formatted memo to Zashi wallet and send shielded z→z transaction (0.01 ZEC)
-7. **Verification**: Oracle (Swordsman) verifies proverb and inscribes proof onchain
+6. **Swordsman Protection**: Send shielded z→z transaction (0.01 ZEC) to Zcash—the Swordsman protects your spell
+7. **Verification**: Zcash (Swordsman) verifies proverb and inscribes proof onchain
 8. **View VRC**: See your Verifiable Relationship Credential in `/proverbs` gallery
+
+**Key Point**: Evoke is where you interact with the Mage; Zcash is where the Swordsman protects what you create.
 
 ---
 
@@ -210,8 +237,8 @@ The website is a Next.js application with the following main routes:
 | `/society` | Society/Parallel Spellbook | 17 Chapters on parallel society and network states |
 | `/plurality` | Plurality Spellbook | 30 Acts on collective intelligence and coordination |
 | `/privacy` | Privacy page | Privacy policy and information |
-| `/mage` | Mage Interface | Soulbae AI chat assistant with context-aware responses |
-| `/evoke` | Evoke page | Stream interface for real-time interactions |
+| `/evoke` | **Evoke (Primary Mage Interface)** | Primary interaction with Soulbae—form proverbs with AI assistance |
+| `/mage` | Mage Interface | Alternative Soulbae chat interface with context-aware responses |
 | `/proverbs` | Proverbs Gallery | Onchain inscription viewer (VRC gallery) |
 | `/the-first` | The First | Coming soon page |
 
@@ -237,14 +264,22 @@ The website hosts **5 complete spellbooks** (grimoires):
 5. **Plurality Spellbook** (`/plurality`) - 30 Acts
    - Collective intelligence, coordination mechanisms, and digital democracy
 
+### Evoke: Primary Mage Interface (`/evoke`)
+
+**Evoke** is the primary Mage interface where First Persons interact with Soulbae:
+- **Primary Interaction**: Evoke is where you form proverbs with Soulbae's assistance
+- **Stream Interface**: View the stream of proverbs from the community
+- **Context-Aware**: Automatically detects which spellbook/tale/chapter you're viewing
+- **Proverb Formation**: Get AI assistance in crafting your understanding into proverbs
+- **Privacy-Preserving**: Never sees transaction data or wallet addresses
+- **Privacy Budget**: 6 queries per session to prevent over-reliance
+
 ### Mage Interface (`/mage`)
 
-The Mage interface provides context-aware AI assistance:
-- **Soulbae** (the Mage agent) helps users understand spellbook content
-- Automatically detects which spellbook/tale/chapter you're viewing
-- Provides proverb suggestions based on context
-- Privacy-preserving: never sees transaction data or wallet addresses
-- Privacy budget: 6 queries per session to prevent over-reliance
+The `/mage` route provides an alternative interface for Soulbae interactions:
+- Context-aware AI assistance across all spellbooks
+- Proverb suggestions and refinement
+- Integration with spellbook reading pages
 
 ---
 
@@ -260,8 +295,8 @@ agentprivacy_master/
 │   │   ├── canon/                # Canon Spellbook (/canon)
 │   │   ├── society/              # Society Spellbook (/society)
 │   │   ├── plurality/            # Plurality Spellbook (/plurality)
-│   │   ├── mage/                 # Soulbae chat interface (/mage)
-│   │   ├── evoke/                # Evoke stream interface (/evoke)
+│   │   ├── evoke/                # Evoke: Primary Mage interface (/evoke)
+│   │   ├── mage/                 # Alternative Soulbae chat interface (/mage)
 │   │   ├── proverbs/             # VRC gallery (/proverbs)
 │   │   └── privacy/              # Privacy page (/privacy)
 │   ├── components/               # React components
@@ -314,7 +349,9 @@ I(Soulbae; Wallet_Address) = 0
 I(Soulbae; Transaction_Timing) = 0
 ```
 
-**Soulbae (Mage) only processes**: Tale principle → Understanding → Proverb suggestion
+**Soulbae (Mage/Evoke) only processes**: Tale principle → Understanding → Proverb suggestion
+
+**Zcash (Swordsman) protects**: Proverb verification → Onchain inscription → VRC creation
 
 ### What's Public vs Private
 
