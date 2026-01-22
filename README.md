@@ -183,28 +183,97 @@ npm run oracle           # Backend (port 3001)
 
 ### First Person Flow
 
-1. Visit `/story` to read spellbook tales
-2. Click "Learn" to copy content into your context
-3. Form a proverb using your own model/understanding
-4. Open `/mage` for optional Soulbae assistance
-5. Format signal memo and copy to Zashi wallet
-6. Send shielded z→z transaction (0.01 ZEC)
-7. Oracle verifies and inscribes proof
-8. View your VRC in `/proverbs` gallery
+1. **Read Spellbook**: Visit `/story`, `/zero`, `/canon`, `/society`, or `/plurality` to read spellbook content
+2. **Learn Content**: Click "Learn 🧙‍♂️" to copy content into your context
+3. **Form Proverb**: Create a proverb connecting your understanding to the tale
+4. **Get Assistance** (Optional): Open `/mage` for Soulbae AI assistance with context-aware responses
+5. **Format Signal**: Use the "Share Proverb" form to format your memo with:
+   - Spellbook type (Story, Zero, Canon, Society, Plurality)
+   - Act/Tale/Chapter number
+   - Your proverb
+   - Spellemoji (auto-generated)
+6. **Send Transaction**: Copy formatted memo to Zashi wallet and send shielded z→z transaction (0.01 ZEC)
+7. **Verification**: Oracle (Swordsman) verifies proverb and inscribes proof onchain
+8. **View VRC**: See your Verifiable Relationship Credential in `/proverbs` gallery
+
+---
+
+## Website Structure & Routes
+
+The website is a Next.js application with the following main routes:
+
+| Route | Description | Content |
+|-------|-------------|---------|
+| `/` | Landing page | Introduction to the protocol |
+| `/story` | Story Spellbook | 18 Acts of narrative tales about privacy and sovereignty |
+| `/zero` | Zero Knowledge Spellbook | 30 Tales teaching cryptographic concepts |
+| `/canon` | Canon Spellbook | 10 Chapters of blockchain history from cypherpunks to present |
+| `/society` | Society/Parallel Spellbook | 17 Chapters on parallel society and network states |
+| `/plurality` | Plurality Spellbook | 30 Acts on collective intelligence and coordination |
+| `/privacy` | Privacy page | Privacy policy and information |
+| `/mage` | Mage Interface | Soulbae AI chat assistant with context-aware responses |
+| `/evoke` | Evoke page | Stream interface for real-time interactions |
+| `/proverbs` | Proverbs Gallery | Onchain inscription viewer (VRC gallery) |
+| `/the-first` | The First | Coming soon page |
+
+### Spellbook Mapping
+
+The website hosts **5 complete spellbooks** (grimoires):
+
+1. **Story Spellbook** (`/story`) - 18 Acts
+   - Narrative tales about privacy, sovereignty, and the dual-agent architecture
+   - Acts 1-12 inscribed on Zcash mainnet
+
+2. **Zero Knowledge Spellbook** (`/zero`) - 30 Tales
+   - Mathematical foundations of zero-knowledge proofs
+   - Cryptographic concepts explained through stories
+
+3. **Canon Spellbook** (`/canon`) - 10 Chapters
+   - Blockchain history and lineage from cypherpunks to present
+   - The "why" behind privacy-preserving architecture
+
+4. **Society/Parallel Spellbook** (`/society`) - 17 Chapters
+   - Parallel society, network states, and alternative governance structures
+
+5. **Plurality Spellbook** (`/plurality`) - 30 Acts
+   - Collective intelligence, coordination mechanisms, and digital democracy
+
+### Mage Interface (`/mage`)
+
+The Mage interface provides context-aware AI assistance:
+- **Soulbae** (the Mage agent) helps users understand spellbook content
+- Automatically detects which spellbook/tale/chapter you're viewing
+- Provides proverb suggestions based on context
+- Privacy-preserving: never sees transaction data or wallet addresses
+- Privacy budget: 6 queries per session to prevent over-reliance
 
 ---
 
 ## Architecture
 
 ```
-agentprivacy_zypher/
-├── src/                          # Frontend (Mage interface)
+agentprivacy_master/
+├── src/                          # Frontend (Next.js 16)
 │   ├── app/                      # Routes
-│   │   ├── story/                # Spellbook reader
-│   │   ├── mage/                 # Soulbae chat
-│   │   └── proverbs/             # VRC gallery
+│   │   ├── page.tsx              # Landing page (/)
+│   │   ├── story/                # Story Spellbook reader (/story)
+│   │   ├── zero/                 # Zero Knowledge Spellbook (/zero)
+│   │   ├── canon/                # Canon Spellbook (/canon)
+│   │   ├── society/              # Society Spellbook (/society)
+│   │   ├── plurality/            # Plurality Spellbook (/plurality)
+│   │   ├── mage/                 # Soulbae chat interface (/mage)
+│   │   ├── evoke/                # Evoke stream interface (/evoke)
+│   │   ├── proverbs/             # VRC gallery (/proverbs)
+│   │   └── privacy/              # Privacy page (/privacy)
 │   ├── components/               # React components
+│   │   ├── MagePanel.tsx         # Mage chat panel
+│   │   ├── SwordsmanPanel.tsx    # Donation flow
+│   │   ├── UAddressDisplay.tsx   # Unified address display
+│   │   └── ...
 │   └── lib/                      # Utilities
+│       ├── soulbae.ts            # NEAR AI integration
+│       ├── zcash-memo.ts         # Memo formatting
+│       └── ...
 │
 ├── oracle-swordsman/             # Backend (Oracle)
 │   ├── src/
@@ -219,9 +288,18 @@ agentprivacy_zypher/
 │
 ├── public/
 │   ├── story/markdown/           # 18 Acts content
-│   └── zero/markdown/            # 30 Tales content
+│   ├── zero/markdown/            # 30 Tales content
+│   ├── canon/markdown/           # 10 Chapters content
+│   ├── society/markdown/         # 17 Chapters content
+│   └── plurality/markdown/       # 30 Acts content
 │
-└── spellbook/                    # Canonical proverbs (JSON)
+├── spellbook/                    # Canonical proverbs (JSON)
+│   └── spellbook-acts.json       # Complete spellbook data
+│
+└── archive/                      # Historical documentation
+    ├── merge-docs/               # Completed merge documentation
+    ├── integration-docs/          # Completed integration checklists
+    └── ...
 ```
 
 ---
@@ -325,11 +403,14 @@ This implementation aligns with the 0xagentprivacy living documentation:
 - **Website**: [agentprivacy.ai](https://agentprivacy.ai)
 - **GitHub**: [@mitchuski/agentprivacy](https://github.com/mitchuski/agentprivacy)
 
-### Spellbook
+### Spellbooks
 
-- **Version**: 4.0.0-canonical
-- **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
-- **Content**: 18 Acts + 30 Tales
+- **Story Spellbook**: 18 Acts (narrative tales)
+- **Zero Knowledge Spellbook**: 30 Tales (cryptographic concepts)
+- **Canon Spellbook**: 10 Chapters (blockchain history)
+- **Society/Parallel Spellbook**: 17 Chapters (network states)
+- **Plurality Spellbook**: 30 Acts (collective intelligence)
+- **Total**: 105 spellbook entries across 5 grimoires
 
 ### Collaborators
 
