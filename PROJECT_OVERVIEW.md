@@ -40,7 +40,7 @@ Privacy-preserving trust formation through proof-of-understanding:
 │ agentprivacy.ai/mage (Soulbae)         │
 │                                         │
 │ 🔮 NEAR Cloud AI                        │
-│ 📚 RAG: Trained on 30 spellbook tales   │
+│ 📚 RAG: Trained on all five grimoires (105 inscriptions) │
 │ 🤖 Natural proverb generation           │
 │ 🔒 Hardware-attested privacy            │
 │ ❌ Never sees: amount, wallet, timing   │
@@ -143,7 +143,7 @@ Soulbae only processes:
 
 **Technology:**
 - NEAR Cloud AI
-- RAG trained on Zero Knowledge Spellbook
+- RAG trained on all five grimoires: Story (17 acts), Zero (30 tales), Canon (11 chapters), Parallel (17 chapters), Plurality (30 acts)
 - Character file: soulbae-character.md
 
 **Capabilities:**

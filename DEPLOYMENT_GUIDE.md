@@ -36,13 +36,13 @@ npm install -g @near-ai/shade-agent
 
 Download from repo:
 ```bash
-git clone https://github.com/mitchuski/agentprivacy-zypher
-cd zkspellbook-final
+git clone https://github.com/mitchuski/agentprivacy
+cd agentprivacy_master
 
 # Verify structure:
-# ├── soulbae/              (NEAR Cloud AI config)
-# ├── story/                (Tale pages)
-# └── vrc-callbacks/        (Monitoring scripts)
+# ├── src/                  (Next.js application)
+# ├── public/               (Spellbook content: story, zero, canon, society, plurality)
+# └── oracle-swordsman/     (Oracle backend)
 ```
 
 ---
@@ -106,7 +106,7 @@ rag:
 privacy:
   log_conversations: false
   store_user_data: false
-  privacy_budget: 16  # φ × 10 queries per session
+  privacy_budget: 6  # Privacy budget per session
 
 endpoints:
   chat: "/chat"
@@ -626,7 +626,7 @@ Before announcing to the world:
 ### Community
 
 - **Discord:** discord.gg/0xagentprivacy
-- **GitHub:** https://github.com/mitchuski/agentprivacy-zypher
+- **GitHub:** https://github.com/mitchuski/agentprivacy
 - **Email:** mage@agentprivacy.ai
 - **Security:** security@proverbprotocol.com
 
@@ -651,7 +651,7 @@ Before announcing to the world:
 You now have:
 
 1. ✅ **Soulbae** - NEAR Cloud AI at agentprivacy.ai/mage
-2. ✅ **Tale Pages** - 30 spellbook tales at agentprivacy.ai/story/*
+2. ✅ **Spellbook Pages** - All five grimoires (105 inscriptions) at agentprivacy.ai
 3. ✅ **VRC Callbacks** - Automated bilateral proverb responses
 
 **Total deployment time: ~30 minutes**  

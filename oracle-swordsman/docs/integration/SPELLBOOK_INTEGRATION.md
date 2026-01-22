@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Oracle Swordsman uses the canonical spellbook stored on IPFS to verify proverbs submitted in shielded transactions. The spellbook contains both the Story Spellbook (13 acts) and the Zero Knowledge Spellbook (30 tales), each with associated proverbs.
+The Oracle Swordsman uses the canonical spellbook stored on IPFS to verify proverbs submitted in shielded transactions. The spellbook contains both the Story Spellbook (18 acts) and the Zero Knowledge Spellbook (30 tales), each with associated proverbs.
 
 ## Spellbook Location
 

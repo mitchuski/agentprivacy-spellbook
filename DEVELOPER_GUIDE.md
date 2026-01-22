@@ -1020,7 +1020,7 @@ MIT License - See [LICENSE](./LICENSE) file for details.
 **Parent Project**: 0xagentprivacy  
 **Event**: Zypherpunk Hack 2025  
 **Status**: ✅ Production (Acts 1-7 live on mainnet)  
-**GitHub**: github.com/mitchuski/agentprivacy-zypher
+**GitHub**: github.com/mitchuski/agentprivacy
 
 ---
 

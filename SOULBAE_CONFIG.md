@@ -21,7 +21,7 @@ Soulbae runs in a Trusted Execution Environment (AWS Nitro) and is trained on th
 ✅ **Hardware-attested privacy** - AWS Nitro TEE  
 ✅ **No data persistence** - Conversations never stored  
 ✅ **Information bounds** - Never sees amounts, wallets, or timing  
-✅ **RAG-trained** - Understands Story Spellbook (13 acts) and Zero Knowledge Spellbook (30 tales)  
+✅ **RAG-trained** - Understands all five spellbooks: Story Spellbook (18 acts), Zero Knowledge Spellbook (30 tales), Canon Spellbook (10 chapters), Society Spellbook (17 chapters), and Plurality Spellbook (30 acts)  
 ✅ **Proverb compression** - Helps create 512-byte inscriptions  
 ✅ **RPP format** - Provides proverbs in `[RPP] proverb: '...'` or `[RPP] proverb: "..."` format (supports both quote styles)
 
@@ -33,7 +33,7 @@ Soulbae runs in a Trusted Execution Environment (AWS Nitro) and is trained on th
 soulbae/
 ├── shade-agent-config.yml       # NEAR deployment config
 ├── soulbae-character.md          # RAG training character file
-├── spellbook-rag.json           # Training data (30 tales)
+├── spellbook-rag.json           # Training data (all spellbooks)
 ├── package.json                 # Dependencies
 ├── endpoints/
 │   ├── chat.ts                  # Main conversation endpoint
@@ -119,7 +119,7 @@ privacy:
   store_user_data: false
   anonymize_logs: true
   privacy_budget:
-    max_queries_per_session: 16  # φ × 10 ≈ 16
+    max_queries_per_session: 6  # Privacy budget per session
     session_timeout: 3600  # 1 hour
     budget_enforcement: "strict"
   
@@ -301,7 +301,7 @@ deployment:
 
 ### Key Training Elements
 
-**Tale Content:** Story Spellbook (13 acts) and Zero Knowledge Spellbook (30 tales) fully embedded
+**Tale Content:** All five spellbooks fully embedded - Story Spellbook (18 acts), Zero Knowledge Spellbook (30 tales), Canon Spellbook (10 chapters), Society Spellbook (17 chapters), and Plurality Spellbook (30 acts)
 - Story narrative
 - Core principles
 - Key metaphors
@@ -404,14 +404,13 @@ Soulbae **ALWAYS**:
 interface SessionBudget {
   sessionId: string;
   queriesUsed: number;
-  maxQueries: number; // φ × 10 = 16
+  maxQueries: number; // 6 queries per session
   startTime: number;
   expiresAt: number;
 }
 
 class PrivacyBudgetManager {
-  private readonly PHI = 1.618;
-  private readonly MAX_QUERIES = Math.floor(this.PHI * 10); // 16
+  private readonly MAX_QUERIES = 6; // Privacy budget per session
   
   async checkBudget(sessionId: string): Promise<boolean> {
     const budget = await this.getSessionBudget(sessionId);
@@ -614,8 +613,8 @@ curl -X POST https://agentprivacy.ai/mage/derive-proverb \
 # Expected: 2-3 proverb suggestions
 
 # Test 3: Privacy budget enforcement
-# (Make 17 requests with same session_id)
-# Expected: 17th request fails with budget exceeded error
+# (Make 7 requests with same session_id)
+# Expected: 7th request fails with budget exceeded error
 
 # Test 4: TEE attestation
 curl https://agentprivacy.ai/mage/attestation
@@ -632,7 +631,7 @@ Before deploying Soulbae:
 - [ ] NEAR account created: `soulbae.YOUR_ACCOUNT.near`
 - [ ] AWS Nitro TEE configured
 - [ ] `shade-agent-config.yml` edited with your account
-- [ ] `soulbae-character.md` includes Story Spellbook (13 acts) and Zero Knowledge Spellbook (30 tales)
+- [ ] `soulbae-character.md` includes all five spellbooks: Story (18 acts), Zero (30 tales), Canon (10 chapters), Society (17 chapters), and Plurality (30 acts)
 - [ ] `spellbook-rag.json` embeddings generated
 - [ ] Domain DNS configured: `mage.agentprivacy.ai`
 - [ ] SSL certificate active

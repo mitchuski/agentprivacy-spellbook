@@ -260,7 +260,7 @@ agentprivacy_zypher/
 
 ```bash
 # Clone repo
-git clone https://github.com/mitchuski/agentprivacy-zypher
+git clone https://github.com/mitchuski/agentprivacy
 cd agentprivacy_zypher
 
 # Install dependencies

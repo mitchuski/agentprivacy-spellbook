@@ -30,7 +30,7 @@
 │   │   └── Signals, ceremonies, trust tiers
 │   │
 │   ├── spellbook_v4_0_1_canonical.md ────── Narrative framework
-│   │   └── 13 Acts + 30 Tales, symbolic system
+│   │   └── 18 Acts + 30 Tales, symbolic system
 │   │
 │   ├── VISUAL_ARCHITECTURE_GUIDE_v1_1.md ── Diagrams & flows
 │   │   └── Quick visual reference
@@ -242,7 +242,7 @@ The implementation proves the architecture works in production while the living 
 - docs (coming soon)
 
 ### Implementation
-- **GitHub**: https://github.com/mitchuski/agentprivacy-zypher
+- **GitHub**: https://github.com/mitchuski/agentprivacy
 - **Spellbook IPFS**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
 
 ### Community

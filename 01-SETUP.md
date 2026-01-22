@@ -503,8 +503,11 @@ The spellbook is already created and uploaded to IPFS:
 - **Location**: `spellbook/spellbook-acts.json`
 
 The spellbook contains:
-- **Story Spellbook**: 13 acts teaching privacy and delegation architecture
-- **Zero Knowledge Spellbook**: Additional privacy concepts
+- **Story Spellbook**: 18 acts teaching privacy and delegation architecture
+- **Zero Knowledge Spellbook**: 30 tales on zero-knowledge proofs
+- **Canon Spellbook**: 10 chapters on blockchain history
+- **Society Spellbook**: 17 chapters on parallel society
+- **Plurality Spellbook**: 30 acts on plurality concepts
 - **Relationship Proverb Protocol**: Integration for AI verification
 
 To update the spellbook, edit `spellbook/spellbook-acts.json` and re-upload to Pinata (see upload script: `upload-spellbook.ps1`).

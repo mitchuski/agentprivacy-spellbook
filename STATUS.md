@@ -61,7 +61,7 @@
 
 ### Frontend (`src/`)
 - `app/page.tsx` - Landing page
-- `app/story/page.tsx` - Story reader (13 acts + 30 zero tales)
+- `app/story/page.tsx` - Story reader (18 acts + 30 zero tales)
 - `app/mage/page.tsx` - Soulbae chat (Mage agent)
 - `app/proverbs/page.tsx` - Proverbs gallery (onchain inscriptions)
 - `components/SwordsmanPanel.tsx` - Donation UI

@@ -165,8 +165,8 @@ First Person reads Spellbook
 
 ```bash
 # Clone repository
-git clone https://github.com/mitchuski/agentprivacy-zypher
-cd agentprivacy-zypher
+git clone https://github.com/mitchuski/agentprivacy
+cd agentprivacy_master
 
 # Install dependencies
 npm install
@@ -218,7 +218,7 @@ agentprivacy_zypher/
 │   └── inscribe-act*.js          # Inscription scripts
 │
 ├── public/
-│   ├── story/markdown/           # 13 Acts content
+│   ├── story/markdown/           # 18 Acts content
 │   └── zero/markdown/            # 30 Tales content
 │
 └── spellbook/                    # Canonical proverbs (JSON)
@@ -323,13 +323,13 @@ This implementation aligns with the 0xagentprivacy living documentation:
 ### Project Links
 
 - **Website**: [agentprivacy.ai](https://agentprivacy.ai)
-- **GitHub**: [@mitchuski/agentprivacy-zypher](https://github.com/mitchuski/agentprivacy-zypher)
+- **GitHub**: [@mitchuski/agentprivacy](https://github.com/mitchuski/agentprivacy)
 
 ### Spellbook
 
 - **Version**: 4.0.0-canonical
 - **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
-- **Content**: 13 Acts + 30 Tales
+- **Content**: 18 Acts + 30 Tales
 
 ### Collaborators
 

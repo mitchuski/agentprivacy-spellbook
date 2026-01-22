@@ -88,7 +88,7 @@ When observations are conditionally independent, information leakage becomes add
 **Location**: `src/`
 
 **Features**:
-- Spellbook reader (13 Acts + 30 Tales)
+- Spellbook reader (18 Acts + 30 Tales)
 - Soulbae chat (optional AI assistance)
 - Signal flow UI
 - Proverbs gallery (VRC viewer)
@@ -163,7 +163,7 @@ I(Soulbae; Transaction_Timing) = 0
 **Spellbook**:
 - **Version**: 4.0.1-canonical
 - **IPFS CID**: `bafkreigopjrfwjsz56oft7nmv26q2oddq6j4fexj27zjirzgkdeogm2myq`
-- **Content**: 13 Acts + 30 Tales with canonical proverbs
+- **Content**: 18 Acts + 30 Tales with canonical proverbs
 
 ### 5. Zcash Network
 

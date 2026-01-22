@@ -426,7 +426,7 @@ const [isLoading, setIsLoading] = useState(true);
 
 ```typescript
 const [messages, setMessages] = useState<SoulbaeMessage[]>([]);
-const [privacyBudget, setPrivacyBudget] = useState(16);
+const [privacyBudget, setPrivacyBudget] = useState(6);
 const [proverbSuggestions, setProverbSuggestions] = useState<string[]>([]);
 const [selectedProverb, setSelectedProverb] = useState('');
 ```

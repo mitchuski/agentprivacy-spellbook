@@ -22,8 +22,8 @@ Get the **Proof of Proverb Revelation Protocol** running locally in under 30 min
 ## 1. Clone & Install (2 min)
 
 ```bash
-git clone https://github.com/mitchuski/agentprivacy-zypher
-cd agentprivacy-zypher
+git clone https://github.com/mitchuski/agentprivacy
+cd agentprivacy_master
 npm install
 ```
 
@@ -199,7 +199,7 @@ netstat -ano | findstr :28232
 
 ## Getting Help
 
-- **Issues**: [GitHub Issues](https://github.com/mitchuski/agentprivacy-zypher/issues)
+- **Issues**: [GitHub Issues](https://github.com/mitchuski/agentprivacy/issues)
 - **Zcash**: [Zcash Forum](https://forum.zcashcommunity.com/)
 - **NEAR**: [NEAR Discord](https://near.chat/)
 - **Project**: mage@agentprivacy.ai
