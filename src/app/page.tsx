@@ -6,14 +6,14 @@ import { useState, useEffect } from 'react';
 export default function LandingPage() {
   const carouselItems = [
     { text: 'swordsman ⚔️ privacy is my blade.', emoji: '⚔️' },
-    { text: 'mage 🧙‍♂️ knowledge is my spellbook.', emoji: '🧙‍♂️' },
+    { text: 'mage 🧙 knowledge is my spellbook.', emoji: '🧙' },
     { text: 'agent 🤖 expanding our universe.', emoji: '🤖' },
     { text: 'person 😊 looking for shared meaning', emoji: '😊' },
   ];
 
   const ctaCarouselItems = [
     { text: 'swordsman ⚔️', emoji: '⚔️' },
-    { text: 'mage 🧙‍♂️', emoji: '🧙‍♂️' },
+    { text: 'mage 🧙', emoji: '🧙' },
     { text: 'agent 🤖', emoji: '🤖' },
     { text: 'person 😊', emoji: '😊' },
   ];
@@ -381,7 +381,7 @@ export default function LandingPage() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="card bg-secondary/10 border-secondary/30"
             >
-              <div className="text-4xl mb-4">🧙‍♂️</div>
+              <div className="text-4xl mb-4">🧙</div>
               <h3 className="text-xl font-semibold text-text mb-3">Mage Agent</h3>
               <p className="text-text-muted">
                 Knowledge and information privacy agent for managing storage, identity, confidential compute, ZK credential composition.
@@ -400,7 +400,7 @@ export default function LandingPage() {
               ⚔️ Protecting privacy, collecting value, experience and knowledge along the way.
               <br />
               <br />
-              🧙‍♂️ Share loot and knowledge in privacy pools with allies.
+              🧙 Share loot and knowledge in privacy pools with allies.
               <br />
               <br />
               🤝 Use the results to cast more powerful spells or buy more powerful gear.
@@ -579,45 +579,60 @@ export default function LandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="card bg-gradient-to-r from-primary/20 to-secondary/20 border-primary/30 text-center"
+            className="card border-primary/30 text-center relative overflow-hidden min-h-[400px] flex flex-col items-center justify-center"
           >
-            <h2 className="text-3xl font-bold text-text mb-4">
-            join us?
-            </h2>
-            <div className="mb-8">
-              <p className="text-text-muted mb-4 text-lg">
-                Create your:
-              </p>
-              <div className="relative h-12 md:h-16 flex items-center justify-center" suppressHydrationWarning>
-                {isClient ? (
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={ctaCurrentIndex}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.5 }}
-                      className="text-2xl md:text-3xl text-text absolute"
-                    >
-                      {ctaCarouselItems[ctaCurrentIndex].text}
-                    </motion.p>
-                  </AnimatePresence>
-                ) : (
-                  <p className="text-2xl md:text-3xl text-text absolute">
-                    {ctaCarouselItems[0].text}
-                  </p>
-                )}
+            {/* Background Video */}
+            <video
+              src="/assets/agentprivacy_swordmage_bg_animation.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover z-0"
+            />
+            {/* Overlay for text readability */}
+            <div className="absolute inset-0 bg-background/40 z-10" />
+            
+            {/* Content */}
+            <div className="relative z-20 w-full">
+              <h2 className="text-3xl font-bold text-text mb-4">
+                join us?
+              </h2>
+              <div className="mb-8">
+                <p className="text-text-muted mb-4 text-lg">
+                  Create your:
+                </p>
+                <div className="relative h-12 md:h-16 flex items-center justify-center" suppressHydrationWarning>
+                  {isClient ? (
+                    <AnimatePresence mode="wait">
+                      <motion.p
+                        key={ctaCurrentIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.5 }}
+                        className="text-2xl md:text-3xl text-text absolute"
+                      >
+                        {ctaCarouselItems[ctaCurrentIndex].text}
+                      </motion.p>
+                    </AnimatePresence>
+                  ) : (
+                    <p className="text-2xl md:text-3xl text-text absolute">
+                      {ctaCarouselItems[0].text}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="flex justify-center">
-              <motion.a
-                href="/story"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-secondary px-8 py-4 text-lg"
-              >
-                Learn More
-              </motion.a>
+              <div className="flex justify-center">
+                <motion.a
+                  href="/story"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-secondary px-8 py-4 text-lg"
+                >
+                  Learn More
+                </motion.a>
+              </div>
             </div>
           </motion.div>
         </div>

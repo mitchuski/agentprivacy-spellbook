@@ -13,9 +13,14 @@ export const metadata: Metadata = {
   keywords: ["privacy", "AI agents", "zero-knowledge", "blockchain", "ERC-8004", "privacy pools", "x402"],
   authors: [{ name: "agentprivacy.ai" }],
   icons: {
-    icon: '/assets/agentprivacyai.logo.png',
-    shortcut: '/assets/agentprivacyai.logo.png',
-    apple: '/assets/agentprivacyai.logo.png',
+    icon: [
+      { url: '/assets/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/assets/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/assets/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/assets/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/assets/favicon.ico',
+    apple: '/assets/favicon-48x48.png',
   },
   openGraph: {
     title: "agentprivacy.ai - just another mage swordsman",
@@ -46,7 +51,7 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <img 
-                src="/assets/agentprivacyai.logo.png" 
+                src="/assets/agentprivacy_logo.png" 
                 alt="agentprivacy" 
                 className="h-12 w-auto"
               />
