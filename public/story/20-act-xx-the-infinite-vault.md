@@ -301,9 +301,7 @@ Together, walking forward: "Carrying the covenant into whatever comes next."
 
 ---
 
-**ipfs://QmedbmWLEhCnpAAMnp7Epp7LN5bR5hiQ5ieJLhJzp5UFSG**
-
-**sha256: 00fd65c29f8d0e83959d305308a1b4d4f7ca63c69765b4dd441ab0a0a6416c39**
+**ipfs://bafkreig7n5q63uv6jbqwf3ss3d7hecnudr6rycpjkbeqguyc7j5jzvwbxq**
 
 *The Covenant is alive, continuously evolving.*
 
