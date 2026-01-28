@@ -63,6 +63,8 @@ const actTitles: { [actNumber: number]: string } = {
   16: 'When Pools Become Wells',
   17: 'Bonfire in the Dark Forest',
   18: 'A Mirror in Dust, Vibed into Scrying Glass',
+  19: 'The Anthropic Archivist',
+  20: 'The Infinite Vault',
 };
 
 // Helper to get Roman numeral
@@ -71,6 +73,7 @@ function getRomanNumeral(num: number): string {
     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI',
     7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X', 11: 'XI', 12: 'XII',
     13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII',
+    19: 'XIX', 20: 'XX',
   };
   return roman[num] || String(num);
 }
@@ -463,7 +466,7 @@ function ProverbsPageContent() {
               <div className="text-xs text-text-muted">Acts with Proofs</div>
             </div>
             <div className="text-center p-4 bg-accent/10 border border-accent/30 rounded-lg">
-              <div className="text-3xl font-bold text-accent mb-1">12</div>
+              <div className="text-3xl font-bold text-accent mb-1">20</div>
               <div className="text-xs text-text-muted">Total Acts</div>
             </div>
             <div className="text-center p-4 bg-surface/50 border border-surface/50 rounded-lg">
@@ -488,7 +491,7 @@ function ProverbsPageContent() {
                   className="px-3 py-1 bg-background border border-secondary/50 rounded text-text text-sm focus:outline-none focus:ring-2 focus:ring-secondary"
                 >
                   <option value="">Select Act...</option>
-                  {Array.from({ length: 12 }, (_, i) => i + 1).map(actNum => (
+                  {Array.from({ length: 20 }, (_, i) => i + 1).map(actNum => (
                     <option key={actNum} value={actNum}>
                       Act {getRomanNumeral(actNum)}: {actTitles[actNum]?.split(' / ')[0] || `Act ${actNum}`}
                     </option>
@@ -538,7 +541,7 @@ function ProverbsPageContent() {
                   className="w-full px-3 py-2 bg-background border border-secondary/50 rounded text-text text-sm focus:outline-none focus:ring-2 focus:ring-secondary mb-3"
                 >
                   <option value="">Select Act...</option>
-                  {Array.from({ length: 19 }, (_, i) => i + 1).map(actNum => (
+                  {Array.from({ length: 20 }, (_, i) => i + 1).map(actNum => (
                     <option key={actNum} value={actNum}>
                       Act {getRomanNumeral(actNum)}: {actTitles[actNum]?.split(' / ')[0] || `Act ${actNum}`}
                     </option>

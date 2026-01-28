@@ -41,6 +41,7 @@ const storyActs: { [key: number]: string } = {
   17: 'Act XVII: Bonfire in the Dark Forest',
   18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
   19: 'Act XIX: The Anthropic Archivist',
+  20: 'Act XX: The Infinite Vault',
 };
 
 // Zero tales (1-30)

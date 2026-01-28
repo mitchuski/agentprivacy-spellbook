@@ -50,6 +50,7 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xvii-bonfire-dark-forest': 17,
     'act-xviii-mirror-in-dust': 18,
     'act-xix-the-anthropic-archivist': 19,
+    'act-xx-the-infinite-vault': 20,
   };
   return taleMap[taleId] || null;
 }
@@ -79,6 +80,7 @@ export function getSpellemojiForAct(act: number): string {
     17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
     18: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
     19: "⚔️🧙‍♂️ → 📐📜 → 🏛️🤝 → 💫✨",
+    20: "⚔️🧙‍♂️ → 🚪🔐 → 🏛️∞ → 👤⚖️(keeper) → 📜₁₀ → 🔑🛡️⚖️ → 🌿(root-fork) → 📦∅(empty-alcove) → 🌸🌍",
   };
   return spellemojiMap[act] || '';
 }
@@ -261,6 +263,7 @@ export function getTaleIdFromAct(act: number): string {
     17: 'act-xvii-bonfire-dark-forest',
     18: 'act-xviii-mirror-in-dust',
     19: 'act-xix-the-anthropic-archivist',
+    20: 'act-xx-the-infinite-vault',
   };
   return taleMap[act] || `act-${act}`;
 }

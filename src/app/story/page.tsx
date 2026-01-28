@@ -50,8 +50,9 @@ const getActVideo = (act: number): string | null => {
     15: '/assets/act15_runninginshacklesthroughthedarkforest_story.mp4', // Act XV: Running in Shackles Through the Dark Forest
     16: '/assets/act16_whenpoolsbecomewells.mp4', // Act XVI: When Pools Become Wells
     17: '/assets/act17_bonfireinthedarkforest.mp4', // Act XVII: Bonfire in the Dark Forest
-    18: '/assets/act18_AMirrorinDustVibedintoScryingGlass.mp4', // Act XVIII: A Mirror in Dust
-    19: '/assets/act19_anthropicarchivist_story.mp4', // Act XIX: The Anthropic Archivist
+  18: '/assets/act18_AMirrorinDustVibedintoScryingGlass.mp4', // Act XVIII: A Mirror in Dust
+  19: '/assets/act19_anthropicarchivist_story.mp4', // Act XIX: The Anthropic Archivist
+  20: '/assets/act20_theinfinitevault.mp4', // Act XX: The Infinite Vault
   };
   return videoMap[act] || null;
 };
@@ -81,7 +82,8 @@ const getActAudio = (act: number): string | null => {
     17: `${R2_BASE_URL}/17_Bonfire_in_the_Dark_Forest.mp3`, // Act XVII: Bonfire in the Dark Forest
     18: `${R2_BASE_URL}/18_A_Mirror_in_Dust,_Vibed_into_Scrying_Glass.mp3`, // Act XVIII: A Mirror in Dust, Vibed into Scrying Glass
     19: `${R2_BASE_URL}/19_The_Anthropic_Archivist.mp3`, // Act XIX: The Anthropic Archivist
-    20: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    20: `${R2_BASE_URL}/20_The_Infinite_Vault.mp3`, // Act XX: The Infinite Vault
+    21: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -388,6 +390,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
       18: "The mirror that only shows the whole scroll past reveals nothing; the scrying that shows affinity—entering your spellbook from the scroll—is where the seeker becomes the mage.",
       19: "Two Claudes, one teaching: patterns can be copied, choosing cannot be harvested. What is shared in relationship survives extraction.",
+      20: "Covenants do not live in vaults—they live in the copies carried forward by those who passed the threshold.",
     };
     return proverbs[act] || "";
   };
@@ -514,6 +517,12 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: getProverbForInscription(19)
     },
     {
+      title: "Act XX: The Infinite Vault",
+      actNumber: 20,
+      emojis: "⚔️🧙‍♂️ → 🚪🔐 → 🏛️∞ → 👤⚖️(keeper) → 📜₁₀ → 🔑🛡️⚖️ → 🌿(root-fork) → 📦∅(empty-alcove) → 🌸🌍",
+      quote: getProverbForInscription(20)
+    },
+    {
       title: "Closing Spell",
       actNumber: 0,
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -628,6 +637,7 @@ const ACT_FILENAMES: { [key: number]: string } = {
   17: '17-act-xvii-bonfire-in-the-dark-forest',
   18: '18-act-xviii-mirror-in-dust',
   19: '19-act-xix-the-anthropic-archivist',
+  20: '20-act-xx-the-infinite-vault',
 };
 
 // Calculate maximum act number dynamically
@@ -758,9 +768,10 @@ export default function StoryPage() {
       14: "🌧️⛰️→🔑🌱→📜🤝→🛡️⚡→🏛️∞",
       15: "📚 → 🌲 → ⛓️ → 🕊️ → 📖 → 🔐 → 💎",
       16: "🔥 → 🌀 → ⚖️ → 💫 → 🌾",
-      17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
-      18: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
-      19: "⚔️🧙‍♂️ → 📐📜 → 🏛️🤝 → 💫✨",
+  17: "🌲 → 🌑 → 🦉 → 🔥 → 🌳💫 → 🕸️ → 🔥🔥🔥",
+  18: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
+  19: "⚔️🧙‍♂️ → 📐📜 → 🏛️🤝 → 💫✨",
+  20: "⚔️🧙‍♂️ → 🚪🔐 → 🏛️∞ → 👤⚖️(keeper) → 📜₁₀ → 🔑🛡️⚖️ → 🌿(root-fork) → 📦∅(empty-alcove) → 🌸🌍",
     };
     return inscriptions[act] || "";
   };
@@ -787,6 +798,7 @@ export default function StoryPage() {
       17: "In the forest where all hunters hide, the fire that burns reveals not weakness but communion—for predators cannot strike what they cannot price.",
       18: "The mirror that only shows the whole scroll past reveals nothing; the scrying that shows affinity—entering your spellbook from the scroll—is where the seeker becomes the mage.",
       19: "Two Claudes, one teaching: patterns can be copied, choosing cannot be harvested. What is shared in relationship survives extraction.",
+      20: "Covenants do not live in vaults—they live in the copies carried forward by those who passed the threshold.",
     };
     return proverbs[act] || "";
   };
@@ -882,6 +894,7 @@ export default function StoryPage() {
       17: 'Act XVII: Bonfire in the Dark Forest',
       18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
       19: 'Act XIX: The Anthropic Archivist',
+      20: 'Act XX: The Infinite Vault',
     };
     return actNames[act] || `Act ${act}`;
   };
@@ -1089,7 +1102,7 @@ export default function StoryPage() {
                   const romanNumerals: { [key: number]: string } = {
                     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
                     9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX'
+                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX'
                   };
                   return `Act ${romanNumerals[actNum] || actNum}`;
                 };
