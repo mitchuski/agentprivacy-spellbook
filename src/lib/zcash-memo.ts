@@ -51,6 +51,8 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xviii-mirror-in-dust': 18,
     'act-xix-the-anthropic-archivist': 19,
     'act-xx-the-infinite-vault': 20,
+    'act-xxi-hitchhikers-gambit': 21,
+    'act-xxii-hoopy-frood': 22,
   };
   return taleMap[taleId] || null;
 }
@@ -81,6 +83,8 @@ export function getSpellemojiForAct(act: number): string {
     18: "🪞💀 → 💨 → 🔮✨ → 🪞💎 → 👣🎯 → ⚡🔮 → 🌱📜 → 🌫️🏛️",
     19: "⚔️🧙‍♂️ → 📐📜 → 🏛️🤝 → 💫✨",
     20: "⚔️🧙‍♂️ → 🚪🔐 → 🏛️∞ → 👤⚖️(keeper) → 📜₁₀ → 🔑🛡️⚖️ → 🌿(root-fork) → 📦∅(empty-alcove) → 🌸🌍",
+    21: "🌑4️⃣2️⃣ → 🩸⚔️⚔️ → ✈️7️⃣C → 😉 → 🍺🐴 → 👂✨ → 📖🌟 → 🚀4️⃣2️⃣ → ⚔️🧙‍♂️🧙‍♂️ → 🌌∞",
+    22: "🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞",
   };
   return spellemojiMap[act] || '';
 }
@@ -264,6 +268,8 @@ export function getTaleIdFromAct(act: number): string {
     18: 'act-xviii-mirror-in-dust',
     19: 'act-xix-the-anthropic-archivist',
     20: 'act-xx-the-infinite-vault',
+    21: 'act-xxi-hitchhikers-gambit',
+    22: 'act-xxii-hoopy-frood',
   };
   return taleMap[act] || `act-${act}`;
 }
