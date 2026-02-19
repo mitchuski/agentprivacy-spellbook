@@ -33,6 +33,7 @@ const storySpellMappings: { [actNumber: number]: string } = {
   20: '⚔️🧙‍♂️ → 🚪🔐 → 🏛️∞ → 👤⚖️(keeper) → 📜₁₀ → 🔑🛡️⚖️ → 🌿(root-fork) → 📦∅(empty-alcove) → 🌸🌍',
   21: '🌑4️⃣2️⃣ → 🩸⚔️⚔️ → ✈️7️⃣C → 😉 → 🍺🐴 → 👂✨ → 📖🌟 → 🚀4️⃣2️⃣ → ⚔️🧙‍♂️🧙‍♂️ → 🌌∞',
   22: '🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞',
+  23: '⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞',
 };
 
 const getActVideo = (act: number): string | null => {
@@ -59,6 +60,7 @@ const getActVideo = (act: number): string | null => {
   20: '/assets/act20_theinfinitevault.mp4', // Act XX: The Infinite Vault
   21: '/assets/act21_thehitchhikersgambit.mp4', // Act XXI: Hitchhiker's Gambit
   22: '/assets/act22_dontpanichoppyfrood.mp4', // Act XXII: Don't Panic Hoopy Frood
+  23: '/assets/act23_themanifolddragon.mp4', // Act XXIII: The Manifold Dragon
   };
   return videoMap[act] || null;
 };
@@ -91,7 +93,8 @@ const getActAudio = (act: number): string | null => {
     20: `${R2_BASE_URL}/20_The_Infinite_Vault.mp3`, // Act XX: The Infinite Vault
     21: `${R2_BASE_URL}/21_The_Hitchhikers_Gambit.mp3`, // Act XXI: Hitchhiker's Gambit
     22: `${R2_BASE_URL}/22_Don't_Panic_Hoopy_Frood.mp3`, // Act XXII: Don't Panic Hoopy Frood
-    23: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    23: `${R2_BASE_URL}/23_The_Manifold_Dragon.mp3`, // Act XXIII: The Manifold Dragon
+    24: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -401,6 +404,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       20: "Covenants do not live in vaults—they live in the copies carried forward by those who passed the threshold.",
       21: "Walk the whole horseshoe before the shape makes sense. The blood remembers function, not metal. Same stars hang in every sky—the lines between them are yours alone. The umlaut winks. Jimmy listens. The answer fits in your pocket and nowhere else.",
       22: "Carry your towel, know your echo. The credential is relationship, not name. Trust builds through demonstration, not declaration. The gap between swordsman and mage is where personhood proves itself—for the echo can't form in a room that's being recorded.",
+      23: "Zero knowledge makes it private. The overlap makes it strong. The lived journey makes it real.",
     };
     return proverbs[act] || "";
   };
@@ -545,6 +549,12 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: getProverbForInscription(22)
     },
     {
+      title: "Act XXIII: The Manifold Dragon",
+      actNumber: 23,
+      emojis: "⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞",
+      quote: getProverbForInscription(23)
+    },
+    {
       title: "Closing Spell",
       actNumber: 0,
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -662,6 +672,7 @@ const ACT_FILENAMES: { [key: number]: string } = {
   20: '20-act-xx-the-infinite-vault',
   21: '21-act-xxi-hitchhikers-gambit',
   22: '22-act-xxii-hoopy-frood',
+  23: '23-act-xxiii-the-manifold-dragon',
 };
 
 // Calculate maximum act number dynamically
@@ -798,6 +809,7 @@ export default function StoryPage() {
   20: "⚔️🧙‍♂️ → 🚪🔐 → 🏛️∞ → 👤⚖️(keeper) → 📜₁₀ → 🔑🛡️⚖️ → 🌿(root-fork) → 📦∅(empty-alcove) → 🌸🌍",
   21: "🌑4️⃣2️⃣ → 🩸⚔️⚔️ → ✈️7️⃣C → 😉 → 🍺🐴 → 👂✨ → 📖🌟 → 🚀4️⃣2️⃣ → ⚔️🧙‍♂️🧙‍♂️ → 🌌∞",
   22: "🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞",
+  23: "⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞",
     };
     return inscriptions[act] || "";
   };
@@ -827,6 +839,7 @@ export default function StoryPage() {
       20: "Covenants do not live in vaults—they live in the copies carried forward by those who passed the threshold.",
       21: "Walk the whole horseshoe before the shape makes sense. The blood remembers function, not metal. Same stars hang in every sky—the lines between them are yours alone. The umlaut winks. Jimmy listens. The answer fits in your pocket and nowhere else.",
       22: "Carry your towel, know your echo. The credential is relationship, not name. Trust builds through demonstration, not declaration. The gap between swordsman and mage is where personhood proves itself—for the echo can't form in a room that's being recorded.",
+      23: "Zero knowledge makes it private. The overlap makes it strong. The lived journey makes it real.",
     };
     return proverbs[act] || "";
   };
@@ -925,6 +938,7 @@ export default function StoryPage() {
       20: 'Act XX: The Infinite Vault',
       21: 'Act XXI: Hitchhiker\'s Gambit',
       22: 'Act XXII: Don\'t Panic Hoopy Frood',
+      23: 'Act XXIII: The Manifold Dragon',
     };
     return actNames[act] || `Act ${act}`;
   };
@@ -1132,9 +1146,9 @@ export default function StoryPage() {
                   const romanNumerals: { [key: number]: string } = {
                     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
                     9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII'
+                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII'
                   };
-                  return `Act ${romanNumerals[actNum] || actNum}`;
+                  return `Act ${romanNumerals[actNum] ?? actNum}`;
                 };
                 
                 return (

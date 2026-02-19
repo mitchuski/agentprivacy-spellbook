@@ -1,7 +1,7 @@
 /**
  * Fetches spellbook from IPFS and formats it for copying.
  * Canonical reference: update the IPFS URL when you publish a new pin that includes
- * all story acts (1-22) with spells and proverbs so inference and copy-paste stay inclusive.
+ * all story acts (1-23) with spells and proverbs so inference and copy-paste stay inclusive.
  */
 
 const SPELLBOOK_IPFS_URL = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm';
