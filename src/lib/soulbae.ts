@@ -54,7 +54,7 @@ const NEAR_MODEL = process.env.NEXT_PUBLIC_NEAR_MODEL || 'openai/gpt-oss-120b';
  */
 function getCanonChapterTitle(chapterNumber: number): string {
   const chapterTitles: { [key: number]: string } = {
-    0: "The Privacymage's Preface / Why This Canon Exists",
+    0: "The privacymage's Preface / Why This Canon Exists",
     1: "The Cypherpunk Whispers / Foundational Runes (1983-1997)",
     2: "The Early Incantations / Runes Before Synthesis (1997-2007)",
     3: "The Synthesis / When Protest Met Protocol (2008-2014)",
@@ -65,7 +65,7 @@ function getCanonChapterTitle(chapterNumber: number): string {
     8: "The Missing Primitive / Why Privacy Unifies Both Canons",
     9: "The Open Canon / The Chapters Yet to Be Written",
     10: "The Timeline Archive / Sources as Trust Graph Infrastructure",
-    11: "The Privacymage's Reflection",
+    11: "The privacymage's Reflection",
     12: "Guardian Application",
   };
   return chapterTitles[chapterNumber] || `Chapter ${chapterNumber}`;

@@ -5,12 +5,17 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import MagePanel from '@/components/MagePanel';
+import SpellbookTalentTree from '@/components/SpellbookTalentTree';
+import InscribeProverbModal from '@/components/InscribeProverbModal';
+import ConstellationInscriptionBox from '@/components/ConstellationInscriptionBox';
+import AppNav from '@/components/AppNav';
+import { getSpellbookFromStorage, getPathwayNodeIds, getSpellIdForNode, getInscribedProverbs, getInscribedMarkerEmoji } from '@/lib/spellbook-storage';
+import { useMagePanel } from '@/contexts/MagePanelContext';
 
 // Chapter metadata
 const chapterData: { [key: number]: { title: string; spell: string; proverb: string } } = {
   0: {
-    title: "The Privacymage's Preface / Why This Spellbook Exists",
+    title: "The privacymage's Preface / Why This Spellbook Exists",
     spell: "👑⛓️ → 💀 → 🗺️ → 🕯️ → ⚔️❓ → 🧮 → 🔗 → 🌱 → 🏛️ → ✨",
     proverb: "The Old Kingdoms are obsolete. Decentralisation is sovereignty. Build the Parallel Society."
   },
@@ -100,7 +105,7 @@ const chapterData: { [key: number]: { title: string; spell: string; proverb: str
     proverb: "When values meet code, the house stands on two floors—technology in the foundation, human wisdom in the rooms where we live."
   },
   18: {
-    title: "The Privacymage's Reflection",
+    title: "The privacymage's Reflection",
     spell: "👑💀 → 🌱 → 🔗 → ⚔️ → 🧙‍♂️ → ✨ → 🏛️ → 🔓 → △",
     proverb: "The Parallel Society is not a destination but a direction—built by those who refuse to wait for permission from obsolete kingdoms."
   },
@@ -291,20 +296,15 @@ export default function SocietyPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [inscribeNodeId, setInscribeNodeId] = useState<number | null>(null);
 
-  const chapters = [0, ...Array.from({ length: 17 }, (_, i) => i + 1), 18, 19]; // 0 = preface, 1-17 = chapters, 18 = lastpage, 19 = inscriptions
+  const chapters = [0, ...Array.from({ length: 17 }, (_, i) => i + 1), 18]; // 0 = preface, 1-17 = chapters, 18 = lastpage — spells at /spells
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        if (activeChapter === 19) {
-          // Inscriptions page - no markdown to load
-          setMarkdownContent('');
-          setOriginalMarkdownContent('');
-        } else {
-          const filename = `${getChapterFilename(activeChapter)}.md`;
+        const filename = `${getChapterFilename(activeChapter)}.md`;
           const url = `/society/${filename}`;
           console.log(`Loading markdown for chapter ${activeChapter}: ${url}`);
 
@@ -342,7 +342,6 @@ export default function SocietyPage() {
             setMarkdownContent(`<p class="text-text-muted">Network error loading content. Please check your connection and try again.</p>`);
             setOriginalMarkdownContent('');
           }
-        }
       } catch (error) {
         console.error('Error loading markdown:', error);
         setMarkdownContent('');
@@ -354,6 +353,21 @@ export default function SocietyPage() {
 
     loadMarkdown();
   }, [activeChapter]);
+
+  const { setPageContext } = useMagePanel();
+  useEffect(() => {
+    if (activeChapter >= 0 && activeChapter <= 18) {
+      const data = chapterData[activeChapter as keyof typeof chapterData];
+      setPageContext({
+        taleId: `society-chapter-${activeChapter}`,
+        actNumber: activeChapter,
+        actName: data?.title ?? `Chapter ${activeChapter}`,
+      });
+    } else {
+      setPageContext(null);
+    }
+    return () => setPageContext(null);
+  }, [activeChapter, setPageContext]);
 
   const copyToClipboard = async () => {
     try {
@@ -435,210 +449,17 @@ export default function SocietyPage() {
   const hasPrevious = chapters.indexOf(activeChapter) > 0;
   const hasNext = chapters.indexOf(activeChapter) < chapters.length - 1;
 
-  // Show Mage panel for first page (0), chapters 1-17, and last page (18)
-  const showMagePanel = activeChapter === 0 || (activeChapter >= 1 && activeChapter <= 17) || activeChapter === 18;
   const currentChapter = activeChapter >= 0 && activeChapter <= 18 ? chapterData[activeChapter] : null;
 
   const getChapterName = (chapter: number): string => {
     if (chapter === 0) return 'firstpage';
     if (chapter === 18) return 'lastpage';
-    if (chapter === 19) return 'spells';
     return `chapter ${chapter}`;
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Mage Panel - for chapters */}
-      {showMagePanel && (
-        <MagePanel
-          taleId={
-            activeChapter === 0 
-              ? 'society-firstpage' 
-              : activeChapter === 18 
-              ? 'society-lastpage' 
-              : `society-chapter-${activeChapter}`
-          }
-          actNumber={activeChapter === 0 || activeChapter === 18 ? undefined : activeChapter}
-          actName={
-            activeChapter === 0 
-              ? 'first page' 
-              : activeChapter === 18 
-              ? 'last page' 
-              : currentChapter 
-              ? `Chapter ${activeChapter}: ${currentChapter.title}` 
-              : undefined
-          }
-        />
-      )}
-
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </a>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-4 sm:gap-6">
-                <a
-                  href="/story"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden overflow-hidden"
-              >
-                <div className="py-4 space-y-3 border-t border-surface/50">
-                  <a
-                    href="/story"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    story
-                  </a>
-                  <a
-                    href="/zero"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    zero
-                  </a>
-                  <a
-                    href="/canon"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    canon
-                  </a>
-                  <a
-                    href="/society"
-                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    society
-                  </a>
-                  <a
-                    href="/plurality"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    plural
-                  </a>
-                  <a
-                    href="/privacy"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    privacy
-                  </a>
-                  <a
-                    href="/mage"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    mage
-                  </a>
-                  <a
-                    href="/evoke"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    evoke
-                  </a>
-                  <a
-                    href="/proverbs"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    proverbs
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </nav>
+      <AppNav />
 
       {/* Society Content */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
@@ -652,41 +473,53 @@ export default function SocietyPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">parallel society spellbook</h1>
           </motion.div>
 
-          {/* Tabs */}
-          <div className="mb-8">
-            <div className="flex flex-wrap gap-2 border-b border-surface/50 overflow-x-auto">
-              {chapters.map((chapter) => {
-                return (
-                  <button
-                    key={chapter}
-                    onClick={() => setActiveChapter(chapter)}
-                    className={`
-                      px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap
-                      ${
-                        activeChapter === chapter
-                          ? 'text-primary border-b-2 border-primary'
-                          : 'text-text-muted hover:text-text'
-                      }
-                    `}
-                  >
-                    {getChapterName(chapter)}
-                    {activeChapter === chapter && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
+          {/* Constellation path + inscription box */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,340px)] gap-6 mb-8">
+            <div className="min-w-0">
+              <p className="text-text/70 text-sm mb-3">Constellation path through the spellbook</p>
+              <SpellbookTalentTree
+                nodes={chapters.map((ch) => {
+                  const data = chapterData[ch as keyof typeof chapterData];
+                  const label = data ? data.title : getChapterName(ch);
+                  const shortLabel = ch === 0 ? 'first' : ch === 18 ? 'last' : String(ch);
+                  return { id: ch, label, shortLabel };
+                })}
+                activeId={activeChapter}
+                onSelect={setActiveChapter}
+                pathwayNodeIds={(() => { const ids = getPathwayNodeIds(getSpellbookFromStorage().spellIds, 'society'); return ids.length > 0 ? ids : undefined; })()}
+                nodesPerRow={6}
+                nodeKind="Chapter"
+                onCrystalClick={setInscribeNodeId}
+                markerEmojiByNodeId={(() => {
+                  const out: Record<number, string> = {};
+                  chapters.forEach((ch) => {
+                    const sid = getSpellIdForNode('society', ch);
+                    if (sid) { const m = getInscribedMarkerEmoji(sid); if (m) out[ch] = m; }
+                  });
+                  return out;
+                })()}
+              />
+            </div>
+            <div className="flex-shrink-0">
+              <ConstellationInscriptionBox
+                nodeKind="Chapter"
+                activeId={activeChapter}
+                spell={chapterData[activeChapter as keyof typeof chapterData]?.spell ?? null}
+                proverb={chapterData[activeChapter as keyof typeof chapterData]?.proverb ?? null}
+                onInscribe={setInscribeNodeId}
+                inscribedProverb={(() => {
+                  const sid = getSpellIdForNode('society', activeChapter);
+                  const inscribed = getInscribedProverbs();
+                  return sid ? inscribed[sid] : null;
+                })()}
+              />
             </div>
           </div>
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Learn and Protect Buttons */}
-            {(markdownContent || activeChapter === 19) && (
+            {markdownContent && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
                 <button
                   onClick={copyToClipboard}
@@ -723,76 +556,10 @@ export default function SocietyPage() {
                     <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
                     {/* Chapter Video */}
                     <ChapterImage chapter={activeChapter} />
-                    {/* Proverb and Inscription Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-3 mb-4">
-                      {/* Proverb Inscription Box */}
-                      {getProverb(activeChapter) && (
-                        <div className="flex-1">
-                          <button
-                            onClick={copyProverbText}
-                            className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
-                            title="Copy proverb"
-                          >
-                            <div className="text-primary font-semibold text-xs mb-2">
-                              {copiedProverbTop ? (
-                                <motion.span
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  className="text-primary"
-                                >
-                                  cast
-                                </motion.span>
-                              ) : (
-                                <span className="group-hover:text-primary/80 transition-colors">
-                                  proverb
-                                </span>
-                              )}
-                            </div>
-                            <div className="text-text-muted text-sm italic leading-relaxed">
-                              "{getProverb(activeChapter)}"
-                            </div>
-                          </button>
-                        </div>
-                      )}
-                      {/* Inscription Button */}
-                      {getInscriptionEmojis(activeChapter) && (
-                        <div className="flex-1">
-                          <button
-                            onClick={copyProverb}
-                            className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
-                            title="Copy inscription"
-                          >
-                            <div className="text-primary font-semibold text-xs mb-2">
-                              {copiedProverb ? (
-                                <motion.span
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  className="text-primary"
-                                >
-                                  cast
-                                </motion.span>
-                              ) : (
-                                <span className="group-hover:text-primary/80 transition-colors">
-                                  inscribe
-                                </span>
-                              )}
-                            </div>
-                            <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line font-mono">
-                              {getInscriptionEmojis(activeChapter)}
-                            </div>
-                          </button>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 )}
 
-                {activeChapter === 19 ? (
-                  <InscriptionsPage
-                    onCopy={copyInscription}
-                  />
-                ) : (
-                  <div className="markdown-content pb-24 sm:pb-28">
+                <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>
                     ) : markdownContent ? (
@@ -828,11 +595,10 @@ export default function SocietyPage() {
                       </p>
                     )}
                   </div>
-                )}
-
+                
               </motion.div>
             </AnimatePresence>
-
+            
             {/* Previous, Copy and Next Buttons */}
             <div className="absolute bottom-6 sm:bottom-8 right-2 sm:right-4 flex items-center gap-2 sm:gap-3 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
               {hasPrevious && (
@@ -853,7 +619,7 @@ export default function SocietyPage() {
                   </svg>
                 </button>
               )}
-              {(markdownContent || activeChapter === 19) && (
+              {markdownContent && (
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
@@ -896,6 +662,23 @@ export default function SocietyPage() {
           </div>
         </div>
       </section>
+      {inscribeNodeId != null && (
+        <InscribeProverbModal
+          open={true}
+          onClose={() => setInscribeNodeId(null)}
+          nodeId={inscribeNodeId}
+          nodeLabel={
+            (() => {
+              const data = chapterData[inscribeNodeId as keyof typeof chapterData];
+              return data ? data.title : getChapterName(inscribeNodeId);
+            })()
+          }
+          spellbook="society"
+          initialProverb={typeof window !== 'undefined' ? (getInscribedProverbs()[getSpellIdForNode('society', inscribeNodeId) ?? ''] ?? '') : ''}
+          initialMarkerEmoji={typeof window !== 'undefined' ? getInscribedMarkerEmoji(getSpellIdForNode('society', inscribeNodeId) ?? '') : undefined}
+          onCommitted={() => {}}
+        />
+      )}
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { formatZcashMemo, getTaleIdFromAct } from '@/lib/zcash-memo';
 import ChatMessage from '@/components/ChatMessage';
 import ProverbSuggestions from '@/components/ProverbSuggestions';
 import AttestationBadge from '@/components/AttestationBadge';
+import AppNav from '@/components/AppNav';
 
 const MAX_QUERIES = 6; // Privacy budget per session
 
@@ -61,7 +62,6 @@ function MagePageContent() {
   const hasTaleSelected = taleIdParam !== null && taleIdParam !== '';
 
   // State
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // Generate or retrieve persistent session ID for this tale (only if tale is selected)
   const [persistentSessionId] = useState(() => {
     if (!hasTaleSelected || typeof window === 'undefined') {
@@ -222,7 +222,7 @@ function MagePageContent() {
       role: 'assistant',
       content: `A living model, a lore on privacy and sovereignty, started with,
 
-just another story about, just another swordsman ⚔️, and just another mage 🧙‍♂️, who met a drake 🐲, and found the 7th capital. 🤝
+just another story about, just another swordsman ⚔️, and just another mage 🧙, who met a drake 🐲, and found the 7th capital. 🤝
 
 the prophecy all, unique, first persons may join and follow.
 
@@ -780,8 +780,8 @@ What brings you my spellbook?`,
     inputRef.current?.focus();
   };
 
-  // Handle copy to Zashi
-  const handleCopyToZashi = async () => {
+  // Handle copy to Zodl
+  const handleCopyToZodl = async () => {
     const proverb = proverbForMemo.trim() || currentProverb;
     if (!proverb || !hasTaleSelected || !taleIdParam) return;
 
@@ -815,174 +815,7 @@ What brings you my spellbook?`,
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </a>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-4 sm:gap-6">
-                <a
-                  href="/story"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden overflow-hidden"
-              >
-                <div className="py-4 space-y-3 border-t border-surface/50">
-                  <a
-                    href="/story"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    story
-                  </a>
-                  <a
-                    href="/zero"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    zero
-                  </a>
-                  <a
-                    href="/canon"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    canon
-                  </a>
-                  <a
-                    href="/society"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    society
-                  </a>
-                  <a
-                    href="/plurality"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    plural
-                  </a>
-                  <a
-                    href="/privacy"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    privacy
-                  </a>
-                  <a
-                    href="/mage"
-                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    mage
-                  </a>
-                  <a
-                    href="/evoke"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    evoke
-                  </a>
-                  <a
-                    href="/proverbs"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    proverbs
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </nav>
+      <AppNav />
 
       {/* Main Content */}
       <section className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
@@ -1016,7 +849,7 @@ What brings you my spellbook?`,
               <div className="card bg-surface border-surface/50">
                 <h2 className="text-2xl font-bold text-text mb-4">Select a Spellbook Tale</h2>
                 <p className="text-text-muted mb-6">
-                  Choose a tale from the Story, Zero Knowledge, Canon, or Society Spellbook to begin your conversation with Soulbae. Plurality spellbook coming soon.
+                  Choose a tale from the Story, Zero Knowledge, Canon, Society, or Plurality Spellbook to begin your conversation with Soulbae.
                 </p>
 
                 {/* Story Spellbook Acts */}
@@ -1171,29 +1004,57 @@ What brings you my spellbook?`,
                   </div>
                 </div>
 
-                {/* Plurality Spellbook Acts - Locked */}
-                <div className="relative opacity-60">
-                  <div className="absolute inset-0 bg-black/5 rounded-lg flex items-center justify-center z-10">
-                    <div className="bg-surface/90 px-3 py-1 rounded border border-surface/50 shadow-lg">
-                      <span className="text-xs font-semibold text-text-muted">🔒 Locked</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
-                      <span>🌐</span>
-                      <span>Plurality Spellbook</span>
-                      <span className="text-xs bg-surface/30 text-text-muted px-2 py-0.5 rounded">Coming Soon</span>
-                    </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
-                      {Array.from({ length: 30 }, (_, i) => i + 1).map((actNum) => (
-                        <div
-                          key={`plurality-${actNum}`}
-                          className="p-3 bg-background border border-surface/50 rounded-lg text-center cursor-not-allowed"
+                {/* Plurality Spellbook Acts */}
+                <div className="mb-8">
+                  <h3 className="text-xl font-semibold text-text mb-4 flex items-center gap-2">
+                    <span>🌐</span>
+                    <span>Plurality Spellbook</span>
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-2">
+                    {[
+                      { num: 1, title: 'The First Overlap' },
+                      { num: 2, title: 'The Widening Gulf' },
+                      { num: 3, title: 'View From Yushan' },
+                      { num: 4, title: 'Life Digital Democracy' },
+                      { num: 5, title: 'The Glyph That Breathes' },
+                      { num: 6, title: 'The Web Beneath Web' },
+                      { num: 7, title: 'Teachers Before Drake' },
+                      { num: 8, title: 'The Path Abandoned' },
+                      { num: 9, title: 'Foundation Beneath Floor' },
+                      { num: 10, title: 'The Name You Give Yourself' },
+                      { num: 11, title: 'Guilds Form Themselves' },
+                      { num: 12, title: "Market Doesn't Devour" },
+                      { num: 13, title: 'Held Together' },
+                      { num: 14, title: 'Door Opens Both Ways' },
+                      { num: 15, title: 'Words Before Words' },
+                      { num: 16, title: 'World We Build Together' },
+                      { num: 17, title: 'Creation That Compounds' },
+                      { num: 18, title: 'Hearing At Scale' },
+                      { num: 19, title: 'Rules That Learn' },
+                      { num: 20, title: 'Weight of Wanting' },
+                      { num: 21, title: 'Market That Remembers' },
+                      { num: 22, title: 'Circle That Includes' },
+                      { num: 23, title: 'Forge of Peers' },
+                      { num: 24, title: "Body's Secrets" },
+                      { num: 25, title: 'Signal and Noise' },
+                      { num: 26, title: 'Commons That Breathes' },
+                      { num: 27, title: 'Mind That Grows' },
+                      { num: 28, title: 'Laws That Enable' },
+                      { num: 29, title: 'Window That Closes' },
+                      { num: 30, title: 'Ceremony Completes' },
+                    ].map((act) => {
+                      const taleId = `plurality-act-${act.num}`;
+                      return (
+                        <button
+                          key={taleId}
+                          onClick={() => router.push(`/mage?tale_id=${taleId}`)}
+                          className="p-3 bg-background border border-surface/50 rounded-lg hover:border-primary hover:bg-primary/5 transition-all text-center"
                         >
-                          <div className="font-semibold text-text text-sm">Act {actNum}</div>
-                        </div>
-                      ))}
-                    </div>
+                          <div className="font-semibold text-text text-sm">Act {act.num}</div>
+                          <div className="text-xs text-text-muted mt-1">{act.title}</div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -1273,7 +1134,7 @@ What brings you my spellbook?`,
                   animate={{ opacity: 1 }}
                   className="flex items-center gap-2 text-text-muted"
                 >
-                  <span>🧙‍♀️</span>
+                  <span>🧙</span>
                   <div className="flex gap-1">
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -1373,7 +1234,7 @@ What brings you my spellbook?`,
                     </motion.span>
                   ) : (
                     <span className="text-sm font-medium transition-colors text-secondary group-hover:text-secondary/80">
-                      learn 🧙‍♂️
+                      learn 🧙
                     </span>
                   )}
                 </button>

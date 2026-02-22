@@ -1,561 +1,598 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import MagePanel from '@/components/MagePanel';
+import { useState, useEffect, useCallback, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import AppNav from '@/components/AppNav';
+import UAddressDisplay from '@/components/UAddressDisplay';
+import { useMagePanel } from '@/contexts/MagePanelContext';
+import { addEvokedMessage, getEvokedMessages, type EvokedMessage } from '@/lib/evoked-storage';
+import { getRevealedProverbs } from '@/lib/proverbs/storage';
+import { getAgentCard } from '@/lib/ceremony/storage';
+import { sendToPrivacymage } from '@/lib/send-to-privacymage';
+import { formatZcashMemo, getTaleIdFromAct } from '@/lib/zcash-memo';
 
-// Stream entry interface
-interface StreamEntry {
-  id: string;
-  proverb: string;
-  spellbook?: 'story' | 'zero' | 'canon' | 'society' | 'plurality';
-  actNumber?: number;
-  actTitle?: string;
-  spell?: string;
-  date: string;
-  author?: string;
+type RevelationSpellbook = 'story' | 'zero' | 'plurality';
+
+function getTaleIdForRevelation(spellbook: RevelationSpellbook, nodeId: number): string {
+  if (spellbook === 'story') return getTaleIdFromAct(nodeId);
+  if (spellbook === 'zero') return `zero-tale-${nodeId}`;
+  return `plurality-act-${nodeId}`;
 }
 
-// Sample stream entries - in production, these would come from a database/API
-const sampleEntries: StreamEntry[] = [
-  {
-    id: '1',
-    proverb: 'Dawn whispers, "Ask the wind what it carries, and you\'ll hear the stories of the unseen."',
-    spellbook: 'story',
-    actNumber: 1,
-    actTitle: 'Act I: Venice',
-    spell: '📖💰 → 🐉⏳ → ⚔️🔮',
-    date: 'Jan 20, 2026',
-  },
-  {
-    id: '2',
-    proverb: 'Whispers of raindrops, roars of thunder, glimmers of focused light compose the symphony of sovereign data.',
-    spellbook: undefined,
-    actNumber: undefined,
-    actTitle: 'privacy',
-    spell: '📖💰 → 🐉⏳ → ⚔️🔮 → 💰∞',
-    date: 'Jan 20, 2026',
-  },
-  {
-    id: '3',
-    proverb: 'A blade that sings alone still echoes in the canyon of trust.',
-    spellbook: 'story',
-    actNumber: 4,
-    actTitle: 'Act IV: Blade Alone',
-    spell: '🗡️ → 🍪⚔️ → 🔒 → 📖📝 → 🤝📜₁',
-    date: 'Jan 20, 2026',
-  },
-  {
-    id: '4',
-    proverb: 'A sunrise over the Grand Canal reminds us that every new day is a fresh ledger, waiting for only the entries we consent to write.',
-    spellbook: 'story',
-    actNumber: 1,
-    actTitle: 'Act I: Venice',
-    spell: '📖💰 → 🐉⏳ → ⚔️🔮',
-    date: 'Jan 20, 2026',
-  },
-  {
-    id: '5',
-    proverb: 'When the sunrise kisses the harbor, the city whispers its secrets to those who listen.',
-    spellbook: 'society',
-    actNumber: 4,
-    actTitle: 'Chapter 4: The Manifesto',
-    spell: '📜(May) → 🔓(Gilmore) → 💻(hacktivists) → 🔮(cyberstate) → ⚡(prophecy)',
-    date: 'Jan 20, 2026',
-  },
-  {
-    id: '6',
-    proverb: 'The swordsman who never strikes guards nothing; the mage who never casts commands nothing.',
-    spellbook: 'story',
-    actNumber: 1,
-    actTitle: 'Act I: Venice',
-    spell: '📖💰 → 🐉⏳ → ⚔️🔮',
-    date: 'Jan 20, 2026',
-  },
-  {
-    id: '7',
-    proverb: 'What the swordsman executes, the mage authorised; what the mage composes, the swordsman proves capable.',
-    spellbook: 'story',
-    actNumber: 2,
-    actTitle: 'Act II: Dual Ceremony',
-    spell: '🗡️🔮 ← 👤✓ → 🔒📝 → 🤝📜 → 🕸️',
-    date: 'Jan 19, 2026',
-  },
-];
-
-// Spellbook structures
-type SpellbookType = 'story' | 'zero' | 'canon' | 'society' | 'plurality' | null;
-
-const spellbookOptions: { value: SpellbookType; label: string }[] = [
-  { value: null, label: 'All Spellbooks' },
-  { value: 'story', label: 'Story' },
-  { value: 'zero', label: 'Zero' },
-  { value: 'canon', label: 'Canon' },
-  { value: 'society', label: 'Society' },
-  { value: 'plurality', label: 'Plurality' },
-];
-
-// Story acts (1-23)
-const storyActs: { [key: number]: string } = {
-  1: 'Act I: Venice',
-  2: 'Act II: Dual Ceremony',
-  3: 'Act III: Drake\'s Teaching',
-  4: 'Act IV: Blade Alone',
-  5: 'Act V: Light Armour',
-  6: 'Act VI: Trust Graph Plane',
-  7: 'Act VII: Mirror Enhanced',
-  8: 'Act VIII: Ancient Rule',
-  9: 'Act IX: Zcash Shield',
-  10: 'Act X: Topology of Revelation',
-  11: 'Act XI: Balanced Spiral',
-  12: 'Act XII: The Forgetting',
-  13: 'Act XIII: The Book of Promises',
-  14: 'Act XIV: Rain on the Mountain of Entropy',
-  15: 'Act XV: Running in Shackles Through the Dark Forest',
-  16: 'Act XVI: When Pools Become Wells',
-  17: 'Act XVII: Bonfire in the Dark Forest',
-  18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
-  19: 'Act XIX: The Anthropic Archivist',
-  20: 'Act XX: The Infinite Vault',
-  21: 'Act XXI: Hitchhiker\'s Gambit',
-  22: 'Act XXII: Don\'t Panic Hoopy Frood',
-  23: 'Act XXIII: The Manifold Dragon',
-};
-
-// Zero tales (1-30)
-const zeroTales: { [key: number]: string } = {
-  1: 'Tale 1: The Monastery of Hidden Knowledge',
-  2: 'Tale 2: The Three Trials of Truth',
-  3: 'Tale 3: The Silent Messenger',
-  4: 'Tale 4: The Fields of Finite Wisdom',
-  5: 'Tale 5: The Constraint Forge',
-  6: 'Tale 6: The Polynomial Riddle',
-  7: 'Tale 7: The Witness and the Instance',
-  8: 'Tale 8: The Plonkish Revolution',
-  9: 'Tale 9: The Pairing Dance',
-  10: 'Tale 10: The Commitment Ceremony',
-  11: 'Tale 11: The FRI Oracle',
-  12: 'Tale 12: The Folding Path',
-  13: 'Tale 13: The Sumcheck Riddle',
-  14: 'Tale 14: The IPA Chronicle',
-  15: 'Tale 15: The Mirror Within Mirrors',
-  16: 'Tale 16: The Cyclic Ceremony',
-  17: 'Tale 17: The Universal Setup',
-  18: 'Tale 18: The Toxic Waste Dragon',
-  19: 'Tale 19: The zkVM Kingdom',
-  20: 'Tale 20: The Cairo Scribes',
-  21: 'Tale 21: The Circom Workshops',
-  22: 'Tale 22: The zkEVM Empire',
-  23: 'Tale 23: The Private Coin of ZCash',
-  24: 'Tale 24: The Tornado\'s Eye',
-  25: 'Tale 25: The Rollup Realms',
-  26: 'Tale 26: The Vulnerability Codex',
-  27: 'Tale 27: The Data Availability Prophecy',
-  28: 'Tale 28: The Bridge Between Worlds',
-  29: 'Tale 29: The Intelligence Proof',
-  30: 'Tale 30: The Eternal Sovereignty',
-};
-
-// Canon chapters (1-10)
-const canonChapters: { [key: number]: string } = {
-  1: 'Chapter 1: The Cypherpunk Whispers',
-  2: 'Chapter 2: The Early Incantations',
-  3: 'Chapter 3: The Synthesis',
-  4: 'Chapter 4: The World Computer',
-  5: 'Chapter 5: The First Fracture',
-  6: 'Chapter 6: The Great Schism',
-  7: 'Chapter 7: The Surveillance Truth',
-  8: 'Chapter 8: The Missing Primitive',
-  9: 'Chapter 9: The Open Canon',
-  10: 'Chapter 10: The Timeline Archive',
-};
-
-// Society chapters (1-17)
-const societyChapters: { [key: number]: string } = {
-  1: 'Chapter 1: The Westphalian Warning',
-  2: 'Chapter 2: The Elder Remembers',
-  3: 'Chapter 3: The Pirate\'s Republic',
-  4: 'Chapter 4: The Manifesto',
-  5: 'Chapter 5: Leibniz Dreams',
-  6: 'Chapter 6: The Arsenal Opened',
-  7: 'Chapter 7: The Banker\'s Confession',
-  8: 'Chapter 8: The Network State Vision',
-  9: 'Chapter 9: The Three Doors',
-  10: 'Chapter 10: The Leibniz Overlap',
-  11: 'Chapter 11: Rights Became Real',
-  12: 'Chapter 12: Treaty Protocol',
-  13: 'Chapter 13: Head Was Cut',
-  14: 'Chapter 14: Tools That Breathe',
-  15: 'Chapter 15: Trust Reassignment',
-  16: 'Chapter 16: Garden Bloomed',
-  17: 'Chapter 17: Values Met Code',
-};
-
-// Plurality acts (1-30) - placeholder structure
-const pluralityActs: { [key: number]: string } = {
-  1: 'Act 1', 2: 'Act 2', 3: 'Act 3', 4: 'Act 4', 5: 'Act 5',
-  6: 'Act 6', 7: 'Act 7', 8: 'Act 8', 9: 'Act 9', 10: 'Act 10',
-  11: 'Act 11', 12: 'Act 12', 13: 'Act 13', 14: 'Act 14', 15: 'Act 15',
-  16: 'Act 16', 17: 'Act 17', 18: 'Act 18', 19: 'Act 19', 20: 'Act 20',
-  21: 'Act 21', 22: 'Act 22', 23: 'Act 23', 24: 'Act 24', 25: 'Act 25',
-  26: 'Act 26', 27: 'Act 27', 28: 'Act 28', 29: 'Act 29', 30: 'Act 30',
-};
-
-// Get available acts/chapters for a spellbook
-const getSpellbookItems = (spellbook: SpellbookType): { [key: number]: string } | null => {
-  switch (spellbook) {
-    case 'story': return storyActs;
-    case 'zero': return zeroTales;
-    case 'canon': return canonChapters;
-    case 'society': return societyChapters;
-    case 'plurality': return pluralityActs;
-    default: return null;
+function formatDate(iso: string): string {
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' });
+  } catch {
+    return iso;
   }
+}
+
+// Act titles for selection
+const actTitles: { [actNumber: number]: string } = {
+  1: "Venice, 1494 / The Drake's First Whisper",
+  2: 'The Dual Ceremony / Sovereignty Divided',
+  3: "The Drake's Teaching / A Tale of Conditions",
+  4: 'The Blade Alone / First Adventures',
+  5: 'Light Armor / Multi-Site Coordination',
+  6: 'Trust Graph Plane / Where Agents Gather',
+  7: 'The Mirror That Never Completes',
+  8: 'The Ancient Rule / Two-of-Three Locks',
+  9: 'Zcash Shield / Forging Cryptographic Privacy',
+  10: 'Topology of Revelation / Triangle Geometry',
+  11: 'Balanced Spiral of Sovereignty',
+  12: 'The Forgetting / Proverbiogenesis',
+  13: 'The Book of Promises',
+  14: 'Rain on the Mountain of Entropy',
+  15: 'Running in Shackles Through the Dark Forest',
+  16: 'When Pools Become Wells',
+  17: 'Bonfire in the Dark Forest',
+  18: 'A Mirror in Dust, Vibed into Scrying Glass',
+  19: 'The Anthropic Archivist',
+  20: 'The Infinite Vault',
+  21: "The Hitchhiker's Gambit",
+  22: "Don't Panic Hoopy Frood",
+  23: 'The Manifold Dragon',
 };
 
-export default function StreamPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filter, setFilter] = useState<'all' | 'curated'>('all');
-  const [selectedSpellbook, setSelectedSpellbook] = useState<SpellbookType>(null);
-  const [selectedAct, setSelectedAct] = useState<number | null>(null);
-  const [entries] = useState<StreamEntry[]>(sampleEntries);
+function getRomanNumeral(num: number): string {
+  const roman: { [key: number]: string } = {
+    1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI',
+    7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X', 11: 'XI', 12: 'XII',
+    13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII',
+    19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
+  };
+  return roman[num] || String(num);
+}
 
-  // Get available items for selected spellbook
-  const availableItems = selectedSpellbook ? getSpellbookItems(selectedSpellbook) : null;
+function EvokePageContent() {
+  const searchParams = useSearchParams();
+  const { openMagePanel } = useMagePanel();
 
-  // Reset act selection when spellbook changes
+  // Proverb from URL (from ProverbCard evoke link)
+  const [proverb, setProverb] = useState('');
+  const [selectedSpellbook, setSelectedSpellbook] = useState<RevelationSpellbook>('story');
+  const [selectedNode, setSelectedNode] = useState<number | null>(null);
+  const [memoCopied, setMemoCopied] = useState(false);
+
+  // Contact form state
+  const [contactMessage, setContactMessage] = useState('');
+  const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactEmail, setContactEmail] = useState('');
+  const [includeEmail, setIncludeEmail] = useState(false);
+  const [includeSwordsmanId, setIncludeSwordsmanId] = useState(false);
+  const [contactSending, setContactSending] = useState(false);
+  const [contactError, setContactError] = useState<string | null>(null);
+  const [agentCard, setAgentCard] = useState<ReturnType<typeof getAgentCard>>(null);
+  useEffect(() => setAgentCard(getAgentCard()), []);
+
+  // Donation bubble copy state
+  const [copiedDonation, setCopiedDonation] = useState(false);
+  const [copiedZec, setCopiedZec] = useState(false);
+  const DONATION_ADDRESS = '0x421D2BAd83484D658aEEaCC6035be2cD5115FE5D';
+  const ZEC_DONATION_ADDRESS = 'u1m9f98243nm8998jrj7azzzm8qfud9ycl0z8hj8t9wwh59zn9xz0nq0qc0u67n3l72es6w9yt5wcv96jhmjslsh7cvu2hftgcr0t5s5d3l5r3lrk43cun26z30c2kzqm2dwhygygd4c0xzl8hrvdc5yt68c68zu89zd5kkguahccvthnw';
+
+  // Published proverbs (evoked + revealed) for list on this page
+  const [evoked, setEvoked] = useState<EvokedMessage[]>([]);
+  const [revealed, setRevealed] = useState(getRevealedProverbs());
+  const [evokedOpen, setEvokedOpen] = useState(true);
+  const [revealedOpen, setRevealedOpen] = useState(true);
+
+  const loadPublished = useCallback(() => {
+    setEvoked(getEvokedMessages());
+    setRevealed(getRevealedProverbs());
+  }, []);
+
   useEffect(() => {
-    setSelectedAct(null);
+    loadPublished();
+  }, [loadPublished]);
+
+  useEffect(() => {
+    const onFocus = () => loadPublished();
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, [loadPublished]);
+
+  // Load proverb from URL param
+  useEffect(() => {
+    const proverbParam = searchParams.get('proverb');
+    if (proverbParam) {
+      setProverb(decodeURIComponent(proverbParam));
+    }
+  }, [searchParams]);
+
+  const handleCopyMemo = async () => {
+    if (!proverb.trim() || selectedNode == null) return;
+
+    const taleId = getTaleIdForRevelation(selectedSpellbook, selectedNode);
+    const memo = formatZcashMemo(taleId, proverb.trim());
+
+    try {
+      await navigator.clipboard.writeText(memo);
+      setMemoCopied(true);
+      setTimeout(() => setMemoCopied(false), 3000);
+    } catch (err) {
+      console.error('Failed to copy memo:', err);
+    }
+  };
+
+  // Reset constellation selection when spellbook changes so user picks a valid node
+  useEffect(() => {
+    setSelectedNode(null);
   }, [selectedSpellbook]);
 
-  // Filter entries based on search, spellbook, and act selection
-  const filteredEntries = entries.filter((entry) => {
-    const matchesSearch = searchQuery === '' || 
-      entry.proverb.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      entry.actTitle?.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesSpellbook = selectedSpellbook === null || entry.spellbook === selectedSpellbook;
-    const matchesAct = selectedAct === null || entry.actNumber === selectedAct;
-    
-    return matchesSearch && matchesSpellbook && matchesAct;
-  });
+  const handleContactSubmit = async () => {
+    const message = contactMessage.trim();
+    if (!message) return;
+    setContactError(null);
+    setContactSending(true);
+    addEvokedMessage(message);
+    loadPublished();
 
+    const participantId = includeSwordsmanId ? agentCard?.participantId : undefined;
+    let body = message;
+    if (participantId) body += `\n\nSwordsman ID (participant id): ${participantId}`;
+    if (includeEmail && contactEmail.trim()) body += `\n\nSubmitted by: ${contactEmail.trim()}`;
+
+    const subject = 'Contact Evocation - agentprivacy';
+    try {
+      if (includeEmail && contactEmail.trim()) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(contactEmail.trim())) {
+          setContactError('Please enter a valid email address.');
+          setContactSending(false);
+          return;
+        }
+        await sendToPrivacymage({
+          subject,
+          body,
+          fromEmail: contactEmail.trim(),
+          replyTo: contactEmail.trim(),
+        });
+      } else {
+        await sendToPrivacymage({ subject, body });
+      }
+    } catch (err: unknown) {
+      setContactError(err instanceof Error ? err.message : 'Failed to send. Try again or use your email client.');
+      setContactSending(false);
+      return;
+    }
+    setContactSending(false);
+    setContactSubmitted(true);
+    setTimeout(() => setContactSubmitted(false), 3000);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background">
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </a>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-4 sm:gap-6">
-                <a
-                  href="/story"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden overflow-hidden"
-              >
-                <div className="py-4 space-y-3 border-t border-surface/50">
-                  <a
-                    href="/story"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    story
-                  </a>
-                  <a
-                    href="/zero"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    zero
-                  </a>
-                  <a
-                    href="/canon"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    canon
-                  </a>
-                  <a
-                    href="/society"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    society
-                  </a>
-                  <a
-                    href="/plurality"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    plural
-                  </a>
-                  <a
-                    href="/privacy"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    privacy
-                  </a>
-                  <a
-                    href="/mage"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    mage
-                  </a>
-                  <a
-                    href="/evoke"
-                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    evoke
-                  </a>
-                  <a
-                    href="/proverbs"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    proverbs
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </nav>
+      <AppNav />
 
-      {/* Main Content */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        {/* Page Title */}
+        {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
           <h1 className="text-3xl md:text-4xl font-light italic text-text-muted mb-4">
-            the mages spell, once spoken, becomes the village weather
+            the mage's spell, once spoken, becomes the village weather
           </h1>
-          <p className="text-lg text-text-muted mb-8">
-            a stream of understanding and spells casted to the privacymage:
+          <p className="text-lg text-text-muted">
+            Two paths of evocation: private communion or public revelation
           </p>
+        </motion.div>
 
-          {/* Search Bar */}
-          <div className="relative max-w-2xl mx-auto mb-6">
-            <div className="absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
-              <svg
-                className="w-5 h-5 text-text-muted"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+        {/* Donate — first */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="mb-10"
+        >
+          <div className="p-5 rounded-2xl bg-surface/40 border border-surface/60 text-center">
+            <p className="text-2xl mb-2 flex items-center justify-center gap-2 flex-wrap" aria-hidden="true">
+              <span>⿻</span>
+              <span className="text-lg font-medium text-text">donate</span>
+            </p>
+            <p className="text-sm text-text-muted mb-2 max-w-md mx-auto italic">
+              The right people arrive, the right thing happens, the right moment opens, and the right ending closes—trust the pattern, for it trusts you.
+            </p>
+            <p className="text-xs text-text-muted mb-4">
+              ZEC is private and ETH is a public donation address.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(DONATION_ADDRESS);
+                    setCopiedDonation(true);
+                    setTimeout(() => setCopiedDonation(false), 2500);
+                  } catch {}
+                }}
+                className="px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/10 hover:bg-primary/20 text-primary text-sm font-medium transition-colors"
               >
-                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <span className="text-text-muted text-sm">?</span>
+                {copiedDonation ? '✓ Copied' : 'privacymage.eth (public)'}
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(ZEC_DONATION_ADDRESS);
+                    setCopiedZec(true);
+                    setTimeout(() => setCopiedZec(false), 2500);
+                  } catch {}
+                }}
+                className="px-4 py-2.5 rounded-xl border border-secondary/30 bg-secondary/10 hover:bg-secondary/20 text-secondary text-sm font-medium transition-colors"
+              >
+                {copiedZec ? '✓ Copied' : 'ZEC shielded spellbook (private)'}
+              </button>
             </div>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search proverbs..."
-              className="w-full pl-16 pr-4 py-3 bg-surface/50 border border-surface/50 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
-          </div>
-
-          {/* Filters */}
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <button
-              onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                filter === 'all'
-                  ? 'bg-primary/20 text-primary border border-primary/30'
-                  : 'bg-surface/30 text-text-muted border border-surface/30 hover:bg-surface/50'
-              }`}
-            >
-              all
-            </button>
-            <button
-              onClick={() => setFilter('curated')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                filter === 'curated'
-                  ? 'bg-primary/20 text-primary border border-primary/30'
-                  : 'bg-surface/30 text-text-muted border border-surface/30 hover:bg-surface/50'
-              }`}
-            >
-              curated
-            </button>
-            <select
-              value={selectedSpellbook || ''}
-              onChange={(e) => setSelectedSpellbook(e.target.value ? e.target.value as SpellbookType : null)}
-              className="px-4 py-2 rounded-full text-sm font-medium bg-surface/30 text-text border border-surface/30 hover:bg-surface/50 focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              {spellbookOptions.map((option) => (
-                <option key={option.value || 'all'} value={option.value || ''}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            {availableItems && (
-              <select
-                value={selectedAct || ''}
-                onChange={(e) => setSelectedAct(e.target.value ? parseInt(e.target.value) : null)}
-                className="px-4 py-2 rounded-full text-sm font-medium bg-surface/30 text-text border border-surface/30 hover:bg-surface/50 focus:outline-none focus:ring-2 focus:ring-primary"
-              >
-                <option value="">
-                  All {selectedSpellbook === 'zero' ? 'Tales' : selectedSpellbook === 'canon' || selectedSpellbook === 'society' ? 'Chapters' : 'Acts'}
-                </option>
-                {Object.entries(availableItems).map(([num, title]) => (
-                  <option key={num} value={num}>
-                    {title}
-                  </option>
-                ))}
-              </select>
-            )}
           </div>
         </motion.div>
 
-        {/* Stream Entries */}
-        <div className="space-y-6">
-          <AnimatePresence>
-            {filteredEntries.map((entry, index) => (
-              <motion.div
-                key={entry.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ delay: index * 0.1 }}
-                className="border-b border-surface/30 pb-6 last:border-b-0"
+        {/* Evocation — includes contact section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.06 }}
+          className="mb-12"
+        >
+          <div className="p-6 rounded-xl bg-primary/10 border border-primary/30">
+            <h2 className="text-xl font-semibold text-text mb-2">Contact Evocation</h2>
+            <p className="text-text-muted text-sm mb-6">
+              Direct mage contact is ephemeral. Perfect for learning, questioning, and refining your understanding before public revelation.
+            </p>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm text-text-muted mb-2">
+                  Your message or proverb:
+                </label>
+                <textarea
+                  value={contactMessage}
+                  onChange={(e) => setContactMessage(e.target.value)}
+                  placeholder="Share your understanding, ask a question, or propose a proverb..."
+                  rows={4}
+                  className="w-full px-4 py-3 bg-background border border-primary/30 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                />
+              </div>
+              <div className="space-y-3 text-sm">
+                <label className="flex items-center gap-2 cursor-pointer text-text-muted hover:text-text">
+                  <input
+                    type="checkbox"
+                    checked={includeEmail}
+                    onChange={(e) => { setIncludeEmail(e.target.checked); setContactError(null); }}
+                    className="rounded border-surface/50"
+                  />
+                  <span>Share my email</span>
+                </label>
+                {includeEmail && (
+                  <input
+                    type="email"
+                    value={contactEmail}
+                    onChange={(e) => { setContactEmail(e.target.value); setContactError(null); }}
+                    placeholder="your@email.example"
+                    className="w-full max-w-sm px-3 py-2 bg-background border border-primary/30 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                )}
+                <label className="flex items-center gap-2 cursor-pointer text-text-muted hover:text-text">
+                  <input
+                    type="checkbox"
+                    checked={includeSwordsmanId}
+                    onChange={(e) => setIncludeSwordsmanId(e.target.checked)}
+                    className="rounded border-surface/50"
+                    disabled={!agentCard}
+                  />
+                  <span>
+                    {agentCard
+                      ? `Include Swordsman ID (participant id): ${agentCard.participantId.slice(0, 12)}…`
+                      : 'Include Swordsman ID (participant id) — complete the ceremony first'}
+                  </span>
+                </label>
+              </div>
+              {contactError && (
+                <p className="text-sm text-red-400 bg-red-400/10 border border-red-400/30 rounded-lg px-3 py-2">
+                  {contactError}
+                </p>
+              )}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={handleContactSubmit}
+                  disabled={!contactMessage.trim() || contactSending}
+                  className="flex-1 px-6 py-3 bg-primary hover:bg-primary/90 text-background font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {contactSending ? 'Sending…' : contactSubmitted ? '✓ Message Received' : 'send to privacymage'}
+                </button>
+                <button
+                  onClick={openMagePanel}
+                  className="px-6 py-3 bg-surface/50 hover:bg-surface text-text font-medium rounded-lg border border-surface/50 transition-colors"
+                >
+                  🧙 Form Proverb
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Your published proverbs — first after donate */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.08 }}
+          className="mb-12"
+        >
+          <h2 className="text-xl font-semibold text-text mb-4">Your shared proverbs</h2>
+          <p className="text-sm text-text-muted mb-4">
+            Messages you've sent to the Mage (evoked) and proverbs you've inscribed on Zcash (revealed). Recorded proverbs live on the <Link href="/proverbs" className="text-primary hover:underline">Proverbs</Link> page.
+          </p>
+
+          <div className="space-y-4">
+            <div className="rounded-xl border border-primary/30 bg-primary/5 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setEvokedOpen(!evokedOpen)}
+                className="w-full px-4 py-3 flex items-center justify-between hover:bg-primary/10 transition-colors text-left"
               >
-                <div className="space-y-3">
-                  {/* Proverb */}
-                  <p className="text-lg md:text-xl text-text leading-relaxed italic">
-                    "{entry.proverb}"
-                  </p>
-                  
-                  {/* Act and Spell Info */}
-                  {(entry.actNumber || entry.actTitle || entry.spell) && (
-                    <div className="flex flex-wrap items-center gap-3 text-sm text-text-muted">
-                      {entry.actTitle && (
-                        <span className="font-medium">{entry.actTitle}</span>
-                      )}
-                      {entry.spell && (
-                        <span className="font-mono text-xs">{entry.spell}</span>
+                <span className="font-medium text-text">✨ Evoked</span>
+                <span className="text-text-muted text-sm">{evoked.length}</span>
+                <span className="text-text-muted">{evokedOpen ? '−' : '+'}</span>
+              </button>
+              <AnimatePresence>
+                {evokedOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="overflow-hidden border-t border-primary/20"
+                  >
+                    <div className="p-4">
+                      {evoked.length === 0 ? (
+                        <p className="text-sm text-text-muted">No evoked messages yet. Use the form below to contact the Mage.</p>
+                      ) : (
+                        <ul className="space-y-2">
+                          {evoked.map((msg) => (
+                            <li key={msg.id} className="text-sm border-b border-surface/30 pb-2 last:border-0 last:pb-0">
+                              <time className="text-text-muted text-xs block">{formatDate(msg.createdAt)}</time>
+                              <p className="text-text mt-0.5">{msg.content}</p>
+                            </li>
+                          ))}
+                        </ul>
                       )}
                     </div>
-                  )}
-                  
-                  {/* Date */}
-                  <p className="text-xs text-text-muted">{entry.date}</p>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-
-          {filteredEntries.length === 0 && (
-            <div className="text-center py-12 text-text-muted">
-              <p>No proverbs found. Be the first to share your understanding.</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          )}
-        </div>
-      </section>
 
-      {/* Mage Panel - Base Soulbae prompt for evoke page */}
-      <MagePanel
-        taleId="evoke-base"
-        actNumber={undefined}
-        actName={undefined}
-      />
+            <div className="rounded-xl border border-secondary/30 bg-secondary/5 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setRevealedOpen(!revealedOpen)}
+                className="w-full px-4 py-3 flex items-center justify-between hover:bg-secondary/10 transition-colors text-left"
+              >
+                <span className="font-medium text-text">⚔️ Revealed</span>
+                <span className="text-text-muted text-sm">{revealed.length}</span>
+                <span className="text-text-muted">{revealedOpen ? '−' : '+'}</span>
+              </button>
+              <AnimatePresence>
+                {revealedOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="overflow-hidden border-t border-secondary/20"
+                  >
+                    <div className="p-4">
+                      {revealed.length === 0 ? (
+                        <p className="text-sm text-text-muted">No revealed proverbs yet. Copy a memo below and send minimum 0.01 ZEC to the shielded spellbook address to inscribe.</p>
+                      ) : (
+                        <ul className="space-y-2">
+                          {revealed.map((p) => (
+                            <li key={p.id} className="text-sm border-b border-surface/30 pb-2 last:border-0 last:pb-0">
+                              <time className="text-text-muted text-xs block">{p.revealedAt ? formatDate(p.revealedAt) : formatDate(p.createdAt)}</time>
+                              <p className="text-text mt-0.5">{p.content}</p>
+                              {p.revealedTxid && (
+                                <a href={`https://mainnet.zcashexplorer.app/transactions/${p.revealedTxid}`} target="_blank" rel="noopener noreferrer" className="text-secondary hover:underline text-xs mt-1 inline-block">
+                                  View on chain →
+                                </a>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Progressive Trust (VRC) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-12"
+        >
+          <div className="p-5 rounded-xl bg-accent/10 border border-accent/30">
+            <h2 className="font-semibold text-text mb-2">Progressive Trust (VRC)</h2>
+            <p className="text-text-muted text-sm mb-3">
+              Both evocation types contribute to your trust portfolio. Private communion builds local understanding while revelations form Verifiable Relationship Credentials (VRCs)—bilateral trust proofs that unlock higher armor tiers.
+            </p>
+            <ul className="text-sm text-text-muted space-y-1 list-disc list-inside">
+              <li>Signals prove comprehension</li>
+              <li>Bilateral proverbs form VRCs</li>
+              <li>VRCs unlock guardian candidacy</li>
+            </ul>
+          </div>
+        </motion.div>
+
+        {/* Divider */}
+        <div className="flex items-center gap-4 mb-12">
+          <div className="flex-1 h-px bg-surface/50" />
+          <span className="text-text-muted text-sm">or</span>
+          <div className="flex-1 h-px bg-surface/50" />
+        </div>
+
+        {/* Revelation > Proverb Revelation Protocol (evoke) — no duplicate emoji */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-12"
+        >
+          <div className="p-6 rounded-xl bg-secondary/10 border border-secondary/30">
+            <h2 className="text-xl font-semibold text-text mb-1">Revelation</h2>
+            <p className="text-secondary/90 text-sm font-medium mb-4">Proverb Revelation Protocol</p>
+
+            <p className="text-text-muted mb-6">
+              Inscribe your proverb on the Zcash blockchain as permanent proof of understanding.
+              Revelation that contributes to the collective wisdom.
+            </p>
+
+            <div className="space-y-4">
+              {/* First Person (Story) only */}
+              <div>
+                <p className="text-sm text-text-muted mb-2">
+                  Spellbook: <span className="text-text font-medium">First Person (Story) · Acts 1–23</span>
+                </p>
+              </div>
+
+              {/* Act selection */}
+              <div>
+                <label className="block text-sm text-text-muted mb-2">
+                  Select the Act your proverb relates to:
+                </label>
+                <select
+                  value={selectedNode ?? ''}
+                  onChange={(e) => setSelectedNode(e.target.value ? parseInt(e.target.value) : null)}
+                  className="w-full px-4 py-3 bg-background border border-secondary/30 rounded-lg text-text focus:outline-none focus:ring-2 focus:ring-secondary"
+                >
+                  <option value="">Choose an Act...</option>
+                  {Array.from({ length: 23 }, (_, i) => i + 1).map((num) => (
+                    <option key={num} value={num}>
+                      Act {getRomanNumeral(num)}: {actTitles[num]?.split(' / ')[0]}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Proverb Input */}
+              <div>
+                <label className="block text-sm text-text-muted mb-2">
+                  Your proverb:
+                </label>
+                <textarea
+                  value={proverb}
+                  onChange={(e) => setProverb(e.target.value)}
+                  placeholder="Enter your compressed understanding..."
+                  rows={3}
+                  className="w-full px-4 py-3 bg-background border border-secondary/30 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-secondary resize-none"
+                />
+              </div>
+
+              {/* Copy Memo Button */}
+              {selectedNode != null && proverb.trim() && (
+                <button
+                  onClick={handleCopyMemo}
+                  className="w-full px-6 py-3 bg-secondary hover:bg-secondary/90 text-background font-medium rounded-lg transition-colors"
+                >
+                  {memoCopied ? '✓ Memo Copied!' : '📋 Copy Memo for Zodl'}
+                </button>
+              )}
+
+              {/* Instructions — stay expanded when proverb has text and Copy Memo is showing */}
+              {selectedNode != null && proverb.trim() && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  className="p-4 bg-secondary/10 border border-secondary/20 rounded-lg"
+                >
+                  <h4 className="font-medium text-text mb-3">Complete your revelation:</h4>
+                  <ol className="space-y-2 text-sm text-text-muted">
+                    <li className="flex gap-2">
+                      <span className="text-secondary font-medium">1.</span>
+                      <span>Open your Zodl wallet</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-secondary font-medium">2.</span>
+                      <span>Create a new send transaction</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-secondary font-medium">3.</span>
+                      <span>Set amount to <strong className="text-secondary">minimum 0.01 ZEC</strong></span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-secondary font-medium">4.</span>
+                      <span>Send to the shielded spellbook address:</span>
+                    </li>
+                  </ol>
+                  <div className="mt-3">
+                    <UAddressDisplay label="Shielded spellbook address" variant="small-button" />
+                  </div>
+                  <ol start={5} className="space-y-2 text-sm text-text-muted mt-3">
+                    <li className="flex gap-2">
+                      <span className="text-secondary font-medium">5.</span>
+                      <span>Paste the memo in the message field</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-secondary font-medium">6.</span>
+                      <span>Send as a shielded transaction</span>
+                    </li>
+                  </ol>
+                </motion.div>
+              )}
+
+              {/* Zcash Address Display */}
+              <div className="pt-4 border-t border-secondary/20">
+                <p className="text-sm text-text-muted mb-3">
+                  Shielded spellbook address (minimum 0.01 ZEC for proverb revelations):
+                </p>
+                <UAddressDisplay variant="proverb-button" />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+      </section>
     </div>
+  );
+}
+
+export default function EvokePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-background to-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-text-muted">Loading...</p>
+        </div>
+      </div>
+    }>
+      <EvokePageContent />
+    </Suspense>
   );
 }

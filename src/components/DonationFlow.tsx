@@ -2,7 +2,7 @@
  * Donation Flow Component
  * 
  * Guides users through the Signal-to-Sanctuary donation process:
- * 1. Read story → 2. Form proverb → 3. Copy → 4. Paste → 5. Copy memo → 6. Zashi
+ * 1. Read story → 2. Form proverb → 3. Copy → 4. Paste → 5. Copy memo → 6. Zodl
  * 
  * Located at agentprivacy.ai as part of the First Person Spellbook
  */
@@ -232,12 +232,12 @@ export const DonationFlow: React.FC<DonationFlowProps> = ({ act, onComplete }) =
       case 'send':
         return (
           <div className="flow-step send-step">
-            <h2>💎 Step 5: Send via Zashi</h2>
+            <h2>💎 Step 5: Send via Zodl</h2>
             
-            <div className="zashi-instructions">
+            <div className="zodl-instructions">
               <ol>
                 <li>
-                  <strong>Open Zashi wallet</strong> on your device
+                  <strong>Open Zodl wallet</strong> on your device
                 </li>
                 <li>
                   <strong>Start a new transaction</strong> (Send)
@@ -488,7 +488,7 @@ export const DonationFlowStyles = `
   padding-left: 20px;
 }
 
-.zashi-instructions ol {
+.zodl-instructions ol {
   line-height: 2;
 }
 

@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { motion, AnimatePresence } from 'framer-motion';
-import MagePanel from '@/components/MagePanel';
+import AppNav from '@/components/AppNav';
 
 function PrivacyVideo() {
   const videoSrc = '/assets/privacymage_weather.mp4';
@@ -254,7 +254,6 @@ function PrivacyAudioPlayer() {
 }
 
 export default function PrivacyPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [markdownContent, setMarkdownContent] = useState<string>('');
   const [originalMarkdownContent, setOriginalMarkdownContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
@@ -385,174 +384,7 @@ export default function PrivacyPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Mage Panel */}
-      <MagePanel
-        taleId="privacy-origins"
-        actNumber={undefined}
-        actName={actName}
-      />
-
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </a>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-4 sm:gap-6">
-                <a
-                  href="/story"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-surface/50">
-              <div className="flex flex-col gap-4">
-                <a
-                  href="/story"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text hover:text-primary transition-colors font-medium px-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
+      <AppNav />
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

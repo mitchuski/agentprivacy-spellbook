@@ -1,0 +1,226 @@
+/**
+ * Baked grimoire from canonical v8.4.0 (privacymage grimoire).
+ * Maps all spells from: First Person (23 acts + origins), Zero (30 tales), Canon (11),
+ * Parallel Society (17), Plurality (opening + 30 acts + closing), unified incantations.
+ * Origins section includes all story.origins.spells. Plurality includes opening, 30 acts
+ * from parts[].acts[], and closing. Total matches the grimoire JSON.
+ */
+
+import v8 from '@/data/privacymage-grimoire-v8.4.0-canonical.json';
+
+export type SpellbookSource = 'story' | 'origins' | 'zero' | 'canon' | 'society' | 'plurality' | 'incantations' | 'none';
+
+export interface SpellCard {
+  id: string;
+  title: string;
+  spellbook: SpellbookSource;
+  spell: string;
+  proverb: string;
+  learnUrl?: string;
+  actNumber?: number;
+}
+
+type V8 = {
+  spellbooks?: {
+    story?: {
+      acts?: Array<{ id: string; act_number?: number; title: string; spell: string; proverb: string }>;
+      origins?: {
+        spells?: Array<{
+          id: string;
+          title: string;
+          spell: string;
+          proverbs?: string[];
+          incantation?: string;
+        }>;
+      };
+    };
+    zero?: {
+      parts?: Array<{
+        tales?: Array<{ number: number; title: string; spell: string; proverb: string }>;
+      }>;
+    };
+    canon?: {
+      chapters?: Array<{ id: string; chapter_number?: number; title: string; spell: string; proverb: string }>;
+    };
+    parallel?: {
+      parts?: Array<{
+        chapters?: Array<{ chapter_number: number; title: string; spell: string; proverb: string }>;
+      }>;
+    };
+    plurality?: {
+      opening?: { spell: string; proverb: string };
+      closing?: { spell: string; proverb: string };
+      parts?: Array<{
+        acts?: Array<{
+          id: string;
+          act_number?: string | number;
+          title: string;
+          spell: string;
+          proverb: string;
+        }>;
+      }>;
+    };
+  };
+  unified_incantations?: Record<string, { name: string; spell: string; proverb: string; incantation?: string }>;
+};
+
+const data = v8 as V8;
+
+function flattenV8(): SpellCard[] {
+  const cards: SpellCard[] = [];
+  const sb = data.spellbooks;
+  if (!sb) return cards;
+
+  // First Person — 23 acts (v8.4.0 includes act-23-manifold-dragon)
+  if (sb.story?.acts) {
+    sb.story.acts.forEach((act) => {
+      cards.push({
+        id: act.id,
+        title: act.title,
+        spellbook: 'story',
+        spell: act.spell,
+        proverb: act.proverb,
+        learnUrl: `/story?act=${act.act_number ?? 0}`,
+        actNumber: act.act_number,
+      });
+    });
+  }
+
+  // Origins — all origin spells from the grimoire (e.g. The Symphony Within / Gave Myself a Cape)
+  if (sb.story?.origins?.spells) {
+    sb.story.origins.spells.forEach((s) => {
+      const proverb = Array.isArray(s.proverbs) && s.proverbs.length > 0 ? s.proverbs.join(' ') : (s as { proverb?: string }).proverb ?? '';
+      cards.push({
+        id: s.id,
+        title: s.title,
+        spellbook: 'origins',
+        spell: s.spell,
+        proverb: proverb || "The mage's spell, once spoken, becomes the village weather.",
+      });
+    });
+  }
+
+  // Zero — 30 tales
+  if (sb.zero?.parts) {
+    sb.zero.parts.forEach((part) => {
+      part.tales?.forEach((tale) => {
+        cards.push({
+          id: `zero-tale-${tale.number}`,
+          title: tale.title,
+          spellbook: 'zero',
+          spell: tale.spell,
+          proverb: tale.proverb,
+          learnUrl: `/zero?tale=${tale.number}`,
+          actNumber: tale.number,
+        });
+      });
+    });
+  }
+
+  // Canon — 11 chapters
+  if (sb.canon?.chapters) {
+    sb.canon.chapters.forEach((ch) => {
+      cards.push({
+        id: ch.id,
+        title: ch.title,
+        spellbook: 'canon',
+        spell: ch.spell,
+        proverb: ch.proverb,
+        learnUrl: `/canon?chapter=${ch.chapter_number ?? 0}`,
+        actNumber: ch.chapter_number,
+      });
+    });
+  }
+
+  // Parallel Society → society (17 chapters)
+  if (sb.parallel?.parts) {
+    sb.parallel.parts.forEach((part) => {
+      part.chapters?.forEach((ch) => {
+        cards.push({
+          id: `parallel-${ch.chapter_number}`,
+          title: ch.title,
+          spellbook: 'society',
+          spell: ch.spell,
+          proverb: ch.proverb,
+          learnUrl: `/society?chapter=${ch.chapter_number}`,
+          actNumber: ch.chapter_number,
+        });
+      });
+    });
+  }
+
+  // Plurality — opening, 30 acts from parts[].acts[], closing (ids plurality-act-1..30 for pathway/storage)
+  if (sb.plurality?.opening) {
+    cards.push({
+      id: 'plurality-opening',
+      title: 'Plurality Opening',
+      spellbook: 'plurality',
+      spell: sb.plurality.opening.spell,
+      proverb: sb.plurality.opening.proverb,
+      learnUrl: '/plurality',
+    });
+  }
+  let pluralityActIndex = 0;
+  if (sb.plurality?.parts) {
+    sb.plurality.parts.forEach((part) => {
+      part.acts?.forEach((act) => {
+        pluralityActIndex += 1;
+        const n = pluralityActIndex;
+        cards.push({
+          id: `plurality-act-${n}`,
+          title: act.title,
+          spellbook: 'plurality',
+          spell: act.spell,
+          proverb: act.proverb,
+          learnUrl: `/plurality?act=${n}`,
+          actNumber: n,
+        });
+      });
+    });
+  }
+  if (sb.plurality?.closing) {
+    cards.push({
+      id: 'plurality-closing',
+      title: 'Plurality Closing',
+      spellbook: 'plurality',
+      spell: sb.plurality.closing.spell,
+      proverb: sb.plurality.closing.proverb,
+      learnUrl: '/plurality',
+    });
+  }
+
+  // Unified incantations — only entries with name/spell/proverb (exclude nested or non-spell keys)
+  if (data.unified_incantations) {
+    Object.entries(data.unified_incantations).forEach(([key, val]) => {
+      if (!val || typeof val !== 'object' || !('name' in val) || !('spell' in val) || !('proverb' in val)) return;
+      cards.push({
+        id: `incantation-${key}`,
+        title: val.name,
+        spellbook: 'incantations',
+        spell: val.spell,
+        proverb: val.proverb,
+      });
+    });
+  }
+
+  return cards;
+}
+
+let cached: SpellCard[] | null = null;
+
+export function getBakedSpellCards(): SpellCard[] {
+  if (cached) return cached;
+  cached = flattenV8();
+  return cached;
+}
+
+/** All First Person spell ids (23 acts; origins spells are in spellbook 'origins') — shared by Soulbis and Soulbae. */
+export const FIRST_PERSON_SPELL_IDS: string[] = [
+  'act-01-venice', 'act-02-dual-ceremony', 'act-03-drakes-teaching', 'act-04-blade-alone',
+  'act-05-light-armor', 'act-06-trust-graph', 'act-07-mirror', 'act-08-ancient-rule',
+  'act-09-zcash-shield', 'act-10-topology', 'act-11-sovereignty-spiral', 'act-12-forgetting',
+  'act-13-book-of-promises', 'act-14-claimed-string', 'act-15-running-in-shackles',
+  'act-16-pools-become-wells', 'act-17-bonfire-dark-forest', 'act-18-mirror-in-dust',
+  'act-19-enthusiastic-archivist', 'act-20-infinite-vault', 'act-21-hitchhikers-gambit',
+  'act-22-hoopy-frood', 'act-23-manifold-dragon',
+];

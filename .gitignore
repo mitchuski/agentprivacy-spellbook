@@ -81,6 +81,12 @@ oracle-swordsman/temp/
 oracle-swordsman/dist/
 oracle-swordsman/build/
 
+# nested node_modules (should npm install separately if needed)
+oracle-swordsman/node_modules/
+
+# Cloudflare cache
+.wrangler/
+
 # database
 *.db
 *.sqlite

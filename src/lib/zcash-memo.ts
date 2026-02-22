@@ -1,6 +1,8 @@
 // Zcash Memo Formatting Utilities
 // Formats proverbs for Zcash shielded transaction memos
 
+import type { PathwaySpellbook } from './spellbook-storage';
+
 export interface ZcashMemo {
   protocol: string;
   taleId: string;
@@ -11,16 +13,21 @@ export interface ZcashMemo {
 
 /**
  * Get act number from tale ID
- * Supports story spellbook (act-i-venice), zero spellbook (zero-tale-1), and canon spellbook (canon-chapter-X or guardian)
+ * Supports story spellbook (act-01-venice, act-i-venice), zero (zero-tale-X), canon (canon-chapter-X, guardian), society (society-chapter-X), plurality (plurality-act-X)
  */
 export function getActFromTaleId(taleId: string): number | null {
-  // Check for zero spellbook format: zero-tale-X
+  // Spell-id style: act-01-venice, act-13-book-of-promises
+  const storySpellMatch = taleId.match(/^act-(\d{2})-/);
+  if (storySpellMatch) {
+    const n = parseInt(storySpellMatch[1], 10);
+    return Number.isFinite(n) ? n : null;
+  }
+  // Zero spellbook format: zero-tale-X
   const zeroMatch = taleId.match(/^zero-tale-(\d+)$/);
   if (zeroMatch) {
     return parseInt(zeroMatch[1], 10);
   }
-  
-  // Check for canon spellbook format: canon-chapter-X or guardian
+  // Canon: canon-chapter-X or guardian
   const canonMatch = taleId.match(/^canon-chapter-(\d+)$/);
   if (canonMatch) {
     return parseInt(canonMatch[1], 10);
@@ -28,8 +35,17 @@ export function getActFromTaleId(taleId: string): number | null {
   if (taleId === 'guardian') {
     return 12; // Guardian is chapter 12
   }
-  
-  // Story spellbook tale IDs
+  // Society: society-chapter-X
+  const societyMatch = taleId.match(/^society-chapter-(\d+)$/);
+  if (societyMatch) {
+    return parseInt(societyMatch[1], 10);
+  }
+  // Plurality: plurality-act-X
+  const pluralityMatch = taleId.match(/^plurality-act-(\d+)$/);
+  if (pluralityMatch) {
+    return parseInt(pluralityMatch[1], 10);
+  }
+  // Legacy story spellbook tale IDs (act-i-venice, etc.)
   const taleMap: { [key: string]: number } = {
     'act-i-venice': 1,
     'act-ii-dual-ceremony': 2,
@@ -114,7 +130,8 @@ function getSpellemojiForCanonChapter(chapterNumber: number): string {
 }
 
 /**
- * Get spellemoji for zero spellbook tale
+ * Get spellemoji for zero spellbook tale.
+ * Kept in sync with Zero page taleData.spell so constellation picker and memos match.
  */
 function getSpellemojiForZeroTale(taleNumber: number): string {
   const zeroSpellemojiMap: { [key: number]: string } = {
@@ -123,33 +140,83 @@ function getSpellemojiForZeroTale(taleNumber: number): string {
     3: "🎭(interactive) + 🔮(hash-oracle) → 🔇(non-interactive)",
     4: "𝔽_q = {0, 1, ..., q-1} → ➕ ✖️ (mod q)",
     5: "🔨(claim) → 🔗(gates) → {a ⊗ b = c}ⁿ",
-    6: "{a⊗b=c}ⁿ → {A(x), B(x), C(x)} → A·B - C = Z·H",
+    6: "🔗ⁿ → 🔮{A(x), B(x), C(x)} → A·B - C = Z·H → ✨(vanish)",
     7: "claim → {instance(🌍) + witness(🗝️)}",
-    8: "PlonK: Σqᵢ·wᵢ + q·(w₁⊗w₂) = 0 (flexible)",
-    9: "e: G₁ × G₂ → GT (bilinear)",
+    8: "⚙️ PlonK: Σqᵢ·wᵢ + q·(w₁⊗w₂) = 0 → 🔧(flexible)",
+    9: "💃 G₁ × G₂ → 🤝 GT(bilinear)",
     10: "commit(🗝️) → 🔒(binding + hiding)",
-    11: "FRI: φ → φ' → φ'' → ... → constant",
-    12: "proof₁ + proof₂ →(fold @ r)→ proof₃",
-    13: "S = Σ g(x₁,...,xₙ) over {0,1}ⁿ → 2ⁿ terms",
-    14: "⟨a, b⟩ = Σ aᵢbᵢ → inner product",
-    15: "proof → verify(proof) → proof_of_proof → verify → ... ∞",
-    16: "Circuit C → verify(C's proof) → paradox(vk_C unknown)",
-    17: "Ceremony(τ) → {g^1, g^τ, ..., g^(τ^N)} → universal_params",
+    11: "🔮 FRI: φ → φ' → φ'' → ... → 💎(constant)",
+    12: "📜₁ + 📜₂ →(🔄fold)→ 📜₃",
+    13: "🎲 S = Σ g(x₁,...,xₙ) → 🔍(n rounds) → ✓",
+    14: "📐 ⟨a, b⟩ = Σ aᵢbᵢ → 🔍log(n) → ✓",
+    15: "📜 → 🪞(verify) → 📜² → 🪞 → ... ∞",
+    16: "🐍 Circuit C → verify(C) → C (ouroboros)",
+    17: "🕯️ Ceremony(τ) → {g^τⁿ}ᴺ → 🌍(universal)",
     18: "🐉 Head 1: τ leaked → forge_proofs(∞) → 🚨",
-    19: "program(any_language) → compile(ISA) → execute → trace[cycles]",
-    20: "Cairo: language(felt) → AIR(direct) → STARK → StarkNet",
-    21: "Circom: template(signals) → constraints(R1CS) → Groth16/PlonK",
-    22: "EVM(140 opcodes + state) → zkEVM → proof → L1(verify)",
-    23: "ZCash: private(from, to, amount) + proof(valid, no_double_spend)",
-    24: "Tornado: deposit(cm) → pool → withdraw(proof, nf) → unlinked",
-    25: "zkRollup: execute(L2) → prove → L1(verify + data)",
-    26: "Vulnerabilities: setup + parameters + circuits + implementation + protocol + upgrades",
-    27: "EIP-4844: blobs(128KB, 18 days, 1 gas/byte) → 16x cheaper",
-    28: "Bridge: prove(chain_A_state) → verify(chain_B) → trustless",
-    29: "zkML: model(committed) + data(private) + inference → proof(correct) + output",
-    30: "Sovereign Agent = {Identity, Swordsman, Mage, Reflect, Connect, Capital, Intelligence}",
+    19: "💻(program) → ⚙️(compile) → ▶️(execute) → 📊(trace) → 📜(proof)",
+    20: "✍️ Cairo: 𝔽(felt) → 📐(AIR) → ⚡(STARK)",
+    21: "🔧 Circom: 📋(template) → 🔗(R1CS) → 📜(Groth16|PlonK)",
+    22: "🏰 EVM(opcodes + state) → 🔐(zkEVM) → 📜 → ⛓️ L1(✓)",
+    23: "🦓🛡️ private(👤→👤, 💰) + 📜(valid, ¬double) → 🕶️",
+    24: "🌀 deposit(🔒) → 🌊(pool) → withdraw(📜, nf) → 🔓(unlinked)",
+    25: "📦 execute(L2) → 📜(prove) → ⬆️ L1(✓ + 📊data)",
+    26: "⚠️🐉 6 heads: 🕯️(setup) + 🔢(params) + 🔗(circuits) + 💻(impl) + 📡(protocol) + 🔄(upgrades)",
+    27: "💾 EIP-4844: 📦(blobs, 128KB) → ⏳(18 days) → 💰(16× cheaper)",
+    28: "🌉 prove(⛓️A state) → verify(⛓️B) → 🤝(trustless)",
+    29: "🧠 model(🔒) + data(🗝️) + inference → 📜(✓) + output → 🛡️",
+    30: "⚔️🧙‍♂️🪞🕸️ = {👤, 🗡️, 🔮, 🪞, 🤝, 💎, 🧠}",
   };
   return zeroSpellemojiMap[taleNumber] || '';
+}
+
+/**
+ * Get spellemoji for Parallel Society spellbook chapter (for constellation marker picker).
+ * Must match society page chapterData.spell so inscribe modal shows the same emojis.
+ */
+function getSpellemojiForSocietyChapter(chapterNumber: number): string {
+  const societySpellMap: { [key: number]: string } = {
+    0: "👑⛓️ → 💀 → 🗺️ → 🕯️ → ⚔️❓ → 🧮 → 🔗 → 🌱 → 🏛️ → ✨",
+    1: "👑⛓️(1648) → 💣⚖️(44%) → ⚔️❓(tradeoff) → 📜(archive) → 🐍(corrupt) → ⚖️(divide) → 🌱(seeds) → 🕯️(warning)",
+    2: "👑💀(775) → 📊(67%) → 🎭(mirage) → 💸(extract) → 🗺️⛓️(kettle) → 🌱(seeds)",
+    3: "🏴‍☠️(pirates) → 🌲(Cherán) → 🏙️(SEZ) → 🔧(architecture) → 🌱(bloom)",
+    4: "📜(May) → 🔓(Gilmore) → 💻(hacktivists) → 🔮(cyberstate) → ⚡(prophecy)",
+    5: "📚(Leibniz) → 🔄(overlap) → ⚔️❓(General) → 🧮(BFT) → ✅(solved)",
+    6: "📜💻(contracts) → 🔮(oracles) → 🏛️(DAO) → 🌐(emerge)",
+    7: "💰🐍(FinCEN) → 📊(99.95%) → 💸(extract) → 💻⚡(cure)",
+    8: "🌐(Balaji) → 🗺️❌(landless) → 👥(community) → ❓(state?) → 🔄(rethink)",
+    9: "🚪(exit) → 🌍(exile) → 🔑(access) → ⚖️(rights) → 🔓(freedom)",
+    10: "🔄(five-place) → 🏰🏰(medieval) → 👥(shared) → 🔓(distributed)",
+    11: "🗽(Lafayette) → 📜(17 articles) → 👥(community) → ⚖️(rights) → ✨(real)",
+    12: "🤝(relational) → 📜(contracts) → 🦁❓(incomprehensible) → 🔗(protocol)",
+    13: "🎭(PSYOP) → ⚔️💻(softwar) → 🔗(network) → 💚(heal) → 🔄(adapt)",
+    14: "🔧(Reed-Solomon) → 🛡️(zk-SNARKs) → 📡(Waku) → 🏛️(Nomos) → ✨(breathe)",
+    15: "🏛️💥(DAO hack) → 📜❌(code≠law) → 👥(social) → ⚖️(limits) → 🔄(iterate)",
+    16: "🍷(1847 banquet) → 🌱(future here) → 📊(6500 nodes) → ✨(inevitable)",
+    17: "🏠(two floors) → 💻(tech) → ❤️(values) → 🔗(align) → ⚡(barbed wire falls)",
+    18: "👑💀 → 🌱 → 🔗 → ⚔️ → 🧙‍♂️ → ✨ → 🏛️ → 🔓 → △",
+  };
+  return societySpellMap[chapterNumber] ?? '';
+}
+
+/**
+ * Get the spell emoji string for a spellbook node (for constellation marker picker).
+ * Society now has a map; plurality still has no map and returns ''.
+ */
+export function getSpellemojiForSpellbook(spellbook: PathwaySpellbook, nodeId: number): string {
+  switch (spellbook) {
+    case 'story':
+      return getSpellemojiForAct(nodeId);
+    case 'zero':
+      return getSpellemojiForZeroTale(nodeId);
+    case 'canon':
+      return getSpellemojiForCanonChapter(nodeId === 12 ? 12 : nodeId);
+    case 'society':
+      return getSpellemojiForSocietyChapter(nodeId);
+    case 'plurality':
+      return '';
+    default:
+      return '';
+  }
 }
 
 /**
@@ -166,14 +233,17 @@ export function formatZcashMemo(
   // Determine spellbook type
   const isZeroSpellbook = taleId.startsWith('zero-tale-');
   const isCanonSpellbook = taleId.startsWith('canon-chapter-') || taleId === 'guardian';
+  const isPluralitySpellbook = taleId.startsWith('plurality-act-');
   
-  // Get appropriate spellemoji
+  // Get appropriate spellemoji (plurality has no map in this module; story uses getSpellemojiForAct)
   let spellemoji = '';
   if (act !== null) {
     if (isZeroSpellbook) {
       spellemoji = getSpellemojiForZeroTale(act);
     } else if (isCanonSpellbook) {
       spellemoji = getSpellemojiForCanonChapter(act);
+    } else if (isPluralitySpellbook) {
+      spellemoji = ''; // Plurality spellemoji not mapped here; memo still valid
     } else {
       spellemoji = getSpellemojiForAct(act);
     }

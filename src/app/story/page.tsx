@@ -5,9 +5,30 @@ import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import MagePanel from '@/components/MagePanel';
-import UAddressDisplay from '@/components/UAddressDisplay';
+import SpellbookTalentTree from '@/components/SpellbookTalentTree';
+import InscribeProverbModal from '@/components/InscribeProverbModal';
+import ConstellationInscriptionBox from '@/components/ConstellationInscriptionBox';
+import AppNav from '@/components/AppNav';
+import Link from 'next/link';
 import { getTaleIdFromAct } from '@/lib/zcash-memo';
+import { addSpellToSpellbook, getSpellbookFromStorage, getLearnedUpTo, setLearnedUpTo, LEARNED_STORY_KEY, getPathwayNodeIds, getSpellIdForNode, getInscribedProverbs, getInscribedMarkerEmoji } from '@/lib/spellbook-storage';
+import { useMagePanel } from '@/contexts/MagePanelContext';
+
+/** Story act number → grimoire spell id (for add-to-spellbook / spells page export). Canon has 1–12. */
+const STORY_ACT_TO_GRIMOIRE_ID: { [act: number]: string } = {
+  1: 'act-01-venice',
+  2: 'act-02-dual-ceremony',
+  3: 'act-03-drakes-teaching',
+  4: 'act-04-blade-alone',
+  5: 'act-05-light-armor',
+  6: 'act-06-trust-graph',
+  7: 'act-07-mirror',
+  8: 'act-08-ancient-rule',
+  9: 'act-09-zcash-shield',
+  10: 'act-10-topology',
+  11: 'act-11-sovereignty-spiral',
+  12: 'act-12-forgetting',
+};
 
 // Spell mappings for story spellbook - must match inscriptions
 const storySpellMappings: { [actNumber: number]: string } = {
@@ -646,7 +667,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
 
 // Special page identifiers - these are relative to MAX_ACT_NUMBER
 const FIRST_PAGE = 0;
-// LAST_PAGE and INSCRIPTIONS_PAGE will be calculated dynamically
+// LAST_PAGE is calculated dynamically
 
 // Act filename mapping - add new acts here and everything else adjusts automatically
 const ACT_FILENAMES: { [key: number]: string } = {
@@ -678,7 +699,6 @@ const ACT_FILENAMES: { [key: number]: string } = {
 // Calculate maximum act number dynamically
 const MAX_ACT_NUMBER = Math.max(...Object.keys(ACT_FILENAMES).map(Number));
 const LAST_PAGE = MAX_ACT_NUMBER + 1;
-const INSCRIPTIONS_PAGE = MAX_ACT_NUMBER + 2;
 
 const getActFilename = (act: number): string => {
   if (act === FIRST_PAGE) {
@@ -695,21 +715,77 @@ export default function StoryPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [spellbookToast, setSpellbookToast] = useState<string | null>(null);
+  const [spellbookSpellIds, setSpellbookSpellIds] = useState<string[]>(() =>
+    typeof window !== 'undefined' ? getSpellbookFromStorage().spellIds : []
+  );
+  const [learnedUpTo, setLearnedUpToState] = useState<number>(-1);
+  const [inscribeNodeId, setInscribeNodeId] = useState<number | null>(null);
+  /** Marker emojis from localStorage — set only after mount to avoid hydration mismatch. */
+  const [markerEmojiByNodeId, setMarkerEmojiByNodeId] = useState<Record<number, string>>({});
 
-  // Dynamically generate acts array: [first page, acts 1-MAX, last page, inscriptions]
-  const acts = [FIRST_PAGE, ...Array.from({ length: MAX_ACT_NUMBER }, (_, i) => i + 1), LAST_PAGE, INSCRIPTIONS_PAGE];
+  const { setPageContext } = useMagePanel();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') setLearnedUpToState(getLearnedUpTo(LEARNED_STORY_KEY));
+  }, []);
+  useEffect(() => {
+    if (typeof window !== 'undefined') setSpellbookSpellIds(getSpellbookFromStorage().spellIds);
+  }, []);
+
+  useEffect(() => {
+    const out: Record<number, string> = {};
+    acts.forEach((actNum) => {
+      const sid = getSpellIdForNode('story', actNum);
+      if (sid) { const m = getInscribedMarkerEmoji(sid); if (m) out[actNum] = m; }
+    });
+    setMarkerEmojiByNodeId(out);
+  }, [inscribeNodeId]); // re-run when inscribe modal closes so markers update
+
+  // Register current act with Mage panel so popout inference uses the right tale
+  useEffect(() => {
+    const romanNumerals: { [key: number]: string } = {
+      1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
+      9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
+      16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
+    };
+    if (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) {
+      setPageContext({
+        taleId: getTaleIdFromAct(activeAct),
+        actNumber: activeAct,
+        actName: `Act ${romanNumerals[activeAct] ?? activeAct}`,
+      });
+    } else {
+      setPageContext(null);
+    }
+    return () => setPageContext(null);
+  }, [activeAct, setPageContext]);
+
+  const grimoireIdForAct = activeAct >= 1 && activeAct <= 12 ? STORY_ACT_TO_GRIMOIRE_ID[activeAct] : undefined;
+  const spellbookHasThisAct =
+    grimoireIdForAct &&
+    typeof window !== 'undefined' &&
+    getSpellbookFromStorage().spellIds.includes(grimoireIdForAct);
+
+  const handleAddToSpellbook = () => {
+    if (!grimoireIdForAct) return;
+    addSpellToSpellbook(grimoireIdForAct);
+    setSpellbookSpellIds(getSpellbookFromStorage().spellIds);
+    setSpellbookToast('Added to skill graph');
+    setTimeout(() => setSpellbookToast(null), 2500);
+  };
+
+  // Dynamically generate acts array: [first page, acts 1-MAX, last page] — spells live at /spells
+  const acts = [FIRST_PAGE, ...Array.from({ length: MAX_ACT_NUMBER }, (_, i) => i + 1), LAST_PAGE];
 
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
       try {
-        // Load markdown for first page, acts, last page, or inscriptions
-        if (activeAct === FIRST_PAGE || (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) || activeAct === LAST_PAGE || activeAct === INSCRIPTIONS_PAGE) {
+        // Load markdown for first page, acts, or last page
+        if (activeAct === FIRST_PAGE || (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) || activeAct === LAST_PAGE) {
           let filename: string;
-          if (activeAct === INSCRIPTIONS_PAGE) {
-            filename = '112-inscriptions.md';
-          } else if (activeAct === LAST_PAGE) {
+          if (activeAct === LAST_PAGE) {
             filename = '111-privacymage-lastpage.md';
           } else {
             filename = `${getActFilename(activeAct)}.md`;
@@ -770,12 +846,13 @@ export default function StoryPage() {
 
   const copyToClipboard = async () => {
     try {
-      // Copy the full markdown file content for the current story/tale
       const textToCopy = originalMarkdownContent || markdownContent;
       if (textToCopy) {
         await navigator.clipboard.writeText(textToCopy);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+        setLearnedUpTo(LEARNED_STORY_KEY, activeAct);
+        setLearnedUpToState((prev) => Math.max(prev, activeAct));
       }
     } catch (err) {
       if (process.env.NODE_ENV === 'development') {
@@ -903,15 +980,13 @@ export default function StoryPage() {
 
   // Get tale ID for current act
   const getCurrentTaleId = (): string => {
-    if (activeAct === FIRST_PAGE || activeAct === LAST_PAGE || activeAct === INSCRIPTIONS_PAGE) {
+    if (activeAct === FIRST_PAGE || activeAct === LAST_PAGE) {
       return 'act-i-venice'; // Default
     }
     return getTaleIdFromAct(activeAct);
   };
 
-  // Show Mage panel only for actual acts (not inscriptions)
   // Show Mage panel for first page, acts, and last page
-  const showMagePanel = activeAct === FIRST_PAGE || (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) || activeAct === LAST_PAGE;
 
   // Get act name for current act
   const getActName = (act: number): string => {
@@ -945,183 +1020,7 @@ export default function StoryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Mage Panel - Right Side */}
-      {showMagePanel && (
-        <MagePanel
-          taleId={activeAct === FIRST_PAGE ? 'story-firstpage' : activeAct === LAST_PAGE ? 'story-lastpage' : getCurrentTaleId()}
-          actNumber={activeAct === FIRST_PAGE || activeAct === LAST_PAGE ? undefined : activeAct}
-          actName={activeAct === FIRST_PAGE ? 'first page' : activeAct === LAST_PAGE ? 'last page' : getActName(activeAct)}
-        />
-      )}
-
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </a>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-4 sm:gap-6">
-                <a
-                  href="/story"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden overflow-hidden"
-              >
-                <div className="py-4 space-y-3 border-t border-surface/50">
-                  <a
-                    href="/story"
-                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    story
-                  </a>
-                  <a
-                    href="/zero"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    zero
-                  </a>
-                  <a
-                    href="/canon"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    canon
-                  </a>
-                  <a
-                    href="/society"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    society
-                  </a>
-                  <a
-                    href="/plurality"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    plural
-                  </a>
-                  <a
-                    href="/privacy"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    privacy
-                  </a>
-                  <a
-                    href="/mage"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    mage
-                  </a>
-                  <a
-                    href="/evoke"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    evoke
-                  </a>
-                  <a
-                    href="/proverbs"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    proverbs
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </nav>
+      <AppNav />
 
       {/* Story Content */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
@@ -1135,49 +1034,49 @@ export default function StoryPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">just another story</h1>
           </motion.div>
 
-          {/* Tabs */}
-          <div className="mb-8">
-            <div className="flex flex-wrap gap-2 border-b border-surface/50">
-              {acts.map((act) => {
-                const getTabLabel = (actNum: number) => {
-                  if (actNum === FIRST_PAGE) return 'first page';
-                  if (actNum === LAST_PAGE) return 'last page';
-                  if (actNum === INSCRIPTIONS_PAGE) return 'spells';
+          {/* Constellation path + inscription box (emoji & proverb per act) */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,340px)] gap-6 mb-8">
+            <div className="min-w-0">
+              <p className="text-text/70 text-sm mb-3">Constellation path through the spellbook</p>
+              <SpellbookTalentTree
+                nodes={acts.map((actNum) => {
                   const romanNumerals: { [key: number]: string } = {
                     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
                     9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
                     16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII'
                   };
-                  return `Act ${romanNumerals[actNum] ?? actNum}`;
-                };
-                
-                return (
-                  <button
-                    key={act}
-                    onClick={() => setActiveAct(act)}
-                    className={`
-                      px-6 py-3 text-sm font-medium transition-all relative
-                      ${
-                        activeAct === act
-                          ? 'text-primary border-b-2 border-primary'
-                          : 'text-text-muted hover:text-text'
-                      }
-                    `}
-                  >
-                    {getTabLabel(act)}
-                    {activeAct === act && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
+                  let label = '';
+                  let shortLabel = '';
+                  if (actNum === FIRST_PAGE) { label = 'First page'; shortLabel = 'first'; }
+                  else if (actNum === LAST_PAGE) { label = 'Last page'; shortLabel = 'last'; }
+                  else { label = `Act ${romanNumerals[actNum] ?? actNum}`; shortLabel = romanNumerals[actNum] ?? String(actNum); }
+                  return { id: actNum, label, shortLabel };
+                })}
+                activeId={activeAct}
+                onSelect={setActiveAct}
+                learnedUpToId={learnedUpTo >= 0 ? learnedUpTo : undefined}
+                pathwayNodeIds={getPathwayNodeIds(spellbookSpellIds, 'story').length > 0 ? getPathwayNodeIds(spellbookSpellIds, 'story') : undefined}
+                nodesPerRow={8}
+                nodeKind="Act"
+                onCrystalClick={setInscribeNodeId}
+                markerEmojiByNodeId={markerEmojiByNodeId}
+              />
+            </div>
+            <div className="flex-shrink-0">
+              <ConstellationInscriptionBox
+                nodeKind="Act"
+                activeId={activeAct}
+                spell={getInscriptionEmojis(activeAct) || null}
+                proverb={getProverb(activeAct) || null}
+                onInscribe={setInscribeNodeId}
+                inscribedProverb={(() => {
+                  const sid = getSpellIdForNode('story', activeAct);
+                  const inscribed = getInscribedProverbs();
+                  return sid ? inscribed[sid] : null;
+                })()}
+              />
             </div>
           </div>
-
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
@@ -1191,6 +1090,24 @@ export default function StoryPage() {
                   </div>
                 )}
                 
+                {/* Add to skill graph (inscriptions & proverbs → Spells page → skills.md) */}
+                {grimoireIdForAct && (
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button
+                      type="button"
+                      onClick={handleAddToSpellbook}
+                      title={spellbookHasThisAct ? 'In skill graph — remove on Spells page' : 'Add this act’s inscription & proverb to your skill graph'}
+                      aria-label={spellbookHasThisAct ? 'In skill graph' : 'Add to skill graph'}
+                      className={`px-2 sm:px-3 py-2 rounded-lg border transition-all duration-200 flex-shrink-0 ${
+                        spellbookHasThisAct
+                          ? 'bg-primary/20 border-primary text-primary'
+                          : 'bg-surface/30 hover:bg-surface/50 border-surface/50 text-text'
+                      }`}
+                    >
+                      <span aria-hidden>{spellbookHasThisAct ? '✓🔮' : '🔮'}</span>
+                    </button>
+                  </div>
+                )}
                 {/* Learn Button */}
                 {markdownContent && (
                   <div className="flex items-center gap-2 flex-shrink-0">
@@ -1225,81 +1142,18 @@ export default function StoryPage() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {activeAct !== FIRST_PAGE && activeAct !== LAST_PAGE && activeAct !== INSCRIPTIONS_PAGE && (
+                {activeAct !== FIRST_PAGE && activeAct !== LAST_PAGE && (
                   <>
                     <div className="mb-6 pt-16 sm:pt-0">
                       <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
                       <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
                       {/* Act Video */}
                       <ActImage act={activeAct} />
-                      {/* Proverb and Inscription Buttons */}
-                      <div className="flex flex-col sm:flex-row gap-3 mb-4 mt-6">
-                        {/* Proverb Inscription Box */}
-                        {getProverb(activeAct) && (
-                          <div className="flex-1">
-                            <button
-                              onClick={copyProverbText}
-                              className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
-                              title="Copy proverb"
-                            >
-                              <div className="text-primary font-semibold text-xs mb-2">
-                                {copiedProverbTop ? (
-                                  <motion.span
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    className="text-primary"
-                                  >
-                                    cast
-                                  </motion.span>
-                                ) : (
-                                  <span className="group-hover:text-primary/80 transition-colors">
-                                    proverb
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-text-muted text-sm italic leading-relaxed">
-                                "{getProverb(activeAct)}"
-                              </div>
-                            </button>
-                          </div>
-                        )}
-                        {/* Inscription Button */}
-                        {getInscriptionEmojis(activeAct) && (
-                          <div className="flex-1">
-                            <button
-                              onClick={copyProverb}
-                              className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
-                              title="Copy inscription"
-                            >
-                              <div className="text-primary font-semibold text-xs mb-2">
-                                {copiedProverb ? (
-                                  <motion.span
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    className="text-primary"
-                                  >
-                                    cast
-                                  </motion.span>
-                                ) : (
-                                  <span className="group-hover:text-primary/80 transition-colors">
-                                    inscribe
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line">
-                                {getInscriptionEmojis(activeAct)}
-                              </div>
-                            </button>
-                          </div>
-                        )}
-                      </div>
                     </div>
                   </>
                 )}
                 
-                {activeAct === INSCRIPTIONS_PAGE ? (
-                  <InscriptionsPage onCopy={copyInscription} />
-                ) : activeAct === LAST_PAGE ? (
+                {activeAct === LAST_PAGE ? (
                   <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>
@@ -1378,14 +1232,6 @@ export default function StoryPage() {
               </motion.div>
             </AnimatePresence>
             
-            {/* ZEC Send Proverbs Button - Bottom Left */}
-            <div className="absolute bottom-6 sm:bottom-8 left-2 sm:left-4 z-10">
-              <UAddressDisplay
-                label="zec"
-                variant="small-button"
-              />
-            </div>
-
             {/* Previous, Copy and Next Buttons */}
             <div className="absolute bottom-6 sm:bottom-8 right-2 sm:right-4 flex items-center gap-2 sm:gap-3 justify-end flex-wrap-reverse" style={{ maxWidth: 'calc(100% - 0.5rem)' }}>
               {hasPrevious && (
@@ -1449,6 +1295,38 @@ export default function StoryPage() {
           </div>
         </div>
       </section>
+
+      {spellbookToast && (
+        <div
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg bg-primary/90 text-background text-sm shadow-lg z-50 animate-in fade-in duration-200 flex items-center gap-2"
+          role="status"
+          aria-live="polite"
+        >
+          {spellbookToast}
+          <Link href="/spells" className="underline font-medium hover:no-underline">
+            Build skill graph on Spells →
+          </Link>
+        </div>
+      )}
+
+      {inscribeNodeId != null && (
+        <InscribeProverbModal
+          open={true}
+          onClose={() => setInscribeNodeId(null)}
+          nodeId={inscribeNodeId}
+          nodeLabel={
+            inscribeNodeId === FIRST_PAGE ? 'First page' : inscribeNodeId === LAST_PAGE ? 'Last page' :
+            (() => {
+              const r: { [k: number]: string } = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII' };
+              return `Act ${r[inscribeNodeId] ?? inscribeNodeId}`;
+            })()
+          }
+          spellbook="story"
+          initialProverb={typeof window !== 'undefined' ? (getInscribedProverbs()[getSpellIdForNode('story', inscribeNodeId) ?? ''] ?? '') : ''}
+          initialMarkerEmoji={typeof window !== 'undefined' ? getInscribedMarkerEmoji(getSpellIdForNode('story', inscribeNodeId) ?? '') : undefined}
+          onCommitted={() => setSpellbookSpellIds(getSpellbookFromStorage().spellIds)}
+        />
+      )}
     </div>
   );
 }

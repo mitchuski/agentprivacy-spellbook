@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import AppNav from '@/components/AppNav';
 
 export default function TheFirstPage() {
   // All stats set to 0 for coming soon
@@ -12,80 +13,7 @@ export default function TheFirstPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-8">
-              <Link href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </Link>
-              <div className="flex items-center gap-6">
-                <Link
-                  href="/story"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  story
-                </Link>
-                <Link
-                  href="/zero"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  zero
-                </Link>
-                <Link
-                  href="/canon"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  canon
-                </Link>
-                <Link
-                  href="/society"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  society
-                </Link>
-                <Link
-                  href="/plurality"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  plural
-                </Link>
-                <Link
-                  href="/privacy"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  privacy
-                </Link>
-                <Link
-                  href="/mage"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  mage
-                </Link>
-                <Link
-                  href="/evoke"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  evoke
-                </Link>
-                <Link
-                  href="/proverbs"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  proverbs
-                </Link>
-                <Link
-                  href="/the-first"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
-                >
-                  the first
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <AppNav />
 
       {/* Main Content */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">

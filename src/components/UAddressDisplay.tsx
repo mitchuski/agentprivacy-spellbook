@@ -14,7 +14,7 @@ interface UAddressDisplayProps {
   className?: string;
 }
 
-// Treasury UA (Account 0) - where proverbs are sent
+// Treasury UA (Account 0) - where proverbs are sent (spellbook)
 const ORACLE_ADDRESS = process.env.NEXT_PUBLIC_SPELLBOOK_ADDRESS ||
   'u1jjrsaxyradv3dq03fa4wvk2husu2643v9m6rpnm8x7wmq0zdzv57ca0t5862yq9z7zx4h4d4r42rf85cup3xft6knntz5zglxkqxy8ekr0m2mx4s7cjsg5djq6dzlx9u7l8wlk85ha5t97nh9x3xm27qctlwvcezfeg0a96xnngu4u6fx05css4fzfv50vq0u3zy5vnfswvj5yzx0um';
 
@@ -209,7 +209,7 @@ export default function UAddressDisplay({
       {showDescription && (
         <p className="text-xs text-text-muted mt-2">
           Send your shielded proverb transaction (0.01 ZEC) to this Unified Address.
-          Use a z-to-z transaction in Zashi or any Zcash wallet.
+          Use a z-to-z transaction in Zodl or any Zcash wallet.
         </p>
       )}
     </div>

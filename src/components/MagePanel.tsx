@@ -1,12 +1,15 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { chatWithSoulbae, generateSessionId, type SoulbaeMessage } from '@/lib/soulbae';
 import { streamChatCompletion } from '@/lib/stream-utils';
 import ChatMessage from '@/components/ChatMessage';
 import ProverbSuggestions from '@/components/ProverbSuggestions';
 import { getSpellemojiForAct, getActFromTaleId } from '@/lib/zcash-memo';
+import { getCustomProverbs, setCustomProverbs } from '@/lib/spellbook-storage';
+import { addEvokedMessage } from '@/lib/evoked-storage';
 
 // Spellbook structures for feedback form
 type SpellbookType = 'story' | 'zero' | 'canon' | 'society' | 'plurality' | null;
@@ -18,6 +21,11 @@ const spellbookOptions: { value: SpellbookType; label: string }[] = [
   { value: 'canon', label: 'Canon' },
   { value: 'society', label: 'Society' },
   { value: 'plurality', label: 'Plurality' },
+];
+
+const affiliationOptions = [
+  { value: '', label: '—' },
+  { value: 'myterms-alliance', label: 'MyTerms Alliance' },
 ];
 
 // Story acts (1-23)
@@ -177,6 +185,7 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
   const [userName, setUserName] = useState('');
   const [selectedSpellbook, setSelectedSpellbook] = useState<SpellbookType | null>(initialSpellbook);
   const [selectedAct, setSelectedAct] = useState<number | null>(actNumber && actNumber > 0 ? actNumber : null);
+  const [affiliation, setAffiliation] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -226,10 +235,12 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
     const subject = 'Proverb Submission - Mage Stream';
     const pageTypeLabel = pageType || (selectedSpellbook ? spellbookOptions.find(opt => opt.value === selectedSpellbook)?.label : '');
     const actLabel = selectedAct && availableItems ? availableItems[selectedAct] : (actName && actNumber ? actName : '');
+    const affiliationLabel = affiliation ? affiliationOptions.find(o => o.value === affiliation)?.label : '';
     const body = `Proverb:\n${feedbackMessage}\n\n` +
       (userName.trim() ? `Name: ${userName.trim()}\n` : '') +
       (pageType ? `Page: ${pageType}\n` : selectedSpellbook ? `Spellbook: ${pageTypeLabel}\n` : '') +
       (actLabel ? `${selectedSpellbook === 'zero' ? 'Tale' : selectedSpellbook === 'canon' || selectedSpellbook === 'society' ? 'Chapter' : selectedSpellbook ? 'Act' : 'Reference'}: ${actLabel}\n` : '') +
+      (affiliationLabel ? `Affiliation: ${affiliationLabel}\n` : '') +
       `\nSubmitted from: agentprivacy.ai\nSubmitted by: ${userEmail.trim()}`;
 
     try {
@@ -294,6 +305,8 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
         }
       }
       
+      // Persist as evoked note for Proverbs page
+      addEvokedMessage(feedbackMessage.trim());
       // Show sent confirmation
       setSent(true);
       setIsSending(false);
@@ -304,6 +317,7 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
         setUserName('');
         setSelectedSpellbook(null);
         setSelectedAct(null);
+        setAffiliation('');
       }, 3000);
     } catch (err: any) {
       console.error('Error sending email:', err);
@@ -406,6 +420,20 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
               </>
             )}
           </div>
+          <div>
+            <label className="block text-xs text-text-muted mb-2">Affiliation</label>
+            <select
+              value={affiliation}
+              onChange={(e) => setAffiliation(e.target.value)}
+              className="w-full px-3 py-2 bg-background border border-surface/50 rounded-lg text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              {affiliationOptions.map((opt) => (
+                <option key={opt.value || 'none'} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
     </form>
@@ -415,13 +443,29 @@ function ShareProverbForm({ taleId, actNumber, actName }: ShareProverbFormProps)
 const MAX_QUERIES = 6; // Privacy budget per session
 
 interface MagePanelProps {
-  taleId: string;
+  taleId?: string;
   actNumber?: number;
   actName?: string;
+  /** When set, panel visibility is controlled by parent (e.g. nav). No floating toggle shown. */
+  controlledOpen?: boolean;
+  /** Called when user closes the panel in controlled mode. */
+  onClose?: () => void;
 }
 
-export default function MagePanel({ taleId, actNumber, actName }: MagePanelProps) {
+const DEFAULT_TALE_ID = 'evoke-base';
+
+export default function MagePanel({ taleId: taleIdProp, actNumber, actName, controlledOpen, onClose }: MagePanelProps) {
+  const taleId = taleIdProp ?? DEFAULT_TALE_ID;
   const [isOpen, setIsOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const effectiveOpen = isControlled ? controlledOpen : isOpen;
+  const handleClose = () => {
+    if (isControlled && onClose) {
+      onClose();
+    } else {
+      setIsOpen(false);
+    }
+  };
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<SoulbaeMessage[]>([]);
   const [input, setInput] = useState('');
@@ -431,8 +475,8 @@ export default function MagePanel({ taleId, actNumber, actName }: MagePanelProps
   const [isClient, setIsClient] = useState(false);
   const [userProverb, setUserProverb] = useState('');
   const [proverbCopied, setProverbCopied] = useState(false);
-  const [isEvokeExpanded, setIsEvokeExpanded] = useState(false);
   const [inscriptionCopied, setInscriptionCopied] = useState(false);
+
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -475,14 +519,14 @@ export default function MagePanel({ taleId, actNumber, actName }: MagePanelProps
     
     const handleResize = () => {
       const isMobile = window.innerWidth < 768;
-      if (isOpen && isMobile) {
+      if (effectiveOpen && isMobile) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
       }
     };
     
-    if (isOpen) {
+    if (effectiveOpen) {
       // Only prevent body scroll on mobile devices (screen width < 768px)
       const isMobile = window.innerWidth < 768;
       if (isMobile) {
@@ -497,7 +541,7 @@ export default function MagePanel({ taleId, actNumber, actName }: MagePanelProps
         };
       }
     }
-  }, [isOpen]);
+  }, [effectiveOpen]);
 
   // Load chat history from localStorage when taleId or session changes
   useEffect(() => {
@@ -770,7 +814,7 @@ What would you like to explore?`;
   useEffect(() => {
     if (detectedProverb) {
       setUserProverb(detectedProverb);
-      // Broadcast to parent page (e.g., proverbs page) for Zashi panel
+      // Broadcast to parent page (e.g., proverbs page) for Zodl panel
       if (typeof window !== 'undefined') {
         const event = new CustomEvent('mage-proverb-detected', {
           detail: { proverb: detectedProverb }
@@ -843,13 +887,13 @@ What would you like to explore?`;
 
   return (
     <>
-      {/* Toggle Button - Fixed on right side */}
-      {!isOpen && (
+      {/* Toggle Button - only when not controlled (embedded on a page) */}
+      {!isControlled && !effectiveOpen && (
         <motion.button
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 100, opacity: 0 }}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen(true)}
           className="fixed right-0 top-1/2 z-[60] transform -translate-y-1/2"
           data-mage-toggle
         >
@@ -862,14 +906,14 @@ What would you like to explore?`;
 
       {/* Panel */}
       <AnimatePresence>
-        {isOpen && (
+        {effectiveOpen && (
           <>
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
               className="fixed inset-0 bg-black/50 z-[55] md:hidden"
             />
 
@@ -915,7 +959,7 @@ What would you like to explore?`;
                       )}
                     </button>
                     <button
-                      onClick={() => setIsOpen(false)}
+                      onClick={handleClose}
                       className="text-text-muted hover:text-text text-2xl leading-none"
                     >
                       ×
@@ -952,22 +996,43 @@ What would you like to explore?`;
                     className="w-full px-3 py-2 bg-background border border-surface/50 rounded-lg text-sm text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                   />
                   {userProverb.trim() && (
-                    <button
-                      onClick={handleCopyProverb}
-                      className="mt-2 w-full px-3 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
-                    >
-                      {proverbCopied ? (
-                        <motion.span
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className="text-primary"
-                        >
-                          ✓ Copied!
-                        </motion.span>
-                      ) : (
-                        'Copy Proverb'
-                      )}
-                    </button>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <button
+                        onClick={handleCopyProverb}
+                        className="flex-1 min-w-[100px] px-3 py-2 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
+                      >
+                        {proverbCopied ? (
+                          <motion.span
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="text-primary"
+                          >
+                            ✓ Copied!
+                          </motion.span>
+                        ) : (
+                          'Copy Proverb'
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const trimmed = userProverb.trim();
+                          if (!trimmed) return;
+                          const existing = getCustomProverbs();
+                          setCustomProverbs(existing ? `${existing}\n${trimmed}` : trimmed);
+                          setUserProverb('');
+                        }}
+                        className="flex-1 min-w-[100px] px-3 py-2 bg-surface/30 hover:bg-surface/50 border border-surface/50 rounded-lg text-text text-sm font-medium"
+                      >
+                        Add to my proverbs
+                      </button>
+                      <Link
+                        href={`/promises?proverb=${encodeURIComponent(userProverb.trim())}`}
+                        className="flex-1 min-w-[100px] px-3 py-2 bg-surface/30 hover:bg-surface/50 border border-surface/50 rounded-lg text-text text-sm font-medium text-center"
+                      >
+                        Make Promise
+                      </Link>
+                    </div>
                   )}
                 </div>
               </div>
@@ -1044,40 +1109,7 @@ What would you like to explore?`;
                   </div>
                 </div>
 
-                {/* Evoke Your Proverb Section - Collapsible */}
-                <div className="border-t border-surface/50 flex-shrink-0 border-l-2 border-r-2 border-b-2 border-primary/30 shadow-[0_0_15px_rgba(59,130,246,0.3),0_0_30px_rgba(59,130,246,0.15)] overflow-hidden" style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-                <button
-                  onClick={() => setIsEvokeExpanded(!isEvokeExpanded)}
-                  className="w-full p-4 flex items-center justify-between hover:bg-surface/50 transition-colors"
-                  type="button"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">✨</span>
-                    <h3 className="text-sm font-semibold text-text">Evoke Your Proverb</h3>
-                  </div>
-                  <span className="text-text-muted text-lg transform transition-transform">
-                    {isEvokeExpanded ? '−' : '+'}
-                  </span>
-                </button>
-                {isEvokeExpanded && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-3 sm:px-4 pb-4 overflow-x-hidden overflow-y-auto max-h-[40vh] sm:max-h-[50vh]" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}>
-                      <p className="text-xs text-text-muted mb-3">
-                        serendipity in understanding are the acts of creation.
-                      </p>
-                      <ShareProverbForm taleId={taleId} actNumber={actNumber} actName={actName} />
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-
-              {/* Footer - Emoji Inscription Copy Button */}
+                {/* Footer - Emoji Inscription Copy Button */}
               {getEmojiInscription() && (
                 <div className="border-t border-surface/50 flex-shrink-0 p-4" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom, 1rem))' }}>
                   <button

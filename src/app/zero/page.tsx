@@ -5,7 +5,12 @@ import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import MagePanel from '@/components/MagePanel';
+import SpellbookTalentTree from '@/components/SpellbookTalentTree';
+import InscribeProverbModal from '@/components/InscribeProverbModal';
+import ConstellationInscriptionBox from '@/components/ConstellationInscriptionBox';
+import AppNav from '@/components/AppNav';
+import { getLearnedUpTo, setLearnedUpTo, LEARNED_ZERO_KEY, getSpellbookFromStorage, getPathwayNodeIds, getSpellIdForNode, getInscribedProverbs, getInscribedMarkerEmoji } from '@/lib/spellbook-storage';
+import { useMagePanel } from '@/contexts/MagePanelContext';
 
 // Tale metadata from manifest
 const taleData: { [key: number]: { title: string; spell: string; proverb: string } } = {
@@ -14,126 +19,36 @@ const taleData: { [key: number]: { title: string; spell: string; proverb: string
   3: { title: "The Silent Messenger", spell: "🎭(interactive) + 🔮(hash-oracle) → 🔇(non-interactive)", proverb: "The oracle that answers all questions truthfully but learns nothing in return—this is the heart of non-interactive proof." },
   4: { title: "The Fields of Finite Wisdom", spell: "𝔽_q = {0, 1, ..., q-1} → ➕ ✖️ (mod q)", proverb: "In finite fields, infinity loops back to zero. On elliptic curves, addition draws lines through space. In pairings, multiplication becomes verifiable—these are the foundations of invisible proof. The crystalline field is not metaphor but mathematics itself, made geometric." },
   5: { title: "The Constraint Forge", spell: "🔨(claim) → 🔗(gates) → {a ⊗ b = c}ⁿ", proverb: "Break the complex into atomic truths. Each multiplication is a checkpoint; each constraint is a promise. The forge transforms tangled knowledge into verifiable form." },
-  6: { title: "The Polynomial Riddle", spell: "{a⊗b=c}ⁿ → {A(x), B(x), C(x)} → A·B - C = Z·H", proverb: "When a million truths must be checked, transform them into one equation. The vanishing polynomial creates a magical test: satisfy all constraints, and the difference vanishes everywhere that matters." },
+  6: { title: "The Polynomial Riddle", spell: "🔗ⁿ → 🔮{A(x), B(x), C(x)} → A·B - C = Z·H → ✨(vanish)", proverb: "When a million truths must be checked, transform them into one equation. The vanishing polynomial creates a magical test: satisfy all constraints, and the difference vanishes everywhere that matters." },
   7: { title: "The Witness and the Instance", spell: "claim → {instance(🌍) + witness(🗝️)}", proverb: "Guard the witness as you guard your sovereignty. Reveal the instance as you reveal your boundary. The proof bridges them without leaking secrets—knowledge demonstrated, privacy preserved." },
-  8: { title: "The Plonkish Revolution", spell: "PlonK: Σqᵢ·wᵢ + q·(w₁⊗w₂) = 0 (flexible)", proverb: "The rigid hammer serves many purposes, but the specialized tool excels at its craft. Custom gates are to constraints what a master key is to lockpicking—elegant efficiency through thoughtful design. The lattice that learns to adapt is the lattice that survives." },
-  9: { title: "The Pairing Dance", spell: "e: G₁ × G₂ → GT (bilinear)", proverb: "Two groups dance separately until the pairing unites them. In that union, addition becomes multiplication, and encrypted polynomials become verifiable. The secret tau binds all proofs yet must be destroyed to secure them." },
+  8: { title: "The Plonkish Revolution", spell: "⚙️ PlonK: Σqᵢ·wᵢ + q·(w₁⊗w₂) = 0 → 🔧(flexible)", proverb: "The rigid hammer serves many purposes, but the specialized tool excels at its craft. Custom gates are to constraints what a master key is to lockpicking—elegant efficiency through thoughtful design. The lattice that learns to adapt is the lattice that survives." },
+  9: { title: "The Pairing Dance", spell: "💃 G₁ × G₂ → 🤝 GT(bilinear)", proverb: "Two groups dance separately until the pairing unites them. In that union, addition becomes multiplication, and encrypted polynomials become verifiable. The secret tau binds all proofs yet must be destroyed to secure them." },
   10: { title: "The Commitment Ceremony", spell: "commit(🗝️) → 🔒(binding + hiding)", proverb: "The commitment binds your future choices yet hides your current knowledge. Choose your ceremony by what matters most: tiny proofs, transparent trust, or quantum survival." },
-  11: { title: "The FRI Oracle", spell: "FRI: φ → φ' → φ'' → ... → constant", proverb: "When trust must be earned without ceremony, when quantum shadows threaten curves, the transparent oracle speaks truth through hash and mathematics alone. The proof grows larger, but the foundation never crumbles. In the lattice, some vertices require ceremony to anchor; others need only arithmetic to stabilize." },
-  12: { title: "The Folding Path", spell: "proof₁ + proof₂ →(fold @ r)→ proof₃", proverb: "Don't verify each step—fold them together. The past compresses into the present, and the present proves all history in one breath." },
-  13: { title: "The Sumcheck Riddle", spell: "S = Σ g(x₁,...,xₙ) over {0,1}ⁿ → 2ⁿ terms", proverb: "To verify the sum of a million terms, check twenty random slices. Each challenge halves the space; randomness guarantees honesty." },
-  14: { title: "The IPA Chronicle", spell: "⟨a, b⟩ = Σ aᵢbᵢ → inner product", proverb: "When trust ceremonies are unavailable but tiny proofs unneeded, the inner product argument walks the middle path—transparent by construction, logarithmic in size." },
-  15: { title: "The Mirror Within Mirrors", spell: "proof → verify(proof) → proof_of_proof → verify → ... ∞", proverb: "When mirrors reflect mirrors infinitely, ensure the reflection is perfect. Pasta pairs the curves; STARKs need no pairing; folding skips verification entirely. Choose based on whether you need tiny proofs or transparent trust. Five dimensions sing in harmony; one note remains silent, awaiting the song of value." },
-  16: { title: "The Cyclic Ceremony", spell: "Circuit C → verify(C's proof) → paradox(vk_C unknown)", proverb: "The snake that devours itself seems paradoxical until you realize it grows from both ends. Circuit verifying itself requires identity confirmation—the structure proves the structure." },
-  17: { title: "The Universal Setup", spell: "Ceremony(τ) → {g^1, g^τ, ..., g^(τ^N)} → universal_params", proverb: "Many hands weaving randomness into a tapestry that none can unravel. The universal ceremony performed once serves forever." },
+  11: { title: "The FRI Oracle", spell: "(FRI) · (φ → φ′ → φ″ → … → constant)", proverb: "When trust must be earned without ceremony, when quantum shadows threaten curves, the transparent oracle speaks truth through hash and mathematics alone. The proof grows larger, but the foundation never crumbles. In the lattice, some vertices require ceremony to anchor; others need only arithmetic to stabilize." },
+  12: { title: "The Folding Path", spell: "📜₁ + 📜₂ →(🔄fold)→ 📜₃", proverb: "Don't verify each step—fold them together. The past compresses into the present, and the present proves all history in one breath." },
+  13: { title: "The Sumcheck Riddle", spell: "(S = Σ g(x₁,…,xₙ) over {0,1}ⁿ) → (2ⁿ terms)", proverb: "To verify the sum of a million terms, check twenty random slices. Each challenge halves the space; randomness guarantees honesty." },
+  14: { title: "The IPA Chronicle", spell: "📐 ⟨a, b⟩ = Σ aᵢbᵢ → 🔍log(n) → ✓", proverb: "When trust ceremonies are unavailable but tiny proofs unneeded, the inner product argument walks the middle path—transparent by construction, logarithmic in size." },
+  15: { title: "The Mirror Within Mirrors", spell: "📜 → 🪞(verify) → 📜² → 🪞 → ... ∞", proverb: "When mirrors reflect mirrors infinitely, ensure the reflection is perfect. Pasta pairs the curves; STARKs need no pairing; folding skips verification entirely. Choose based on whether you need tiny proofs or transparent trust. Five dimensions sing in harmony; one note remains silent, awaiting the song of value." },
+  16: { title: "The Cyclic Ceremony", spell: "🐍 Circuit C → verify(C) → C (ouroboros)", proverb: "The snake that devours itself seems paradoxical until you realize it grows from both ends. Circuit verifying itself requires identity confirmation—the structure proves the structure." },
+  17: { title: "The Universal Setup", spell: "🕯️ Ceremony(τ) → {g^τⁿ}ᴺ → 🌍(universal)", proverb: "Many hands weaving randomness into a tapestry that none can unravel. The universal ceremony performed once serves forever." },
   18: { title: "The Toxic Waste Dragon", spell: "🐉 Head 1: τ leaked → forge_proofs(∞) → 🚨", proverb: "Four heads guard four failure modes. Defense requires eternal vigilance across all four fronts: setup, parameters, circuits, and cryptographic assumptions." },
-  19: { title: "The zkVM Kingdom", spell: "program(any_language) → compile(ISA) → execute → trace[cycles]", proverb: "When every program becomes provable, the VM becomes the universal judge. Write once in familiar language, prove anywhere with mathematical certainty. The circuit specialist's art becomes the programmer's tool. The lattice becomes programmable, aware of its own universality, ready to prove any computation that sovereignty demands." },
-  20: { title: "The Cairo Scribes", spell: "Cairo: language(felt) → AIR(direct) → STARK → StarkNet", proverb: "When the language itself speaks in field elements, the program becomes its own proof. Cairo scribes don't compile to constraints—they write constraints directly." },
-  21: { title: "The Circom Workshops", spell: "Circom: template(signals) → constraints(R1CS) → Groth16/PlonK", proverb: "The master craftsman knows each constraint intimately. Circom demands precision but rewards with efficiency." },
-  22: { title: "The zkEVM Empire", spell: "EVM(140 opcodes + state) → zkEVM → proof → L1(verify)", proverb: "To prove the world computer is to recursively verify every computation layer—opcodes, state, gas, calls. Perfect equivalence costs proving time; custom bytecode gains speed but loses compatibility. Choose your type by what matters most: compatibility or performance." },
-  23: { title: "The Private Coin of ZCash", spell: "ZCash: private(from, to, amount) + proof(valid, no_double_spend)", proverb: "The first private coin proved privacy possible. Each generation cut constraints, improved security, enhanced usability. Privacy Pools showed the synthesis: hide transactions from surveillance, prove compliance to regulators. The blade protects both freedom and order." },
-  24: { title: "The Tornado's Eye", spell: "Tornado: deposit(cm) → pool → withdraw(proof, nf) → unlinked", proverb: "The mixer that hides all equally protects innocent and guilty alike. This is the nature of privacy tools—neutral in construction, moral in application." },
-  25: { title: "The Rollup Realms", spell: "zkRollup: execute(L2) → prove → L1(verify + data)", proverb: "The rollup kingdoms scale Ethereum by proving rather than re-executing. Each kingdom trades different properties—compatibility for speed, transparency for proof size, centralization for simplicity. Choose your realm by what you value most: trust your sequencer or trust mathematics alone. The lattice provides the framework; the kingdoms choose their position within it." },
-  26: { title: "The Vulnerability Codex", spell: "Vulnerabilities: setup + parameters + circuits + implementation + protocol + upgrades", proverb: "The Hall of Scars teaches humility. Every vulnerability inscribed prevents ten more. The price of sovereignty is eternal vigilance." },
-  27: { title: "The Data Availability Prophecy", spell: "EIP-4844: blobs(128KB, 18 days, 1 gas/byte) → 16x cheaper", proverb: "Execution needs proof; reconstruction needs data. Blobs separate these concerns, making data temporary yet sufficient, cheap yet available, distributed yet verifiable. Sample randomly to ensure availability; encode with redundancy to guarantee reconstruction. Data availability is the foundation beneath all scalability prophecies—without it, sovereignty cannot scale. The lattice teaches: complete configuration requires all six dimensions, but multiple complete configurations can coexist, each optimized for different purposes." },
-  28: { title: "The Bridge Between Worlds", spell: "Bridge: prove(chain_A_state) → verify(chain_B) → trustless", proverb: "The bridge built on trust crumbles under coordinated attack. The bridge built on proof stands eternal, limited only by mathematics." },
-  29: { title: "The Intelligence Proof", spell: "zkML: model(committed) + data(private) + inference → proof(correct) + output", proverb: "Intelligence that cannot be verified is intelligence that cannot be trusted. Prove the model, prove the inference, prove the training—reveal only the outputs while hiding the process. Machine learning becomes machine proving, and sovereignty over intelligence becomes mathematically enforceable." },
-  30: { title: "The Eternal Sovereignty", spell: "Sovereign Agent = {Identity, Swordsman, Mage, Reflect, Connect, Capital, Intelligence}", proverb: "The complete sovereignty system is a symphony of zero-knowledge proofs: boundary proving privacy, delegation proving agency, memory proving continuity, network proving connection, capital proving compliance, intelligence proving learning. Every component modular, every interaction provable, every privacy preserved. The eternal sovereignty emerges not from any single proof but from their mathematical harmony across all six dimensions of the crystalline lattice." },
+  19: { title: "The zkVM Kingdom", spell: "(program) → (compile(ISA)) → (execute) → (trace[cycles])", proverb: "When every program becomes provable, the VM becomes the universal judge. Write once in familiar language, prove anywhere with mathematical certainty. The circuit specialist's art becomes the programmer's tool. The lattice becomes programmable, aware of its own universality, ready to prove any computation that sovereignty demands." },
+  20: { title: "The Cairo Scribes", spell: "✍️ Cairo: 𝔽(felt) → 📐(AIR) → ⚡(STARK)", proverb: "When the language itself speaks in field elements, the program becomes its own proof. Cairo scribes don't compile to constraints—they write constraints directly." },
+  21: { title: "The Circom Workshops", spell: "🔧 Circom: 📋(template) → 🔗(R1CS) → 📜(Groth16|PlonK)", proverb: "The master craftsman knows each constraint intimately. Circom demands precision but rewards with efficiency." },
+  22: { title: "The zkEVM Empire", spell: "🏰 EVM(opcodes + state) → 🔐(zkEVM) → 📜 → ⛓️ L1(✓)", proverb: "To prove the world computer is to recursively verify every computation layer—opcodes, state, gas, calls. Perfect equivalence costs proving time; custom bytecode gains speed but loses compatibility. Choose your type by what matters most: compatibility or performance." },
+  23: { title: "The Private Coin of ZCash", spell: "🦓🛡️ private(👤→👤, 💰) + 📜(valid, ¬double) → 🕶️", proverb: "The first private coin proved privacy possible. Each generation cut constraints, improved security, enhanced usability. Privacy Pools showed the synthesis: hide transactions from surveillance, prove compliance to regulators. The blade protects both freedom and order." },
+  24: { title: "The Tornado's Eye", spell: "(deposit(cm)) → (pool) → (withdraw(proof, nf)) → (unlinked)", proverb: "The mixer that hides all equally protects innocent and guilty alike. This is the nature of privacy tools—neutral in construction, moral in application." },
+  25: { title: "The Rollup Realms", spell: "📦 execute(L2) → 📜(prove) → ⬆️ L1(✓ + 📊data)", proverb: "The rollup kingdoms scale Ethereum by proving rather than re-executing. Each kingdom trades different properties—compatibility for speed, transparency for proof size, centralization for simplicity. Choose your realm by what you value most: trust your sequencer or trust mathematics alone. The lattice provides the framework; the kingdoms choose their position within it." },
+  26: { title: "The Vulnerability Codex", spell: "⚠️🐉 6 heads: 🕯️(setup) + 🔢(params) + 🔗(circuits) + 💻(impl) + 📡(protocol) + 🔄(upgrades)", proverb: "The Hall of Scars teaches humility. Every vulnerability inscribed prevents ten more. The price of sovereignty is eternal vigilance." },
+  27: { title: "The Data Availability Prophecy", spell: "💾 EIP-4844: 📦(blobs, 128KB) → ⏳(18 days) → 💰(16× cheaper)", proverb: "Execution needs proof; reconstruction needs data. Blobs separate these concerns, making data temporary yet sufficient, cheap yet available, distributed yet verifiable. Sample randomly to ensure availability; encode with redundancy to guarantee reconstruction. Data availability is the foundation beneath all scalability prophecies—without it, sovereignty cannot scale. The lattice teaches: complete configuration requires all six dimensions, but multiple complete configurations can coexist, each optimized for different purposes." },
+  28: { title: "The Bridge Between Worlds", spell: "🌉 prove(⛓️A state) → verify(⛓️B) → 🤝(trustless)", proverb: "The bridge built on trust crumbles under coordinated attack. The bridge built on proof stands eternal, limited only by mathematics." },
+  29: { title: "The Intelligence Proof", spell: "🧠 model(🔒) + data(🗝️) + inference → 📜(✓) + output → 🛡️", proverb: "Intelligence that cannot be verified is intelligence that cannot be trusted. Prove the model, prove the inference, prove the training—reveal only the outputs while hiding the process. Machine learning becomes machine proving, and sovereignty over intelligence becomes mathematically enforceable." },
+  30: { title: "The Eternal Sovereignty", spell: "⚔️🧙‍♂️🪞🕸️ = {👤, 🗡️, 🔮, 🪞, 🤝, 💎, 🧠}", proverb: "The complete sovereignty system is a symphony of zero-knowledge proofs: boundary proving privacy, delegation proving agency, memory proving continuity, network proving connection, capital proving compliance, intelligence proving learning. Every component modular, every interaction provable, every privacy preserved. The eternal sovereignty emerges not from any single proof but from their mathematical harmony across all six dimensions of the crystalline lattice." },
 };
-
-function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
-  const handleProtect = (taleNumber: number) => {
-    // Navigate to proverbs page - zero tales can be submitted there
-    window.location.href = `/proverbs`;
-  };
-  const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
-  const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
-
-  const inscriptions = Object.entries(taleData).map(([num, data]) => ({
-    number: parseInt(num),
-    title: `Tale ${num}: ${data.title}`,
-    emojis: data.spell,
-    quote: data.proverb
-  }));
-
-  const handleCopySpell = async (text: string, index: number) => {
-    const success = await onCopy(text);
-    if (success) {
-      setCopiedSpellIndex(index);
-      setTimeout(() => setCopiedSpellIndex(null), 2000);
-    }
-  };
-
-  const handleCopyProverb = async (text: string, index: number) => {
-    const success = await onCopy(text);
-    if (success) {
-      setCopiedProverbIndex(index);
-      setTimeout(() => setCopiedProverbIndex(null), 2000);
-    }
-  };
-
-  return (
-    <div className="space-y-6 pb-24">
-      <h2 className="text-2xl font-bold text-text mb-6">Spells</h2>
-      {inscriptions.map((inscription, index) => (
-        <div key={inscription.number} className="border border-surface/50 rounded-lg p-4 bg-background/30">
-          <h3 className="text-lg font-semibold text-text mb-2">{inscription.title}</h3>
-          <div className="mb-3">
-            <p className="text-2xl mb-2 whitespace-pre-line font-mono">{inscription.emojis}</p>
-            <p className="text-text-muted italic text-sm">"{inscription.quote}"</p>
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            <button
-              onClick={() => handleCopySpell(inscription.emojis, index)}
-              className="px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
-            >
-              {copiedSpellIndex === index ? (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="text-primary"
-                >
-                  cast
-                </motion.span>
-              ) : (
-                "inscribe"
-              )}
-            </button>
-            <button
-              onClick={() => handleCopyProverb(inscription.quote, index)}
-              className="px-4 py-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-primary text-sm font-medium"
-            >
-              {copiedProverbIndex === index ? (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="text-primary"
-                >
-                  cast
-                </motion.span>
-              ) : (
-                "proverb"
-              )}
-            </button>
-            <button
-              onClick={() => handleProtect(inscription.number)}
-              className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
-              title="Protect the spell - Submit proof on proverbs page"
-            >
-              <span>⚔️</span>
-              <span>protect</span>
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 const getActFilename = (act: number): string => {
   if (act === 0) return 'zeromage-firstpage';
   if (act === 31) return 'zeromage-lastpage';
-  if (act === 32) return 'inscriptions';
   return `tale-${act.toString().padStart(2, '0')}`;
 };
 
@@ -184,8 +99,13 @@ export default function ZeroPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [talesAvailable, setTalesAvailable] = useState<boolean>(false); // Default to false (production mode)
+  const [talesAvailable, setTalesAvailable] = useState<boolean>(false);
+  const [learnedUpTo, setLearnedUpToState] = useState<number>(-1);
+  const [inscribeNodeId, setInscribeNodeId] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') setLearnedUpToState(getLearnedUpTo(LEARNED_ZERO_KEY));
+  }, []);
 
   // Check if tales are available (local vs production)
   useEffect(() => {
@@ -210,11 +130,11 @@ export default function ZeroPage() {
     checkTalesAvailability();
   }, []);
 
-  // Acts: 0 = first page, 1-30 = tales, 31 = last page, 32 = inscriptions
-  // In production (tales not available), only show first page
-  // Default to production mode (only first page) until we confirm tales exist
-  const allActs = [0, ...Array.from({ length: 30 }, (_, i) => i + 1), 31, 32];
-  const acts = talesAvailable ? allActs : [0]; // Only show all acts if tales are confirmed available
+  // Acts: 0 = first page, 1-30 = tales, 31 = last page
+  const allActs = [0, ...Array.from({ length: 30 }, (_, i) => i + 1), 31];
+  const acts = talesAvailable ? allActs : [0]; // When tales unavailable, show first page only
+
+  const { setPageContext } = useMagePanel();
 
   // Reset to first page if current activeAct is not available
   useEffect(() => {
@@ -222,6 +142,21 @@ export default function ZeroPage() {
       setActiveAct(0);
     }
   }, [talesAvailable, activeAct]);
+
+  // Register current tale with Mage panel so popout inference uses the right tale
+  useEffect(() => {
+    if (activeAct >= 1 && activeAct <= 30) {
+      const tale = taleData[activeAct as keyof typeof taleData];
+      setPageContext({
+        taleId: `zero-tale-${activeAct}`,
+        actNumber: activeAct,
+        actName: tale?.title ?? `Tale ${activeAct}`,
+      });
+    } else {
+      setPageContext(null);
+    }
+    return () => setPageContext(null);
+  }, [activeAct, setPageContext]);
 
   useEffect(() => {
     const loadMarkdown = async () => {
@@ -279,10 +214,6 @@ export default function ZeroPage() {
             setMarkdownContent('<p class="text-text-muted">This tale is not available in the deployed version.</p>');
             setOriginalMarkdownContent('');
           }
-        } else if (activeAct === 32) {
-          // Inscriptions page - no markdown to load
-          setMarkdownContent('');
-          setOriginalMarkdownContent('');
         } else if (activeAct >= 1 && activeAct <= 30) {
           const filename = `${activeAct.toString().padStart(2, '0')}-tale-${activeAct.toString().padStart(2, '0')}.md`;
           const url = `/zero/markdown/${filename}`;
@@ -324,12 +255,13 @@ export default function ZeroPage() {
 
   const copyToClipboard = async () => {
     try {
-      // Copy the full markdown file content for the current tale/story
       const textToCopy = originalMarkdownContent || markdownContent;
       if (textToCopy) {
         await navigator.clipboard.writeText(textToCopy);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+        setLearnedUpTo(LEARNED_ZERO_KEY, activeAct);
+        setLearnedUpToState((prev) => Math.max(prev, activeAct));
       } else {
         console.error('No markdown content available to copy');
       }
@@ -403,203 +335,11 @@ export default function ZeroPage() {
   const hasPrevious = acts.indexOf(activeAct) > 0;
   const hasNext = acts.indexOf(activeAct) < acts.length - 1;
 
-  // Show Mage panel for first page (0), tales (1-30), and last page (31)
-  const showMagePanel = activeAct === 0 || (activeAct >= 1 && activeAct <= 30) || activeAct === 31;
   const currentTale = activeAct >= 1 && activeAct <= 30 ? taleData[activeAct] : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
-      {/* Mage Panel - for first page, tales, and last page */}
-      {showMagePanel && (
-        <MagePanel
-          taleId={
-            activeAct === 0 
-              ? 'zero-firstpage' 
-              : activeAct === 31 
-              ? 'zero-lastpage' 
-              : `zero-tale-${activeAct}`
-          }
-          actNumber={activeAct === 0 || activeAct === 31 ? undefined : activeAct}
-          actName={
-            activeAct === 0 
-              ? 'first page' 
-              : activeAct === 31 
-              ? 'last page' 
-              : currentTale 
-              ? `Tale ${activeAct}: ${currentTale.title}` 
-              : undefined
-          }
-        />
-      )}
-      
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </a>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-4 sm:gap-6">
-                <a
-                  href="/story"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-primary border-b-2 border-primary pb-1 font-medium"
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text-muted hover:text-text transition-colors font-medium"
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden overflow-hidden"
-              >
-                <div className="py-4 space-y-3 border-t border-surface/50">
-                  <a
-                    href="/story"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    story
-                  </a>
-                  <a
-                    href="/zero"
-                    className="block text-primary border-b-2 border-primary pb-1 font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    zero
-                  </a>
-                  <a
-                    href="/canon"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    canon
-                  </a>
-                  <a
-                    href="/society"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    society
-                  </a>
-                  <a
-                    href="/plurality"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    plural
-                  </a>
-                  <a
-                    href="/privacy"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    privacy
-                  </a>
-                  <a
-                    href="/mage"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    mage
-                  </a>
-                  <a
-                    href="/evoke"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    evoke
-                  </a>
-                  <a
-                    href="/proverbs"
-                    className="block text-text-muted hover:text-text transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    proverbs
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </nav>
+      <AppNav />
 
       {/* Zero Content */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
@@ -613,48 +353,66 @@ export default function ZeroPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">just another spellbook</h1>
           </motion.div>
 
-          {/* Tabs */}
-          <div className="mb-8">
-            <div className="flex flex-wrap gap-2 border-b border-surface/50 overflow-x-auto">
-              {acts.map((act) => {
-                const getTabLabel = (actNum: number) => {
-                  if (actNum === 0) return 'first page';
-                  if (actNum === 31) return 'last page';
-                  if (actNum === 32) return 'spells';
-                  return `Tale ${actNum}`;
-                };
-                
-                return (
-                  <button
-                    key={act}
-                    onClick={() => setActiveAct(act)}
-                    className={`
-                      px-4 py-3 text-sm font-medium transition-all relative whitespace-nowrap
-                      ${
-                        activeAct === act
-                          ? 'text-primary border-b-2 border-primary'
-                          : 'text-text-muted hover:text-text'
+          {/* Constellation path + inscription box (emoji & proverb per tale) */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,340px)] gap-6 mb-8">
+            <div className="min-w-0">
+              {acts.length > 1 && (
+                <>
+                  <p className="text-text/70 text-sm mb-3">Constellation path through the spellbook</p>
+                  <SpellbookTalentTree
+                    nodes={acts.map((actNum) => {
+                      let label = '';
+                      let shortLabel = '';
+                      if (actNum === 0) { label = 'First page'; shortLabel = 'first'; }
+                      else if (actNum === 31) { label = 'Last page'; shortLabel = 'last'; }
+                      else {
+                        const tale = taleData[actNum as keyof typeof taleData];
+                        label = tale ? `Tale ${actNum}: ${tale.title}` : `Tale ${actNum}`;
+                        shortLabel = String(actNum);
                       }
-                    `}
-                  >
-                    {getTabLabel(act)}
-                    {activeAct === act && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
+                      return { id: actNum, label, shortLabel };
+                    })}
+                    activeId={activeAct}
+                    onSelect={setActiveAct}
+                    learnedUpToId={learnedUpTo >= 0 ? learnedUpTo : undefined}
+                    pathwayNodeIds={(() => { const ids = getPathwayNodeIds(getSpellbookFromStorage().spellIds, 'zero'); return ids.length > 0 ? ids : undefined; })()}
+                    nodesPerRow={8}
+                    nodeKind="Tale"
+                    onCrystalClick={setInscribeNodeId}
+                    markerEmojiByNodeId={(() => {
+                      const out: Record<number, string> = {};
+                      acts.forEach((actNum) => {
+                        const sid = getSpellIdForNode('zero', actNum);
+                        if (sid) { const m = getInscribedMarkerEmoji(sid); if (m) out[actNum] = m; }
+                      });
+                      return out;
+                    })()}
+                  />
+                </>
+              )}
+            </div>
+            <div className="flex-shrink-0">
+              <ConstellationInscriptionBox
+                nodeKind="Tale"
+                activeId={activeAct}
+                spell={currentTale?.spell ?? null}
+                proverb={currentTale?.proverb ?? null}
+                onInscribe={setInscribeNodeId}
+                inscribedProverb={
+                  (() => {
+                    const sid = getSpellIdForNode('zero', activeAct);
+                    const inscribed = getInscribedProverbs();
+                    return sid ? inscribed[sid] : null;
+                  })()
+                }
+              />
             </div>
           </div>
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
             {/* Top Learn Button */}
-            {(markdownContent || activeAct === 32) && (
+            {markdownContent && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
                 <button
                   onClick={copyToClipboard}
@@ -691,76 +449,11 @@ export default function ZeroPage() {
                     <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
                     {/* Tale Video */}
                     <TaleImage tale={activeAct} />
-                    {/* Proverb and Inscription Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-3 mb-4">
-                      {/* Proverb Inscription Box */}
-                      {getProverb(activeAct) && (
-                        <div className="flex-1">
-                          <button
-                            onClick={copyProverbText}
-                            className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
-                            title="Copy proverb"
-                          >
-                            <div className="text-primary font-semibold text-xs mb-2">
-                              {copiedProverbTop ? (
-                                <motion.span
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  className="text-primary"
-                                >
-                                  cast
-                                </motion.span>
-                              ) : (
-                                <span className="group-hover:text-primary/80 transition-colors">
-                                  proverb
-                                </span>
-                              )}
-                            </div>
-                            <div className="text-text-muted text-sm italic leading-relaxed">
-                              "{getProverb(activeAct)}"
-                            </div>
-                          </button>
-                        </div>
-                      )}
-                      {/* Inscription Button */}
-                      {getInscriptionEmojis(activeAct) && (
-                        <div className="flex-1">
-                          <button
-                            onClick={copyProverb}
-                            className="w-full px-4 py-3 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-lg transition-all duration-200 text-left group"
-                            title="Copy inscription"
-                          >
-                            <div className="text-primary font-semibold text-xs mb-2">
-                              {copiedProverb ? (
-                                <motion.span
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  className="text-primary"
-                                >
-                                  cast
-                                </motion.span>
-                              ) : (
-                                <span className="group-hover:text-primary/80 transition-colors">
-                                  inscribe
-                                </span>
-                              )}
-                            </div>
-                            <div className="text-text-muted text-sm flex-1 break-words max-w-full sm:max-w-none whitespace-pre-line font-mono">
-                              {getInscriptionEmojis(activeAct)}
-                            </div>
-                          </button>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 )}
                 
-                {activeAct === 32 ? (
-                  <InscriptionsPage 
-                    onCopy={copyInscription}
-                  />
-                ) : (
-                  <div className="markdown-content pb-24 sm:pb-28">
+                {(
+                <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (
                       <p className="text-text-muted">Loading...</p>
                     ) : markdownContent ? (
@@ -821,7 +514,7 @@ export default function ZeroPage() {
                   </svg>
                 </button>
               )}
-              {(markdownContent || activeAct === 32) && (
+              {markdownContent && (
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
@@ -864,6 +557,21 @@ export default function ZeroPage() {
           </div>
         </div>
       </section>
+      {inscribeNodeId != null && (
+        <InscribeProverbModal
+          open={true}
+          onClose={() => setInscribeNodeId(null)}
+          nodeId={inscribeNodeId}
+          nodeLabel={
+            inscribeNodeId === 0 ? 'First page' : inscribeNodeId === 31 ? 'Last page' :
+            (taleData[inscribeNodeId as keyof typeof taleData] ? `Tale ${inscribeNodeId}: ${taleData[inscribeNodeId as keyof typeof taleData].title}` : `Tale ${inscribeNodeId}`)
+          }
+          spellbook="zero"
+          initialProverb={typeof window !== 'undefined' ? (getInscribedProverbs()[getSpellIdForNode('zero', inscribeNodeId) ?? ''] ?? '') : ''}
+          initialMarkerEmoji={typeof window !== 'undefined' ? getInscribedMarkerEmoji(getSpellIdForNode('zero', inscribeNodeId) ?? '') : undefined}
+          onCommitted={() => {}}
+        />
+      )}
     </div>
   );
 }

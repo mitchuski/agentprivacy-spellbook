@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { MagePanelProvider } from "@/contexts/MagePanelContext";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -43,9 +44,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <main>
-          {children}
-        </main>
+        <MagePanelProvider>
+          <main>
+            {children}
+          </main>
 
         <footer className="bg-background border-t border-surface/50 py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
@@ -56,10 +58,13 @@ export default function RootLayout({
                 className="h-12 w-auto"
               />
               <div className="text-sm text-text-muted">
-                © 2025 agentprivacy just another ⚔️ 🧙‍♂️ 🤖 😊
+                © 2025 agentprivacy just another ⚔️ 🧙 🤖 😊
               </div>
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
+              <a href="https://github.com/mitchuski/agentprivacy-docs" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+                living documentation
+              </a>
               <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
                 privacymage: x
               </a>
@@ -75,6 +80,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </MagePanelProvider>
       </body>
     </html>
   );

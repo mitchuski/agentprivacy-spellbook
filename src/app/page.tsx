@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import AppNav from '@/components/AppNav';
 
 export default function LandingPage() {
   const carouselItems = [
@@ -26,12 +27,6 @@ export default function LandingPage() {
   useEffect(() => {
     setIsClient(true);
   }, []);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [message, setMessage] = useState('');
-  const [githubLink, setGithubLink] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
@@ -48,37 +43,7 @@ export default function LandingPage() {
     return () => clearInterval(interval);
   }, [ctaCarouselItems.length]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: '' });
-
-    // Use mailto: link which works immediately without any backend setup
-    const introText = "im just another mage looking to share their spellbook";
-    const fullMessage = `${introText} ${message}`;
-    const subject = encodeURIComponent('Contribution from agentprivacy.ai');
-    const body = encodeURIComponent(
-      `${fullMessage}${githubLink ? `\n\nGitHub Link: ${githubLink}` : ''}`
-    );
-    const mailtoLink = `mailto:mage@agentprivacy.ai?subject=${subject}&body=${body}`;
-    
-    // Open mailto link
-    window.location.href = mailtoLink;
-    
-    // Show success message
-    setSubmitStatus({ type: 'success', message: 'Opening your email client...' });
-    setMessage('');
-    setGithubLink('');
-    
-    setTimeout(() => {
-      setIsModalOpen(false);
-      setSubmitStatus({ type: null, message: '' });
-      setIsSubmitting(false);
-    }, 1500);
-  };
-
   const [mounted, setMounted] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -86,174 +51,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background" suppressHydrationWarning>
-      {/* Navigation Header */}
-      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-surface/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4 md:gap-8">
-              <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors">
-                agentprivacy
-              </a>
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-4 sm:gap-6">
-                <a
-                  href="/story"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  story
-                </a>
-                <a
-                  href="/zero"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  zero
-                </a>
-                <a
-                  href="/canon"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  canon
-                </a>
-                <a
-                  href="/society"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  society
-                </a>
-                <a
-                  href="/plurality"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  plural
-                </a>
-                <a
-                  href="/privacy"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  privacy
-                </a>
-                <a
-                  href="/mage"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  mage
-                </a>
-                <a
-                  href="/evoke"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  evoke
-                </a>
-                <a
-                  href="/proverbs"
-                  className="text-text hover:text-primary transition-colors font-medium"
-                >
-                  proverbs
-                </a>
-              </div>
-            </div>
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {mobileMenuOpen ? (
-                  <path d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {mobileMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="md:hidden overflow-hidden"
-              >
-                <div className="py-4 space-y-3 border-t border-surface/50">
-                  <a
-                    href="/story"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    story
-                  </a>
-                  <a
-                    href="/zero"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    zero
-                  </a>
-                  <a
-                    href="/canon"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    canon
-                  </a>
-                  <a
-                    href="/society"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    society
-                  </a>
-                  <a
-                    href="/plurality"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    plural
-                  </a>
-                  <a
-                    href="/proverbs"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    proverbs
-                  </a>
-                  <a
-                    href="/mage"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    mage
-                  </a>
-                  <a
-                    href="/privacy"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    privacy
-                  </a>
-                  <a
-                    href="/evoke"
-                    className="block text-text hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    evoke
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </nav>
+      <AppNav />
 
       {/* Hero Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
@@ -272,23 +70,30 @@ export default function LandingPage() {
               privacy-first personal payment and knowledge for AI agents
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-              {/* Hide Get Started for now */}
+              <motion.a
+                href="/ceremony"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-primary px-8 py-4 text-lg"
+              >
+                ⚔️ Ceremony
+              </motion.a>
               <motion.a
                 href="/story"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-secondary px-8 py-4 text-lg"
               >
-                Learn More
+                📖 Story
               </motion.a>
-              <motion.button
-                onClick={() => setIsModalOpen(true)}
+              <motion.a
+                href="/spells"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn-primary px-8 py-4 text-lg"
+                className="btn-secondary px-8 py-4 text-lg"
               >
-                Contribute
-              </motion.button>
+                🔮 Spellbook
+              </motion.a>
             </div>
             
             <motion.div
@@ -623,113 +428,15 @@ export default function LandingPage() {
                   )}
                 </div>
               </div>
-              <div className="flex justify-center">
-                <motion.a
-                  href="/story"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="btn-secondary px-8 py-4 text-lg"
-                >
-                  Learn More
-                </motion.a>
+              <div className="flex flex-wrap justify-center gap-3">
+                <motion.a href="/ceremony" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn-primary px-8 py-4 text-lg">⚔️ Ceremony</motion.a>
+                <motion.a href="/story" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn-secondary px-8 py-4 text-lg">📖 Story</motion.a>
+                <motion.a href="/spells" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn-secondary px-8 py-4 text-lg">🔮 Spellbook</motion.a>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
-
-      {/* Contribute Modal */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsModalOpen(false)}
-              className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-            >
-              {/* Modal */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                onClick={(e) => e.stopPropagation()}
-                className="card bg-surface border-surface/50 max-w-lg w-full max-h-[90vh] overflow-y-auto"
-              >
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-text">Share Your Spellbook</h2>
-                  <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="text-text-muted hover:text-text text-2xl leading-none"
-                  >
-                    ×
-                  </button>
-                </div>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-text-muted mb-2">
-                      im just another mage looking to share their spellbook
-                    </label>
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="...finish your thought here"
-                      required
-                      rows={4}
-                      className="w-full px-4 py-3 bg-background border border-surface/50 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-text-muted mb-2">
-                      GitHub Link (optional)
-                    </label>
-                    <input
-                      type="url"
-                      value={githubLink}
-                      onChange={(e) => setGithubLink(e.target.value)}
-                      placeholder="https://github.com/..."
-                      className="w-full px-4 py-3 bg-background border border-surface/50 rounded-lg text-text placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    />
-                  </div>
-
-                  {submitStatus.type && (
-                    <div
-                      className={`p-3 rounded-lg ${
-                        submitStatus.type === 'success'
-                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                          : 'bg-red-500/20 text-red-400 border border-red-500/30'
-                      }`}
-                    >
-                      {submitStatus.message}
-                    </div>
-                  )}
-
-                  <div className="flex gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setIsModalOpen(false)}
-                      className="flex-1 btn-secondary py-3"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting || !message.trim()}
-                      className="flex-1 btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? 'Sending...' : 'Send'}
-                    </button>
-                  </div>
-                </form>
-              </motion.div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
