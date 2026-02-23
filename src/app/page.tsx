@@ -7,6 +7,7 @@ import AppNav from '@/components/AppNav';
 import { ROUTES } from '@/lib/nav';
 import LandingStars from '@/components/landing/LandingStars';
 import HeroConstellation from '@/components/landing/HeroConstellation';
+import LazyConstellation from '@/components/landing/LazyConstellation';
 
 const HERO_CAROUSEL = [
   { text: 'mage 🧙 knowledge is my spellbook.', emoji: '🧙' },
@@ -280,7 +281,7 @@ export default function LandingPage() {
 
       {/* Section 4 — Features */}
       <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={0} sectionIndex={2} />
+        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={2} />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -352,7 +353,7 @@ export default function LandingPage() {
 
       {/* Section 5 — Five Spellbooks */}
       <section id="spellbooks" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={1} sectionIndex={3} />
+        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={3} />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -422,7 +423,7 @@ export default function LandingPage() {
 
       {/* Section 6 — Your Path */}
       <section id="your-path" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={0} sectionIndex={4} />
+        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={4} />
         <div className="max-w-[760px] mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -470,7 +471,7 @@ export default function LandingPage() {
 
       {/* Section 7 — The Architecture */}
       <section id="architecture" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={1} sectionIndex={5} />
+        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={5} />
         <div className="max-w-[720px] mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -589,7 +590,7 @@ export default function LandingPage() {
 
       {/* Section 8 — Pools */}
       <section id="pools" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={0} sectionIndex={6} />
+        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={6} />
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -624,7 +625,7 @@ export default function LandingPage() {
 
       {/* Section 9 — Join Us */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={1} sectionIndex={7} />
+        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={7} />
         <div className="max-w-[860px] mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -675,7 +676,7 @@ export default function LandingPage() {
       {/* Section 10 — Final CTA */}
       <div className="border-t border-surface/50" />
       <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={0} sectionIndex={8} />
+        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={8} />
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -728,7 +729,7 @@ export default function LandingPage() {
 
       {/* Donate */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={1} sectionIndex={9} />
+        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={9} />
         <div className="max-w-xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

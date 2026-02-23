@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 export default function LandingStars() {
   const stars = useMemo(
     () =>
-      Array.from({ length: 50 }, (_, i) => {
+      Array.from({ length: 28 }, (_, i) => {
         const s1 = (i * 9301 + 49297) % 233280;
         const s2 = (i * 7919 + 31) % 233280;
         const s3 = (i * 7829 + 7) % 233280;

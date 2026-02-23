@@ -2,6 +2,11 @@
 
 import { useMemo } from 'react';
 
+const FIELD_STARS_DEFAULT = 220;
+const OUTER_STARS_DEFAULT = 48;
+const FIELD_STARS_REDUCED = 70;
+const OUTER_STARS_REDUCED = 20;
+
 /** Round to 4 decimals so server and client hydrate identically (avoids float mismatch). */
 function r4(n: number): number {
   return Math.round(n * 10000) / 10000;
@@ -40,8 +45,8 @@ function tetrahedronPoints(angle: 0 | 1): { x: number; y: number }[] {
 const TETRA_EDGES: [number, number][] = [[0, 1], [0, 2], [0, 3], [1, 2], [2, 3], [3, 1]];
 
 /** Full-sky: more random placement (jitter), varied size/opacity. Deterministic for hydration. */
-function fullFieldStars(): { x: number; y: number; r: number; opacity: number; delay: number }[] {
-  return Array.from({ length: 220 }, (_, i) => {
+function fullFieldStars(count: number = FIELD_STARS_DEFAULT): { x: number; y: number; r: number; opacity: number; delay: number }[] {
+  return Array.from({ length: count }, (_, i) => {
     const s1 = (i * 9301 + 49297) % 233280;
     const s2 = (i * 7919 + 31) % 233280;
     const s3 = (i * 7829 + 7) % 233280;
@@ -63,8 +68,8 @@ function fullFieldStars(): { x: number; y: number; r: number; opacity: number; d
 }
 
 /** Outer stars: more random (angle + radius jitter, irregular spacing). Rounded for hydration. */
-function outerStars(): { x: number; y: number; r: number; opacity: number; delay: number }[] {
-  return Array.from({ length: 48 }, (_, i) => {
+function outerStars(count: number = OUTER_STARS_DEFAULT): { x: number; y: number; r: number; opacity: number; delay: number }[] {
+  return Array.from({ length: count }, (_, i) => {
     const s1 = (i * 9301 + 49297) % 233280;
     const s2 = (i * 7919 + 31) % 233280;
     const s3 = (i * 7829 + 7) % 233280;
@@ -87,15 +92,20 @@ export default function HeroConstellation({
   variant = 'hero',
   sectionAngle = 1,
   sectionIndex = 0,
+  reduced = false,
 }: {
   variant?: Variant;
   sectionAngle?: 0 | 1;
   sectionIndex?: number;
+  /** When true, fewer stars (for mobile / below-fold lazy sections). */
+  reduced?: boolean;
 }) {
   const angle = variant === 'hero' ? 0 : sectionAngle;
   const tetra = useMemo(() => tetrahedronPoints(angle), [angle]);
-  const field = useMemo(fullFieldStars, []);
-  const outer = useMemo(outerStars, []);
+  const fieldLen = reduced ? FIELD_STARS_REDUCED : FIELD_STARS_DEFAULT;
+  const outerLen = reduced ? OUTER_STARS_REDUCED : OUTER_STARS_DEFAULT;
+  const field = useMemo(() => fullFieldStars(fieldLen), [fieldLen]);
+  const outer = useMemo(() => outerStars(outerLen), [outerLen]);
 
   const id = sectionIndex;
   const filterStrong = `constellationGlowStrong-${id}`;
