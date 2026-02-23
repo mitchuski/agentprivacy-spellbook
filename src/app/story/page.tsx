@@ -716,9 +716,8 @@ export default function StoryPage() {
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [spellbookToast, setSpellbookToast] = useState<string | null>(null);
-  const [spellbookSpellIds, setSpellbookSpellIds] = useState<string[]>(() =>
-    typeof window !== 'undefined' ? getSpellbookFromStorage().spellIds : []
-  );
+  /** Initialized to [] so server and first client render match; populated from localStorage in useEffect to avoid hydration mismatch. */
+  const [spellbookSpellIds, setSpellbookSpellIds] = useState<string[]>([]);
   const [learnedUpTo, setLearnedUpToState] = useState<number>(-1);
   const [inscribeNodeId, setInscribeNodeId] = useState<number | null>(null);
   /** Marker emojis from localStorage — set only after mount to avoid hydration mismatch. */
@@ -1034,8 +1033,8 @@ export default function StoryPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">just another story</h1>
           </motion.div>
 
-          {/* Constellation path + inscription box (emoji & proverb per act) */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,340px)] gap-6 mb-8">
+          {/* Constellation path + next-step arrow + inscription box (emoji & proverb per act) */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_minmax(280px,340px)] gap-4 lg:gap-6 mb-8">
             <div className="min-w-0">
               <p className="text-text/70 text-sm mb-3">Constellation path through the spellbook</p>
               <SpellbookTalentTree
@@ -1061,6 +1060,19 @@ export default function StoryPage() {
                 onCrystalClick={setInscribeNodeId}
                 markerEmojiByNodeId={markerEmojiByNodeId}
               />
+            </div>
+            <div className="flex items-center justify-center lg:justify-center py-2 lg:py-0">
+              <button
+                type="button"
+                onClick={() => setActiveAct(Math.min(activeAct + 1, LAST_PAGE))}
+                disabled={activeAct >= LAST_PAGE}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-primary/40 bg-primary/10 text-primary font-medium hover:bg-primary/20 disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                aria-label="Next step on the constellation"
+                title="Next story"
+              >
+                <span aria-hidden>Next story</span>
+                <span aria-hidden className="text-lg">→</span>
+              </button>
             </div>
             <div className="flex-shrink-0">
               <ConstellationInscriptionBox

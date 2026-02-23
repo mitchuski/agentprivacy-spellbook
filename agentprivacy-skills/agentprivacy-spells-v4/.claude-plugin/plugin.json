@@ -1,0 +1,24 @@
+{
+  "name": "agentprivacy",
+  "description": "Privacy-first AI agent architecture — 21 personas and 36 domain skills for dual-agent separation, ZKP systems, tokenomics, governance, and sovereign identity. Built on the Privacy Value Model V4.",
+  "skillsets": [
+    {
+      "name": "persona-skills",
+      "description": "22 agent personas (8 swordsman, 7 mage, 7 balanced) for privacy-first AI operations. Each persona configures Claude with a specific privacy role — from ZKP engineering (Cipher) to healthcare privacy (Healer) to adversarial red-teaming (Sith).",
+      "skills_dir": "persona",
+      "strict": false
+    },
+    {
+      "name": "role-skills",
+      "description": "26 domain knowledge skills covering cryptography, governance, economics, identity, dark forest strategy, narrative compression, and more. Loaded on demand by persona skills.",
+      "skills_dir": "role",
+      "strict": false
+    },
+    {
+      "name": "privacy-layer-skills",
+      "description": "9 foundational skills covering every term of the V(π,t) privacy value equation. Always loaded as the ground state for any agentprivacy operation.",
+      "skills_dir": "privacy-layer",
+      "strict": false
+    }
+  ]
+}

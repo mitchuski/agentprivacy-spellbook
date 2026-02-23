@@ -9,10 +9,13 @@ export default function ConstellationHeader({
   completedStepIds,
   currentStepId,
   chosenEmojis,
+  onStepSelect,
 }: {
   completedStepIds: string[];
   currentStepId: string | null;
   chosenEmojis: Record<string, string>;
+  /** When set, emojis are clickable to navigate to that step (stepIndex 0-based). */
+  onStepSelect?: (stepIndex: number) => void;
 }) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
@@ -51,11 +54,29 @@ export default function ConstellationHeader({
               : isCurrent
                 ? 'inline-flex w-9 h-9 sm:w-10 sm:h-10 items-center justify-center rounded-lg text-lg sm:text-xl border-2 transition-all border-primary bg-primary/10 text-primary animate-pulse'
                 : NEUTRAL_STEP_CLASS;
+          const clickable = !!onStepSelect;
+          const content = (
+            <>
+              {display}
+            </>
+          );
           return (
             <span key={step.id} className="flex items-center gap-1 sm:gap-2">
-              <span className={stepClassName} aria-label={step.title} title={step.title}>
-                {display}
-              </span>
+              {clickable ? (
+                <button
+                  type="button"
+                  onClick={() => onStepSelect(i)}
+                  className={`${stepClassName} cursor-pointer hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background`}
+                  aria-label={`${step.title}${isCurrent ? ' (current)' : ''}`}
+                  title={step.title}
+                >
+                  {content}
+                </button>
+              ) : (
+                <span className={stepClassName} aria-label={step.title} title={step.title}>
+                  {content}
+                </span>
+              )}
               {i < CEREMONY_STEPS.length - 1 && (
                 <span className="text-text/30 text-sm hidden sm:inline" aria-hidden>→</span>
               )}

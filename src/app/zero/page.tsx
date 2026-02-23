@@ -353,8 +353,8 @@ export default function ZeroPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">just another spellbook</h1>
           </motion.div>
 
-          {/* Constellation path + inscription box (emoji & proverb per tale) */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,340px)] gap-6 mb-8">
+          {/* Constellation path + next-step arrow + inscription box (emoji & proverb per tale) */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_minmax(280px,340px)] gap-4 lg:gap-6 mb-8">
             <div className="min-w-0">
               {acts.length > 1 && (
                 <>
@@ -390,6 +390,19 @@ export default function ZeroPage() {
                   />
                 </>
               )}
+            </div>
+            <div className="flex items-center justify-center lg:justify-center py-2 lg:py-0">
+              <button
+                type="button"
+                onClick={() => setActiveAct(Math.min(activeAct + 1, 31))}
+                disabled={activeAct >= 31}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-primary/40 bg-primary/10 text-primary font-medium hover:bg-primary/20 disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                aria-label="Next step on the constellation"
+                title="Next tale"
+              >
+                <span aria-hidden>Next tale</span>
+                <span aria-hidden className="text-lg">→</span>
+              </button>
             </div>
             <div className="flex-shrink-0">
               <ConstellationInscriptionBox

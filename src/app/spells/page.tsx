@@ -25,7 +25,6 @@ import {
 } from '@/lib/spellbook-storage';
 import { useRouter } from 'next/navigation';
 import AppNav from '@/components/AppNav';
-import SpellwebViewer from '@/components/spellweb/SpellwebViewer';
 import TierBadge from '@/components/trust/TierBadge';
 import { calculateTier } from '@/lib/trust/tiers';
 import { getTrustMetrics, setStudiedActs } from '@/lib/trust/storage';
@@ -133,7 +132,8 @@ export default function SpellsPage() {
 
   const loadSkillContent = useCallback(async (filename: string) => {
     if (skillContent[filename]) return skillContent[filename];
-    const res = await fetch(`/skills/${encodeURIComponent(filename)}`);
+    // filename is e.g. "agentprivacy/dragon.skills.md" — keep path so /skills/agentprivacy/dragon.skills.md resolves
+    const res = await fetch(`/skills/${filename}`);
     if (!res.ok) return '';
     const text = await res.text();
     setSkillContent((prev) => ({ ...prev, [filename]: text }));
@@ -214,6 +214,13 @@ export default function SpellsPage() {
   }, [showToast]);
 
   const handleDownloadSpellbook = useCallback(async () => {
+    // Union of storage + current state so we never miss skills/spells the user sees
+    const { spellIds: storageSpellIds, skillIds: storageSkillIds } = getSpellbookFromStorage();
+    const exportSpellIds = [...new Set([...storageSpellIds, ...selectedSpellIds])];
+    const exportSkillIds = [...new Set([...storageSkillIds, ...selectedSkillIds])];
+    const exportSpells = spellCards.filter((c) => exportSpellIds.includes(c.id));
+    const exportSkills = ALL_SKILL_FILES.filter((s) => exportSkillIds.includes(s.id));
+
     const agentLabel = agentFilter !== 'all' ? agentFilter : null;
     const lines: string[] = [
       `# Custom Spellbook${agentLabel ? ` — ${agentLabel === 'soulbis' ? 'Soulbis (Swordsman)' : agentLabel === 'soulbae' ? 'Soulbae (Mage)' : 'Privacy Layer'}` : ''}`,
@@ -223,14 +230,14 @@ export default function SpellsPage() {
       '---',
       '',
     ];
-    const pathwayLines = getPathwayLines([...selectedSpellIds], spellCards);
+    const pathwayLines = getPathwayLines(exportSpellIds, spellCards);
     if (pathwayLines.length > 0) {
       lines.push('## Your pathway', '');
       lines.push('Acts and tales in your spell graph, mapped across spellbooks:', '', ...pathwayLines.map((l) => l + '\n'), '---', '');
     }
-    if (selectedSpells.length > 0) {
+    if (exportSpells.length > 0) {
       lines.push('## Spells & Proverbs', '');
-      for (const card of selectedSpells) {
+      for (const card of exportSpells) {
         lines.push(`### ${card.title}`, '', `**Spell:** ${card.spell}`, '', `*${card.proverb}*`, '', '---', '');
       }
     }
@@ -250,7 +257,8 @@ export default function SpellsPage() {
       }
       lines.push('');
     }
-    const matchingPersonas = getMatchingPersonas(selectedSkillIds);
+    const exportSkillIdSet = new Set(exportSkillIds);
+    const matchingPersonas = getMatchingPersonas(exportSkillIdSet);
     if (matchingPersonas.length > 0) {
       lines.push('## Persona alignment', '');
       lines.push('This spell graph aligns with the following persona patterns (role skills covered):', '');
@@ -259,11 +267,12 @@ export default function SpellsPage() {
       }
       lines.push('', '---', '');
     }
-    if (selectedSkills.length > 0) {
+    if (exportSkills.length > 0) {
       lines.push('## Skill Files', '');
-      for (const meta of selectedSkills) {
+      for (const meta of exportSkills) {
         const content = await loadSkillContent(meta.filename);
-        lines.push(`### ${meta.seedEmoji} ${meta.seedName}`, '', content, '', '---', '');
+        const body = (content ?? '').trim() ? content : `*${meta.proverb}*\n\n${meta.spell}`;
+        lines.push(`### ${meta.seedEmoji} ${meta.seedName}`, '', body, '', '---', '');
       }
     }
     const md = lines.join('\n');
@@ -275,7 +284,7 @@ export default function SpellsPage() {
     a.click();
     URL.revokeObjectURL(url);
     showToast('skills.md downloaded');
-  }, [agentFilter, selectedSpells, selectedSkills, loadSkillContent, showToast]);
+  }, [agentFilter, spellCards, selectedSpellIds, selectedSkillIds, loadSkillContent, showToast]);
 
   const filteredSpells = spellbookFilter === 'all'
     ? spellCards
@@ -616,30 +625,6 @@ export default function SpellsPage() {
           </div>
         </section>
 
-        <section id="spellweb" className="scroll-mt-24 mb-16 flex flex-col items-center">
-          <h2 className="text-2xl font-semibold text-text mb-4 text-center">Your Spellweb</h2>
-          <p className="text-text/70 mb-6 text-center max-w-xl">
-            Visual map of your spell graph. Spells and skills connected by grimoire and agent.
-          </p>
-          <div className="w-full max-w-4xl mx-auto">
-            {selectionCount > 0 ? (
-              <div className="rounded-2xl overflow-hidden shadow-lg shadow-primary/10">
-                <SpellwebViewer
-                  selectedSpellIds={[...selectedSpellIds]}
-                  selectedSkillIds={[...selectedSkillIds]}
-                  spellCards={spellCards}
-                  skillFiles={ALL_SKILL_FILES}
-                  inscribedMarkers={inscribedMarkers}
-                />
-              </div>
-            ) : (
-              <div className="h-[200px] border border-surface/50 rounded-2xl flex items-center justify-center text-text/50 bg-surface/10">
-                Add spells and skills to see your spellweb
-              </div>
-            )}
-          </div>
-        </section>
-
         <section id="agent-files" className="scroll-mt-24 mb-16 rounded-xl border border-surface/50 bg-surface/10 overflow-hidden">
           <button
             type="button"
@@ -712,6 +697,13 @@ export default function SpellsPage() {
         </section>
       </main>
 
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-[39] bg-black/50 md:hidden"
+          aria-hidden
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
       <aside
         className={`flex-shrink-0 w-80 border-l border-surface/50 bg-background/95 overflow-hidden flex flex-col transition-[width] duration-200 ${sidebarOpen ? 'max-md:fixed max-md:right-0 max-md:top-0 max-md:bottom-0 max-md:z-40 max-md:shadow-xl' : 'w-0 max-md:hidden'}`}
         aria-label="Your spell graph"

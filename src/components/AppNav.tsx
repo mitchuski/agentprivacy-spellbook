@@ -1,60 +1,53 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMagePanel } from '@/contexts/MagePanelContext';
-import { getAgentCard } from '@/lib/ceremony/storage';
+import { getAgentCard, hasCompletedCeremony } from '@/lib/ceremony/storage';
+import { NAV_LINKS } from '@/lib/nav';
 
-/** Nav order: ⚔️(ceremony) - story - zero - canon - society - plural - proverbs - evoke - privacy - mage - promise - spells. 🧙 far right opens AI panel. */
-const NAV_LINKS_BASE: { href: string; label: string; key: string }[] = [
-  { href: '/ceremony', label: '⚔️', key: 'ceremony' },
-  { href: '/story', label: 'story', key: 'story' },
-  { href: '/zero', label: 'zero', key: 'zero' },
-  { href: '/canon', label: 'canon', key: 'canon' },
-  { href: '/society', label: 'society', key: 'society' },
-  { href: '/plurality', label: 'plural', key: 'plurality' },
-  { href: '/proverbs', label: 'proverbs', key: 'proverbs' },
-  { href: '/evoke', label: 'evoke', key: 'evoke' },
-  { href: '/privacy', label: 'privacy', key: 'privacy' },
-  { href: '/mage', label: 'mage', key: 'mage' },
-  { href: '/promises', label: 'promise', key: 'promises' },
-  { href: '/spells', label: 'spells', key: 'spells' },
-];
+// Plain <a> for nav so static server serves the right HTML on click (no RSC fetch).
+const NavLink = ({ href, className, onClick, title, children }: { href: string; className: string; onClick?: () => void; title?: string; children: React.ReactNode }) => (
+  <a href={href} className={className} onClick={onClick} title={title}>{children}</a>
+);
 
 export default function AppNav() {
   const pathname = usePathname();
   const { openMagePanel } = useMagePanel();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [swordsmanName, setSwordsmanName] = useState<string | null>(null);
+  const [ceremonyComplete, setCeremonyComplete] = useState(false);
 
   useEffect(() => {
     const sync = () => {
       const card = getAgentCard();
       setSwordsmanName(card?.displayName ?? null);
+      setCeremonyComplete(hasCompletedCeremony());
     };
     sync();
     window.addEventListener('ap-identity-changed', sync);
     return () => window.removeEventListener('ap-identity-changed', sync);
   }, []);
 
-  const navLinks = NAV_LINKS_BASE.map((link) =>
-    link.key === 'ceremony' && swordsmanName
-      ? { ...link, label: `⚔️ ${swordsmanName}` }
+  // Ceremony link: always ⚔️ (Swordsman); when ceremony complete, fill with name
+  const navLinks = NAV_LINKS.map((link) =>
+    link.key === 'soulbis'
+      ? { ...link, label: ceremonyComplete && swordsmanName ? `⚔️ ${swordsmanName}` : '⚔️' }
       : link
   );
 
+  const isCurrentPage = (href: string) =>
+    pathname === href || (href !== '/' && pathname?.startsWith(href));
+
   const linkClass = (href: string) => {
-    const isCurrent = pathname === href || (href !== '/' && pathname?.startsWith(href));
-    return isCurrent
+    return isCurrentPage(href)
       ? 'text-primary border-b-2 border-primary pb-1 font-medium'
       : 'text-text-muted hover:text-text transition-colors font-medium';
   };
 
   const mobileLinkClass = (href: string) => {
-    const isCurrent = pathname === href || (href !== '/' && pathname?.startsWith(href));
-    return isCurrent
+    return isCurrentPage(href)
       ? 'block text-primary border-b-2 border-primary pb-1 font-medium py-2'
       : 'block text-text-muted hover:text-text transition-colors font-medium py-2';
   };
@@ -64,14 +57,14 @@ export default function AppNav() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-4 md:gap-8 min-w-0">
-            <Link href="/" className="text-xl font-bold text-text hover:text-primary transition-colors flex-shrink-0">
+            <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors flex-shrink-0">
               agentprivacy
-            </Link>
+            </a>
             <div className="hidden md:flex items-center gap-4 sm:gap-6 min-w-0">
-              {navLinks.map(({ href, label }) => (
-                <Link key={href} href={href} className={`flex-shrink-0 ${linkClass(href)}`}>
+              {navLinks.map(({ href, label, key }) => (
+                <NavLink key={href} href={href} className={`flex-shrink-0 ${linkClass(href)}`} title={key === 'soulbis' ? (ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony') : undefined}>
                   {label}
-                </Link>
+                </NavLink>
               ))}
             </div>
           </div>
@@ -118,15 +111,16 @@ export default function AppNav() {
               className="md:hidden overflow-hidden"
             >
               <div className="py-4 space-y-3 border-t border-surface/50">
-                {navLinks.map(({ href, label }) => (
-                  <Link
+                {navLinks.map(({ href, label, key }) => (
+                  <NavLink
                     key={href}
                     href={href}
                     className={mobileLinkClass(href)}
+                    title={key === 'soulbis' ? (ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony') : undefined}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {label}
-                  </Link>
+                  </NavLink>
                 ))}
                 <button
                   type="button"

@@ -8,9 +8,11 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
+export const viewport = { width: 'device-width', initialScale: 1 };
+
 export const metadata: Metadata = {
   title: "agentprivacy.ai - just another mage swordsman",
-  description: "agentprivacy - just another mage swordsman",
+  description: "Knowledge and information sharing and discovery agent. Cast spells and skills, interface with the world. Understanding as key—storage, identity, confidential compute, ZK credential composition. Share loot in privacy pools with allies.",
   keywords: ["privacy", "AI agents", "zero-knowledge", "blockchain", "ERC-8004", "privacy pools", "x402"],
   authors: [{ name: "agentprivacy.ai" }],
   icons: {
@@ -25,14 +27,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "agentprivacy.ai - just another mage swordsman",
-    description: "agentprivacy - just another mage swordsman",
+    description: "Knowledge and information sharing and discovery agent. Cast spells and skills, interface with the world. Understanding as key—storage, identity, confidential compute, ZK credential composition. Share loot in privacy pools with allies.",
     type: "website",
     url: "https://agentprivacy.ai",
   },
   twitter: {
     card: "summary_large_image",
     title: "agentprivacy.ai - just another mage swordsman",
-    description: "agentprivacy - just another mage swordsman",
+    description: "Knowledge and information sharing and discovery agent. Cast spells and skills, interface with the world. Understanding as key—storage, identity, confidential compute, ZK credential composition. Share loot in privacy pools with allies.",
   },
 };
 
@@ -49,32 +51,32 @@ export default function RootLayout({
             {children}
           </main>
 
-        <footer className="bg-background border-t border-surface/50 py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <footer className="bg-background border-t border-surface/50 py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
-              <img 
-                src="/assets/agentprivacy_logo.png" 
-                alt="agentprivacy" 
-                className="h-12 w-auto"
+              <img
+                src="/assets/agentprivacy_logo.png"
+                alt="agentprivacy"
+                className="h-10 w-auto shrink-0"
               />
-              <div className="text-sm text-text-muted">
-                © 2025 agentprivacy just another ⚔️ 🧙 🤖 😊
-              </div>
+              <p className="text-base text-text-muted">
+                © 2025 agentprivacy just another (⚔️⊥⿻⊥🧙)🙂
+              </p>
             </div>
-            <div className="flex flex-col items-center md:items-end gap-2">
-              <a href="https://github.com/mitchuski/agentprivacy-docs" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+            <div className="flex flex-wrap justify-center gap-6 text-base">
+              <a href="https://github.com/mitchuski/agentprivacy-docs" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
                 living documentation
               </a>
-              <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+              <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
                 privacymage: x
               </a>
-              <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+              <a href="https://t.me/agentprivacy" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
                 agentprivacy-tg
               </a>
-              <a href="https://sync.soulbis.com/" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+              <a href="https://sync.soulbis.com" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
                 soulbis research
               </a>
-              <a href="https://intel.agentkyra.ai/" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text transition-colors">
+              <a href="https://intel.agentkyra.ai" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
                 private ai: agent kyra
               </a>
             </div>

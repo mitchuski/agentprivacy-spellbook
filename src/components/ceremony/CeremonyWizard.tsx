@@ -151,6 +151,7 @@ export default function CeremonyWizard({ returnTo = '/spells' }: { returnTo?: st
         completedStepIds={completedStepIds}
         currentStepId={currentStepId}
         chosenEmojis={chosenEmojis}
+        onStepSelect={(stepIndex) => setStep(stepIndex + 1)}
       />
 
       <div className="flex gap-2 mb-6 overflow-x-auto pb-2">

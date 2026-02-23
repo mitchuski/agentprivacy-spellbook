@@ -7,7 +7,7 @@ import { clearIdentity } from '@/lib/ceremony/storage';
 
 export default function SwordsmanAccountSettings({ card, onClear }: { card: AgentCard; onClear: () => void }) {
   const [copied, setCopied] = useState(false);
-  const [confirmClear, setConfirmClear] = useState(false);
+  const [showRerollConfirm, setShowRerollConfirm] = useState(false);
 
   const handleCopyId = async () => {
     try {
@@ -17,12 +17,9 @@ export default function SwordsmanAccountSettings({ card, onClear }: { card: Agen
     } catch {}
   };
 
-  const handleClear = () => {
-    if (!confirmClear) {
-      setConfirmClear(true);
-      return;
-    }
+  const handleRerollConfirm = () => {
     clearIdentity();
+    setShowRerollConfirm(false);
     onClear();
   };
 
@@ -63,34 +60,62 @@ export default function SwordsmanAccountSettings({ card, onClear }: { card: Agen
           <dd className="text-text capitalize">{card.trustTier}</dd>
         </div>
       </dl>
-      <div className="mt-6 pt-6 border-t border-surface/50 flex flex-wrap items-center gap-3">
-        <Link
-          href="/spells"
-          className="px-4 py-2 rounded-lg bg-primary/20 text-primary border border-primary/40 font-medium hover:bg-primary/30 transition-colors"
-        >
-          Go to Spells
-        </Link>
-        <button
-          type="button"
-          onClick={handleClear}
-          className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-            confirmClear
-              ? 'bg-red-500/20 text-red-500 border border-red-500/40 hover:bg-red-500/30'
-              : 'text-text-muted hover:text-text border border-surface/50 hover:border-surface'
-          }`}
-        >
-          {confirmClear ? 'Click again to clear identity' : 'Clear identity'}
-        </button>
-        {confirmClear && (
+      <div className="mt-6 pt-6 border-t border-surface/50">
+        <p className="text-xs font-medium text-text-muted uppercase tracking-wide mb-3">Next steps</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <span
+            className="px-4 py-2 rounded-lg bg-surface/50 text-text-muted border border-surface/50 font-medium cursor-not-allowed"
+            aria-current="page"
+          >
+            ⚔️ Ceremony
+          </span>
+          <Link
+            href="/story"
+            className="px-4 py-2 rounded-lg bg-primary/20 text-primary border border-primary/40 font-medium hover:bg-primary/30 transition-colors"
+          >
+            📖 Story
+          </Link>
+          <Link
+            href="/spells"
+            className="px-4 py-2 rounded-lg bg-primary/20 text-primary border border-primary/40 font-medium hover:bg-primary/30 transition-colors"
+          >
+            🔮 Spellbook
+          </Link>
           <button
             type="button"
-            onClick={() => setConfirmClear(false)}
-            className="text-sm text-text-muted hover:text-text"
+            onClick={() => setShowRerollConfirm(true)}
+            className="px-4 py-2 rounded-lg font-medium text-text-muted hover:text-text border border-surface/50 hover:border-surface transition-colors"
           >
-            Cancel
+            Reroll keys
           </button>
-        )}
+        </div>
       </div>
+
+      {showRerollConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60" aria-modal="true" role="dialog">
+          <div className="rounded-xl border border-surface/50 bg-background p-6 max-w-sm w-full shadow-xl">
+            <p className="text-text font-medium mb-4">
+              This clears your history with the website. Are you sure?
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => setShowRerollConfirm(false)}
+                className="px-4 py-2 rounded-lg border border-surface/50 text-text hover:bg-surface/30"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleRerollConfirm}
+                className="px-4 py-2 rounded-lg bg-red-500/20 text-red-500 border border-red-500/40 hover:bg-red-500/30 font-medium"
+              >
+                Yes, clear
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

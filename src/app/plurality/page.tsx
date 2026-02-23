@@ -245,7 +245,7 @@ function ActImage({ act }: { act: number }) {
   );
 }
 
-function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Promise<boolean>; onProtect?: (actNumber: number) => void }) {
+function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolean> }) {
   const [copiedSpellIndex, setCopiedSpellIndex] = useState<number | null>(null);
   const [copiedProverbIndex, setCopiedProverbIndex] = useState<number | null>(null);
 
@@ -314,18 +314,6 @@ function InscriptionsPage({ onCopy, onProtect }: { onCopy: (text: string) => Pro
               </button>
             </div>
           )}
-          {onProtect && inscription.number !== undefined && inscription.number !== null && inscription.number > 0 && inscription.number < 31 && (
-            <div className="pt-1">
-              <button
-                onClick={() => onProtect(inscription.number!)}
-                className="px-4 py-2 bg-accent/5 hover:bg-accent/10 border border-accent/20 rounded-lg transition-all duration-200 text-accent text-sm font-medium flex items-center gap-1"
-                title="Protect the spell (1 ZEC) - Public stake, private knowledge"
-              >
-                <span>⚔️</span>
-                <span>protect</span>
-              </button>
-            </div>
-          )}
         </div>
       ))}
     </div>
@@ -380,10 +368,28 @@ export default function PluralityPage() {
   const [copied, setCopied] = useState(false);
   const [copiedProverb, setCopiedProverb] = useState(false);
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
+  /** Pathway and marker emoji from localStorage — set only after mount to avoid hydration mismatch. */
+  const [pathwayNodeIds, setPathwayNodeIds] = useState<number[] | undefined>(undefined);
+  const [markerEmojiByNodeId, setMarkerEmojiByNodeId] = useState<Record<number, string>>({});
 
   // Full spellbook: firstpage (0), acts 1–30, lastpage (31)
   const acts = Array.from({ length: 32 }, (_, i) => i);
-  
+
+  useEffect(() => {
+    const spellIds = getSpellbookFromStorage().spellIds;
+    const ids = getPathwayNodeIds(spellIds, 'plurality');
+    setPathwayNodeIds(ids.length > 0 ? ids : undefined);
+  }, []);
+
+  useEffect(() => {
+    const out: Record<number, string> = {};
+    acts.forEach((actNum) => {
+      const sid = getSpellIdForNode('plurality', actNum);
+      if (sid) { const m = getInscribedMarkerEmoji(sid); if (m) out[actNum] = m; }
+    });
+    setMarkerEmojiByNodeId(out);
+  }, [inscribeNodeId]); // re-run when inscribe modal closes so markers update
+
   useEffect(() => {
     const loadMarkdown = async () => {
       setIsLoading(true);
@@ -528,18 +534,6 @@ export default function PluralityPage() {
   const showSwordsmanPanel = activeAct >= 1 && activeAct <= 30;
   const currentAct = activeAct >= 0 && activeAct <= 31 ? actData[activeAct] : null;
 
-  // Handle protect button - switch to act and open swordsman panel
-  const handleProtect = (actNumber: number) => {
-    setActiveAct(actNumber);
-    // Open swordsman panel after a short delay to allow render
-    setTimeout(() => {
-      const swordsmanButton = document.querySelector('[data-swordsman-toggle]');
-      if (swordsmanButton) {
-        (swordsmanButton as HTMLElement).click();
-      }
-    }, 100);
-  };
-
   const getActName = (act: number): string => {
     if (act === 0) return 'firstpage';
     if (act === 31) return 'lastpage';
@@ -574,8 +568,8 @@ export default function PluralityPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-text mb-6">plurality spellbook</h1>
           </motion.div>
 
-          {/* Constellation path + inscription box (same pattern as story, zero, canon, society) */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(280px,340px)] gap-6 mb-8">
+          {/* Constellation path + next-step arrow + inscription box (same pattern as story, zero, canon, society) */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_minmax(280px,340px)] gap-4 lg:gap-6 mb-8">
             <div className="min-w-0">
               <p className="text-text/70 text-sm mb-3">Constellation path through the spellbook</p>
               <SpellbookTalentTree
@@ -587,19 +581,25 @@ export default function PluralityPage() {
                 })}
                 activeId={activeAct}
                 onSelect={setActiveAct}
-                pathwayNodeIds={(() => { const ids = getPathwayNodeIds(getSpellbookFromStorage().spellIds, 'plurality'); return ids.length > 0 ? ids : undefined; })()}
+                pathwayNodeIds={pathwayNodeIds}
                 nodesPerRow={8}
                 nodeKind="Act"
                 onCrystalClick={setInscribeNodeId}
-                markerEmojiByNodeId={(() => {
-                  const out: Record<number, string> = {};
-                  acts.forEach((actNum) => {
-                    const sid = getSpellIdForNode('plurality', actNum);
-                    if (sid) { const m = getInscribedMarkerEmoji(sid); if (m) out[actNum] = m; }
-                  });
-                  return out;
-                })()}
+                markerEmojiByNodeId={markerEmojiByNodeId}
               />
+            </div>
+            <div className="flex items-center justify-center lg:justify-center py-2 lg:py-0">
+              <button
+                type="button"
+                onClick={() => setActiveAct(Math.min(activeAct + 1, 31))}
+                disabled={activeAct >= 31}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-primary/40 bg-primary/10 text-primary font-medium hover:bg-primary/20 disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                aria-label="Next step on the constellation"
+                title="Next act"
+              >
+                <span aria-hidden>Next act</span>
+                <span aria-hidden className="text-lg">→</span>
+              </button>
             </div>
             <div className="flex-shrink-0">
               <ConstellationInscriptionBox
@@ -620,18 +620,9 @@ export default function PluralityPage() {
 
           {/* Content Area */}
           <div className="card bg-surface border-surface/50 min-h-[400px] relative overflow-x-hidden pb-20 sm:pb-6">
-            {/* Top Learn and Protect Buttons */}
+            {/* Top Learn button */}
             {(markdownContent || activeAct === 32) && (
               <div className="absolute top-4 right-2 sm:right-4 z-10 flex items-center gap-2">
-                {showSwordsmanPanel && (
-                  <button
-                    onClick={() => handleProtect(activeAct)}
-                    className="px-2 sm:px-4 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg transition-all duration-200 flex items-center gap-1 flex-shrink-0"
-                    title="Protect the spell (1 ZEC) - Public stake, private knowledge"
-                  >
-                    <span className="text-accent text-xs sm:text-sm font-medium">⚔️ protect</span>
-                  </button>
-                )}
                 <button
                   onClick={copyToClipboard}
                   className="px-2 sm:px-4 py-2 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded-lg transition-all duration-200 group flex-shrink-0"
@@ -671,10 +662,7 @@ export default function PluralityPage() {
                 )}
 
                 {activeAct === 32 ? (
-                  <InscriptionsPage
-                    onCopy={copyInscription}
-                    onProtect={handleProtect}
-                  />
+                  <InscriptionsPage onCopy={copyInscription} />
                 ) : (
                   <div className="markdown-content pb-24 sm:pb-28">
                     {isLoading ? (

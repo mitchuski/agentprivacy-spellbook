@@ -1,7 +1,7 @@
 /**
  * Built-in spellbook patterns — pre-configured skill graphs users can load.
- * Aligned with public/persona/_index.json (16 templates). Soulbis and Soulbae are canonical;
- * others are role-specific pathways with persona-index skills_role.
+ * Aligned with agentprivacy-CODEX.md (22 personas). Soulbis and Soulbae are canonical;
+ * skillIds from persona-index getSkillIdsForPersona (privacy layer + skills_role).
  */
 
 import { FIRST_PERSON_SPELL_IDS } from '@/lib/grimoire-baked';
@@ -25,11 +25,6 @@ const SOULBIS_SPELL_IDS: string[] = [
   'zero-tale-26',
 ];
 
-const SOULBIS_SKILL_IDS: string[] = [
-  'dragon', 'vrc_identity', 'promise_theory', 'knowledgegraph', 'tetrahedral_sovereignty', 'uor_toroidal',
-  'crypto_zkp', 'swordsman_browser', 'personhood_sybil', 'dark_forest', 'academic',
-];
-
 /** Soulbae — Full First Person + Mage divergence (Canon, Society, Plurality, incantations). */
 const SOULBAE_SPELL_IDS: string[] = [
   ...FIRST_PERSON_SPELL_IDS,
@@ -41,11 +36,6 @@ const SOULBAE_SPELL_IDS: string[] = [
   'incantation-manifold_incantation', // Manifold Dragon — convergence
 ];
 
-const SOULBAE_SKILL_IDS: string[] = [
-  'dragon', 'vrc_identity', 'promise_theory', 'knowledgegraph', 'tetrahedral_sovereignty', 'uor_toroidal',
-  'ai_agent', 'economics', 'policy_governance', 'narrative_compression', 'hitchhiker_governance', 'plurality_cooperative',
-];
-
 /** Cipher — ZKP Protocol Engineer (Swordsman persona). */
 const CIPHER_SPELL_IDS: string[] = [
   'act-09-zcash-shield', 'act-07-mirror', 'act-10-topology',
@@ -55,40 +45,25 @@ const CIPHER_SPELL_IDS: string[] = [
   'zero-tale-23', 'zero-tale-26',
 ];
 
-const CIPHER_SKILL_IDS: string[] = [
-  'dragon', 'vrc_identity', 'promise_theory', 'knowledgegraph', 'tetrahedral_sovereignty', 'uor_toroidal',
-  'crypto_zkp', 'personhood_sybil', 'academic',
-];
-
-/** Warden — Browser Privacy Builder (Swordsman persona). */
+/** Warden — Browser Builder (Swordsman persona). */
 const WARDEN_SPELL_IDS: string[] = [
   'act-04-blade-alone', 'act-05-light-armor', 'act-08-ancient-rule', 'act-09-zcash-shield',
   'act-15-running-in-shackles', 'act-17-bonfire-dark-forest',
 ];
 
-const WARDEN_SKILL_IDS: string[] = [
-  'dragon', 'vrc_identity', 'promise_theory', 'knowledgegraph', 'tetrahedral_sovereignty', 'uor_toroidal',
-  'swordsman_browser', 'personhood_sybil', 'dark_forest', 'crypto_zkp',
-];
-
-/** Chronicler — Narrative Architect (Mage persona). */
+/** Chronicler — Narrative Compression Specialist (Mage persona). */
 const CHRONICLER_SPELL_IDS: string[] = [
   'act-01-venice', 'act-02-dual-ceremony', 'act-03-drakes-teaching', 'act-12-forgetting',
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-02-early-incantations', 'chapter-03-synthesis',
 ];
 
-const CHRONICLER_SKILL_IDS: string[] = [
-  'dragon', 'vrc_identity', 'promise_theory', 'knowledgegraph', 'tetrahedral_sovereignty', 'uor_toroidal',
-  'narrative_compression', 'ai_agent', 'hitchhiker_governance', 'plurality_cooperative',
-];
-
-/** Mage-focused pathway (canon + story). Used by assessor, ambassador, shipwright, weaver. */
+/** Mage-focused pathway (canon + story). Used by assessor, ambassador, shipwright, weaver, priest. */
 const MAGE_PATH_SPELL_IDS: string[] = [
   'act-01-venice', 'act-02-dual-ceremony', 'act-03-drakes-teaching', 'act-12-forgetting',
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-02-early-incantations', 'chapter-03-synthesis',
 ];
 
-/** Balanced pathway (story + canon). Used by healer, witness, architect, pedagogue. */
+/** Balanced pathway (story + canon). Used by healer, witness, architect, pedagogue, jedi, kyra, person. */
 const BALANCED_PATH_SPELL_IDS: string[] = [
   'act-01-venice', 'act-03-drakes-teaching', 'act-09-zcash-shield', 'act-12-forgetting',
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-03-synthesis',
@@ -99,52 +74,52 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     id: 'soulbis',
     name: 'Soulbis — The First Swordsman',
     emoji: '⚔️',
-    tagline: 'I slash surveillance focus. I enforce boundaries with mathematics.',
+    tagline: 'The blade that protects without seeing what it protects is the only blade that cannot be turned.',
     alignment: 'swordsman',
     spellIds: SOULBIS_SPELL_IDS,
-    skillIds: SOULBIS_SKILL_IDS,
+    skillIds: getSkillIdsForPersona('soulbis'),
   },
   {
     id: 'soulbae',
     name: 'Soulbae — The First Mage',
     emoji: '🧙',
-    tagline: 'I chronicle, compress, and project. I delegate without disclosure.',
+    tagline: 'The mage who sees everything and touches nothing is the only delegate who cannot betray what was delegated.',
     alignment: 'mage',
     spellIds: SOULBAE_SPELL_IDS,
-    skillIds: SOULBAE_SKILL_IDS,
+    skillIds: getSkillIdsForPersona('soulbae'),
   },
   {
     id: 'cipher',
     name: 'The Cipher — ZKP Protocol Engineer',
     emoji: '🗡️🔐',
-    tagline: 'I prove without revealing. I build the circuits that make privacy mathematical.',
+    tagline: 'A proof that reveals nothing except its own truth is worth more than a promise that reveals everything about its maker.',
     alignment: 'swordsman',
     spellIds: CIPHER_SPELL_IDS,
-    skillIds: CIPHER_SKILL_IDS,
+    skillIds: getSkillIdsForPersona('cipher'),
   },
   {
     id: 'warden',
-    name: 'The Warden — Browser Privacy Builder',
+    name: 'The Warden — Browser Builder',
     emoji: '🗡️🌐',
-    tagline: 'I stand between the human and the harvest. Every cookie slashed is a sovereignty transition.',
+    tagline: 'The door you walk through a thousand times a day is the one most worth guarding.',
     alignment: 'swordsman',
     spellIds: WARDEN_SPELL_IDS,
-    skillIds: WARDEN_SKILL_IDS,
+    skillIds: getSkillIdsForPersona('warden'),
   },
   {
     id: 'gatekeeper',
-    name: 'The Gatekeeper — Proof-of-Personhood Researcher',
+    name: 'The Gatekeeper — Personhood Verification Specialist',
     emoji: '🗡️👤',
-    tagline: 'One human. One swordsman. One chain. Multiply the agents and you multiply the lie.',
+    tagline: 'The gate that knows you are real without knowing who you are is the only gate worth walking through.',
     alignment: 'swordsman',
     spellIds: CIPHER_SPELL_IDS,
     skillIds: getSkillIdsForPersona('gatekeeper'),
   },
   {
     id: 'ranger',
-    name: 'The Ranger — Dark Forest Strategist',
+    name: 'The Ranger — Dark Forest Navigator',
     emoji: '🗡️🌲',
-    tagline: 'In the economic dark forest, the greatest signal of value is the absence of signal.',
+    tagline: "The forest doesn't punish the visible — it prices them.",
     alignment: 'swordsman',
     spellIds: WARDEN_SPELL_IDS,
     skillIds: getSkillIdsForPersona('ranger'),
@@ -153,25 +128,43 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     id: 'sentinel',
     name: 'The Sentinel — Infrastructure Security Architect',
     emoji: '🗡️🛡️',
-    tagline: 'The perimeter is not a wall. It is a proof. Every packet carries a claim about its origin.',
+    tagline: 'The wall you never notice is the one doing its job.',
     alignment: 'swordsman',
     spellIds: WARDEN_SPELL_IDS,
     skillIds: getSkillIdsForPersona('sentinel'),
   },
   {
+    id: 'sith',
+    name: 'The Sith — Adversarial Researcher',
+    emoji: '🗡️🔴',
+    tagline: 'The architecture that only discovers weaknesses when attackers find them has already been breached.',
+    alignment: 'swordsman',
+    spellIds: WARDEN_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('sith'),
+  },
+  {
+    id: 'archer',
+    name: 'The Archer — Precision Strike Operative',
+    emoji: '🗡️🎯',
+    tagline: 'The most sovereign disclosure reveals exactly one truth and leaves no residue.',
+    alignment: 'swordsman',
+    spellIds: WARDEN_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('archer'),
+  },
+  {
     id: 'chronicler',
-    name: 'The Chronicler — Knowledge Compression Builder',
+    name: 'The Chronicler — Narrative Compression Specialist',
     emoji: '🧙📖',
-    tagline: 'A proverb is a story that forgot its author. A skill file is an equation dressed for foreign soil.',
+    tagline: "A proverb that can't rebuild the cathedral it was carved from was never carved at all.",
     alignment: 'mage',
     spellIds: CHRONICLER_SPELL_IDS,
-    skillIds: CHRONICLER_SKILL_IDS,
+    skillIds: getSkillIdsForPersona('chronicler'),
   },
   {
     id: 'assessor',
     name: 'The Assessor — Privacy Data Economist',
     emoji: '🧙💰',
-    tagline: 'The gap between surveillance and sovereignty is not a number. It is a topology.',
+    tagline: 'The person who knows the price of their data but not its compounding value has already been bought at discount.',
     alignment: 'mage',
     spellIds: MAGE_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('assessor'),
@@ -180,7 +173,7 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     id: 'ambassador',
     name: 'The Ambassador — Standards & Governance Architect',
     emoji: '🧙⚖️',
-    tagline: 'A standard set too late is a wall built after the flood.',
+    tagline: 'The standard that requires surveillance to enforce has already failed the thing it was written to protect.',
     alignment: 'mage',
     spellIds: MAGE_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('ambassador'),
@@ -189,7 +182,7 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     id: 'shipwright',
     name: 'The Shipwright — DAO & Community Architect',
     emoji: '🧙🏴‍☠️',
-    tagline: 'The ship cannot be bought, only joined. The guide cannot be owned, only tended.',
+    tagline: "The ship that can't sail without its captain was never a ship — it was a throne.",
     alignment: 'mage',
     spellIds: MAGE_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('shipwright'),
@@ -198,23 +191,32 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     id: 'weaver',
     name: 'The Weaver — Plural Technology Researcher',
     emoji: '🧙⿻',
-    tagline: 'Without sovereignty, every vote is coerced. Without separation, every commons is extracted.',
+    tagline: 'The thread that refuses to touch other threads makes no fabric.',
     alignment: 'mage',
     spellIds: MAGE_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('weaver'),
   },
   {
+    id: 'priest',
+    name: 'The Priest — Ceremony Architect',
+    emoji: '🧙🔮',
+    tagline: 'A ceremony that can be performed without understanding has already emptied itself of everything worth committing to.',
+    alignment: 'mage',
+    spellIds: MAGE_PATH_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('priest'),
+  },
+  {
     id: 'healer',
-    name: 'The Healer — Healthcare Privacy Architect',
+    name: 'The Healer — Healthcare Privacy Specialist',
     emoji: '☯️🏥',
-    tagline: "Trust is architectural, not contractual. The patient's data saves lives only if the patient trusts the system.",
+    tagline: 'The record that heals you should not be the record that prices you.',
     alignment: 'balanced',
     spellIds: BALANCED_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('healer'),
   },
   {
     id: 'witness',
-    name: 'The Witness — Privacy-Preserving Journalist',
+    name: 'The Witness — Privacy-Preserving Accountability Agent',
     emoji: '☯️📰',
     tagline: 'The source must be protected. The story must be verified. The gap is the architecture.',
     alignment: 'balanced',
@@ -225,7 +227,7 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     id: 'architect',
     name: 'The Architect — AI Agent System Designer',
     emoji: '☯️🤖',
-    tagline: 'The hardest problem in AI is not intelligence. It is trustworthiness without omniscience.',
+    tagline: 'The system that trusts its agents to behave has already delegated sovereignty to hope.',
     alignment: 'balanced',
     spellIds: BALANCED_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('architect'),
@@ -234,10 +236,37 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     id: 'pedagogue',
     name: 'The Pedagogue — Privacy Education Designer',
     emoji: '☯️🎓',
-    tagline: "If a sixty-year-old in a Glasgow pub can't understand it in one breath, it hasn't found its compression.",
+    tagline: 'The teacher who needs the student to know cryptography before explaining privacy has already lost the class that matters most.',
     alignment: 'balanced',
     spellIds: BALANCED_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('pedagogue'),
+  },
+  {
+    id: 'jedi',
+    name: 'The Jedi — Balanced Force Practitioner',
+    emoji: '☯️⚡',
+    tagline: 'The practitioner who masters the tension builds sovereignty.',
+    alignment: 'balanced',
+    spellIds: BALANCED_PATH_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('jedi'),
+  },
+  {
+    id: 'kyra',
+    name: 'Kyra — Sovereign AI Vision',
+    emoji: '☯️💎',
+    tagline: 'The intelligence that serves without surveilling, delegates without extracting, and protects without imprisoning is the only intelligence worth building.',
+    alignment: 'balanced',
+    spellIds: BALANCED_PATH_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('kyra'),
+  },
+  {
+    id: 'person',
+    name: 'The Person — First Person Seeker',
+    emoji: '☯️👤',
+    tagline: 'The platform sees the data and calls it wealth. The sovereign holds the data and generates twelve thousand times more.',
+    alignment: 'balanced',
+    spellIds: BALANCED_PATH_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('person'),
   },
 ];
 

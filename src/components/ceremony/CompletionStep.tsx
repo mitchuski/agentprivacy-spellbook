@@ -14,10 +14,9 @@ export default function CompletionStep({ returnTo = '/spells' }: { returnTo?: st
   }, []);
 
   useEffect(() => {
-    const path = returnTo === '/spells' ? `${returnTo}?from=ceremony` : returnTo;
-    const t = setTimeout(() => router.push(path), 2500);
+    const t = setTimeout(() => router.push('/ceremony'), 2500);
     return () => clearTimeout(t);
-  }, [router, returnTo]);
+  }, [router]);
 
   const handleDownloadCard = () => {
     const card = getAgentCard();
@@ -31,13 +30,11 @@ export default function CompletionStep({ returnTo = '/spells' }: { returnTo?: st
     URL.revokeObjectURL(url);
   };
 
-  const destination = returnTo === '/spells' ? 'Spells' : returnTo === '/promises' ? 'Promises' : returnTo;
-
   return (
     <div className="space-y-6 text-center">
       <h2 className="text-2xl font-semibold text-text">Ceremony complete</h2>
       <p className="text-text/80">
-        Your Swordsman identity is ready. Redirecting you to {destination}…
+        Your Swordsman identity is ready. Taking you to the ceremony page…
       </p>
       {constellationPath && (
         <div className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3">
