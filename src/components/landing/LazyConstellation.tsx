@@ -24,7 +24,23 @@ export default function LazyConstellation({
   const placeholderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setReduced(typeof window !== 'undefined' && window.innerWidth < 768);
+    const checkWidth = () => {
+      setReduced(window.innerWidth < 768);
+    };
+
+    checkWidth();
+
+    let timeoutId: ReturnType<typeof setTimeout>;
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkWidth, 150);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   useEffect(() => {

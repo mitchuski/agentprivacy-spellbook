@@ -90,50 +90,50 @@ export default function LandingPage() {
   const [heroFade, setHeroFade] = useState(true);
   const [ctaIndex, setCtaIndex] = useState(0);
   const [ctaFade, setCtaFade] = useState(true);
-  const [isClient, setIsClient] = useState(false);
   const [copiedDonation, setCopiedDonation] = useState(false);
   const [copiedZec, setCopiedZec] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const heroInterval = isMobile ? 4500 : 3200;
+    const ctaInterval = isMobile ? 4000 : 2800;
 
-  useEffect(() => {
-    const t = setInterval(() => {
+    const heroTimer = setInterval(() => {
       setHeroFade(false);
       setTimeout(() => {
         setHeroIndex((i) => (i + 1) % HERO_CAROUSEL.length);
         setHeroFade(true);
       }, 400);
-    }, 3200);
-    return () => clearInterval(t);
-  }, []);
+    }, heroInterval);
 
-  useEffect(() => {
-    const t = setInterval(() => {
+    const ctaTimer = setInterval(() => {
       setCtaFade(false);
       setTimeout(() => {
         setCtaIndex((i) => (i + 1) % CTA_CAROUSEL.length);
         setCtaFade(true);
       }, 400);
-    }, 2800);
-    return () => clearInterval(t);
+    }, ctaInterval);
+
+    return () => {
+      clearInterval(heroTimer);
+      clearInterval(ctaTimer);
+    };
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background relative" suppressHydrationWarning>
+    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background relative">
       <LandingStars />
       <AppNav />
 
       {/* Hero — full viewport */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative pb-[env(safe-area-inset-bottom)]">
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
         <HeroConstellation sectionIndex={0} />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-bold text-text mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-text mb-6"
           >
             agentprivacy
           </motion.h1>
@@ -141,7 +141,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl md:text-2xl text-text-muted mb-8"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-text-muted mb-8"
           >
             privacy-first personal payment and knowledge for AI agents
           </motion.p>
@@ -167,33 +167,29 @@ export default function LandingPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="max-w-3xl mx-auto"
           >
-            <p className="text-2xl md:text-3xl font-medium text-text mb-4">i&apos;m just another</p>
-            <div className="relative h-14 md:h-16 flex items-center justify-center" suppressHydrationWarning>
-              {isClient ? (
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={heroIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: heroFade ? 1 : 0, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.4 }}
-                    className="text-2xl md:text-3xl text-text-muted absolute text-center"
-                  >
-                    {HERO_CAROUSEL[heroIndex].text}
-                  </motion.p>
-                </AnimatePresence>
-              ) : (
-                <p className="text-2xl md:text-3xl text-text-muted absolute">{HERO_CAROUSEL[0].text}</p>
-              )}
+            <p className="text-xl sm:text-2xl md:text-3xl font-medium text-text mb-4">i&apos;m just another</p>
+            <div className="relative h-14 md:h-16 flex items-center justify-center">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.p
+                  key={heroIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: heroFade ? 1 : 0, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4 }}
+                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-text-muted absolute text-center px-4"
+                >
+                  {HERO_CAROUSEL[heroIndex].text}
+                </motion.p>
+              </AnimatePresence>
             </div>
-            <p className="text-primary font-medium pt-4 text-xl md:text-2xl">and so are you. 🤝</p>
+            <p className="text-primary font-medium pt-4 text-lg sm:text-xl md:text-2xl">and so are you. 🤝</p>
           </motion.div>
         </div>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-text-muted text-2xl z-10"
+          className="absolute bottom-8 mb-[env(safe-area-inset-bottom)] left-1/2 -translate-x-1/2 text-text-muted text-2xl z-10"
           aria-hidden
         >
           ↓
@@ -498,20 +494,20 @@ export default function LandingPage() {
             Each inscription — proverb + spell — adds a node to your spell graph. Connected nodes form constellations. Constellations become skills. The more you understand, the more powerful your agents become.
           </motion.p>
           {/* Graph convergence — v4: knowledge graph + promise graph = trust graph */}
-          <div className="flex flex-wrap justify-center items-center gap-5 mb-4">
-            <div className="text-center min-w-[144px]">
+          <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 mb-4">
+            <div className="text-center min-w-0 sm:min-w-[144px]">
               <div className="text-[1.8rem] mb-2">📖</div>
               <div className="font-mono text-[11px] text-primary tracking-wide font-medium">knowledge graph</div>
               <div className="text-[11px] text-text-muted mt-0.5">(what you know)</div>
             </div>
             <div className="text-xl text-surface font-extrabold">+</div>
-            <div className="text-center min-w-[144px]">
+            <div className="text-center min-w-0 sm:min-w-[144px]">
               <div className="text-[1.8rem] mb-2">🤝</div>
               <div className="font-mono text-[11px] text-primary tracking-wide font-medium">promise graph</div>
               <div className="text-[11px] text-text-muted mt-0.5">(what you commit)</div>
             </div>
             <div className="text-xl text-surface font-extrabold">=</div>
-            <div className="text-center min-w-[144px]">
+            <div className="text-center min-w-0 sm:min-w-[144px]">
               <div className="text-[1.8rem] mb-2">🐉</div>
               <div className="font-mono text-[11px] text-primary tracking-wide font-medium">trust graph</div>
               <div className="text-[11px] text-text-muted mt-0.5">(what you&apos;ve earned)</div>
@@ -639,29 +635,33 @@ export default function LandingPage() {
               loop
               muted
               playsInline
+              preload="metadata"
+              poster="/assets/agentprivacy_swordmage_bg_frame.jpg"
+              onCanPlay={(e) => {
+                const video = e.currentTarget;
+                video.play().catch(() => {});
+              }}
               className="absolute inset-0 w-full h-full object-cover z-0"
             />
+            {/* Fallback background for when video fails to load/play */}
+            <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-primary/20 via-background to-secondary/20 z-[-1]" />
             <div className="absolute inset-0 bg-background/40 z-[1]" />
             <div className="relative z-10 w-full px-6">
               <h2 className="text-3xl font-bold text-text mb-3">join us?</h2>
               <p className="text-[15px] text-text-muted mb-1">Create your:</p>
-              <div className="relative h-14 flex items-center justify-center mb-8" suppressHydrationWarning>
-                {isClient ? (
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={ctaIndex}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: ctaFade ? 1 : 0, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{ duration: 0.4 }}
-                      className="text-2xl md:text-3xl text-text absolute"
-                    >
-                      {CTA_CAROUSEL[ctaIndex].text}
-                    </motion.p>
-                  </AnimatePresence>
-                ) : (
-                  <p className="text-2xl md:text-3xl text-text absolute">{CTA_CAROUSEL[0].text}</p>
-                )}
+              <div className="relative h-14 flex items-center justify-center mb-8">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.p
+                    key={ctaIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: ctaFade ? 1 : 0, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-text absolute"
+                  >
+                    {CTA_CAROUSEL[ctaIndex].text}
+                  </motion.p>
+                </AnimatePresence>
               </div>
               <div className="flex flex-wrap justify-center gap-3">
                 <motion.a href={ROUTES.ceremony} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn-primary px-8 py-4 text-lg">⚔️ Ceremony</motion.a>

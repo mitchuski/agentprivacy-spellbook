@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 const FIELD_STARS_DEFAULT = 220;
 const OUTER_STARS_DEFAULT = 48;
@@ -107,6 +107,17 @@ export default function HeroConstellation({
   const field = useMemo(() => fullFieldStars(fieldLen), [fieldLen]);
   const outer = useMemo(() => outerStars(outerLen), [outerLen]);
 
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  useEffect(() => {
+    const m = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    if (!m) return;
+    setPrefersReducedMotion(m.matches);
+    const handler = () => setPrefersReducedMotion(m.matches);
+    m.addEventListener('change', handler);
+    return () => m.removeEventListener('change', handler);
+  }, []);
+  const disableAnimations = reduced || prefersReducedMotion;
+
   const id = sectionIndex;
   const filterStrong = `constellationGlowStrong-${id}`;
   const filterSoft = `constellationGlowSoft-${id}`;
@@ -194,7 +205,7 @@ export default function HeroConstellation({
               r={s.r}
               fill="#a0a4fe"
               opacity={s.opacity}
-              style={{ animation: `constellationTwinkle 6s ease-in-out ${s.delay}s infinite` }}
+              style={disableAnimations ? {} : { animation: `constellationTwinkle 6s ease-in-out ${s.delay}s infinite` }}
             />
           ))}
         </g>
@@ -207,13 +218,13 @@ export default function HeroConstellation({
               r={s.r}
               fill="#8a8afe"
               opacity={s.opacity}
-              style={{ animation: `constellationPulse 5s ease-in-out ${s.delay}s infinite` }}
+              style={disableAnimations ? {} : { animation: `constellationPulse 5s ease-in-out ${s.delay}s infinite` }}
             />
           ))}
         </g>
         {/* Tetrahedron: gas + highlighted bigger dots along tetrahedra lines, masked for soft edges */}
         <g mask={`url(#${maskFrame})`}>
-          <g filter={`url(#${filterGas})`} style={{ animation: `gasPhase 9s ease-in-out ${id * 0.7}s infinite` }}>
+          <g filter={`url(#${filterGas})`} style={disableAnimations ? {} : { animation: `gasPhase 9s ease-in-out ${id * 0.7}s infinite` }}>
             {TETRA_EDGES.map(([i, j], ei) => {
               const a = tetra[i];
               const b = tetra[j];
@@ -241,7 +252,7 @@ export default function HeroConstellation({
                 r={i < 4 ? 0.44 : 0.3}
                 fill="#8a8afe"
                 opacity={i < 4 ? 0.7 : 0.55}
-                style={{ animation: `constellationPulse 4s ease-in-out ${(i % 8) * 0.12}s infinite` }}
+                style={disableAnimations ? {} : { animation: `constellationPulse 4s ease-in-out ${(i % 8) * 0.12}s infinite` }}
               />
             ))}
           </g>
