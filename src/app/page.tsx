@@ -703,7 +703,7 @@ export default function LandingPage() {
           </motion.p>
           <div className="flex flex-wrap justify-center gap-4 mb-10">
             <motion.a
-              href="https://github.com/mitchuski/agentprivacy-spellbook"
+              href="https://github.com/mitchuski/agentprivacy-docs"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}

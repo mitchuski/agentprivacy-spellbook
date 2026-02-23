@@ -1,5 +1,11 @@
 import { createRequire } from 'module';
+import { existsSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 const require = createRequire(import.meta.url);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const adapterPath = path.join(__dirname, 'build', 'fix-rsc-paths.js');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -17,8 +23,8 @@ const nextConfig = {
     root: process.cwd(),
   },
   experimental: {
-    // Next.js 16: flatten RSC payload paths so client requests find them (issue #85374)
-    adapterPath: require.resolve('./build/fix-rsc-paths.js'),
+    // Next.js 16: flatten RSC payload paths (optional; file may be missing on CI/Cloudflare)
+    ...(existsSync(adapterPath) && { adapterPath: path.resolve(adapterPath) }),
   },
 };
 
