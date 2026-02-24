@@ -432,7 +432,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
 
   const inscriptions = [
     {
-      title: "First Page",
+      title: "just another mage, sharing a spellbook",
       actNumber: 0,
       emojis: "😊 → 🔮 🤝 🗡️ × 🐉 → 🤖❌",
       quote: getProverbForInscription(0)
@@ -1046,8 +1046,8 @@ export default function StoryPage() {
                   };
                   let label = '';
                   let shortLabel = '';
-                  if (actNum === FIRST_PAGE) { label = 'First page'; shortLabel = 'first'; }
-                  else if (actNum === LAST_PAGE) { label = 'Last page'; shortLabel = 'last'; }
+                  if (actNum === FIRST_PAGE) { label = 'just another mage, sharing a spellbook'; shortLabel = 'first'; }
+                  else if (actNum === LAST_PAGE) { label = "The privacymage's reflection"; shortLabel = 'last'; }
                   else { label = `Act ${romanNumerals[actNum] ?? actNum}`; shortLabel = romanNumerals[actNum] ?? String(actNum); }
                   return { id: actNum, label, shortLabel };
                 })}
@@ -1327,7 +1327,7 @@ export default function StoryPage() {
           onClose={() => setInscribeNodeId(null)}
           nodeId={inscribeNodeId}
           nodeLabel={
-            inscribeNodeId === FIRST_PAGE ? 'First page' : inscribeNodeId === LAST_PAGE ? 'Last page' :
+            inscribeNodeId === FIRST_PAGE ? 'just another mage, sharing a spellbook' : inscribeNodeId === LAST_PAGE ? "The privacymage's reflection" :
             (() => {
               const r: { [k: number]: string } = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII' };
               return `Act ${r[inscribeNodeId] ?? inscribeNodeId}`;
