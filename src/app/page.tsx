@@ -491,7 +491,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-[15px] text-text-muted text-center max-w-[520px] mx-auto mb-11 leading-[1.7]"
           >
-            Each inscription — proverb + spell — adds a node to your spell graph. Connected nodes form constellations. Constellations become skills. The more you understand, the more powerful your agents become.
+            Each inscription — proverb + spell — adds a node to your spell web. Connected nodes form constellations. Constellations become skills. The more you understand, the more powerful your agents become.
           </motion.p>
           {/* Graph convergence — v4: knowledge graph + promise graph = trust graph */}
           <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 mb-4">
@@ -594,7 +594,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-3xl font-bold text-text mb-8 text-center"
           >
-            Pools
+            Pools, Where Pools Become Wells.
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
