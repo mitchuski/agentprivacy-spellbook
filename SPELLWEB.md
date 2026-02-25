@@ -2,9 +2,18 @@
 
 > *"Serendipity shapes more than strategy. Constellations illuminate more than spotlights. Promise builds in the gap between."*
 
+## Spellweb vs web (agentprivacy)
+
+- **Spellweb** = the whole product: a **standalone domain** for the full knowledge graph viewer (all tales, protocols, standards, Paradox Plane, node inspector, filters, Graph RAG). The atlas.
+- **web** = the **personal journey** on agentprivacy: one route (`/web`) showing your lit spells, skills, connections, and reflections — emojis, lines, constellation. The path on the map.
+
+This repo ships **web** (journey only). The full Spellweb product will live on its own domain. For transformer instructions (ID mapping, data shapes, how the two relate), see **`docs/SPELLWEB_WEB_TRANSFORMER.md`**.
+
+---
+
 ## What is the Spellweb?
 
-The Spellweb is an interactive knowledge graph — a navigable constellation of everything agentprivacy has built, mapped, and connected. Tales, protocols, standards, and the relationships between them, rendered as an explorable force-directed graph.
+The Spellweb is an interactive knowledge graph — a navigable constellation of everything agentprivacy has built, mapped, and connected. Tales, protocols, standards, and the relationships between them, rendered as an explorable force-directed graph. It is intended to be built and hosted as a **standalone product** (separate domain); agentprivacy’s **web** is the personal-journey slice only.
 
 Think of it as a living map of the privacy-preserving agent ecosystem. Not a list, not a table of contents. A web where you can see how zero-knowledge proofs connect to delegation ceremonies, how the Swordsman's blade relates to the Mage's projection, and where the gap between them holds human sovereignty intact.
 
@@ -49,9 +58,9 @@ Each node opens a detail panel showing its dimensional profile (six bars from d�
 
 ### Adding Nodes
 
-The graph data lives in `/public/spellweb/nodes.json` and `/public/spellweb/edges.json`. To add a new node:
+The graph data for the full Spellweb (standalone) lives in this repo as reference in `public/nexus/nodes.json` and `public/nexus/edges.json`. To add a new node:
 
-1. Create an entry in `nodes.json` following the schema in `src/lib/spellweb/types.ts`
+1. Create an entry in `nodes.json` following the schema in `src/lib/nexus/types.ts`
 2. Score it on the feature axes. If you're unsure about scores, make your best estimate — we'll validate collectively
 3. Add edges to `edges.json` connecting it to related nodes
 4. Open a PR with your additions
@@ -97,7 +106,7 @@ Edge types and when to use them:
 
 ### Improving the Visualization
 
-The visualization code lives in `src/app/spellweb/`. It uses D3.js for force simulation and React for rendering. Contributions welcome on:
+Reference visualization for the full KG in this repo: `src/app/nexus/` (D3). The standalone Spellweb domain will implement or extend this. Journey visualization: `src/components/spellweb/SpellwebViewer.tsx` (web only). Contributions welcome on:
 
 - Force simulation tuning (gravity, charge, link distance)
 - Mobile interaction improvements
@@ -111,7 +120,7 @@ The visualization code lives in `src/app/spellweb/`. It uses D3.js for force sim
 
 - Complete the initial dataset (all 30 tales, all major protocols and standards)
 - Validate scoring through community review
-- Add the `/spellweb` route to the main navigation
+- Standalone Spellweb domain hosts the full KG; agentprivacy keeps **web** (`/web`) as the single journey route
 
 ### Medium Term
 
@@ -138,10 +147,10 @@ The visualization code lives in `src/app/spellweb/`. It uses D3.js for force sim
 
 ## Technical Reference
 
-- Build spec for coding agents: `SPELLWEB_CODING_AGENT.md`
-- Data model and types: `src/lib/spellweb/types.ts`
-- Node data: `/public/spellweb/nodes.json`
-- Edge data: `/public/spellweb/edges.json`
+- **Spellweb ↔ web (this repo):** `docs/SPELLWEB_WEB_TRANSFORMER.md`
+- Build spec for coding agents: `archive/instructional-2025/SPELLWEB_CODING_AGENT.md`
+- Journey data model: `src/lib/spellweb/types.ts` (web); KG types: `src/lib/nexus/types.ts` (Spellweb/standalone)
+- KG seed data (for standalone Spellweb): `public/nexus/nodes.json`, `public/nexus/edges.json`
 - LoC reference: [loc.closertotruth.com/interactive](https://loc.closertotruth.com/interactive)
 - LoC design documentation: [denizcemonduygu.com/portfolio/landscape-of-consciousness](https://www.denizcemonduygu.com/portfolio/landscape-of-consciousness/)
 
