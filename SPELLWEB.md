@@ -58,9 +58,9 @@ Each node opens a detail panel showing its dimensional profile (six bars from d�
 
 ### Adding Nodes
 
-The graph data for the full Spellweb (standalone) lives in this repo as reference in `public/nexus/nodes.json` and `public/nexus/edges.json`. To add a new node:
+The full Spellweb (standalone domain) will have its own graph data pipeline. This repo does not ship KG data or nexus/spellweb routes. To add a new node to the standalone product:
 
-1. Create an entry in `nodes.json` following the schema in `src/lib/nexus/types.ts`
+1. Create an entry in the standalone repo’s `nodes.json` following the schema described in `docs/SPELLWEB_INTEGRATION_SPEC_v2.md` and `docs/NEXUS_SPELLWEB_ARCHITECTURE.md`
 2. Score it on the feature axes. If you're unsure about scores, make your best estimate — we'll validate collectively
 3. Add edges to `edges.json` connecting it to related nodes
 4. Open a PR with your additions
@@ -106,7 +106,7 @@ Edge types and when to use them:
 
 ### Improving the Visualization
 
-Reference visualization for the full KG in this repo: `src/app/nexus/` (D3). The standalone Spellweb domain will implement or extend this. Journey visualization: `src/components/spellweb/SpellwebViewer.tsx` (web only). Contributions welcome on:
+Journey visualization in this repo: `src/components/spellweb/SpellwebViewer.tsx` (used only by **web** at `/web`). The standalone Spellweb domain will implement the full KG viewer (D3, Paradox Plane, etc.) in its own codebase. Contributions welcome on:
 
 - Force simulation tuning (gravity, charge, link distance)
 - Mobile interaction improvements
@@ -149,8 +149,7 @@ Reference visualization for the full KG in this repo: `src/app/nexus/` (D3). The
 
 - **Spellweb ↔ web (this repo):** `docs/SPELLWEB_WEB_TRANSFORMER.md`
 - Build spec for coding agents: `archive/instructional-2025/SPELLWEB_CODING_AGENT.md`
-- Journey data model: `src/lib/spellweb/types.ts` (web); KG types: `src/lib/nexus/types.ts` (Spellweb/standalone)
-- KG seed data (for standalone Spellweb): `public/nexus/nodes.json`, `public/nexus/edges.json`
+- Journey data model: `src/lib/spellweb/types.ts`, `builder.ts`, `labels.ts` (web only). KG schema for standalone: see `docs/SPELLWEB_INTEGRATION_SPEC_v2.md`
 - LoC reference: [loc.closertotruth.com/interactive](https://loc.closertotruth.com/interactive)
 - LoC design documentation: [denizcemonduygu.com/portfolio/landscape-of-consciousness](https://www.denizcemonduygu.com/portfolio/landscape-of-consciousness/)
 

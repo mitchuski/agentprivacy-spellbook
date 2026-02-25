@@ -1,7 +1,7 @@
 # Implementation Path: Nexus + Spellweb Integration
 
 **Date:** February 25, 2026
-**Status:** Ready to Execute
+**Status:** Reference only — **nexus and spellweb routes have been removed from this repo.** Agentprivacy ships **web** (`/web`) only; the full KG viewer is for the standalone Spellweb domain.
 **Spell:** ⚔️🛤️🧙📊 | 😊
 
 ---

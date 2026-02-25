@@ -82,12 +82,9 @@ No automatic sync. Overlay or "Show my path" on the standalone Spellweb would co
 | Journey UI (SpellwebViewer) | `src/components/spellweb/SpellwebViewer.tsx` | **web** (`/web`) |
 | Journey builder | `src/lib/spellweb/builder.ts`, `types.ts`, `labels.ts` | **web** |
 | Journey page | `src/app/web/page.tsx` | **web** |
-| KG seed data (reference) | `public/nexus/nodes.json`, `public/nexus/edges.json` | Standalone Spellweb (copy or ingest); optional `/nexus` route in this repo |
-| KG types | `src/lib/nexus/types.ts`, `loader.ts` | Optional `/nexus` or export for standalone |
-| D3 KG component | `src/app/nexus/components/NexusGraph.tsx` | Optional `/nexus` route; reference for standalone |
 | Nav | **web** only: single tab `web` → `/web` | agentprivacy |
 
-The **standalone Spellweb domain** will implement (or re-implement) the full KG viewer using these specs and seed data; it is not required to use this repo’s `/nexus` route in production.
+This repo contains **only the journey** (web). There are no `/nexus` or `/spellweb` routes. The **standalone Spellweb domain** will implement the full KG viewer (and its own data pipeline) from the specs in these docs.
 
 ---
 
@@ -106,10 +103,10 @@ When updating the relationship between Spellweb and web, touch:
 
 ## Quick Reference for Implementers
 
-- **Building the standalone Spellweb:** Use KG node/edge schema and scoring from this repo (`public/nexus/`, `src/lib/nexus/types.ts`). Implement Constellation + Paradox Plane, node inspector, filters. Graph RAG optional. No dependency on agentprivacy’s journey data.
+- **Building the standalone Spellweb:** Use KG node/edge schema and scoring from the specs in this repo (e.g. `docs/NEXUS_SPELLWEB_ARCHITECTURE.md`, `docs/SPELLWEB_INTEGRATION_SPEC_v2.md`). Implement Constellation + Paradox Plane, node inspector, filters. Graph RAG optional. No dependency on agentprivacy’s journey data. This repo does not ship nexus/spellweb routes or KG data.
 - **Maintaining agentprivacy web:** Keep `/web` as the single journey route. SpellwebViewer + spellbook storage + reflections + Connect + "path the stars." No requirement to host the full KG here.
 - **Linking the two (future):** "Add to my web" from Spellweb → map KG node to spell/skill ID, open agentprivacy with that ID or pass via query/API. "View in Spellweb" from web → map spell ID to KG node ID, open standalone Spellweb with highlight or focus on that node.
-- **"Full map" on web:** The journey page (`/web`) includes a "Full map →" link. It currently points to `/nexus` (in-repo KG preview). When the standalone Spellweb domain is live, update that link (e.g. in `src/app/web/page.tsx`) to the standalone URL so the journey always points at the canonical full graph.
+- **Linking to full map:** The journey page (`/web`) does not currently link to the full KG. When the standalone Spellweb domain is live, you can optionally add a "Full map" link (e.g. in the web top bar) pointing to the standalone URL.
 
 ---
 

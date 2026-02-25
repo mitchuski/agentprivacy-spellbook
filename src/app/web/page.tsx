@@ -242,14 +242,6 @@ export default function WebPage() {
           </Link>
           <span className="text-text-muted/60 shrink-0">·</span>
           <h1 className="text-lg font-semibold text-text shrink-0">Web</h1>
-          <span className="text-text-muted/60 shrink-0">·</span>
-          <Link
-            href="/nexus"
-            className="text-sm text-text-muted hover:text-text hover:underline shrink-0"
-            title="Full knowledge graph (tales, protocols, standards)"
-          >
-            Full map →
-          </Link>
           <div className="flex-1 min-w-0" />
           {selectionCount > 0 && availableFilters.length > 0 && (
             <div className="flex flex-wrap items-center gap-2">

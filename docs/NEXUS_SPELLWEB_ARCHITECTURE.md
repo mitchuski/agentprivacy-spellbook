@@ -2,7 +2,7 @@
 
 **Version:** 2.1
 **Date:** February 2026
-**Status:** Architectural Specification — see also `docs/SPELLWEB_WEB_TRANSFORMER.md`
+**Status:** Architectural Specification — see also `docs/SPELLWEB_WEB_TRANSFORMER.md`. **This repo has no `/nexus` or `/spellweb` routes; only `/web` (journey) exists here.**
 **Spell:** ⚔️🕸️⊥🧙📊 | 😊
 **Proverb:** *"The Spellweb is the atlas. The web is your path on the map."*
 
