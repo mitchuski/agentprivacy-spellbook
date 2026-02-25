@@ -11,7 +11,7 @@ metadata:
   version: "4.0"
   category: "role"
   origin: "0xagentprivacy"
-  author: "Mitchell Travers"
+  author: "privacymage"
   affiliation: "0xagentprivacy, BGIN, First Person Network"
   status: "working_paper"
   target_context: "Key recovery architects, Zcash application developers, cognitive security designers, VRC ceremony builders"

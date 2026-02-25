@@ -12,7 +12,7 @@ metadata:
   version: "5.0"
   category: "role"
   origin: "0xagentprivacy"
-  author: "Mitchell Travers"
+  author: "privacymage"
   affiliation: "0xagentprivacy, BGIN, First Person Network"
   status: "working_paper"
   equation_term: "Grimoire topology: the routing layer beneath persona constellation paths"

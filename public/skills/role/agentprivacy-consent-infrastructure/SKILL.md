@@ -10,7 +10,7 @@ metadata:
   version: "4.0"
   category: "role"
   origin: "0xagentprivacy"
-  author: "Mitchell Travers"
+  author: "privacymage"
   affiliation: "0xagentprivacy, BGIN, First Person Network"
   status: "working_paper"
   target_context: "Consent UX designers, IEEE 7012 implementers, Customer Commons contributors, cookie management builders, GDPR/ePrivacy architects"

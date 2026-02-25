@@ -12,7 +12,7 @@ metadata:
   version: "4.0"
   category: "privacy_layer"
   origin: "0xagentprivacy"
-  author: "Mitchell Travers"
+  author: "privacymage"
   affiliation: "0xagentprivacy, BGIN, First Person Network"
   status: "working_paper"
   target_context: "All agents, all knowledge graphs, all contexts — this is the root"

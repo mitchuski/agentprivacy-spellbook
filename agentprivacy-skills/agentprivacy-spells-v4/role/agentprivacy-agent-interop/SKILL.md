@@ -10,7 +10,7 @@ metadata:
   version: "4.0"
   category: "role"
   origin: "0xagentprivacy"
-  author: "Mitchell Travers"
+  author: "privacymage"
   affiliation: "0xagentprivacy, BGIN, First Person Network"
   status: "working_paper"
   target_context: "Agent platform builders, skill file authors, agentskills.io contributors, community deployers"

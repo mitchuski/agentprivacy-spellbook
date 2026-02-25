@@ -56,7 +56,7 @@ export default function AppNav() {
             <a href="/" className="text-xl font-bold text-text hover:text-primary transition-colors flex-shrink-0">
               agentprivacy
             </a>
-            <div className="hidden md:flex items-center gap-4 sm:gap-6 min-w-0">
+            <div className="hidden lg:flex items-center gap-4 sm:gap-6 min-w-0">
               {navLinks.map(({ href, label, key }) => (
                 <NavLink key={href} href={href} className={`flex-shrink-0 ${linkClass(href)} ${key === 'soulbis' ? 'inline-flex items-center' : ''}`} title={key === 'soulbis' ? (ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony') : undefined}>
                   {key === 'soulbis' ? <span className="text-2xl leading-none" aria-hidden>⚔️</span> : label}
@@ -68,15 +68,15 @@ export default function AppNav() {
             <button
               type="button"
               onClick={openMagePanel}
-              className="p-2 rounded-lg hover:bg-surface/50 transition-colors text-text-muted hover:text-text hidden md:block"
-              aria-label="Open AI panel"
-              title="Open AI panel"
+              className="p-2 rounded-lg hover:bg-surface/50 transition-colors text-text-muted hover:text-text hidden lg:block"
+              aria-label="Soulbae"
+              title="Soulbae"
             >
               <span className="text-2xl leading-none" aria-hidden>🧙</span>
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-text hover:text-primary transition-colors"
+              className="lg:hidden p-2 text-text hover:text-primary transition-colors"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -104,7 +104,7 @@ export default function AppNav() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden"
+              className="lg:hidden overflow-hidden"
             >
               <div className="py-4 space-y-3 border-t border-surface/50">
                 {navLinks.map(({ href, label, key }) => (
@@ -123,7 +123,7 @@ export default function AppNav() {
                   onClick={() => { openMagePanel(); setMobileMenuOpen(false); }}
                   className="block text-text-muted hover:text-text transition-colors font-medium py-2 w-full text-left"
                 >
-                  🧙 Open AI panel
+                  🧙 Soulbae
                 </button>
               </div>
             </motion.div>
