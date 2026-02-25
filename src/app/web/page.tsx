@@ -173,6 +173,7 @@ export default function WebPage() {
             value={reflections[selectedNode.id] ?? ''}
             onChange={(e) => saveReflection(selectedNode.id, e.target.value)}
             onBlur={(e) => saveReflection(selectedNode.id, e.currentTarget.value)}
+            onKeyDown={(e) => e.stopPropagation()}
           />
         </div>
       )}

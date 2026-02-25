@@ -594,7 +594,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-3xl font-bold text-text mb-8 text-center"
           >
-            Pools, Where Pools Become Wells.
+            Pools Become Wells
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
