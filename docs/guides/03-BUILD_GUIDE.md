@@ -1244,6 +1244,60 @@ npm run build
 
 ---
 
+## SpellWeb Feature
+
+The SpellWeb is an interactive graph visualization showing your spell constellation. It includes several advanced features:
+
+### Features
+
+1. **Constellation Mode** - View all spells connected by grimoire, sequence, and custom links
+2. **Draw Mode** - Click two nodes to create custom connections between them
+3. **Randomise Layout** - Scatter nodes and let the physics simulation reorganize them
+4. **Expand/Fullscreen** - View the full graph in fullscreen mode (press Escape to exit)
+5. **Grimoire Filter Panel** - Toggle individual grimoires on/off to focus on specific spell groups
+
+### Key Files
+
+```
+src/
+├── components/spellweb/
+│   ├── SpellwebViewer.tsx         # Basic viewer (used on /spells)
+│   └── SpellwebViewerAgentic.tsx  # Enhanced viewer with draw/constellation modes
+├── lib/spellweb/
+│   ├── types.ts                   # Node, Link, DrawnLink type definitions
+│   ├── builder.ts                 # Builds graph from selected spells
+│   └── labels.ts                  # Grimoire colors, emojis, short labels
+└── app/web/page.tsx               # Web page with grimoire filter panel
+```
+
+### SpellwebViewerAgentic Props
+
+```typescript
+interface SpellwebViewerAgenticProps {
+  data: SpellwebData;           // Nodes and links from builder
+  grimoireFilter?: string[];    // Active grimoire IDs to show
+  onNodeSelect?: (node) => void;// Callback when node is clicked
+  fullHeight?: boolean;         // Fill container height
+}
+```
+
+### Link Types
+
+| Type | Description | Visual |
+|------|-------------|--------|
+| `grimoire` | Spell → grimoire hub | Gray solid |
+| `sequence` | Spell → next spell | Gray dashed |
+| `cluster` | Skill → skills hub | Gray solid |
+| `constellation` | Cross-grimoire | Orange solid |
+| `drawn` | User-drawn (temporary) | Green dashed |
+| `saved` | User-saved (persistent) | Green dashed |
+
+### localStorage Persistence
+
+User-drawn maps are saved to `agentprivacy-web-saved-map` in localStorage. When you click "Save map" in Draw mode, your custom links persist and appear in Constellation mode.
+
+---
+
 ## Next Steps
 
 ✅ **Build Complete!**
@@ -1253,6 +1307,7 @@ You now have:
 - Functional Mage Agent
 - Complete integration
 - Production deployment
+- **SpellWeb visualization with draw/constellation modes**
 
 **Next**: Reference `docs/04-API_REFERENCE.md` for detailed code patterns
 

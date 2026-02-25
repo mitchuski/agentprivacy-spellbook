@@ -16,8 +16,8 @@ export default function AppNav() {
   const pathname = usePathname();
   const { openMagePanel } = useMagePanel();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [swordsmanName, setSwordsmanName] = useState<string | null>(null);
   const [ceremonyComplete, setCeremonyComplete] = useState(false);
+  const [swordsmanName, setSwordsmanName] = useState<string | null>(null);
 
   useEffect(() => {
     const sync = () => {
@@ -30,12 +30,8 @@ export default function AppNav() {
     return () => window.removeEventListener('ap-identity-changed', sync);
   }, []);
 
-  // Ceremony link: always ⚔️ (Swordsman); when ceremony complete, fill with name
-  const navLinks = NAV_LINKS.map((link) =>
-    link.key === 'soulbis'
-      ? { ...link, label: ceremonyComplete && swordsmanName ? `⚔️ ${swordsmanName}` : '⚔️' }
-      : link
-  );
+  // Nav: soulbis is emoji-only (no name) so layout doesn't shift; same size as mage for symmetry
+  const navLinks = NAV_LINKS;
 
   const isCurrentPage = (href: string) =>
     pathname === href || (href !== '/' && pathname?.startsWith(href));
@@ -62,8 +58,8 @@ export default function AppNav() {
             </a>
             <div className="hidden md:flex items-center gap-4 sm:gap-6 min-w-0">
               {navLinks.map(({ href, label, key }) => (
-                <NavLink key={href} href={href} className={`flex-shrink-0 ${linkClass(href)}`} title={key === 'soulbis' ? (ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony') : undefined}>
-                  {label}
+                <NavLink key={href} href={href} className={`flex-shrink-0 ${linkClass(href)} ${key === 'soulbis' ? 'inline-flex items-center' : ''}`} title={key === 'soulbis' ? (ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony') : undefined}>
+                  {key === 'soulbis' ? <span className="text-2xl leading-none" aria-hidden>⚔️</span> : label}
                 </NavLink>
               ))}
             </div>
@@ -119,7 +115,7 @@ export default function AppNav() {
                     title={key === 'soulbis' ? (ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony') : undefined}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {label}
+                    {key === 'soulbis' ? <span className="text-2xl leading-none" aria-hidden>⚔️</span> : label}
                   </NavLink>
                 ))}
                 <button

@@ -9,6 +9,9 @@ export const CUSTOM_PROVERBS_KEY = 'agentprivacy-custom-proverbs';
 /** Inscribed proverbs per act/tale (taleId → proverb + optional constellation marker emoji). */
 export const INSCRIBED_PROVERBS_KEY = 'agentprivacy-inscribed-proverbs';
 
+/** Saved constellation web (node connections + reflect notes) for skills.md export. */
+export const CONSTELLATION_WEB_KEY = 'agentprivacy-spellbook-constellation-web';
+
 export interface InscribedEntry {
   proverb: string;
   markerEmoji?: string;
@@ -171,6 +174,36 @@ export function setSpellbookInStorage(data: SpellbookStorage): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(SPELLBOOK_STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // ignore
+  }
+}
+
+/** Constellation web: user-drawn links and reflect notes saved for skills.md export. */
+export interface ConstellationWebStorage {
+  links: Array<{ source: string; target: string }>;
+  reflections: Record<string, string>;
+}
+
+export function getConstellationWeb(): ConstellationWebStorage {
+  if (typeof window === 'undefined') return { links: [], reflections: {} };
+  try {
+    const raw = localStorage.getItem(CONSTELLATION_WEB_KEY);
+    if (!raw) return { links: [], reflections: {} };
+    const parsed = JSON.parse(raw) as ConstellationWebStorage;
+    return {
+      links: Array.isArray(parsed.links) ? parsed.links : [],
+      reflections: parsed.reflections && typeof parsed.reflections === 'object' ? parsed.reflections : {},
+    };
+  } catch {
+    return { links: [], reflections: {} };
+  }
+}
+
+export function setConstellationWeb(data: ConstellationWebStorage): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(CONSTELLATION_WEB_KEY, JSON.stringify(data));
   } catch {
     // ignore
   }

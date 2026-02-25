@@ -29,7 +29,7 @@ export interface SpellwebNode {
 export interface SpellwebLink {
   source: string;
   target: string;
-  type: 'grimoire' | 'sequence' | 'cluster' | 'constellation';
+  type: 'grimoire' | 'sequence' | 'cluster' | 'constellation' | 'connect';
 }
 
 export interface SpellwebData {

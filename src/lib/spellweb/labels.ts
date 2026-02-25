@@ -15,7 +15,7 @@ const GRIMOIRE_EMOJI: Record<string, string> = {
   zero: '🔮',
   canon: '📜',
   society: '🏛️',
-  plurality: '🌐',
+  plurality: '⿻',
   incantations: '✨',
   origins: '🌅',
   skills: '🧠',

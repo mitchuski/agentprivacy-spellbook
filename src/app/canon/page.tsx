@@ -149,11 +149,32 @@ export default function CanonPage() {
   const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [learnedUpTo, setLearnedUpToState] = useState<number>(-1);
   const [inscribeNodeId, setInscribeNodeId] = useState<number | null>(null);
+  /** Deferred so server and first client render match (avoids hydration mismatch from localStorage). */
+  const [deferredInscribed, setDeferredInscribed] = useState<{
+    pathwayNodeIds: number[] | undefined;
+    markerEmojiByNodeId: Record<number, string>;
+  } | null>(null);
 
   const chapters = [0, ...Array.from({ length: 11 }, (_, i) => i + 1)]; // 0 = preface, 1-11 = chapters
 
   useEffect(() => {
     if (typeof window !== 'undefined') setLearnedUpToState(getLearnedUpTo(LEARNED_CANON_KEY));
+  }, []);
+
+  useEffect(() => {
+    const ids = getPathwayNodeIds(getSpellbookFromStorage().spellIds, 'canon');
+    const out: Record<number, string> = {};
+    chapters.forEach((ch) => {
+      const sid = getSpellIdForNode('canon', ch);
+      if (sid) {
+        const m = getInscribedMarkerEmoji(sid);
+        if (m) out[ch] = m;
+      }
+    });
+    setDeferredInscribed({
+      pathwayNodeIds: ids.length > 0 ? ids : undefined,
+      markerEmojiByNodeId: out,
+    });
   }, []);
 
   useEffect(() => {
@@ -350,18 +371,11 @@ export default function CanonPage() {
                 activeId={activeChapter}
                 onSelect={setActiveChapter}
                 learnedUpToId={learnedUpTo >= 0 ? learnedUpTo : undefined}
-                pathwayNodeIds={(() => { const ids = getPathwayNodeIds(getSpellbookFromStorage().spellIds, 'canon'); return ids.length > 0 ? ids : undefined; })()}
+                pathwayNodeIds={deferredInscribed?.pathwayNodeIds}
                 nodesPerRow={6}
                 nodeKind="Chapter"
                 onCrystalClick={setInscribeNodeId}
-                markerEmojiByNodeId={(() => {
-                  const out: Record<number, string> = {};
-                  chapters.forEach((ch) => {
-                    const sid = getSpellIdForNode('canon', ch);
-                    if (sid) { const m = getInscribedMarkerEmoji(sid); if (m) out[ch] = m; }
-                  });
-                  return out;
-                })()}
+                markerEmojiByNodeId={deferredInscribed?.markerEmojiByNodeId}
               />
             </div>
             <div className="flex items-center justify-center lg:justify-center py-2 lg:py-0">

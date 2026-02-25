@@ -21,6 +21,7 @@ import {
   getPathwayLines,
   getInscribedMarkerEmoji,
   getAllInscribedMarkers,
+  getConstellationWeb,
   type SavedSpellbook,
 } from '@/lib/spellbook-storage';
 import { useRouter } from 'next/navigation';
@@ -51,12 +52,14 @@ export default function SpellsPage() {
   const [trustTier, setTrustTier] = useState<ReturnType<typeof calculateTier>>('blade');
   const [showCeremonyRequiredModal, setShowCeremonyRequiredModal] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
+  const [showConstellationExportModal, setShowConstellationExportModal] = useState(false);
   const [inscribedMarkers, setInscribedMarkers] = useState<Record<string, string>>({});
   const [openGrimoireSections, setOpenGrimoireSections] = useState<Set<SpellbookSource>>(() => new Set(GRIMOIRE_BOOK_ORDER));
   const [agentSkillsSectionOpen, setAgentSkillsSectionOpen] = useState(true);
   const [expandedSkillCards, setExpandedSkillCards] = useState<Set<string>>(new Set());
   const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   const [templatesSectionExpanded, setTemplatesSectionExpanded] = useState(true);
+  const [hasConstellationSaved, setHasConstellationSaved] = useState(false);
 
   useEffect(() => {
     const { spellIds, skillIds } = getSpellbookFromStorage();
@@ -66,6 +69,17 @@ export default function SpellsPage() {
     setAgentCard(hasCompletedCeremony() ? getAgentCard() : null);
     setTrustTier(calculateTier(getTrustMetrics()));
     setInscribedMarkers(getAllInscribedMarkers());
+    const c = getConstellationWeb();
+    setHasConstellationSaved(c.links.length > 0 || Object.keys(c.reflections).length > 0);
+  }, []);
+
+  useEffect(() => {
+    const onFocus = () => {
+      const c = getConstellationWeb();
+      setHasConstellationSaved(c.links.length > 0 || Object.keys(c.reflections).length > 0);
+    };
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
   }, []);
 
   useEffect(() => {
@@ -257,6 +271,26 @@ export default function SpellsPage() {
       }
       lines.push('');
     }
+    const constellationWeb = getConstellationWeb();
+    if (constellationWeb.links.length > 0 || Object.keys(constellationWeb.reflections).length > 0) {
+      lines.push('## Constellation web', '');
+      lines.push('Node connections and reflect notes from the Web (agentprivacy.ai/web):', '');
+      if (constellationWeb.links.length > 0) {
+        lines.push('### Connections', '');
+        for (const { source, target } of constellationWeb.links) {
+          lines.push(`- ${source} → ${target}`);
+        }
+        lines.push('', '---', '');
+      }
+      const reflectionEntries = Object.entries(constellationWeb.reflections).filter(([, t]) => (t ?? '').trim());
+      if (reflectionEntries.length > 0) {
+        lines.push('### Reflect notes', '');
+        for (const [nodeId, text] of reflectionEntries) {
+          lines.push(`**${nodeId}**`, '', text.trim(), '', '---', '');
+        }
+        lines.push('');
+      }
+    }
     const exportSkillIdSet = new Set(exportSkillIds);
     const matchingPersonas = getMatchingPersonas(exportSkillIdSet);
     if (matchingPersonas.length > 0) {
@@ -396,16 +430,38 @@ export default function SpellsPage() {
                 </div>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setSidebarOpen((o) => !o)}
-              className="flex-shrink-0 p-3 rounded-xl border border-surface/50 bg-surface/20 hover:bg-surface/40 flex items-center gap-2"
-              aria-label={sidebarOpen ? 'Close spell graph sidebar' : 'Open spell graph sidebar'}
-            >
-              <span className="text-lg" aria-hidden>📖</span>
-              <span className="font-medium">{selectionCount}</span>
-              <span className="text-text/60 text-sm hidden sm:inline">in spell graph</span>
-            </button>
+            <div className="flex flex-col gap-2 flex-shrink-0 min-w-[10rem]">
+              <button
+                type="button"
+                onClick={() => setSidebarOpen((o) => !o)}
+                className="w-full p-3 rounded-xl border border-surface/50 bg-surface/20 hover:bg-surface/40 flex items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                aria-label={sidebarOpen ? 'Close spell graph sidebar' : 'Open spell graph sidebar'}
+              >
+                <span className="text-lg" aria-hidden>📖</span>
+                <span className="font-medium">{selectionCount}</span>
+                <span className="text-text/60 text-sm hidden sm:inline">in spell graph</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push('/web')}
+                className="w-full p-3 rounded-xl border border-surface/50 bg-surface/30 hover:bg-surface/50 flex items-center justify-center gap-2 text-sm font-medium text-text outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                title="View constellation graph"
+                aria-label="Open Spellweb constellation graph"
+              >
+                <span aria-hidden>🕸️</span>
+                <span>Spellweb</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowConstellationExportModal(true)}
+                className={`w-full py-2 px-3 rounded-xl border border-surface/50 flex items-center justify-center gap-2 text-sm font-medium text-text outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background transition-colors ${hasConstellationSaved ? 'bg-surface/20 hover:bg-surface/30 opacity-100 drop-shadow-[0_0_6px_rgba(168,85,247,0.6)]' : 'bg-surface/10 hover:bg-surface/20 opacity-80'}`}
+                title={hasConstellationSaved ? 'Remember Stars saved — included in skills.md export' : 'No constellation saved yet — use Remember Stars on Web'}
+                aria-label="Path the stars — view export snapshot"
+              >
+                <span aria-hidden className="text-xl">🌌</span>
+                <span>path the stars</span>
+              </button>
+            </div>
           </div>
 
           {/* Skills export — prominent at top */}
@@ -968,6 +1024,77 @@ export default function SpellsPage() {
                 className="flex-1 py-2 rounded-lg font-medium bg-primary text-background hover:bg-primary/90"
               >
                 Clear
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showConstellationExportModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" role="dialog" aria-modal="true" aria-label="Path the stars">
+          <div className="w-full max-w-lg max-h-[85vh] flex flex-col rounded-2xl border border-surface/50 bg-background shadow-xl overflow-hidden">
+            <div className="p-4 border-b border-surface/50 flex items-center justify-between shrink-0">
+              <h2 className="text-lg font-semibold text-text flex items-center gap-2">
+                <span aria-hidden>🌌</span>
+                path the stars
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowConstellationExportModal(false)}
+                className="p-2 rounded-lg text-text-muted hover:text-text hover:bg-surface/50"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4">
+              <p className="text-sm text-text-muted">
+                Included in your agentprivacy skills.md export (Spells → Download). Shown below: saved connections and reflect notes.
+              </p>
+              {(() => {
+                const c = getConstellationWeb();
+                const hasLinks = c.links.length > 0;
+                const reflEntries = Object.entries(c.reflections).filter(([, t]) => (t ?? '').trim());
+                const hasRefl = reflEntries.length > 0;
+                if (!hasLinks && !hasRefl) {
+                  return <p className="text-sm text-text/80">No constellation saved yet. Use Remember Stars on the Web page to save your path.</p>;
+                }
+                return (
+                  <div className="space-y-4 text-sm">
+                    {hasLinks && (
+                      <div>
+                        <h3 className="font-medium text-text mb-2">Connections</h3>
+                        <ul className="list-disc list-inside space-y-1 text-text/90">
+                          {c.links.map(({ source, target }, i) => (
+                            <li key={i}>{source} → {target}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {hasRefl && (
+                      <div>
+                        <h3 className="font-medium text-text mb-2">Reflect notes</h3>
+                        <ul className="space-y-2">
+                          {reflEntries.map(([nodeId, text]) => (
+                            <li key={nodeId} className="rounded-lg border border-surface/50 bg-surface/10 p-2">
+                              <span className="font-mono text-xs text-text-muted">{nodeId}</span>
+                              <p className="mt-1 text-text/90 whitespace-pre-wrap break-words">{text.trim().slice(0, 200)}{(text.trim().length > 200 ? '…' : '')}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
+            <div className="p-4 border-t border-surface/50 flex justify-end shrink-0">
+              <button
+                type="button"
+                onClick={() => setShowConstellationExportModal(false)}
+                className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90"
+              >
+                Close
               </button>
             </div>
           </div>
