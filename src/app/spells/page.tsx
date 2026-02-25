@@ -826,10 +826,62 @@ export default function SpellsPage() {
                   <span>My spellbooks</span>
                   <span className="text-text/50">{savedSpellbooks.length}</span>
                 </button>
+                {/* Name spellbook — under My spellbooks */}
+                <div className="mt-2 space-y-2">
+                  {showSaveForm ? (
+                    <>
+                      <input
+                        type="text"
+                        value={saveName}
+                        onChange={(e) => setSaveName(e.target.value)}
+                        placeholder="Name this spellbook (e.g. Soulbis build)"
+                        className="w-full px-3 py-2 rounded-lg border border-surface/50 bg-background text-text text-sm placeholder:text-text/50"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') handleSaveSpellbook();
+                          if (e.key === 'Escape') setShowSaveForm(false);
+                        }}
+                        autoFocus
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={handleSaveSpellbook}
+                          disabled={selectionCount === 0}
+                          className="flex-1 py-2 rounded-lg text-sm font-medium bg-primary/20 text-primary border border-primary/50 hover:bg-primary/30 disabled:opacity-50"
+                        >
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => { setShowSaveForm(false); setSaveName(''); }}
+                          className="px-3 py-2 rounded-lg text-sm border border-surface/50 hover:bg-surface/50"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!hasCompletedCeremony()) {
+                          setShowCeremonyRequiredModal(true);
+                          return;
+                        }
+                        setShowSaveForm(true);
+                      }}
+                      disabled={selectionCount === 0}
+                      className="w-full py-2 rounded-lg text-sm font-medium border border-surface/50 hover:bg-surface/30 disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
+                    >
+                      <span aria-hidden>📖</span>
+                      Name spellbook
+                    </button>
+                  )}
+                </div>
                 {exploreOpen && (
                   <ul className="mt-2 space-y-2 max-h-48 overflow-y-auto">
                     {savedSpellbooks.length === 0 ? (
-                      <li className="text-sm text-text/50 py-2">No saved spellbooks yet. Save your current selection below.</li>
+                      <li className="text-sm text-text/50 py-2">No saved spellbooks yet. Name your current selection with the button above.</li>
                     ) : (
                       savedSpellbooks.map((sb) => (
                         <li key={sb.id} className="flex items-center justify-between gap-2 p-2 rounded-lg bg-surface/20 border border-surface/30">
@@ -908,58 +960,6 @@ export default function SpellsPage() {
               {selectionCount === 0 && (
                 <p className="text-sm text-text/60">Add spells and skill files above to build your spell graph. Download when ready to get your skills.md package (linked in compression via spells and proverbs).</p>
               )}
-
-              {/* Save spellbook */}
-              <div className="border-t border-surface/30 pt-4 space-y-2">
-                {showSaveForm ? (
-                  <>
-                    <input
-                      type="text"
-                      value={saveName}
-                      onChange={(e) => setSaveName(e.target.value)}
-                      placeholder="Name this spellbook (e.g. Soulbis build)"
-                      className="w-full px-3 py-2 rounded-lg border border-surface/50 bg-background text-text text-sm placeholder:text-text/50"
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') handleSaveSpellbook();
-                        if (e.key === 'Escape') setShowSaveForm(false);
-                      }}
-                      autoFocus
-                    />
-                    <div className="flex gap-2">
-                      <button
-                        type="button"
-                        onClick={handleSaveSpellbook}
-                        disabled={selectionCount === 0}
-                        className="flex-1 py-2 rounded-lg text-sm font-medium bg-primary/20 text-primary border border-primary/50 hover:bg-primary/30 disabled:opacity-50"
-                      >
-                        Save
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => { setShowSaveForm(false); setSaveName(''); }}
-                        className="px-3 py-2 rounded-lg text-sm border border-surface/50 hover:bg-surface/50"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!hasCompletedCeremony()) {
-                        setShowCeremonyRequiredModal(true);
-                        return;
-                      }
-                      setShowSaveForm(true);
-                    }}
-                    disabled={selectionCount === 0}
-                    className="w-full py-2 rounded-lg text-sm font-medium border border-surface/50 hover:bg-surface/30 disabled:opacity-50 disabled:pointer-events-none"
-                  >
-                    Save spellbook
-                  </button>
-                )}
-              </div>
             </div>
           </>
         )}
