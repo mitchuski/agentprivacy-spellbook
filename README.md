@@ -11,6 +11,20 @@
 
 ---
 
+## What’s in this repo
+
+This repository is the **full stack** for the Proof of Proverb Revelation Protocol—not just spellbook content. It includes:
+
+- **Next.js frontend** — Landing, Evoke, Mage, spellbook readers, proverbs gallery
+- **Oracle Swordsman** — Backend (transaction monitoring, AI verification, inscriptions)
+- **Spellbooks** — All 5 grimoires (Story, Zero, Canon, Society, Plurality) and canonical JSON
+- **Evoke & Mage** — Soulbae (NEAR Cloud AI) integration for proverb formation
+- **Docs & scripts** — Build guide, deployment, security, and tooling
+
+Clone this repo to run the full application locally or deploy your own instance.
+
+---
+
 ## Overview
 
 The **Proof of Proverb Revelation Protocol** is the first concrete implementation of the [0xagentprivacy](https://agentprivacy.ai) dual-agent architecture. It demonstrates privacy-preserving AI interaction through **Evoke**—the primary Mage interface where First Persons form proverbs with Soulbae's assistance—protected by **Zcash**—the Swordsman's infrastructure that verifies and inscribes proofs onchain.
@@ -33,8 +47,8 @@ The **Proof of Proverb Revelation Protocol** is the first concrete implementatio
 │   └── Glossary v2.1 - Canonical terminology
 │
 └── Implementations
-    └── Proof of Proverb Revelation Protocol ← YOU ARE HERE
-        └── First expression of dual-agent architecture
+    └── Proof of Proverb Revelation Protocol (this repo)
+        └── Full stack: frontend, Oracle Swordsman, spellbooks
 ```
 
 **0xagentprivacy** solves the privacy-delegation paradox: AI agents need information to act on your behalf, but that same information enables surveillance. The solution is **dual-agent architecture**—splitting observation rights (Swordsman) from action capabilities (Mage) with mathematical separation guarantees.
@@ -188,21 +202,21 @@ First Person visits /evoke
 ### Setup
 
 ```bash
-# Clone repository
-git clone https://github.com/mitchuski/agentprivacy
-cd agentprivacy_master
+# Clone this repository (full stack)
+git clone https://github.com/mitchuski/agentprivacy-spellbook
+cd agentprivacy-spellbook
 
-# Install dependencies
+# Install dependencies (root + Oracle Swordsman)
 npm install
-cd oracle-swordsman && npm install
+cd oracle-swordsman && npm install && cd ..
 
 # Configure environment
 cp .env.example .env
-# Edit .env with your configuration
+# Edit .env with your configuration (see .env.example)
 
-# Start services
+# Start the stack
 npm run dev              # Frontend (port 5000)
-npm run oracle           # Backend (port 3001)
+npm run oracle           # Backend / Oracle Swordsman (port 3001)
 ```
 
 ### First Person Flow
@@ -283,10 +297,10 @@ The `/mage` route provides an alternative interface for Soulbae interactions:
 
 ---
 
-## Architecture
+## Architecture (repository layout)
 
 ```
-agentprivacy_master/
+agentprivacy-spellbook/           # This repo (full stack)
 ├── src/                          # Frontend (Next.js 16)
 │   ├── app/                      # Routes
 │   │   ├── page.tsx              # Landing page (/)
@@ -437,7 +451,8 @@ This implementation aligns with the 0xagentprivacy living documentation:
 ### Project Links
 
 - **Website**: [agentprivacy.ai](https://agentprivacy.ai)
-- **GitHub**: [@mitchuski/agentprivacy](https://github.com/mitchuski/agentprivacy)
+- **This repo (full stack)**: [github.com/mitchuski/agentprivacy-spellbook](https://github.com/mitchuski/agentprivacy-spellbook)
+- **0xagentprivacy**: [@mitchuski/agentprivacy](https://github.com/mitchuski/agentprivacy)
 
 ### Spellbooks
 
