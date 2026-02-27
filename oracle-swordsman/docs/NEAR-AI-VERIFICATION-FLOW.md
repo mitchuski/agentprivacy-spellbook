@@ -50,7 +50,7 @@ node verify-act.js 7
 ```javascript
 // In verify-act.js
 const NEAR_API_KEY = process.env.NEAR_SWORDSMAN_API_KEY || 'your_near_swordsman_api_key_here';
-const SPELLBOOK_IPFS = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm';
+const SPELLBOOK_IPFS = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna';
 ```
 
 ### API Endpoint

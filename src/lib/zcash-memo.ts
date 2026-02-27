@@ -70,6 +70,7 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xxi-hitchhikers-gambit': 21,
     'act-xxii-hoopy-frood': 22,
     'act-xxiii-the-manifold-dragon': 23,
+    'act-xxiv-the-holographic-bound': 24,
   };
   return taleMap[taleId] || null;
 }
@@ -103,6 +104,7 @@ export function getSpellemojiForAct(act: number): string {
     21: "🌑4️⃣2️⃣ → 🩸⚔️⚔️ → ✈️7️⃣C → 😉 → 🍺🐴 → 👂✨ → 📖🌟 → 🚀4️⃣2️⃣ → ⚔️🧙‍♂️🧙‍♂️ → 🌌∞",
     22: "🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞",
     23: "⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞",
+    24: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
   };
   return spellemojiMap[act] || '';
 }
@@ -343,6 +345,7 @@ export function getTaleIdFromAct(act: number): string {
     21: 'act-xxi-hitchhikers-gambit',
     22: 'act-xxii-hoopy-frood',
     23: 'act-xxiii-the-manifold-dragon',
+    24: 'act-xxiv-the-holographic-bound',
   };
   return taleMap[act] || `act-${act}`;
 }

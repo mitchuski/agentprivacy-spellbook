@@ -410,7 +410,7 @@ export default function SpellsPage() {
                 <div className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-surface/50 bg-surface/20">
                   <span className="text-sm font-medium text-text">The privacymage grimoire</span>
                   <a
-                    href="https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiephjsrjoqmwyncjkmllk6qk5qwetaqxibl52wkpzbuoxguereffa"
+                    href="https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs text-primary hover:underline"
@@ -420,7 +420,7 @@ export default function SpellsPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      const url = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreiephjsrjoqmwyncjkmllk6qk5qwetaqxibl52wkpzbuoxguereffa';
+                      const url = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna';
                       navigator.clipboard.writeText(url).then(() => showToast('Grimoire URL copied'));
                     }}
                     className="text-xs px-2 py-1 rounded-lg border border-primary/30 text-primary hover:bg-primary/10"
@@ -594,7 +594,7 @@ export default function SpellsPage() {
 
         <section id="spellbook" className="scroll-mt-24 mb-16">
           <h2 className="text-2xl font-semibold text-text mb-4">The Grimoire Spellbook</h2>
-          <p className="text-text/70 mb-6">All spells and proverbs from the six spellbooks (v8.4.0). Select inscriptions and proverbs to add them to your spell graph.</p>
+          <p className="text-text/70 mb-6">All spells and proverbs from the six spellbooks (v8.5.0). Select inscriptions and proverbs to add them to your spell graph.</p>
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <button type="button" onClick={expandAllGrimoire} className="px-3 py-1.5 rounded-lg border border-surface/50 text-sm hover:bg-surface/30">Expand all</button>
             <button type="button" onClick={collapseAllGrimoire} className="px-3 py-1.5 rounded-lg border border-surface/50 text-sm hover:bg-surface/30">Collapse all</button>

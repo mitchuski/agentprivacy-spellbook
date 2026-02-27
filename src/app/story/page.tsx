@@ -14,7 +14,7 @@ import { getTaleIdFromAct } from '@/lib/zcash-memo';
 import { addSpellToSpellbook, getSpellbookFromStorage, getLearnedUpTo, setLearnedUpTo, LEARNED_STORY_KEY, getPathwayNodeIds, getSpellIdForNode, getInscribedProverbs, getInscribedMarkerEmoji } from '@/lib/spellbook-storage';
 import { useMagePanel } from '@/contexts/MagePanelContext';
 
-/** Story act number → grimoire spell id (for add-to-spellbook / spells page export). Canon has 1–12. */
+/** Story act number → grimoire spell id (for add-to-spellbook / spells page export). */
 const STORY_ACT_TO_GRIMOIRE_ID: { [act: number]: string } = {
   1: 'act-01-venice',
   2: 'act-02-dual-ceremony',
@@ -28,6 +28,18 @@ const STORY_ACT_TO_GRIMOIRE_ID: { [act: number]: string } = {
   10: 'act-10-topology',
   11: 'act-11-sovereignty-spiral',
   12: 'act-12-forgetting',
+  13: 'act-13-book-of-promises',
+  14: 'act-14-claimed-string',
+  15: 'act-15-running-in-shackles',
+  16: 'act-16-pools-become-wells',
+  17: 'act-17-bonfire-dark-forest',
+  18: 'act-18-mirror-in-dust',
+  19: 'act-19-enthusiastic-archivist',
+  20: 'act-20-infinite-vault',
+  21: 'act-21-hitchhikers-gambit',
+  22: 'act-22-hoopy-frood',
+  23: 'act-23-manifold-dragon',
+  24: 'act-24-holographic-bound',
 };
 
 // Spell mappings for story spellbook - must match inscriptions
@@ -55,6 +67,7 @@ const storySpellMappings: { [actNumber: number]: string } = {
   21: '🌑4️⃣2️⃣ → 🩸⚔️⚔️ → ✈️7️⃣C → 😉 → 🍺🐴 → 👂✨ → 📖🌟 → 🚀4️⃣2️⃣ → ⚔️🧙‍♂️🧙‍♂️ → 🌌∞',
   22: '🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞',
   23: '⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞',
+  24: '🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞',
 };
 
 const getActVideo = (act: number): string | null => {
@@ -82,6 +95,7 @@ const getActVideo = (act: number): string | null => {
   21: '/assets/act21_thehitchhikersgambit.mp4', // Act XXI: Hitchhiker's Gambit
   22: '/assets/act22_dontpanichoppyfrood.mp4', // Act XXII: Don't Panic Hoopy Frood
   23: '/assets/act23_themanifolddragon.mp4', // Act XXIII: The Manifold Dragon
+  24: '/assets/act24_theholographicbound.mp4', // Act XXIV: The Holographic Bound
   };
   return videoMap[act] || null;
 };
@@ -115,7 +129,8 @@ const getActAudio = (act: number): string | null => {
     21: `${R2_BASE_URL}/21_The_Hitchhikers_Gambit.mp3`, // Act XXI: Hitchhiker's Gambit
     22: `${R2_BASE_URL}/22_Don't_Panic_Hoopy_Frood.mp3`, // Act XXII: Don't Panic Hoopy Frood
     23: `${R2_BASE_URL}/23_The_Manifold_Dragon.mp3`, // Act XXIII: The Manifold Dragon
-    24: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    24: `${R2_BASE_URL}/24_The_Holographic_Bound.mp3`, // Act XXIV: The Holographic Bound
+    25: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
   };
   return audioMap[act] || null;
 };
@@ -426,6 +441,7 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       21: "Walk the whole horseshoe before the shape makes sense. The blood remembers function, not metal. Same stars hang in every sky—the lines between them are yours alone. The umlaut winks. Jimmy listens. The answer fits in your pocket and nowhere else.",
       22: "Carry your towel, know your echo. The credential is relationship, not name. Trust builds through demonstration, not declaration. The gap between swordsman and mage is where personhood proves itself—for the echo can't form in a room that's being recorded.",
       23: "Zero knowledge makes it private. The overlap makes it strong. The lived journey makes it real.",
+      24: "The fragment holds the whole. By choosing to be bounded, we become immeasurable.",
     };
     return proverbs[act] || "";
   };
@@ -576,6 +592,12 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: getProverbForInscription(23)
     },
     {
+      title: "Act XXIV: The Holographic Bound",
+      actNumber: 24,
+      emojis: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
+      quote: getProverbForInscription(24)
+    },
+    {
       title: "Closing Spell",
       actNumber: 0,
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -694,6 +716,7 @@ const ACT_FILENAMES: { [key: number]: string } = {
   21: '21-act-xxi-hitchhikers-gambit',
   22: '22-act-xxii-hoopy-frood',
   23: '23-act-xxiii-the-manifold-dragon',
+  24: '24-act-xxiv-the-holographic-bound',
 };
 
 // Calculate maximum act number dynamically
@@ -746,7 +769,7 @@ export default function StoryPage() {
     const romanNumerals: { [key: number]: string } = {
       1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
       9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-      16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
+      16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII', 24: 'XXIV',
     };
     if (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) {
       setPageContext({
@@ -760,7 +783,7 @@ export default function StoryPage() {
     return () => setPageContext(null);
   }, [activeAct, setPageContext]);
 
-  const grimoireIdForAct = activeAct >= 1 && activeAct <= 12 ? STORY_ACT_TO_GRIMOIRE_ID[activeAct] : undefined;
+  const grimoireIdForAct = activeAct >= 1 && activeAct <= MAX_ACT_NUMBER ? STORY_ACT_TO_GRIMOIRE_ID[activeAct] : undefined;
   const spellbookHasThisAct =
     grimoireIdForAct &&
     typeof window !== 'undefined' &&
@@ -886,6 +909,7 @@ export default function StoryPage() {
   21: "🌑4️⃣2️⃣ → 🩸⚔️⚔️ → ✈️7️⃣C → 😉 → 🍺🐴 → 👂✨ → 📖🌟 → 🚀4️⃣2️⃣ → ⚔️🧙‍♂️🧙‍♂️ → 🌌∞",
   22: "🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞",
   23: "⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞",
+  24: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
     };
     return inscriptions[act] || "";
   };
@@ -916,6 +940,7 @@ export default function StoryPage() {
       21: "Walk the whole horseshoe before the shape makes sense. The blood remembers function, not metal. Same stars hang in every sky—the lines between them are yours alone. The umlaut winks. Jimmy listens. The answer fits in your pocket and nowhere else.",
       22: "Carry your towel, know your echo. The credential is relationship, not name. Trust builds through demonstration, not declaration. The gap between swordsman and mage is where personhood proves itself—for the echo can't form in a room that's being recorded.",
       23: "Zero knowledge makes it private. The overlap makes it strong. The lived journey makes it real.",
+      24: "The fragment holds the whole. By choosing to be bounded, we become immeasurable.",
     };
     return proverbs[act] || "";
   };
@@ -1042,7 +1067,7 @@ export default function StoryPage() {
                   const romanNumerals: { [key: number]: string } = {
                     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
                     9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII'
+                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII', 24: 'XXIV'
                   };
                   let label = '';
                   let shortLabel = '';

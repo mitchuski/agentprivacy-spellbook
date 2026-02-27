@@ -4,7 +4,7 @@
 
 72 skills across 4 categories — teaching Claude (and any Agent Skills-compatible system) how to operate as privacy-preserving dual-agent infrastructure.
 
-Built on the [Privacy Value Model V4](https://agentprivacy.ai) and the [0xagentprivacy](https://sync.soulbis.com) architecture.
+Built on the [Privacy Value Model V4](https://agentprivacy.ai) and the [0xagentprivacy](https://sync.soulbis.com) architecture. **Canonical spellbook:** Privacymage Grimoire [v8.5.0-canonical](https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna) (24 acts, Holographic Bound, Holonic Architect ☯️🔷).
 
 > *"The intelligence that serves without surveilling, delegates without extracting, and protects without imprisoning is the only intelligence worth building."*
 

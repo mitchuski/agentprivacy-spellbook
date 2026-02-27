@@ -69,6 +69,14 @@ const BALANCED_PATH_SPELL_IDS: string[] = [
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-03-synthesis',
 ];
 
+/** Holonic Architect — data substrate, persistence, Act XXIV Holographic Bound. Story acts 2, 6, 9, 11, 13, 24 + canon + triune/manifold. */
+const HOLONIC_ARCHITECT_SPELL_IDS: string[] = [
+  'act-02-dual-ceremony', 'act-06-trust-graph', 'act-09-zcash-shield', 'act-11-sovereignty-spiral',
+  'act-13-book-of-promises', 'act-24-holographic-bound',
+  'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-08-missing-primitive',
+  'incantation-triune_graph_spell', 'incantation-manifold_incantation',
+];
+
 export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
   {
     id: 'soulbis',
@@ -267,6 +275,15 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     alignment: 'balanced',
     spellIds: BALANCED_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('person'),
+  },
+  {
+    id: 'holonic-architect',
+    name: 'The Holonic Architect — Builder of Identity-Independent Data Structures',
+    emoji: '☯️🔷',
+    tagline: 'I build the data substrate where Swordsman and Mage persist. The identity must outlive any backend.',
+    alignment: 'balanced',
+    spellIds: HOLONIC_ARCHITECT_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('holonic-architect'),
   },
 ];
 

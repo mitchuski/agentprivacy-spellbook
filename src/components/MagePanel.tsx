@@ -28,7 +28,7 @@ const affiliationOptions = [
   { value: 'myterms-alliance', label: 'MyTerms Alliance' },
 ];
 
-// Story acts (1-23)
+// Story acts (1-24)
 const storyActs: { [key: number]: string } = {
   1: 'Act I: Venice',
   2: 'Act II: Dual Ceremony',

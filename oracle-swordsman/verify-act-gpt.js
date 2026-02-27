@@ -8,7 +8,7 @@
 const axios = require('axios');
 
 const NEAR_API_KEY = 'sk-876c0f435b14449bac47f13583f5fd68';
-const SPELLBOOK_IPFS = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreibbod46vfmpultaz7jbv32sickvf3erc7bvtcaoboozxi4n25tclm';
+const SPELLBOOK_IPFS = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna';
 
 // Parse command line args
 const actNumber = parseInt(process.argv[2]) || 5;

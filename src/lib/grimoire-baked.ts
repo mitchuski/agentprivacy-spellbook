@@ -1,6 +1,6 @@
 /**
  * Baked grimoire from canonical v8.4.0 (privacymage grimoire).
- * Maps all spells from: First Person (23 acts + origins), Zero (30 tales), Canon (11),
+ * Maps all spells from: First Person (24 acts + origins), Zero (30 tales), Canon (11),
  * Parallel Society (17), Plurality (opening + 30 acts + closing), unified incantations.
  * Origins section includes all story.origins.spells. Plurality includes opening, 30 acts
  * from parts[].acts[], and closing. Total matches the grimoire JSON.
@@ -71,7 +71,7 @@ function flattenV8(): SpellCard[] {
   const sb = data.spellbooks;
   if (!sb) return cards;
 
-  // First Person — 23 acts (v8.4.0 includes act-23-manifold-dragon)
+  // First Person — 24 acts (v8.4.0 includes act-24-holographic-bound)
   if (sb.story?.acts) {
     sb.story.acts.forEach((act) => {
       cards.push({
@@ -214,7 +214,7 @@ export function getBakedSpellCards(): SpellCard[] {
   return cached;
 }
 
-/** All First Person spell ids (23 acts; origins spells are in spellbook 'origins') — shared by Soulbis and Soulbae. */
+/** All First Person spell ids (24 acts; origins spells are in spellbook 'origins') — shared by Soulbis and Soulbae. */
 export const FIRST_PERSON_SPELL_IDS: string[] = [
   'act-01-venice', 'act-02-dual-ceremony', 'act-03-drakes-teaching', 'act-04-blade-alone',
   'act-05-light-armor', 'act-06-trust-graph', 'act-07-mirror', 'act-08-ancient-rule',
@@ -222,5 +222,5 @@ export const FIRST_PERSON_SPELL_IDS: string[] = [
   'act-13-book-of-promises', 'act-14-claimed-string', 'act-15-running-in-shackles',
   'act-16-pools-become-wells', 'act-17-bonfire-dark-forest', 'act-18-mirror-in-dust',
   'act-19-enthusiastic-archivist', 'act-20-infinite-vault', 'act-21-hitchhikers-gambit',
-  'act-22-hoopy-frood', 'act-23-manifold-dragon',
+  'act-22-hoopy-frood', 'act-23-manifold-dragon', 'act-24-holographic-bound',
 ];

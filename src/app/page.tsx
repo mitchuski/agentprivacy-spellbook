@@ -27,7 +27,7 @@ const CTA_CAROUSEL = [
 ];
 
 const SPELLBOOKS = [
-  { id: 'story', name: 'First Person', emoji: '📖', question: 'WHAT', acts: 23, unit: 'acts', desc: 'Your sovereignty story. The journey of Soulbis and Soulbae through Drake to Dragon pattern space.', color: '#f59e0b', href: '/story' },
+  { id: 'story', name: 'First Person', emoji: '📖', question: 'WHAT', acts: 24, unit: 'acts', desc: 'Your sovereignty story. The journey of Soulbis and Soulbae through Drake to Dragon pattern space.', color: '#f59e0b', href: '/story' },
   { id: 'zero', name: 'Zero Knowledge', emoji: '🔮', question: 'HOW', acts: 30, unit: 'tales', desc: 'Cryptographic magic made human-readable.', color: '#8b5cf6', href: '/zero' },
   { id: 'canon', name: 'The Canon', emoji: '📜', question: 'WHY', acts: 11, unit: 'chapters', desc: 'Blockchain lineage. Cypherpunks to synthesis.', color: '#06b6d4', href: '/canon' },
   { id: 'society', name: 'Parallel Society', emoji: '🚪', question: 'EXIT', acts: 17, unit: 'chapters', desc: 'Farewell to Westphalia. Why sovereignty requires exit.', color: '#ef4444', href: '/society' },
