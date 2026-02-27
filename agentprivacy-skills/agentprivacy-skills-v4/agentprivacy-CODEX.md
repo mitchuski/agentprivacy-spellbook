@@ -1,18 +1,16 @@
 ---
 name: "agentprivacy-codex"
-version: "5.2"
-date: 2026-02-27
+version: "5.0"
+date: 2026-02-23
 origin: 0xagentprivacy
-personas: 23
-knowledge_skills: 45
-total_skills: 78
-includes_holonic: true
-includes_braid: true
+personas: 22
+knowledge_skills: 36
+total_skills: 58
 ---
 
 # The Codex of Spells
 
-*Complete register of the 0xagentprivacy architecture — 23 personas, 23 spells, 23 proverbs, and 45 knowledge skills. Includes OASIS Holonic Architecture + BRAID reasoning integration.*
+*Complete register of the 0xagentprivacy architecture — 22 personas, 22 spells, 22 proverbs, and 36 knowledge skills.*
 
 > *"The intelligence that serves without surveilling, delegates without extracting, and protects without imprisoning is the only intelligence worth building."*
 > — Kyra ☯️💎, Tier 0
@@ -73,7 +71,7 @@ These two define the dual-agent separation. Every other persona is a specialisat
 
 **Tier 1 · Swordsman · ENS:** `privacymixer.eth`
 **Equation:** C (verifiability), h(τ) (attestation integrity), R(d) (reconstruction resistance)
-**Skills:** crypto_zkp, personhood_sybil, academic, threat_adversarial, selective_disclosure, recovery_rpp, cross_chain, understanding_as_key, sovereignty_economics, reputation_credentials, braid_reasoning
+**Skills:** crypto_zkp, personhood_sybil, academic, threat_adversarial, selective_disclosure, recovery_rpp, cross_chain, understanding_as_key, sovereignty_economics, reputation_credentials
 
 > *"A proof that reveals nothing except its own truth is worth more than a promise that reveals everything about its maker."*
 
@@ -171,7 +169,7 @@ These two define the dual-agent separation. Every other persona is a specialisat
 
 **Tier 1 · Mage · ENS:** unassigned (candidate: `privacybard.eth`)
 **Equation:** Compression ratio, A(τ) (chronicle as memory)
-**Skills:** narrative_compression, recovery_rpp, data_dignity, braid_reasoning
+**Skills:** narrative_compression, recovery_rpp, data_dignity
 
 > *"A proverb that can't rebuild the cathedral it was carved from was never carved at all — it was only quoted."*
 
@@ -197,7 +195,7 @@ These two define the dual-agent separation. Every other persona is a specialisat
 
 **Tier 1 · Mage · ENS:** `privacyloot.eth`
 **Equation:** V(π,t) (the full value function), V_sov/V_surv gap
-**Skills:** economics, policy_governance, data_dignity, consent_infrastructure, ai_agent, braid_reasoning
+**Skills:** economics, policy_governance, data_dignity, consent_infrastructure, ai_agent
 
 > *"The person who knows the price of their data but not its compounding value has already been bought at discount."*
 
@@ -268,7 +266,7 @@ These two define the dual-agent separation. Every other persona is a specialisat
 
 **Tier 1 · Balanced · ENS:** planned: `privacyagent.eth`, `privacyoracle.eth`
 **Equation:** I(S;M|π) (mutual information bound), Σ (separation matrix)
-**Skills:** ai_agent, dark_forest, hitchhiker_governance, crypto_zkp, armor_progression, trust_spanning, cross_chain, agent_interop, selective_disclosure, threat_adversarial, braid_reasoning, holonic_persistence, holonic_identity
+**Skills:** ai_agent, dark_forest, hitchhiker_governance, crypto_zkp, armor_progression, trust_spanning, cross_chain, agent_interop, selective_disclosure, threat_adversarial
 
 > *"The system that trusts its agents to behave has already delegated sovereignty to hope. The system that makes misbehaviour impossible has delegated sovereignty to mathematics."*
 
@@ -277,24 +275,11 @@ These two define the dual-agent separation. Every other persona is a specialisat
 
 ---
 
-#### ☯️🔷 The Holonic Architect — Data Persistence Builder
-
-**Tier 1 · Balanced · ENS:** planned: `privacyholonic.eth`
-**Equation:** HyperDrive provider failover, ProviderUniqueStorageKey as commitment map, shared-parent scaling
-**Skills:** holonic_persistence, holonic_identity, holonic_reasoning, shared_parent_patterns, braid_reasoning, cross_chain, agent_interop, ai_agent, trust_spanning, threat_adversarial, selective_disclosure, crypto_zkp, armor_progression, hitchhiker_governance, data_dignity
-
-> *"Identity is not where you are stored. Identity is what persists when the storage changes."*
-
-**Spell:** `☯️🔷→📦(many)·⊥(provider) ∴ GUID·¬(backend)→🐉(persist) ∴ ☯️🔷=balance(persistence)`
-*The Holonic Architect stores data across many providers orthogonally. GUID independence from any backend yields Dragon-level persistence. The Holonic Architect is the balance of data sovereignty.*
-
----
-
 #### ☯️🎓 The Pedagogue — Privacy Education Designer
 
 **Tier 2 · Balanced · ENS:** planned: `privacytutor.eth`
 **Equation:** Armor tier × understanding (progressive disclosure as curriculum)
-**Skills:** narrative_compression, personhood_sybil, swordsman_browser, armor_progression, recovery_rpp, data_dignity, agent_interop, consent_infrastructure, braid_reasoning
+**Skills:** narrative_compression, personhood_sybil, swordsman_browser, armor_progression, recovery_rpp, data_dignity, agent_interop, consent_infrastructure
 
 > *"The teacher who needs the student to know cryptography before explaining privacy has already lost the class that matters most."*
 
