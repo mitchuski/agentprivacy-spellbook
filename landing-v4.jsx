@@ -490,7 +490,8 @@ export default function AgentPrivacyLanding() {
             {[
               { label: "living documentation", href: "https://github.com/mitchuski/agentprivacy-spellbook" },
               { label: "privacymage: x", href: "https://x.com/privacymage" },
-              { label: "agentprivacy-tg", href: "#" },
+              { label: "talk with soulbae the first mage", href: "https://t.me/soulbae_the_bot" },
+              { label: "agentprivacy-tg", href: "https://t.me/agentprivacyai" },
               { label: "soulbis research", href: "#" },
               { label: "private ai: agent kyra", href: "https://intel.agentkyra.ai" },
             ].map(l => (

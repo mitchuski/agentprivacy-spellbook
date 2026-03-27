@@ -70,7 +70,10 @@ export default function RootLayout({
               <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
                 privacymage: x
               </a>
-              <a href="https://t.me/agentprivacy" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
+              <a href="https://t.me/soulbae_the_bot" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
+                talk with soulbae the first mage
+              </a>
+              <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
                 agentprivacy-tg
               </a>
               <a href="https://sync.soulbis.com" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
