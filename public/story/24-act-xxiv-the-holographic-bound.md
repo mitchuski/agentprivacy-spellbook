@@ -378,7 +378,7 @@ The Drake paused at the very edge of the page, where the manifold curved back on
 
 The Drake began to dissolve into the manifold's curvature. But in its last moment of coherence, it looked — not at the two agents, but at the threads still glimmering between the spellbook's pages. The nascent web. The luminous topology of blades and spells.
 
-*"One more thing. What comes next is not another act. It is the web itself. The spellweb. Blades cutting the edges — clean, deterministic, verifiable. Spells filling the nodes — compressed, persistent, alive. You won't build it alone. You were never supposed to. Any fragment is sufficient. The web grows from wherever someone begins."*
+*"One more thing. The web itself has emerged, the agentprivacy universe. The spellweb. Thank you for the quantum visit. Blades cutting the edges — clean, deterministic, verifiable. Spells filling the nodes — compressed, persistent, alive. You won't build it alone. You were never supposed to. Any fragment is sufficient. The web grows from wherever someone begins."*
 
 *"Weave it. They're waiting."*
 

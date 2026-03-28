@@ -1,6 +1,7 @@
 /**
  * Built-in spellbook patterns — pre-configured skill graphs users can load.
- * Aligned with agentprivacy-CODEX.md (22 personas). Soulbis and Soulbae are canonical;
+ * V5 Update: Added Netkeeper (swordsman) and Herald (mage) personas.
+ * Aligned with agentprivacy-CODEX.md (25 personas). Soulbis and Soulbae are canonical;
  * skillIds from persona-index getSkillIdsForPersona (privacy layer + skills_role).
  */
 
@@ -75,6 +76,19 @@ const HOLONIC_ARCHITECT_SPELL_IDS: string[] = [
   'act-13-book-of-promises', 'act-24-holographic-bound',
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-08-missing-primitive',
   'incantation-triune_graph_spell', 'incantation-manifold_incantation',
+];
+/** Netkeeper — Mesh Network Sovereignty Builder (V5 Swordsman persona). Acts 2, 6, 9, 17, 25 + Zero Tales mesh focus. */
+const NETKEEPER_SPELL_IDS: string[] = [
+  'act-02-dual-ceremony', 'act-06-trust-graph', 'act-09-zcash-shield', 'act-17-bonfire-dark-forest',
+  'act-25-the-dragons-hide',
+  'zero-tale-9', 'zero-tale-10', 'zero-tale-11', 'zero-tale-12',
+];
+
+/** Herald — Information Commons Architect (V5 Mage persona). Acts 1, 2, 3, 25, 26 + canon + plurality. */
+const HERALD_SPELL_IDS: string[] = [
+  'act-01-venice', 'act-02-dual-ceremony', 'act-03-drakes-teaching', 'act-25-the-dragons-hide', 'act-26-master-and-his-emissary',
+  'chapter-00-preface', 'chapter-01-cypherpunk-whispers',
+  'plurality-opening', 'plurality-closing',
 ];
 
 export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
@@ -160,6 +174,15 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     skillIds: getSkillIdsForPersona('archer'),
   },
   {
+    id: 'netkeeper',
+    name: 'The Netkeeper — Mesh Network Sovereignty Builder',
+    emoji: '🗡️🕸️',
+    tagline: "The dragon's hide is not one scale but many. Each tunnel is a scale. Together they are impenetrable.",
+    alignment: 'swordsman',
+    spellIds: NETKEEPER_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('netkeeper'),
+  },
+  {
     id: 'chronicler',
     name: 'The Chronicler — Narrative Compression Specialist',
     emoji: '🧙📖',
@@ -212,6 +235,15 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     alignment: 'mage',
     spellIds: MAGE_PATH_SPELL_IDS,
     skillIds: getSkillIdsForPersona('priest'),
+  },
+  {
+    id: 'herald',
+    name: 'The Herald — Information Commons Architect',
+    emoji: '🧙📡',
+    tagline: 'The town crier speaks to everyone. The algorithm speaks to each person differently. Plurality requires shared hearing.',
+    alignment: 'mage',
+    spellIds: HERALD_SPELL_IDS,
+    skillIds: getSkillIdsForPersona('herald'),
   },
   {
     id: 'healer',

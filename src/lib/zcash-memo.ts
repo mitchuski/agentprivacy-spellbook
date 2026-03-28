@@ -71,6 +71,8 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xxii-hoopy-frood': 22,
     'act-xxiii-the-manifold-dragon': 23,
     'act-xxiv-the-holographic-bound': 24,
+    'act-xxv-the-dragons-hide': 25,
+    'act-xxvi-the-master-and-his-emissary': 26,
   };
   return taleMap[taleId] || null;
 }
@@ -105,6 +107,8 @@ export function getSpellemojiForAct(act: number): string {
     22: "🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞",
     23: "⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞",
     24: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
+    25: "🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🗺️🔮(MagicDNS) → 🐲→🐉🛡️🕸️(tail-scale) → 🕸️⊥☁️(control⊥data) → 🌀∞",
+    26: "🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → ⚔️=Master·🧙=Emissary → 🔗(corpus)≠⊥(gap) → 📡(usurp)→📡🚫(bound) → ☯️🧠∞",
   };
   return spellemojiMap[act] || '';
 }
@@ -346,6 +350,8 @@ export function getTaleIdFromAct(act: number): string {
     22: 'act-xxii-hoopy-frood',
     23: 'act-xxiii-the-manifold-dragon',
     24: 'act-xxiv-the-holographic-bound',
+    25: 'act-xxv-the-dragons-hide',
+    26: 'act-xxvi-the-master-and-his-emissary',
   };
   return taleMap[act] || `act-${act}`;
 }

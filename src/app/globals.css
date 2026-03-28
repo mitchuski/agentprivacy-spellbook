@@ -4,17 +4,35 @@
 
 @layer base {
   :root {
-    --primary: #6366f1;
-    --secondary: #8b5cf6;
-    --accent: #06b6d4;
-    --background: #0f172a;
-    --surface: #1e293b;
-    --text: #f1f5f9;
-    --text-muted: #94a3b8;
+    /* Soulbis color architecture */
+    --navy: #080c20;
+    --navy-mid: #0d1230;
+    --navy-light: #141a3d;
+    --coral: #e8523a;
+    --coral-dim: rgba(232, 82, 58, 0.15);
+    --coral-mid: rgba(232, 82, 58, 0.4);
+    --cyan: #4dd9e8;
+    --cyan-dim: rgba(77, 217, 232, 0.12);
+    --white: #f0eee8;
+    --white-dim: rgba(240, 238, 232, 0.55);
+    --white-ghost: rgba(240, 238, 232, 0.12);
+    --border: rgba(240, 238, 232, 0.08);
+    --border-hover: rgba(240, 238, 232, 0.18);
+
+    /* Map to existing Tailwind tokens for compatibility */
+    /* Mage-first: cyan as primary, coral as secondary */
+    --primary: var(--cyan);
+    --secondary: var(--coral);
+    --accent: #8b5cf6;
+    --background: var(--navy);
+    --surface: var(--navy-mid);
+    --text: var(--white);
+    --text-muted: var(--white-dim);
   }
 
   body {
-    @apply bg-background text-text;
+    background: var(--navy);
+    color: var(--white);
   }
 
   * {
@@ -85,6 +103,195 @@
   .btn-secondary {
     min-height: 44px;
     min-width: 44px;
+  }
+}
+
+/* Custom cursor - hide default on desktop */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+/* Cursor dot - the inner orb */
+.cursor {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: var(--cyan); /* Mage-first: cyan orb */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  transform: translate(-50%, -50%);
+}
+
+/* Cursor ring - follows with lag */
+.cursor-ring {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(77, 217, 232, 0.4); /* cyan with transparency */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover state - orb highlight effect */
+.cursor.hover {
+  transform: translate(-50%, -50%) scale(2);
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan), 0 0 24px rgba(77, 217, 232, 0.4);
+}
+
+.cursor-ring.hover {
+  transform: translate(-50%, -50%) scale(1.5);
+  border-color: rgba(77, 217, 232, 0.6);
+}
+
+/* Card with orb glow on hover */
+.card-with-orb {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-with-orb::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(77, 217, 232, 0.15) 0%,
+    rgba(77, 217, 232, 0.05) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+.card-with-orb:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Dual-Agent Orb (Mage + Swordsman intersection) */
+.dual-orb {
+  position: relative;
+}
+
+.dual-orb::before,
+.dual-orb::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  opacity: 0.6;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dual-orb::before {
+  background: var(--cyan);
+  left: calc(50% - 12px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dual-orb::after {
+  background: var(--coral);
+  left: calc(50% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dual-orb:hover::before {
+  transform: translateY(-50%) translateX(-4px);
+  opacity: 0.8;
+}
+
+.dual-orb:hover::after {
+  transform: translateY(-50%) translateX(4px);
+  opacity: 0.8;
+}
+
+/* Footer wave soul orb — idle halo + combustion on copy (overlaps canvas orb) */
+.footer-orb-idle-halo {
+  background: radial-gradient(
+    circle,
+    rgba(77, 217, 232, 0.45) 0%,
+    rgba(139, 77, 170, 0.32) 42%,
+    rgba(232, 82, 58, 0.28) 100%
+  );
+  box-shadow:
+    0 0 18px rgba(77, 217, 232, 0.35),
+    0 0 36px rgba(232, 82, 58, 0.12);
+}
+
+@keyframes footer-orb-combust-burst {
+  0% {
+    transform: translate(-50%, -50%) scale(0.45);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.35);
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+
+@keyframes footer-orb-combust-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.35);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.6);
+    opacity: 0;
+  }
+}
+
+.footer-orb-combust-burst {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(77, 217, 232, 0.75) 28%,
+    rgba(232, 82, 58, 0.45) 58%,
+    transparent 72%
+  );
+  animation: footer-orb-combust-burst 0.7s ease-out forwards;
+}
+
+.footer-orb-combust-ring {
+  animation: footer-orb-combust-ring 0.78s ease-out forwards;
+}
+
+.footer-orb-combust-ring--delay {
+  animation-delay: 0.08s;
+}
+
+.footer-orb-hit--copied {
+  box-shadow:
+    0 0 22px 6px rgba(77, 217, 232, 0.65),
+    0 0 40px 12px rgba(232, 82, 58, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-orb-combust-burst,
+  .footer-orb-combust-ring,
+  .footer-orb-combust-ring--delay {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .footer-orb-idle-halo {
+    transition: none;
   }
 }
 

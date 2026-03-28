@@ -53,8 +53,9 @@ function PrivacyVideo() {
 }
 
 function PrivacyAudioPlayer() {
-  // R2 bucket base URL for audio files
-  const R2_BASE_URL = 'https://voice.agentprivacy.ai';
+  const R2_BASE_URL =
+    (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_VOICE_BASE_URL?.trim()) ||
+    'https://voice.agentprivacy.ai';
   const audioSrc = `${R2_BASE_URL}/GavemyselfaCape_privacymage.mp3`;
   
   const [isPlaying, setIsPlaying] = useState(false);

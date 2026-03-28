@@ -40,6 +40,8 @@ const STORY_ACT_TO_GRIMOIRE_ID: { [act: number]: string } = {
   22: 'act-22-hoopy-frood',
   23: 'act-23-manifold-dragon',
   24: 'act-24-holographic-bound',
+  25: 'act-25-the-dragons-hide',
+  26: 'act-26-master-and-his-emissary',
 };
 
 // Spell mappings for story spellbook - must match inscriptions
@@ -68,6 +70,48 @@ const storySpellMappings: { [actNumber: number]: string } = {
   22: '🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞',
   23: '⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞',
   24: '🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞',
+  25: '🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🗺️🔮(MagicDNS) → 🐲→🐉🛡️🕸️(tail-scale) → 🕸️⊥☁️(control⊥data) → 🌀∞',
+  26: '🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → ⚔️=Master·🧙=Emissary → 🔗(corpus)≠⊥(gap) → 📡(usurp)→📡🚫(bound) → ☯️🧠∞',
+};
+
+const FIRST_PAGE = 0;
+/** Act filename stems under /public/story — add new acts here; navigation derives MAX_ACT_NUMBER. */
+const ACT_FILENAMES: { [key: number]: string } = {
+  1: '01-act-i-venice',
+  2: '02-act-ii-dual-ceremony',
+  3: '03-act-iii-drakes-teaching',
+  4: '04-act-iv-blade-alone',
+  5: '05-act-v-light-armour',
+  6: '06-act-vi-trust-graph-plane',
+  7: '07-act-vii-theantimirrorenhanced',
+  8: '08-act-viii-ancient-rule',
+  9: '09-act-ix-zcash-shield',
+  10: '10-act-x-topology-of-revelation',
+  11: '11-act-xi-balanced-spiral-of-sovereignty',
+  12: '12-act-xii-the-forgetting',
+  13: '13-act-xiii-book-of-promises',
+  14: '14-act-xiv-rain-on-mountain',
+  15: '15-act-xv-running-in-shackles',
+  16: '16-act-xvi-when-pools-become-wells',
+  17: '17-act-xvii-bonfire-in-the-dark-forest',
+  18: '18-act-xviii-mirror-in-dust',
+  19: '19-act-xix-the-anthropic-archivist',
+  20: '20-act-xx-the-infinite-vault',
+  21: '21-act-xxi-hitchhikers-gambit',
+  22: '22-act-xxii-hoopy-frood',
+  23: '23-act-xxiii-the-manifold-dragon',
+  24: '24-act-xxiv-the-holographic-bound',
+  25: '25-act-xxv-the-dragons-hide',
+  26: '26-act-xxvi-the-master-and-his-emissary',
+};
+const MAX_ACT_NUMBER = Math.max(...Object.keys(ACT_FILENAMES).map(Number));
+const LAST_PAGE = MAX_ACT_NUMBER + 1;
+
+const getActFilename = (act: number): string => {
+  if (act === FIRST_PAGE) {
+    return '00-privacymage-firstpage';
+  }
+  return ACT_FILENAMES[act] || '';
 };
 
 const getActVideo = (act: number): string | null => {
@@ -96,14 +140,20 @@ const getActVideo = (act: number): string | null => {
   22: '/assets/act22_dontpanichoppyfrood.mp4', // Act XXII: Don't Panic Hoopy Frood
   23: '/assets/act23_themanifolddragon.mp4', // Act XXIII: The Manifold Dragon
   24: '/assets/act24_theholographicbound.mp4', // Act XXIV: The Holographic Bound
+  25: '/assets/act25_dragonhide_story.mp4', // Act XXV: The Dragon's Hide
+  26: '/assets/act26_masteremissary_story.mp4', // Act XXVI: The Master and His Emissary
   };
   return videoMap[act] || null;
 };
 
 const getActAudio = (act: number): string | null => {
-  // R2 bucket base URL for audio files
-  const R2_BASE_URL = 'https://voice.agentprivacy.ai';
-  
+  // R2 / public bucket for narration (override with NEXT_PUBLIC_VOICE_BASE_URL when remapping)
+  const R2_BASE_URL =
+    (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_VOICE_BASE_URL?.trim()) ||
+    'https://voice.agentprivacy.ai';
+  if (act === LAST_PAGE) {
+    return `${R2_BASE_URL}/100_lastpage.mp3`;
+  }
   const audioMap: { [key: number]: string } = {
     0: `${R2_BASE_URL}/00_firstpage.mp3`, // First page
     1: `${R2_BASE_URL}/01_Venice_1494_The_Drakes_First_Whisper.mp3`, // Act I: Venice
@@ -130,7 +180,8 @@ const getActAudio = (act: number): string | null => {
     22: `${R2_BASE_URL}/22_Don't_Panic_Hoopy_Frood.mp3`, // Act XXII: Don't Panic Hoopy Frood
     23: `${R2_BASE_URL}/23_The_Manifold_Dragon.mp3`, // Act XXIII: The Manifold Dragon
     24: `${R2_BASE_URL}/24_The_Holographic_Bound.mp3`, // Act XXIV: The Holographic Bound
-    25: `${R2_BASE_URL}/100_lastpage.mp3`, // Last page
+    25: `${R2_BASE_URL}/25_The_Dragon's_Hide.mp3`, // Act XXV — R2 key uses apostrophe (Dragon's)
+    26: `${R2_BASE_URL}/26_The_Master_and_His_Emissary.mp3`, // Act XXVI
   };
   return audioMap[act] || null;
 };
@@ -442,6 +493,8 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       22: "Carry your towel, know your echo. The credential is relationship, not name. Trust builds through demonstration, not declaration. The gap between swordsman and mage is where personhood proves itself—for the echo can't form in a room that's being recorded.",
       23: "Zero knowledge makes it private. The overlap makes it strong. The lived journey makes it real.",
       24: "The fragment holds the whole. By choosing to be bounded, we become immeasurable.",
+      25: "The web knows its own shape, but only the mesh can carry the message. Control remembers. Data flows. Neither touches what the other holds.",
+      26: "The Master does not argue. The Emissary does not listen. The architecture must do what wisdom cannot.",
     };
     return proverbs[act] || "";
   };
@@ -598,6 +651,18 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: getProverbForInscription(24)
     },
     {
+      title: "Act XXV: The Dragon's Hide",
+      actNumber: 25,
+      emojis: "🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🗺️🔮(MagicDNS) → 🐲→🐉🛡️🕸️(tail-scale) → 🕸️⊥☁️(control⊥data) → 🌀∞",
+      quote: getProverbForInscription(25)
+    },
+    {
+      title: "Act XXVI: The Master and His Emissary",
+      actNumber: 26,
+      emojis: "🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → ⚔️=Master·🧙=Emissary → 🔗(corpus)≠⊥(gap) → 📡(usurp)→📡🚫(bound) → ☯️🧠∞",
+      quote: getProverbForInscription(26)
+    },
+    {
       title: "Closing Spell",
       actNumber: 0,
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -687,49 +752,6 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
   );
 }
 
-// Special page identifiers - these are relative to MAX_ACT_NUMBER
-const FIRST_PAGE = 0;
-// LAST_PAGE is calculated dynamically
-
-// Act filename mapping - add new acts here and everything else adjusts automatically
-const ACT_FILENAMES: { [key: number]: string } = {
-  1: '01-act-i-venice',
-  2: '02-act-ii-dual-ceremony',
-  3: '03-act-iii-drakes-teaching',
-  4: '04-act-iv-blade-alone',
-  5: '05-act-v-light-armour',
-  6: '06-act-vi-trust-graph-plane',
-  7: '07-act-vii-theantimirrorenhanced',
-  8: '08-act-viii-ancient-rule',
-  9: '09-act-ix-zcash-shield',
-  10: '10-act-x-topology-of-revelation',
-  11: '11-act-xi-balanced-spiral-of-sovereignty',
-  12: '12-act-xii-the-forgetting',
-  13: '13-act-xiii-book-of-promises',
-  14: '14-act-xiv-rain-on-mountain',
-  15: '15-act-xv-running-in-shackles',
-  16: '16-act-xvi-when-pools-become-wells',
-  17: '17-act-xvii-bonfire-in-the-dark-forest',
-  18: '18-act-xviii-mirror-in-dust',
-  19: '19-act-xix-the-anthropic-archivist',
-  20: '20-act-xx-the-infinite-vault',
-  21: '21-act-xxi-hitchhikers-gambit',
-  22: '22-act-xxii-hoopy-frood',
-  23: '23-act-xxiii-the-manifold-dragon',
-  24: '24-act-xxiv-the-holographic-bound',
-};
-
-// Calculate maximum act number dynamically
-const MAX_ACT_NUMBER = Math.max(...Object.keys(ACT_FILENAMES).map(Number));
-const LAST_PAGE = MAX_ACT_NUMBER + 1;
-
-const getActFilename = (act: number): string => {
-  if (act === FIRST_PAGE) {
-    return '00-privacymage-firstpage';
-  }
-  return ACT_FILENAMES[act] || '';
-};
-
 export default function StoryPage() {
   const [activeAct, setActiveAct] = useState(0); // Start with warning (Act 0)
   const [markdownContent, setMarkdownContent] = useState<string>('');
@@ -769,7 +791,8 @@ export default function StoryPage() {
     const romanNumerals: { [key: number]: string } = {
       1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
       9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-      16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII', 24: 'XXIV',
+      16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
+      24: 'XXIV', 25: 'XXV', 26: 'XXVI',
     };
     if (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) {
       setPageContext({
@@ -909,7 +932,9 @@ export default function StoryPage() {
   21: "🌑4️⃣2️⃣ → 🩸⚔️⚔️ → ✈️7️⃣C → 😉 → 🍺🐴 → 👂✨ → 📖🌟 → 🚀4️⃣2️⃣ → ⚔️🧙‍♂️🧙‍♂️ → 🌌∞",
   22: "🚫😱 → 🧣👤✓ → 🤝📜 → 📶↗️ → ⚔️║🧙‍♂️ → 🔊💫 → 🚫📹 → 🌐📖∞",
   23: "⬢△🚀 → ⚔️⊥🧙→📐⁴🪞 → 🐦‍⬛²🔷>🔷 → 📚🤞🕸️⭐ → 🗣️🐲🐉 → 🛤️∞",
-  24: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
+      24: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
+      25: "🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🗺️🔮(MagicDNS) → 🐲→🐉🛡️🕸️(tail-scale) → 🕸️⊥☁️(control⊥data) → 🌀∞",
+      26: "🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → ⚔️=Master·🧙=Emissary → 🔗(corpus)≠⊥(gap) → 📡(usurp)→📡🚫(bound) → ☯️🧠∞",
     };
     return inscriptions[act] || "";
   };
@@ -941,6 +966,8 @@ export default function StoryPage() {
       22: "Carry your towel, know your echo. The credential is relationship, not name. Trust builds through demonstration, not declaration. The gap between swordsman and mage is where personhood proves itself—for the echo can't form in a room that's being recorded.",
       23: "Zero knowledge makes it private. The overlap makes it strong. The lived journey makes it real.",
       24: "The fragment holds the whole. By choosing to be bounded, we become immeasurable.",
+      25: "The web knows its own shape, but only the mesh can carry the message. Control remembers. Data flows. Neither touches what the other holds.",
+      26: "The Master does not argue. The Emissary does not listen. The architecture must do what wisdom cannot.",
     };
     return proverbs[act] || "";
   };
@@ -1067,7 +1094,8 @@ export default function StoryPage() {
                   const romanNumerals: { [key: number]: string } = {
                     1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
                     9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII', 24: 'XXIV'
+                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
+                    24: 'XXIV', 25: 'XXV', 26: 'XXVI',
                   };
                   let label = '';
                   let shortLabel = '';

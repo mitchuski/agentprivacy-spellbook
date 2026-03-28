@@ -594,7 +594,7 @@ export default function SpellsPage() {
 
         <section id="spellbook" className="scroll-mt-24 mb-16">
           <h2 className="text-2xl font-semibold text-text mb-4">The Grimoire Spellbook</h2>
-          <p className="text-text/70 mb-6">All spells and proverbs from the six spellbooks (v8.5.0). Select inscriptions and proverbs to add them to your spell graph.</p>
+          <p className="text-text/70 mb-6">All spells and proverbs from the six spellbooks (v8.7.0-canonical). Select inscriptions and proverbs to add them to your spell graph.</p>
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <button type="button" onClick={expandAllGrimoire} className="px-3 py-1.5 rounded-lg border border-surface/50 text-sm hover:bg-surface/30">Expand all</button>
             <button type="button" onClick={collapseAllGrimoire} className="px-3 py-1.5 rounded-lg border border-surface/50 text-sm hover:bg-surface/30">Collapse all</button>

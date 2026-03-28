@@ -28,7 +28,7 @@ const affiliationOptions = [
   { value: 'myterms-alliance', label: 'MyTerms Alliance' },
 ];
 
-// Story acts (1-24)
+// Story acts (1-26)
 const storyActs: { [key: number]: string } = {
   1: 'Act I: Venice',
   2: 'Act II: Dual Ceremony',
@@ -53,6 +53,9 @@ const storyActs: { [key: number]: string } = {
   21: 'Act XXI: Hitchhiker\'s Gambit',
   22: 'Act XXII: Don\'t Panic Hoopy Frood',
   23: 'Act XXIII: The Manifold Dragon',
+  24: 'Act XXIV: The Holographic Bound',
+  25: 'Act XXV: The Dragon\'s Hide',
+  26: 'Act XXVI: The Master and His Emissary',
 };
 
 // Zero tales (1-30)

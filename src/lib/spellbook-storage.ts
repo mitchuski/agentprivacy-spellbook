@@ -373,7 +373,7 @@ export function getPathwayNodeIds(spellIds: string[], spellbook: PathwaySpellboo
 export function getSpellIdForNode(spellbook: PathwaySpellbook, nodeId: number): string | null {
   switch (spellbook) {
     case 'story': {
-      if (nodeId < 1 || nodeId > 23) return null;
+      if (nodeId < 1 || nodeId > FIRST_PERSON_SPELL_IDS.length) return null;
       return FIRST_PERSON_SPELL_IDS[nodeId - 1] ?? null;
     }
     case 'zero':

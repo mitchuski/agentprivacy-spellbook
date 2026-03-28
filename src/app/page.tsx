@@ -6,15 +6,16 @@ import Link from 'next/link';
 import AppNav from '@/components/AppNav';
 import { ROUTES } from '@/lib/nav';
 import LandingStars from '@/components/landing/LandingStars';
-import HeroConstellation from '@/components/landing/HeroConstellation';
-import LazyConstellation from '@/components/landing/LazyConstellation';
+import HeroManifold from '@/components/landing/HeroManifold';
+import SectionWave from '@/components/landing/SectionWave';
+import SoulOrbCopy from '@/components/SoulOrbCopy';
 
 const HERO_CAROUSEL = [
   { text: 'mage 🧙 knowledge is my spellbook.', emoji: '🧙' },
   { text: 'swordsman ⚔️ privacy is my blade.', emoji: '⚔️' },
   { text: 'seeker 🌌 the story is my path.', emoji: '🌌' },
   { text: 'builder 🔧 the protocol is my craft.', emoji: '🔧' },
-  { text: 'dragon 🐉, traversing pattern space', emoji: '🐉' },
+  { text: 'dragon 🐉 traversing pattern space', emoji: '🐉' },
   { text: 'agent 🤖 expanding our universe.', emoji: '🤖' },
   { text: 'person 😊 looking for shared meaning', emoji: '😊' },
 ];
@@ -27,7 +28,7 @@ const CTA_CAROUSEL = [
 ];
 
 const SPELLBOOKS = [
-  { id: 'story', name: 'First Person', emoji: '📖', question: 'WHAT', acts: 24, unit: 'acts', desc: 'Your sovereignty story. The journey of Soulbis and Soulbae through Drake to Dragon pattern space.', color: '#f59e0b', href: '/story' },
+  { id: 'story', name: 'First Person', emoji: '📖', question: 'WHAT', acts: 26, unit: 'acts', desc: 'Your sovereignty story. The journey of Soulbis and Soulbae through Drake to Dragon pattern space.', color: '#f59e0b', href: '/story' },
   { id: 'zero', name: 'Zero Knowledge', emoji: '🔮', question: 'HOW', acts: 30, unit: 'tales', desc: 'Cryptographic magic made human-readable.', color: '#8b5cf6', href: '/zero' },
   { id: 'canon', name: 'The Canon', emoji: '📜', question: 'WHY', acts: 11, unit: 'chapters', desc: 'Blockchain lineage. Cypherpunks to synthesis.', color: '#06b6d4', href: '/canon' },
   { id: 'society', name: 'Parallel Society', emoji: '🚪', question: 'EXIT', acts: 17, unit: 'chapters', desc: 'Farewell to Westphalia. Why sovereignty requires exit.', color: '#ef4444', href: '/society' },
@@ -121,14 +122,17 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background relative">
+    <div className="min-h-screen relative">
+      {/* Stars layer on landing page */}
       <LandingStars />
+
       <AppNav />
 
-      {/* Hero — full viewport */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 relative pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-        <HeroConstellation sectionIndex={0} />
-        <div className="max-w-4xl mx-auto text-center relative z-10">
+      {/* Hero — dual-lattice manifold over the global veil (layout HeroWave); stars stay underneath in sibling stack */}
+      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:px-6 lg:px-8">
+        <HeroManifold orbAnchorX={0.65} orbAnchorY={0.46} baseAlpha={0.26} />
+        <SoulOrbCopy variant="heroOrb" />
+        <div className="relative z-10 mx-auto max-w-4xl text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -196,11 +200,9 @@ export default function LandingPage() {
         </motion.p>
       </section>
 
-      <div className="border-t border-surface/50" />
-
-      {/* Section 3 — The Thesis (constellation continues, tetrahedron face flipped) */}
+      {/* Section 3 — The Thesis */}
+      <SectionWave height="120px" />
       <section id="thesis" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <HeroConstellation variant="section" sectionAngle={1} sectionIndex={1} />
         <div className="max-w-[720px] mx-auto relative z-10 text-center">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -275,9 +277,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <SectionWave reverse={false} height="120px" />
       {/* Section 4 — Features */}
       <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={2} />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -339,9 +341,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <SectionWave height="120px" />
       {/* Section 5 — Five Spellbooks */}
       <section id="spellbooks" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={3} />
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -409,9 +411,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <SectionWave reverse={false} height="120px" />
       {/* Section 6 — Your Path */}
       <section id="your-path" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={4} />
         <div className="max-w-[760px] mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -457,9 +459,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <SectionWave height="120px" />
       {/* Section 7 — The Architecture */}
       <section id="architecture" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={5} />
         <div className="max-w-[720px] mx-auto relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -576,9 +578,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <SectionWave reverse={false} height="120px" />
       {/* Section 8 — Pools */}
       <section id="pools" className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={6} />
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -611,9 +613,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <SectionWave height="120px" />
       {/* Section 9 — Join Us */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={7} />
         <div className="max-w-[860px] mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -666,9 +668,8 @@ export default function LandingPage() {
       </section>
 
       {/* Section 10 — Final CTA */}
-      <div className="border-t border-surface/50" />
+      <SectionWave reverse={false} height="120px" />
       <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={0} sectionIndex={8} />
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -719,9 +720,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      <SectionWave height="100px" />
       {/* Donate */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 relative">
-        <LazyConstellation variant="section" sectionAngle={1} sectionIndex={9} />
         <div className="max-w-xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -790,6 +791,7 @@ export default function LandingPage() {
           </motion.p>
         </div>
       </section>
+
     </div>
   );
 }
