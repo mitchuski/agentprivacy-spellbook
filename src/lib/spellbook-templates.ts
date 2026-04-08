@@ -64,27 +64,34 @@ const MAGE_PATH_SPELL_IDS: string[] = [
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-02-early-incantations', 'chapter-03-synthesis',
 ];
 
-/** Balanced pathway (story + canon). Used by healer, witness, architect, pedagogue, jedi, kyra, person. */
+/** Balanced pathway (story + canon). Used by healer, witness, pedagogue, jedi, person. */
 const BALANCED_PATH_SPELL_IDS: string[] = [
   'act-01-venice', 'act-03-drakes-teaching', 'act-09-zcash-shield', 'act-12-forgetting',
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-03-synthesis',
 ];
 
-/** Holonic Architect — data substrate, persistence, Act XXIV Holographic Bound. Story acts 2, 6, 9, 11, 13, 24 + canon + triune/manifold. */
+/** Balanced + Acts XXV–XXVI (mesh + hemispheres / AI governance). Used by architect and kyra. */
+const BALANCED_PLUS_MESH_HEMISPHERE_SPELL_IDS: string[] = [
+  ...BALANCED_PATH_SPELL_IDS,
+  'act-25-the-dragons-hide',
+  'act-26-master-and-his-emissary',
+];
+
+/** Holonic Architect — data substrate, persistence, Acts XXIV–XXV (bound + walkable spellweb). Story acts 2, 6, 9, 11, 13, 24, 25 + canon + triune/manifold. */
 const HOLONIC_ARCHITECT_SPELL_IDS: string[] = [
   'act-02-dual-ceremony', 'act-06-trust-graph', 'act-09-zcash-shield', 'act-11-sovereignty-spiral',
-  'act-13-book-of-promises', 'act-24-holographic-bound',
+  'act-13-book-of-promises', 'act-24-holographic-bound', 'act-25-the-dragons-hide',
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers', 'chapter-08-missing-primitive',
   'incantation-triune_graph_spell', 'incantation-manifold_incantation',
 ];
-/** Netkeeper — Mesh Network Sovereignty Builder (V5 Swordsman persona). Acts 2, 6, 9, 17, 25 + Zero Tales mesh focus. */
+/** Netkeeper — Mesh Network Sovereignty Builder (V5 Swordsman persona). Acts 2, 6, 9, 17, 25 + Zero Tales mesh focus. Act XXV = Dragon's Hide. */
 const NETKEEPER_SPELL_IDS: string[] = [
   'act-02-dual-ceremony', 'act-06-trust-graph', 'act-09-zcash-shield', 'act-17-bonfire-dark-forest',
   'act-25-the-dragons-hide',
   'zero-tale-9', 'zero-tale-10', 'zero-tale-11', 'zero-tale-12',
 ];
 
-/** Herald — Information Commons Architect (V5 Mage persona). Acts 1, 2, 3, 25, 26 + canon + plurality. */
+/** Herald — Information Commons Architect (V5 Mage persona). Acts 1, 2, 3, 25, 26 + canon + plurality. Acts XXV–XXVI = mesh + Master/Emissary. */
 const HERALD_SPELL_IDS: string[] = [
   'act-01-venice', 'act-02-dual-ceremony', 'act-03-drakes-teaching', 'act-25-the-dragons-hide', 'act-26-master-and-his-emissary',
   'chapter-00-preface', 'chapter-01-cypherpunk-whispers',
@@ -269,7 +276,7 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     emoji: '☯️🤖',
     tagline: 'The system that trusts its agents to behave has already delegated sovereignty to hope.',
     alignment: 'balanced',
-    spellIds: BALANCED_PATH_SPELL_IDS,
+    spellIds: BALANCED_PLUS_MESH_HEMISPHERE_SPELL_IDS,
     skillIds: getSkillIdsForPersona('architect'),
   },
   {
@@ -296,7 +303,7 @@ export const SPELLBOOK_TEMPLATES: SpellbookTemplate[] = [
     emoji: '☯️💎',
     tagline: 'The intelligence that serves without surveilling, delegates without extracting, and protects without imprisoning is the only intelligence worth building.',
     alignment: 'balanced',
-    spellIds: BALANCED_PATH_SPELL_IDS,
+    spellIds: BALANCED_PLUS_MESH_HEMISPHERE_SPELL_IDS,
     skillIds: getSkillIdsForPersona('kyra'),
   },
   {

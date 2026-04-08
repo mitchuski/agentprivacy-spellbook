@@ -41,22 +41,32 @@ export function saveAgentCard(card: AgentCard): void {
 }
 
 /**
- * Save the keypair to localStorage as hex strings.
- * This allows the identity to persist across page refreshes.
+ * Save the keypair to storage.
+ * PUBLIC KEY: localStorage (persists across sessions)
+ * PRIVATE KEY: sessionStorage (burned on tab close - like the Moon)
+ *
+ * The Swordsman narration key is "burned" - only available during the ceremony session.
+ * This matches the spec: "Your private key was not stored."
  */
 export function saveKeys(keypair: { privateKey: Uint8Array; publicKey: Uint8Array }): void {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(KEYS.PRIVATE_KEY, bytesToHex(keypair.privateKey));
+  // Public key persists (for verification, runecraft)
   localStorage.setItem(KEYS.PUBLIC_KEY, bytesToHex(keypair.publicKey));
+  // Private key is session-only (burned like the Moon)
+  sessionStorage.setItem(KEYS.PRIVATE_KEY, bytesToHex(keypair.privateKey));
 }
 
 /**
- * Load the keypair from localStorage.
- * Returns null if keys are not stored.
+ * Load the keypair from storage.
+ * Private key comes from sessionStorage (if still in session).
+ * Public key comes from localStorage (persists).
+ * Returns null if either key is unavailable.
  */
 export function getKeys(): { privateKey: Uint8Array; publicKey: Uint8Array } | null {
   if (typeof window === 'undefined') return null;
-  const privateKeyHex = localStorage.getItem(KEYS.PRIVATE_KEY);
+  // Private key from session (burned on tab close)
+  const privateKeyHex = sessionStorage.getItem(KEYS.PRIVATE_KEY);
+  // Public key from localStorage (persists)
   const publicKeyHex = localStorage.getItem(KEYS.PUBLIC_KEY);
   if (!privateKeyHex || !publicKeyHex) return null;
   try {
@@ -71,19 +81,39 @@ export function getKeys(): { privateKey: Uint8Array; publicKey: Uint8Array } | n
 
 /**
  * Check if keys are stored (identity can sign).
+ * Returns true only if BOTH private (session) and public (local) keys exist.
  */
 export function hasStoredKeys(): boolean {
   if (typeof window === 'undefined') return false;
-  return !!(localStorage.getItem(KEYS.PRIVATE_KEY) && localStorage.getItem(KEYS.PUBLIC_KEY));
+  return !!(sessionStorage.getItem(KEYS.PRIVATE_KEY) && localStorage.getItem(KEYS.PUBLIC_KEY));
+}
+
+/**
+ * Check if only public key exists (private was burned).
+ * This is the normal state after a ceremony session ends.
+ */
+export function hasPublicKeyOnly(): boolean {
+  if (typeof window === 'undefined') return false;
+  return !!(localStorage.getItem(KEYS.PUBLIC_KEY) && !sessionStorage.getItem(KEYS.PRIVATE_KEY));
+}
+
+/**
+ * Get public key hex string (persisted in localStorage).
+ * Available even after private key is burned.
+ */
+export function getPublicKeyHex(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem(KEYS.PUBLIC_KEY);
 }
 
 export function clearIdentity(): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem(KEYS.AGENT_CARD);
   localStorage.removeItem(KEYS.CEREMONY_COMPLETE);
-  localStorage.removeItem(KEYS.PRIVATE_KEY);
   localStorage.removeItem(KEYS.PUBLIC_KEY);
   localStorage.removeItem(KEYS.CONSTELLATION);
+  // Also clear session storage private key if still present
+  sessionStorage.removeItem(KEYS.PRIVATE_KEY);
   window.dispatchEvent(new Event(IDENTITY_EVENT));
 }
 

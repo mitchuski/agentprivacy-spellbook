@@ -4,7 +4,13 @@ import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { getBakedSpellCards, type SpellCard, type SpellbookSource } from '@/lib/grimoire-baked';
+import {
+  getBakedSpellCards,
+  FIRST_PERSON_ACT_PERSONA_HINTS,
+  type SpellCard,
+  type SpellbookSource,
+} from '@/lib/grimoire-baked';
+import { PRIVACYMAGE_GRIMOIRE_IPFS_URL } from '@/lib/grimoire-ipfs';
 import { ALL_SKILL_FILES, DUAL_AGENT_SKILL_MAP, type SkillFileMeta, type AgentRole } from '@/lib/skills-data';
 import { SPELLBOOK_TEMPLATES } from '@/lib/spellbook-templates';
 import { getMatchingPersonas } from '@/lib/persona-index';
@@ -410,7 +416,7 @@ export default function SpellsPage() {
                 <div className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-surface/50 bg-surface/20">
                   <span className="text-sm font-medium text-text">The privacymage grimoire</span>
                   <a
-                    href="https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna"
+                    href={PRIVACYMAGE_GRIMOIRE_IPFS_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs text-primary hover:underline"
@@ -420,8 +426,7 @@ export default function SpellsPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      const url = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna';
-                      navigator.clipboard.writeText(url).then(() => showToast('Grimoire URL copied'));
+                      navigator.clipboard.writeText(PRIVACYMAGE_GRIMOIRE_IPFS_URL).then(() => showToast('Grimoire URL copied'));
                     }}
                     className="text-xs px-2 py-1 rounded-lg border border-primary/30 text-primary hover:bg-primary/10"
                   >
@@ -637,11 +642,16 @@ export default function SpellsPage() {
                       </button>
                       {isOpen && (
                         <div className="border-t border-surface/50 p-4 space-y-4">
-                          {cards.map((card) => (
-                            <div key={card.id} className="p-4 rounded-xl border border-surface/50 bg-surface/20 hover:border-surface/80 transition-colors">
+                          {cards.map((card, idx) => (
+                            <div key={`${book}-${card.id}-${idx}`} className="p-4 rounded-xl border border-surface/50 bg-surface/20 hover:border-surface/80 transition-colors">
                               <h3 className="font-medium text-text mb-2">{card.title}</h3>
                               <p className="font-mono text-lg mb-2" aria-label={`Spell: ${card.spell}`}>{card.spell}</p>
                               <blockquote className="text-text/80 italic border-l-2 border-primary/50 pl-4 mb-4">&ldquo;{card.proverb}&rdquo;</blockquote>
+                              {FIRST_PERSON_ACT_PERSONA_HINTS[card.id] && (
+                                <p className="text-xs text-text/55 mb-3">
+                                  Persona templates: {FIRST_PERSON_ACT_PERSONA_HINTS[card.id].join(', ')}
+                                </p>
+                              )}
                               <div className="flex flex-wrap gap-2">
                                 <button onClick={() => copyToClipboard(card.spell, 'Spell copied ⚔️')} className="px-3 py-1.5 rounded bg-surface/50 hover:bg-surface border border-surface/50 text-sm">Copy Spell</button>
                                 <button onClick={() => copyToClipboard(card.proverb, 'Proverb inscribed 📜')} className="px-3 py-1.5 rounded bg-surface/50 hover:bg-surface border border-surface/50 text-sm">Copy Proverb</button>
@@ -667,6 +677,11 @@ export default function SpellsPage() {
                       <h3 className="font-medium text-text mb-2">{card.title}</h3>
                       <p className="font-mono text-lg mb-2" aria-label={`Spell: ${card.spell}`}>{card.spell}</p>
                       <blockquote className="text-text/80 italic border-l-2 border-primary/50 pl-4 mb-4">&ldquo;{card.proverb}&rdquo;</blockquote>
+                      {FIRST_PERSON_ACT_PERSONA_HINTS[card.id] && (
+                        <p className="text-xs text-text/55 mb-3">
+                          Persona templates: {FIRST_PERSON_ACT_PERSONA_HINTS[card.id].join(', ')}
+                        </p>
+                      )}
                       <div className="flex flex-wrap gap-2">
                         <button onClick={() => copyToClipboard(card.spell, 'Spell copied ⚔️')} className="px-3 py-1.5 rounded bg-surface/50 hover:bg-surface border border-surface/50 text-sm">Copy Spell</button>
                         <button onClick={() => copyToClipboard(card.proverb, 'Proverb inscribed 📜')} className="px-3 py-1.5 rounded bg-surface/50 hover:bg-surface border border-surface/50 text-sm">Copy Proverb</button>

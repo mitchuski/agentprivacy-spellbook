@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CEREMONY_STEPS } from '@/lib/ceremony/constellation';
+import { getCeremonyStepPhase, CEREMONY_MOON } from '@/lib/ceremony/moon-phase';
 
 const NEUTRAL_STEP_CLASS = 'inline-flex w-9 h-9 sm:w-10 sm:h-10 items-center justify-center rounded-lg text-lg sm:text-xl border-2 transition-all border-surface/30 bg-surface/10 text-text/40';
 
@@ -40,8 +41,22 @@ export default function ConstellationHeader({
     );
   }
 
+  // Calculate current moon phase based on completed steps
+  const completedCount = completedStepIds.length;
+  const currentPhase = getCeremonyStepPhase(completedCount, CEREMONY_STEPS.length);
+
   return (
     <div className="sticky top-0 z-10 py-4 -mx-2 px-2 rounded-lg bg-background/95 border-b border-surface/30 mb-6">
+      {/* Moon Phase Indicator */}
+      <div className="flex items-center justify-center gap-2 mb-3">
+        <span className="text-2xl" title="Ceremony start">{CEREMONY_MOON}</span>
+        <span className="text-text/30 text-xs">→</span>
+        <span className="text-2xl" title={`${currentPhase.name}: ${currentPhase.meaning}`}>
+          {currentPhase.emoji}
+        </span>
+        <span className="text-xs text-text/50 ml-1">{currentPhase.name}</span>
+      </div>
+
       <div className="flex items-center justify-center gap-1 sm:gap-2 flex-wrap" role="list" aria-label="Ceremony progress">
         {CEREMONY_STEPS.map((step, i) => {
           const isCompleted = completedStepIds.includes(step.id);

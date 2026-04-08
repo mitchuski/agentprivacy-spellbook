@@ -8,9 +8,11 @@ import { ALL_SKILL_FILES } from '@/lib/skills-data';
 import { getGrimoireFromSpellId, getGrimoireDisplayName, getGrimoireEmoji, getGrimoireColor } from '@/lib/spellweb/labels';
 import AppNav from '@/components/AppNav';
 import SpellwebViewer from '@/components/spellweb/SpellwebViewer';
+import ExtensionStatusIndicator from '@/components/ExtensionStatusIndicator';
+import { useExtensionBridge } from '@/contexts/ExtensionBridgeContext';
+import { USER_LINKS_STORAGE_KEY } from '@/lib/spellweb-keys';
 
 const REFLECTIONS_STORAGE_KEY = 'agentprivacy-spellweb-reflections';
-const USER_LINKS_STORAGE_KEY = 'agentprivacy-spellweb-user-links';
 
 function loadReflections(): Record<string, string> {
   if (typeof window === 'undefined') return {};
@@ -49,6 +51,40 @@ export default function WebPage() {
   const [reflections, setReflections] = useState<Record<string, string>>({});
   const [connectRequested, setConnectRequested] = useState(false);
   const [showSaveConstellationModal, setShowSaveConstellationModal] = useState(false);
+
+  // Extension bridge integration
+  const { state: extensionState, isConnected: extensionConnected, lastMessage } = useExtensionBridge();
+
+  // Track live constellation nodes from extension
+  const [liveConstellationNodes, setLiveConstellationNodes] = useState<Array<{
+    id: string;
+    emoji?: string;
+    yangYin: 'yang' | 'yin';
+    x: number;
+    y: number;
+  }>>([]);
+
+  // Update live constellation when extension sends updates
+  useEffect(() => {
+    if (lastMessage?.type === 'CONSTELLATION_UPDATE') {
+      const nodes = (lastMessage as { type: 'CONSTELLATION_UPDATE'; nodes: unknown[] }).nodes as Array<{
+        id: string;
+        emoji?: string;
+        yangYin: 'yang' | 'yin';
+        x: number;
+        y: number;
+      }>;
+      setLiveConstellationNodes(nodes);
+    }
+  }, [lastMessage]);
+
+  // Convert extension constellation nodes to spell IDs for the graph
+  const extensionSpellIds = useMemo(() => {
+    // Extension nodes might have different ID format - normalize them
+    return liveConstellationNodes
+      .filter(n => n.emoji)
+      .map(n => `ext-${n.id}`);
+  }, [liveConstellationNodes]);
 
   useEffect(() => {
     setReflections(loadReflections());
@@ -130,6 +166,58 @@ export default function WebPage() {
 
   const spellwebRightPanel = (expanded: boolean) => (
     <div className="flex flex-col gap-3 w-[200px] shrink-0 p-3 border-l border-surface/50 bg-background overflow-y-auto">
+      {/* Extension status panel */}
+      {extensionConnected && (
+        <div className="rounded-xl border border-[#1D9E75]/30 bg-[#1D9E75]/5 p-3">
+          <div className="font-medium text-text text-sm mb-2 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#1D9E75] animate-pulse" />
+            Extensions Active
+          </div>
+          <div className="text-xs text-text-muted space-y-1">
+            {extensionState.mageDetected && (
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#1D9E75]" />
+                Mage scanning
+              </div>
+            )}
+            {extensionState.swordsmanDetected && (
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#534AB7]" />
+                Swordsman guarding
+              </div>
+            )}
+            {liveConstellationNodes.length > 0 && (
+              <div className="mt-2 pt-2 border-t border-[#1D9E75]/20">
+                <div className="font-medium text-[#1D9E75]">
+                  {liveConstellationNodes.length} live spell{liveConstellationNodes.length !== 1 ? 's' : ''}
+                </div>
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {liveConstellationNodes.slice(0, 6).map((n, i) => (
+                    <span
+                      key={n.id}
+                      className={`text-sm ${n.yangYin === 'yang' ? 'text-[#EF9F27]' : 'text-[#8b5cf6]'}`}
+                      title={n.id}
+                    >
+                      {n.emoji || (n.yangYin === 'yang' ? '⚔' : '✦')}
+                    </span>
+                  ))}
+                  {liveConstellationNodes.length > 6 && (
+                    <span className="text-xs text-text-muted">+{liveConstellationNodes.length - 6}</span>
+                  )}
+                </div>
+              </div>
+            )}
+            {extensionState.manaBalance > 0 && (
+              <div className="mt-2 pt-2 border-t border-[#1D9E75]/20 flex items-center gap-1">
+                <span className="text-[#EF9F27]">✦</span>
+                <span className="font-medium text-[#EF9F27]">{extensionState.manaBalance}</span>
+                <span className="text-text-muted">mana</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="rounded-xl border border-surface/50 bg-surface/10 p-2 flex flex-col gap-1">
         <button
           type="button"
@@ -242,6 +330,20 @@ export default function WebPage() {
           </Link>
           <span className="text-text-muted/60 shrink-0">·</span>
           <h1 className="text-lg font-semibold text-text shrink-0">Web</h1>
+
+          {/* Extension status */}
+          {extensionConnected && (
+            <>
+              <span className="text-text-muted/60 shrink-0">·</span>
+              <ExtensionStatusIndicator showConstellation showMana />
+              {liveConstellationNodes.length > 0 && (
+                <span className="text-xs text-[#1D9E75] animate-pulse">
+                  {liveConstellationNodes.length} live nodes
+                </span>
+              )}
+            </>
+          )}
+
           <div className="flex-1 min-w-0" />
           {selectionCount > 0 && availableFilters.length > 0 && (
             <div className="flex flex-wrap items-center gap-2">

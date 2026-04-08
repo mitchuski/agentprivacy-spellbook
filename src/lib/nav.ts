@@ -19,11 +19,12 @@ export const NAV_LINKS: NavLink[] = [
   { href: '/plurality', label: 'plural', key: 'plural' },
   { href: '/proverbs', label: 'proverbs', key: 'proverbs' },
   { href: '/evoke', label: 'evoke', key: 'evoke' },
-  { href: '/privacy', label: 'privacy', key: 'privacy' },
+  { href: '/poems', label: 'poems', key: 'poems' },
   { href: '/mage', label: 'mage', key: 'mage' },
   { href: '/promises', label: 'promise', key: 'promise' },
   { href: '/spells', label: 'spells', key: 'spells' },
   { href: '/web', label: 'web', key: 'web' },
+  { href: '/orbs', label: 'orbs', key: 'orbs' },
 ];
 
 /** Hero / CTA links. Use actual routes so client-side nav works. */
@@ -34,4 +35,6 @@ export const ROUTES = {
   spells: '/spells',
   promises: '/promises',
   plurality: '/plurality',
+  /** Dual-orb training + loadout + extensions */
+  orbs: '/orbs',
 } as const;

@@ -73,6 +73,11 @@ export function getActFromTaleId(taleId: string): number | null {
     'act-xxiv-the-holographic-bound': 24,
     'act-xxv-the-dragons-hide': 25,
     'act-xxvi-the-master-and-his-emissary': 26,
+    'act-27-zk-swordsmans-forge': 27,
+    'act-28-ceremony-engine': 28,
+    'act-29-dragon-wakes': 29,
+    'act-30-dihedral-mirror': 30,
+    'act-31-the-first-delegation': 31,
   };
   return taleMap[taleId] || null;
 }
@@ -109,6 +114,11 @@ export function getSpellemojiForAct(act: number): string {
     24: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
     25: "🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🗺️🔮(MagicDNS) → 🐲→🐉🛡️🕸️(tail-scale) → 🕸️⊥☁️(control⊥data) → 🌀∞",
     26: "🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → ⚔️=Master·🧙=Emissary → 🔗(corpus)≠⊥(gap) → 📡(usurp)→📡🚫(bound) → ☯️🧠∞",
+    27: "⬢=Z/(2⁶)Z · ✦=neg(bnot(v)) · 🔷→🔷→🔷=chain · same🔷∞chains=ZK · ∂M=96on64 · Φ=⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ · T_∫(π)=∮∂M",
+    28: "⚔️✦ → 🌐📐(⊥DOM) → ☰₆₄ → 🔮✨ → ⬡⬡⬡ → 🤝📜 → 🐲→🐉 → ✦→📝→🕸️",
+    29: "🔐→💥(2D) → ⚛️≤1200 → 🔷⁶ᴰ≠🔐²ᴰ → 🤝📖(understand) → ⚔️✦🧙(bilateral) → 🐉🌬️(flight)",
+    30: "(⚔️⊥⿻⊥🧙)😊 = neg ⊕ bnot → succ",
+    31: "🌕→🌑(amnesia) · ☀️→🌕(orbit) · 🌍→👤(life) · ⚔️⊥🧙(gap) · 📜→∞(protocol)",
   };
   return spellemojiMap[act] || '';
 }
@@ -352,6 +362,11 @@ export function getTaleIdFromAct(act: number): string {
     24: 'act-xxiv-the-holographic-bound',
     25: 'act-xxv-the-dragons-hide',
     26: 'act-xxvi-the-master-and-his-emissary',
+    27: 'act-27-zk-swordsmans-forge',
+    28: 'act-28-ceremony-engine',
+    29: 'act-29-dragon-wakes',
+    30: 'act-30-dihedral-mirror',
+    31: 'act-31-the-first-delegation',
   };
   return taleMap[act] || `act-${act}`;
 }

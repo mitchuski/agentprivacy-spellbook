@@ -26,8 +26,11 @@ export default function AgentCardStep({
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold text-text">{constellationStep?.title ?? 'Your Agent Card'}</h2>
       <p className="text-text/80">
-        {constellationStep?.description ?? 'This is your signed Swordsman identity. It will be saved locally; your private key is not stored—back it up in the next step if you need to re-sign later.'}
+        {constellationStep?.description ?? 'This is your signed Swordsman identity. It will be saved locally; your private key is not stored���back it up in the next step if you need to re-sign later.'}
       </p>
+      {constellationStep?.cosmologicalNote && (
+        <p className="text-xs text-amber-500/70 italic">🌕 {constellationStep.cosmologicalNote}</p>
+      )}
       {constellationStep && onChosenEmoji && (
         <EmojiPicker options={constellationStep.emojiOptions} value={chosenEmoji ?? null} onChange={onChosenEmoji} />
       )}

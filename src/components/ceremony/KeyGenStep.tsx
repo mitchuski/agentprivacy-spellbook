@@ -46,6 +46,9 @@ export default function KeyGenStep({
       <p className="text-text/80">
         {constellationStep?.description ?? 'An Ed25519 keypair is being generated in your browser. Your private key never leaves this device.'}
       </p>
+      {constellationStep?.cosmologicalNote && (
+        <p className="text-xs text-primary/70 italic">🪨 {constellationStep.cosmologicalNote}</p>
+      )}
       {constellationStep && onChosenEmoji && (
         <EmojiPicker options={constellationStep.emojiOptions} value={chosenEmoji ?? null} onChange={onChosenEmoji} />
       )}

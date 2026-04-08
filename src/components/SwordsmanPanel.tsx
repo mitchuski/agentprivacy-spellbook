@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatZcashMemo, validateProverb } from '@/lib/zcash-memo';
+import Link from 'next/link';
+import { hasCompletedCeremony, getAgentCard } from '@/lib/ceremony/storage';
+import type { AgentCard } from '@/lib/ceremony/types';
 import UAddressDisplay from '@/components/UAddressDisplay';
 
 interface SwordsmanPanelProps {
@@ -19,6 +22,15 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
   const [copied, setCopied] = useState(false);
   const [spellCopied, setSpellCopied] = useState(false);
   const [mageWindow, setMageWindow] = useState<Window | null>(null);
+  const [ceremonyComplete, setCeremonyComplete] = useState(false);
+  const [agentCard, setAgentCard] = useState<AgentCard | null>(null);
+  const [showCeremonySection, setShowCeremonySection] = useState(false);
+
+  // Check ceremony status on mount
+  useEffect(() => {
+    setCeremonyComplete(hasCompletedCeremony());
+    setAgentCard(getAgentCard());
+  }, []);
 
   // Check if proverb is valid
   const validation = userProverb ? validateProverb(userProverb) : null;
@@ -294,6 +306,93 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                   <div className="text-xs text-text-muted/60 border-t border-surface/20 pt-2 mt-2">
                     <strong>Private:</strong> Proverb in spellbook • <strong>Public:</strong> 1 ZEC stake proof
                   </div>
+                </div>
+
+                {/* Celestial Ceremony Section */}
+                <div className="mt-6 p-4 rounded-lg border-2 border-primary/30 bg-primary/5">
+                  <button
+                    type="button"
+                    onClick={() => setShowCeremonySection(!showCeremonySection)}
+                    className="w-full flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">☀️ ⊥ 🌕</span>
+                      <h3 className="font-semibold text-text">Celestial Ceremony</h3>
+                    </div>
+                    <span className="text-text-muted">{showCeremonySection ? '−' : '+'}</span>
+                  </button>
+
+                  {showCeremonySection && (
+                    <div className="mt-4 space-y-4">
+                      {/* Ceremony Status */}
+                      <div className="p-3 bg-background/50 rounded-lg border border-surface/30">
+                        <div className="text-xs font-medium text-text-muted uppercase tracking-wide mb-2">Identity Status</div>
+                        {ceremonyComplete && agentCard ? (
+                          <>
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-green-400">✓</span>
+                              <span className="text-text text-sm">Public identity active</span>
+                            </div>
+                            <div className="text-xs text-text-muted mb-2">Private key: burned (not stored)</div>
+                            <div className="text-xs font-mono text-text/70 break-all">{agentCard.participantId}</div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-amber-400">○</span>
+                              <span className="text-text-muted text-sm">No identity created</span>
+                            </div>
+                            <Link
+                              href="/ceremony"
+                              className="inline-block mt-2 px-3 py-1.5 bg-primary/20 hover:bg-primary/30 text-primary text-xs font-medium rounded transition-colors"
+                            >
+                              Start Ceremony →
+                            </Link>
+                          </>
+                        )}
+                      </div>
+
+                      {/* Progression */}
+                      <div className="text-center text-text-muted text-xs">
+                        <span className="font-mono">Understanding</span>
+                        <span className="mx-1 text-primary">→</span>
+                        <span className="font-mono">Constellation</span>
+                        <span className="mx-1 text-primary">→</span>
+                        <span className="font-mono">Blade</span>
+                      </div>
+
+                      {/* Quick links */}
+                      <div className="flex flex-wrap gap-2">
+                        <Link
+                          href="/poems"
+                          className="px-3 py-1.5 bg-secondary/10 hover:bg-secondary/20 border border-secondary/30 rounded text-xs text-secondary transition-colors"
+                        >
+                          Poems
+                        </Link>
+                        <a
+                          href="https://spellweb.ai"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 border border-primary/30 rounded text-xs text-primary transition-colors"
+                        >
+                          Spellweb ↗
+                        </a>
+                        {ceremonyComplete && (
+                          <Link
+                            href="/ceremony"
+                            className="px-3 py-1.5 bg-surface/20 hover:bg-surface/30 border border-surface/30 rounded text-xs text-text-muted transition-colors"
+                          >
+                            View Card
+                          </Link>
+                        )}
+                      </div>
+
+                      {/* Proverb */}
+                      <div className="text-xs text-text-muted italic text-center pt-2 border-t border-surface/30">
+                        The overlap is the ceremony. The amnesia is the protocol.
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Act/Spell Matching Info */}

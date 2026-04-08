@@ -1,10 +1,11 @@
 /**
  * Fetches spellbook from IPFS and formats it for copying.
- * Canonical reference: update the IPFS URL when you publish a new pin that includes
- * all story acts (1-26) with spells and proverbs so inference and copy-paste stay inclusive.
+ * URL is shared with `/spells` (see `grimoire-ipfs.ts`).
  */
 
-const SPELLBOOK_IPFS_URL = 'https://red-acute-chinchilla-216.mypinata.cloud/ipfs/bafkreib6uuhhhdb2brmoztnav3ebxlbt6phwyy4gh7rg7po3m7i5niarna';
+import { PRIVACYMAGE_GRIMOIRE_IPFS_URL } from '@/lib/grimoire-ipfs';
+
+const SPELLBOOK_IPFS_URL = PRIVACYMAGE_GRIMOIRE_IPFS_URL;
 
 interface SpellbookData {
   version: string;

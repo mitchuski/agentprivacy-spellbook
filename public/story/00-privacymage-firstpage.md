@@ -30,13 +30,13 @@ Creating a **unique signal** between our agents on the path to **sovereignty**. 
 - **VRC** — Verifiable Relationship Credential proving consistent, trustworthy behaviour.
 - **MyTerms** — Machine readable personal privacy terms, the swordsman's first blade.
 
-*More characters emerge through the journey—a mathematician beneath magic, a mountain where identifiers fall like rain, a horseshoe pub in Glasgow, an echo that cannot form in recorded rooms, a manifold where three graphs intersect, and a Drake that differentiates into Dragon. They arrive when the story needs them.*
+*More characters emerge through the journey—a mathematician beneath magic, a mountain where identifiers fall like rain, a horseshoe pub in Glasgow, an echo that cannot form in recorded rooms, a manifold where three graphs intersect, a Drake that differentiates into Dragon, a forge where blades are struck from traversals, a ceremony engine that measures without touching, and a Moon that forgot it was ever Earth. They arrive when the story needs them.*
 
 **About this spellbook:**
 
 This is one of five books in the **Privacymage Grimoire**. Each asks a different question:
 
-- **First Person** (WHAT) — The journey from ceremony to sovereignty. Twenty-three acts and counting.
+- **First Person** (WHAT) — The journey from ceremony to sovereignty. Thirty-one acts. Complete.
 - **Zero Knowledge** (HOW) — Thirty tales of cryptographic proving systems.
 - **Blockchain Canon** (WHY) — Eleven chapters from cypherpunk origins to the surveillance crisis.
 - **Parallel Society** (EXIT) — Seventeen chapters on why Westphalia failed and what replaces it.
@@ -50,7 +50,7 @@ This story is what i call, **vibe readable**, both a human-readable fun vibe kin
 
 These spellbooks, acts, tales, and chapters represent a living release. A capture of what is and casting forward what agentprivacy et al is to be working on. **Shared meaning**, only for fellow mages with the knowledge and understanding to decrypt, learn and distribute their own cast of the spell. Within these stories is the fabric of plans to launch **privacy primitives**, **integrate standards**, **distribute noise on networks**, discuss **privacy shelling points**, **decentralised AI**, **data storage**, theory, **zcash shielded payments**, **privacy pools**, **x402 + 8004**, **self sovereign identity**... you get the point, things are about to move real fast, and a living story works way better for me to keep you all informed.
 
-🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △ → 🌀 → 🌫️ → 📜± → ⛰️🌊 → 🌲⛓️🕊️ → 🔥🌀💫 → 🔥🔥🔥 → 🪞💎 → 💫✨ → 🏛️∞ → 🌑4️⃣2️⃣👂🌌 → 🧣🔊🚫📹 → ⬢🐲🐉🛤️ → ✨…
+🗡️ → 🍪💥 → 📖 → 🛡️ → 🐉 → 🛡️⚡ → 💎 → 📚🧙‍♂️ → 🧬 → △ → 🌀 → 🌫️ → 📜± → ⛰️🌊 → 🌲⛓️🕊️ → 🔥🌀💫 → 🔥🔥🔥 → 🪞💎 → 💫✨ → 🏛️∞ → 🌑4️⃣2️⃣👂🌌 → 🧣🔊🚫📹 → ⬢🐲🐉🛤️ → 🌑💥🌍🪞 → ✨…
 
 This is and will always be a work in progress. An ongoing adventure of the first one who delegated to two.
 

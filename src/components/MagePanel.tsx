@@ -28,7 +28,7 @@ const affiliationOptions = [
   { value: 'myterms-alliance', label: 'MyTerms Alliance' },
 ];
 
-// Story acts (1-26)
+// Story acts (1-30); acts 27+ use Arabic numerals in titles (tabs on /story use Roman XXVII–XXX)
 const storyActs: { [key: number]: string } = {
   1: 'Act I: Venice',
   2: 'Act II: Dual Ceremony',
@@ -56,6 +56,10 @@ const storyActs: { [key: number]: string } = {
   24: 'Act XXIV: The Holographic Bound',
   25: 'Act XXV: The Dragon\'s Hide',
   26: 'Act XXVI: The Master and His Emissary',
+  27: "Act 27: The ZK Swordsman's Forge",
+  28: 'Act 28: The Ceremony Engine',
+  29: 'Act 29: The Dragon Wakes',
+  30: 'Act 30: The Dihedral Mirror',
 };
 
 // Zero tales (1-30)
@@ -453,11 +457,24 @@ interface MagePanelProps {
   controlledOpen?: boolean;
   /** Called when user closes the panel in controlled mode. */
   onClose?: () => void;
+  /**
+   * `bottom` — sheet from bottom, overlaps page (spellweb / ceremony-style dock).
+   * `side` — classic right drawer.
+   */
+  presentation?: 'side' | 'bottom';
 }
 
 const DEFAULT_TALE_ID = 'evoke-base';
 
-export default function MagePanel({ taleId: taleIdProp, actNumber, actName, controlledOpen, onClose }: MagePanelProps) {
+export default function MagePanel({
+  taleId: taleIdProp,
+  actNumber,
+  actName,
+  controlledOpen,
+  onClose,
+  presentation = 'bottom',
+}: MagePanelProps) {
+  const isBottom = presentation === 'bottom';
   const taleId = taleIdProp ?? DEFAULT_TALE_ID;
   const [isOpen, setIsOpen] = useState(false);
   const isControlled = controlledOpen !== undefined;
@@ -893,14 +910,24 @@ What would you like to explore?`;
       {/* Toggle Button - only when not controlled (embedded on a page) */}
       {!isControlled && !effectiveOpen && (
         <motion.button
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 100, opacity: 0 }}
+          initial={isBottom ? { y: 24, opacity: 0 } : { x: 100, opacity: 0 }}
+          animate={isBottom ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
+          exit={isBottom ? { y: 24, opacity: 0 } : { x: 100, opacity: 0 }}
           onClick={() => setIsOpen(true)}
-          className="fixed right-0 top-1/2 z-[60] transform -translate-y-1/2"
+          className={
+            isBottom
+              ? 'fixed bottom-5 left-1/2 z-[60] -translate-x-1/2 rounded-full shadow-xl'
+              : 'fixed right-0 top-1/2 z-[60] transform -translate-y-1/2'
+          }
           data-mage-toggle
         >
-          <div className="bg-secondary/90 hover:bg-secondary text-white px-4 py-6 rounded-l-lg shadow-lg flex items-center gap-2 transition-all">
+          <div
+            className={
+              isBottom
+                ? 'bg-secondary/95 hover:bg-secondary text-white px-5 py-3 rounded-full flex items-center gap-2 transition-all border border-white/10'
+                : 'bg-secondary/90 hover:bg-secondary text-white px-4 py-6 rounded-l-lg shadow-lg flex items-center gap-2 transition-all'
+            }
+          >
             <span className="text-xl">🧙</span>
             <span className="font-medium hidden sm:inline">Mage</span>
           </div>
@@ -911,29 +938,39 @@ What would you like to explore?`;
       <AnimatePresence>
         {effectiveOpen && (
           <>
-            {/* Backdrop */}
+            {/* Backdrop — always dim when bottom sheet; side drawer keeps desktop undimmed */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={handleClose}
-              className="fixed inset-0 bg-black/50 z-[55] md:hidden"
+              className={`fixed inset-0 bg-black/50 z-[55] ${isBottom ? '' : 'md:hidden'}`}
             />
 
             {/* Panel */}
             <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
+              initial={isBottom ? { y: '100%' } : { x: '100%' }}
+              animate={isBottom ? { y: 0 } : { x: 0 }}
+              exit={isBottom ? { y: '100%' } : { x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className={`fixed right-0 top-0 bg-surface border-l border-surface/50 z-[60] shadow-2xl flex flex-col transition-all duration-300 overflow-hidden ${
-                isExpanded ? 'w-3/4 sm:w-2/3 md:w-1/2' : 'w-[90vw] sm:w-96 max-w-full'
-              }`}
-              style={{ 
-                height: '100dvh',
-                maxHeight: '100dvh',
-                paddingBottom: 'env(safe-area-inset-bottom, 0px)'
-              }}
+              className={
+                isBottom
+                  ? `fixed bottom-0 left-0 right-0 bg-surface border-t border-surface/50 z-[60] shadow-2xl flex flex-col transition-all duration-300 overflow-hidden rounded-t-2xl ${
+                      isExpanded ? 'max-h-[96vh]' : 'max-h-[min(85vh,920px)]'
+                    }`
+                  : `fixed right-0 top-0 bg-surface border-l border-surface/50 z-[60] shadow-2xl flex flex-col transition-all duration-300 overflow-hidden ${
+                      isExpanded ? 'w-3/4 sm:w-2/3 md:w-1/2' : 'w-[90vw] sm:w-96 max-w-full'
+                    }`
+              }
+              style={
+                isBottom
+                  ? { paddingBottom: 'env(safe-area-inset-bottom, 0px)' }
+                  : {
+                      height: '100dvh',
+                      maxHeight: '100dvh',
+                      paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+                    }
+              }
             >
               {/* Header */}
               <div className="p-4 border-b border-surface/50 flex-shrink-0">

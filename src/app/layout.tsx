@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { MagePanelProvider } from "@/contexts/MagePanelContext";
+import { ExtensionBridgeProvider } from "@/contexts/ExtensionBridgeContext";
 import CustomCursor from "@/components/CustomCursor";
 import HeroWave from "@/components/landing/HeroWave";
 import FooterWave from "@/components/landing/FooterWave";
 import SoulOrbCopy from "@/components/SoulOrbCopy";
+import { FloatingExtensionStatus } from "@/components/ExtensionStatusIndicator";
+import GlobalLearningSpells from "@/components/training/GlobalLearningSpells";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -52,54 +55,63 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <HeroWave />
         <CustomCursor />
+        <ExtensionBridgeProvider>
         <MagePanelProvider>
+          <FloatingExtensionStatus />
           <main>
             {children}
           </main>
+          <GlobalLearningSpells />
 
         {/* Footer wave with soul orb — z-10 keeps footer above fixed HeroWave (z-0) */}
         <div className="relative z-10">
           <FooterWave />
         </div>
-        <footer className="relative z-10 bg-background border-t border-surface/50 py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div className="flex flex-wrap items-center gap-3">
-              <img
-                src="/assets/agentprivacy_logo.png"
-                alt="agentprivacy"
-                className="h-10 w-auto shrink-0"
-              />
-              <p className="text-base text-text-muted m-0 flex flex-wrap items-center gap-x-1 gap-y-0">
-                <span>© 2026 agentprivacy just another</span>
-                <SoulOrbCopy />
-              </p>
-            </div>
-            <div className="flex flex-wrap justify-center gap-6 text-base">
+        <footer className="relative z-10 bg-background border-t border-surface/50 pt-6 pb-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto flex flex-col gap-4">
+            {/* Links row - on top so they stay above bottom panel */}
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
               <a href="https://github.com/mitchuski/agentprivacy-docs" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                living documentation
+                docs
               </a>
               <a href="https://x.com/privacymage" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                privacymage: x
+                privacymage
               </a>
               <a href="https://t.me/soulbae_the_bot" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-cyan-400 transition-colors">
-                🧙 soulbae, the first mage
+                🧙 soulbae
               </a>
               <a href="https://spellweb.ai" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-cyan-400 transition-colors">
                 🕸️ spellweb
               </a>
               <a href="https://t.me/agentprivacyai" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                agentprivacy-tg
+                telegram
+              </a>
+              <a href="https://sync.soulbis.com" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-emerald-400 transition-colors">
+                sync
               </a>
               <a href="https://soulbis.com" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-orange-400 transition-colors">
-                ⚔️ soulbis, the first swordsman
+                ⚔️ soulbis
               </a>
               <a href="https://intel.agentkyra.ai" target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary transition-colors">
-                private ai: agent kyra
+                agent kyra
               </a>
+            </div>
+            {/* Logo + Copyright row */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <img
+                src="/assets/agentprivacy_logo.png"
+                alt="agentprivacy"
+                className="h-8 w-auto shrink-0 opacity-70"
+              />
+              <p className="text-sm text-text-muted/70 m-0 flex flex-wrap items-center gap-x-1 gap-y-0">
+                <span>© 2026 agentprivacy</span>
+                <SoulOrbCopy />
+              </p>
             </div>
           </div>
         </footer>
         </MagePanelProvider>
+        </ExtensionBridgeProvider>
       </body>
     </html>
   );

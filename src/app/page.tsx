@@ -28,7 +28,7 @@ const CTA_CAROUSEL = [
 ];
 
 const SPELLBOOKS = [
-  { id: 'story', name: 'First Person', emoji: '📖', question: 'WHAT', acts: 26, unit: 'acts', desc: 'Your sovereignty story. The journey of Soulbis and Soulbae through Drake to Dragon pattern space.', color: '#f59e0b', href: '/story' },
+  { id: 'story', name: 'First Person', emoji: '📖', question: 'WHAT', acts: 31, unit: 'acts', desc: 'Your sovereignty story. The journey of Soulbis and Soulbae through Drake to Dragon pattern space.', color: '#f59e0b', href: '/story' },
   { id: 'zero', name: 'Zero Knowledge', emoji: '🔮', question: 'HOW', acts: 30, unit: 'tales', desc: 'Cryptographic magic made human-readable.', color: '#8b5cf6', href: '/zero' },
   { id: 'canon', name: 'The Canon', emoji: '📜', question: 'WHY', acts: 11, unit: 'chapters', desc: 'Blockchain lineage. Cypherpunks to synthesis.', color: '#06b6d4', href: '/canon' },
   { id: 'society', name: 'Parallel Society', emoji: '🚪', question: 'EXIT', acts: 17, unit: 'chapters', desc: 'Farewell to Westphalia. Why sovereignty requires exit.', color: '#ef4444', href: '/society' },
@@ -695,7 +695,7 @@ export default function LandingPage() {
           >
             Take back the 7th Capital.
           </motion.p>
-          <div className="flex flex-wrap justify-center gap-4 mb-10">
+          <div className="flex flex-wrap justify-center items-center gap-4 mb-10">
             <motion.a
               href="https://github.com/mitchuski/agentprivacy-docs"
               target="_blank"
@@ -705,6 +705,22 @@ export default function LandingPage() {
               className="btn-primary px-6 py-3"
             >
               📄 Living Documentation
+            </motion.a>
+            <motion.a
+              href="/poems"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative px-6 py-3 rounded-lg font-medium transition-all duration-300 overflow-hidden group"
+            >
+              {/* Sun/Moon gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 via-purple-500/10 to-slate-400/20 group-hover:from-amber-500/30 group-hover:via-purple-500/20 group-hover:to-slate-400/30 transition-all duration-300" />
+              <div className="absolute inset-0 border border-amber-500/40 group-hover:border-amber-500/60 rounded-lg" />
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-slate-400/20 to-transparent" />
+              <span className="relative z-10 flex items-center gap-2 text-text">
+                <span className="text-amber-400">☀️</span>
+                <span>Poems</span>
+                <span className="text-slate-300">🌕</span>
+              </span>
             </motion.a>
             <motion.a
               href="https://sync.soulbis.com"

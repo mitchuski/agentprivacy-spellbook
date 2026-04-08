@@ -30,6 +30,9 @@ export default function WelcomeStep({
       <p className="text-text/80">
         {constellationStep?.description ?? 'You are about to create your Swordsman identity. This key will anchor your spellbooks and proverbs. Choose a display name—it can be pseudonymous.'}
       </p>
+      {constellationStep?.cosmologicalNote && (
+        <p className="text-xs text-primary/70 italic">🌑 {constellationStep.cosmologicalNote}</p>
+      )}
       {constellationStep && onChosenEmoji && (
         <EmojiPicker options={constellationStep.emojiOptions} value={chosenEmoji ?? null} onChange={onChosenEmoji} />
       )}

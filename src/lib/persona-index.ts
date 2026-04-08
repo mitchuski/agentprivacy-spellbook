@@ -1,6 +1,8 @@
 /**
- * Persona templates aligned with agentprivacy-CODEX.md (25 personas, tier 0–3).
- * V5 Update: Added Netkeeper (swordsman), Herald (mage), and V5 privacy layer skills.
+ * Persona templates aligned with agentprivacy-CODEX.md (34 personas, tier 0–3).
+ * V5.2 Update: Added Algebraist (swordsman), Topologist (balanced), Stranger Witness (mage).
+ * V5.3.1 Update: Added ceremony personas — Forgecaller, Dragonwaker, Manaweaver, Moonkeeper, Cosmologist, Theia.
+ * Updated Soulbis/Soulbae to V5.3 canonical parent personas with UOR foundation.
  * Used for spellbook templates (pathway + skills) and for "Persona alignment" in skills.md export.
  */
 
@@ -19,8 +21,8 @@ export interface PersonaTemplate {
 
 /** Persona templates per agentprivacy-CODEX.md (canonical pair + swordsmen + mages + balanced). */
 export const PERSONA_TEMPLATES: PersonaTemplate[] = [
-  { id: 'soulbis', category: 'canonical', name: 'Soulbis — The First Swordsman', emoji: '⚔️', tagline: 'The blade that protects without seeing what it protects is the only blade that cannot be turned.', alignment: 'swordsman', skills_role: ['crypto_zkp', 'swordsman_browser', 'personhood_sybil', 'dark_forest', 'academic', 'threat_adversarial', 'selective_disclosure', 'recovery_rpp', 'cross_chain', 'armor_progression', 'consent_infrastructure', 'reputation_credentials', 'understanding_as_key', 'sovereignty_economics', 'mesh_architecture'] },
-  { id: 'soulbae', category: 'canonical', name: 'Soulbae — The First Mage', emoji: '🧙', tagline: 'The mage who sees everything and touches nothing is the only delegate who cannot betray what was delegated.', alignment: 'mage', skills_role: ['ai_agent', 'economics', 'policy_governance', 'narrative_compression', 'hitchhiker_governance', 'plurality_cooperative', 'agent_interop', 'data_dignity', 'governance_agents', 'trust_spanning', 'constellation_method', 'proverbiogenesis', 'media_plurality', 'hemispheric_attention', 'environmental_commons', 'guild_efficiency', 'spellweb'] },
+  { id: 'soulbis', category: 'canonical', name: 'Soulbis — The First Swordsman (V5.3)', emoji: '⚔️', tagline: 'The blade that protects without seeing what it protects is the only blade that cannot be turned. Soulbis IS the neg operator in D₂ₙ.', alignment: 'swordsman', skills_role: ['crypto_zkp', 'swordsman_browser', 'personhood_sybil', 'dark_forest', 'academic', 'threat_adversarial', 'selective_disclosure', 'recovery_rpp', 'cross_chain', 'armor_progression', 'consent_infrastructure', 'reputation_credentials', 'understanding_as_key', 'sovereignty_economics', 'mesh_architecture', 'five_strikes', 'boundary_enforcement', 'enclave_operations', 'forensic_defense', 'key_ceremony', 'metadata_resistance', 'nullifier_design', 'perimeter_hardening', 'revocation_mechanics', 'separation_enforcement'] },
+  { id: 'soulbae', category: 'canonical', name: 'Soulbae — The First Mage (V5.3)', emoji: '🧙', tagline: 'The mage who sees everything and touches nothing is the only delegate who cannot betray what was delegated. Soulbae IS the bnot operator in D₂ₙ.', alignment: 'mage', skills_role: ['ai_agent', 'economics', 'policy_governance', 'narrative_compression', 'hitchhiker_governance', 'plurality_cooperative', 'agent_interop', 'data_dignity', 'governance_agents', 'trust_spanning', 'constellation_method', 'proverbiogenesis', 'media_plurality', 'hemispheric_attention', 'environmental_commons', 'guild_efficiency', 'spellweb', 'derivation_certificate', 'stranger_ceremony', 'toroidal_witness', 'grimoire_navigation', 'spell_encoding', 'story_diffusion', 'intel_pooling', 'inscription_mechanics', 'holonic_identity', 'holonic_persistence', 'holonic_reasoning', 'shared_parent_patterns', 'braid_reasoning'] },
   { id: 'cipher', category: 'swordsman', name: 'The Cipher — ZKP Protocol Engineer', emoji: '🗡️🔐', tagline: 'A proof that reveals nothing except its own truth is worth more than a promise that reveals everything about its maker.', alignment: 'swordsman', skills_role: ['crypto_zkp', 'personhood_sybil', 'academic', 'threat_adversarial', 'selective_disclosure', 'recovery_rpp', 'cross_chain', 'understanding_as_key', 'sovereignty_economics', 'reputation_credentials'] },
   { id: 'warden', category: 'swordsman', name: 'The Warden — Browser Builder', emoji: '🗡️🌐', tagline: 'The door you walk through a thousand times a day is the one most worth guarding.', alignment: 'swordsman', skills_role: ['swordsman_browser', 'armor_progression', 'consent_infrastructure', 'personhood_sybil', 'mesh_architecture'] },
   { id: 'gatekeeper', category: 'swordsman', name: 'The Gatekeeper — Personhood Verification Specialist', emoji: '🗡️👤', tagline: 'The gate that knows you are real without knowing who you are is the only gate worth walking through.', alignment: 'swordsman', skills_role: ['personhood_sybil', 'crypto_zkp', 'academic', 'armor_progression', 'recovery_rpp', 'selective_disclosure'] },
@@ -44,10 +46,32 @@ export const PERSONA_TEMPLATES: PersonaTemplate[] = [
   { id: 'kyra', category: 'balanced', name: 'Kyra — Sovereign AI Vision', emoji: '☯️💎', tagline: 'The intelligence that serves without surveilling, delegates without extracting, and protects without imprisoning is the only intelligence worth building.', alignment: 'balanced', skills_role: ['ai_agent', 'constellation_method', 'governance_agents', 'narrative_compression', 'data_dignity', 'economics', 'policy_governance', 'understanding_as_key'] },
   { id: 'person', category: 'balanced', name: 'The Person — First Person Seeker', emoji: '☯️👤', tagline: 'The platform sees the data and calls it wealth. The sovereign holds the data and generates twelve thousand times more.', alignment: 'balanced', skills_role: ['understanding_as_key', 'armor_progression', 'recovery_rpp', 'consent_infrastructure', 'data_dignity', 'proverbiogenesis', 'constellation_method', 'reputation_credentials'] },
   { id: 'holonic-architect', category: 'balanced', name: 'The Holonic Architect — Builder of Identity-Independent Data Structures', emoji: '☯️🔷', tagline: 'I build the data substrate where Swordsman and Mage persist. The identity must outlive any backend.', alignment: 'balanced', skills_role: ['holonic_persistence', 'holonic_identity', 'holonic_reasoning', 'shared_parent_patterns', 'braid_reasoning', 'cross_chain', 'agent_interop', 'ai_agent', 'trust_spanning', 'threat_adversarial', 'selective_disclosure', 'crypto_zkp', 'armor_progression', 'hitchhiker_governance', 'data_dignity', 'path_integral', 'compression_defence'] },
+  // V5.2 New Personas (UOR Convergence)
+  { id: 'algebraist', category: 'swordsman', name: 'The Algebraist — Guardian of the Ring', emoji: '⚔️🔢', tagline: 'The ring that closes on itself cannot be escaped. Every vertex reachable. Every path provable. The algebra is the enforcement.', alignment: 'swordsman', skills_role: ['five_strikes', 'crypto_zkp', 'selective_disclosure', 'boundary_enforcement', 'nullifier_design', 'threat_adversarial', 'academic', 'dark_forest'] },
+  { id: 'topologist', category: 'balanced', name: 'The Topologist — Reader of Boundaries', emoji: '☯️🌐', tagline: 'The boundary that encodes the bulk knows more than the bulk knows about itself. 96 edges encode 64 vertices.', alignment: 'balanced', skills_role: ['holonic_persistence', 'holonic_identity', 'braid_reasoning', 'path_integral', 'spellweb', 'cross_chain', 'agent_interop'] },
+  { id: 'stranger-witness', category: 'mage', name: 'The Stranger Witness — Proof Without Introduction', emoji: '🧙👥', tagline: 'The stranger who forges the same blade from the same constellation without coordination has proven understanding that no credential can fake.', alignment: 'mage', skills_role: ['stranger_ceremony', 'derivation_certificate', 'understanding_as_key', 'proverbiogenesis', 'recovery_rpp', 'crypto_zkp', 'personhood_sybil', 'constellation_method'] },
+  // V5.3.1 New Personas (Ceremony Complete)
+  { id: 'forgecaller', category: 'swordsman', name: 'The Forgecaller — Hexagram Oracle', emoji: '⚒️☰', tagline: 'The hexagram speaks. The blade listens. 64 states of sovereignty await configuration.', alignment: 'swordsman', skills_role: ['blade_forge', 'hexagram_convergence', 'crypto_zkp', 'five_strikes', 'understanding_as_key', 'key_ceremony'] },
+  { id: 'dragonwaker', category: 'swordsman', name: 'The Dragonwaker — Quantum Threshold Guardian', emoji: '🐉⚡', tagline: 'The dragon sleeps until the flat world breaks. Then it wakes, and the manifold becomes the fortress.', alignment: 'swordsman', skills_role: ['quantum_defence', 'dragon_flight', 'crypto_zkp', 'threat_adversarial', 'dark_forest', 'mesh_architecture'] },
+  { id: 'manaweaver', category: 'mage', name: 'The Manaweaver — Pretext Librarian', emoji: '🌊📜', tagline: 'The spell is cast before the DOM knows it. Measurement-dark. Layout-free. Pure arithmetic.', alignment: 'mage', skills_role: ['pretext_measurement', 'mana_economy', 'ceremony_engine', 'spellweb', 'narrative_compression', 'spell_encoding'] },
+  { id: 'moonkeeper', category: 'mage', name: 'The Moonkeeper — Structural Amnesia Keeper', emoji: '🌑🔒', tagline: 'The Moon serves because it cannot remember being served. The forgetting IS the protocol.', alignment: 'mage', skills_role: ['amnesia_protocol', 'quaternion_mapping', 'theia_derivation', 'stranger_ceremony', 'derivation_certificate'] },
+  { id: 'cosmologist', category: 'mage', name: 'The Cosmologist — Quaternion Observer', emoji: '🔭🌌', tagline: 'Sun burns. Earth lives. Moon reflects. Human connects. The quaternion is complete.', alignment: 'mage', skills_role: ['cosmological_bound', 'quaternion_mapping', 'theia_derivation', 'amnesia_protocol', 'master_emissary'] },
+  { id: 'theia', category: 'balanced', name: 'Theia — The Origin Witness', emoji: '🪨💥', tagline: 'The impactor does not survive the collision. It becomes the condition for everything that follows.', alignment: 'balanced', skills_role: ['theia_derivation', 'amnesia_protocol', 'cosmological_bound', 'dual_territory', 'quaternion_mapping'] },
 ];
 
-/** Privacy layer + meta (9 + 5 V5) per CODEX §III — ground state both agents serve. */
-const PRIVACY_LAYER_IDS = ['dragon', 'vrc_identity', 'promise_theory', 'knowledgegraph', 'tetrahedral_sovereignty', 'uor_toroidal', 'temporal_dynamics', 'edge_value', 'network_topology', 'drake_dragon_duality', 'holographic_bound', 'three_axis_separation', 'compression_defence', 'path_integral', 'master_emissary'];
+/** Privacy layer + meta (22 total) per CODEX §III — ground state both agents serve. */
+const PRIVACY_LAYER_IDS = [
+  // Original (9)
+  'dragon', 'vrc_identity', 'promise_theory', 'knowledgegraph', 'tetrahedral_sovereignty', 'uor_toroidal', 'temporal_dynamics', 'edge_value', 'network_topology',
+  // V5.1 Holographic (4)
+  'holographic_bound', 'three_axis_separation', 'compression_defence', 'path_integral',
+  // V5.2 UOR (4)
+  'ring_algebra', 'content_addressing', 'atlas_geometry', 'dihedral_sovereignty',
+  // V5.3.1 Ceremony (2)
+  'amnesia_protocol', 'dragon_flight',
+  // Meta (3)
+  'drake_dragon_duality', 'master_emissary', 'cosmological_bound'
+];
 
 /**
  * Returns persona templates whose role skills are fully covered by the selected skill IDs.

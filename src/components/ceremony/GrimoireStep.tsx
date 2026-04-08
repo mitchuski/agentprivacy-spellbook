@@ -43,6 +43,9 @@ export default function GrimoireStep({
       <p className="text-text/80">
         {constellationStep?.description ?? 'Which spellbooks do you want to engage with? You can change this on the Spells page later.'}
       </p>
+      {constellationStep?.cosmologicalNote && (
+        <p className="text-xs text-primary/70 italic">☀️ {constellationStep.cosmologicalNote}</p>
+      )}
       {constellationStep && onChosenEmoji && (
         <EmojiPicker options={constellationStep.emojiOptions} value={chosenEmoji ?? null} onChange={onChosenEmoji} />
       )}

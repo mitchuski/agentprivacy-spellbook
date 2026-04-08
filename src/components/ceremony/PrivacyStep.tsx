@@ -29,6 +29,9 @@ export default function PrivacyStep({
       <p className="text-text/80">
         {constellationStep?.description ?? 'How you appear when sharing proverbs or contributing. You can change this later in settings.'}
       </p>
+      {constellationStep?.cosmologicalNote && (
+        <p className="text-xs text-primary/70 italic">🌑 {constellationStep.cosmologicalNote}</p>
+      )}
       {constellationStep && onChosenEmoji && (
         <EmojiPicker options={constellationStep.emojiOptions} value={chosenEmoji ?? null} onChange={onChosenEmoji} />
       )}

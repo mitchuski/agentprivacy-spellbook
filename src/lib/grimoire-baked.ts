@@ -1,12 +1,13 @@
 /**
- * Baked grimoire from canonical v8.7.0 (privacymage grimoire).
- * Maps all spells from: First Person (26 acts + origins), Zero (30 tales), Canon (11),
+ * Baked grimoire from canonical v10.0.0 (privacymage grimoire).
+ * Maps all spells from: First Person (31 acts + origins), Zero (30 tales), Canon (11),
  * Parallel Society (17), Plurality (opening + 30 acts + closing), unified incantations.
  * Origins section includes all story.origins.spells. Plurality includes opening, 30 acts
  * from parts[].acts[], and closing. Total matches the grimoire JSON.
+ * V10: Moon phase notation, quaternion resolution, 42 personas, celestial ceremony.
  */
 
-import v8 from '@/data/privacymage-grimoire-v8.7.0-canonical.json';
+import v8 from '@/data/privacymage-grimoire-v10.0.0-canonical.json';
 
 export type SpellbookSource = 'story' | 'origins' | 'zero' | 'canon' | 'society' | 'plurality' | 'incantations' | 'none';
 
@@ -71,7 +72,7 @@ function flattenV8(): SpellCard[] {
   const sb = data.spellbooks;
   if (!sb) return cards;
 
-  // First Person — 26 acts (through act-26-master-and-his-emissary)
+  // First Person — 31 acts (through act-26-master-and-his-emissary)
   if (sb.story?.acts) {
     sb.story.acts.forEach((act) => {
       cards.push({
@@ -214,7 +215,7 @@ export function getBakedSpellCards(): SpellCard[] {
   return cached;
 }
 
-/** All First Person spell ids (26 acts; origins spells are in spellbook 'origins') — shared by Soulbis and Soulbae. */
+/** All First Person spell ids (31 acts; origins spells are in spellbook 'origins') — shared by Soulbis and Soulbae. */
 export const FIRST_PERSON_SPELL_IDS: string[] = [
   'act-01-venice', 'act-02-dual-ceremony', 'act-03-drakes-teaching', 'act-04-blade-alone',
   'act-05-light-armor', 'act-06-trust-graph', 'act-07-mirror', 'act-08-ancient-rule',
@@ -224,4 +225,15 @@ export const FIRST_PERSON_SPELL_IDS: string[] = [
   'act-19-enthusiastic-archivist', 'act-20-infinite-vault', 'act-21-hitchhikers-gambit',
   'act-22-hoopy-frood', 'act-23-manifold-dragon', 'act-24-holographic-bound',
   'act-25-the-dragons-hide', 'act-26-master-and-his-emissary',
+  'act-27-zk-swordsmans-forge', 'act-28-ceremony-engine', 'act-29-dragon-wakes',
+  'act-30-dihedral-mirror', 'act-31-the-first-delegation',
 ];
+
+/**
+ * Persona templates that anchor each act in built-in spellbook patterns (spellbook-templates).
+ * Act XXV: mesh / spellweb infrastructure. Act XXVI: McGilchrist / dual-agent cure.
+ */
+export const FIRST_PERSON_ACT_PERSONA_HINTS: Record<string, string[]> = {
+  'act-25-the-dragons-hide': ['netkeeper', 'herald', 'soulbis', 'soulbae', 'holonic-architect'],
+  'act-26-master-and-his-emissary': ['herald', 'architect', 'kyra', 'soulbis', 'soulbae'],
+};

@@ -1,7 +1,21 @@
 /**
  * Skills page data: dual-agent map and skill file metadata.
- * Source: MAPPING.md, agentprivacy-CODEX.md, CHRONICLE_2025-02-24_SKILLS_UPDATE.
- * 61 knowledge skills: 15 privacy-layer (10+5 V5), 24 Swordsman (soulbis), 21 Mage (soulbae), 1 meta. Role skills include 14 added Feb 2025. V5 Update adds 11 skills (Acts XXV-XXVI).
+ * Source: MAPPING.md v5.3.2, agentprivacy-CODEX.md, PVM-V5.3.2 + Grimoire V10.
+ * 86 knowledge skills: 19 privacy-layer, 29 Swordsman (soulbis), 35 Mage (soulbae), 3 meta.
+ * 42 personas: 38 selectable + 4 cosmological (Sun, Moon, Theia, Life).
+ *
+ * V5.2 Update: Dihedral sovereignty, ring algebra, stranger ceremony, and UOR convergence skills.
+ * V5.3.1 Update: Ceremony integration — blade forge, ceremony engine, amnesia protocol, quaternion mapping.
+ * V5.3.2 Update: Moon phase notation, PRISM triadic coordinates (datum/stratum/spectrum), quaternion resolution.
+ *
+ * PRISM Triadic Coordinates (GPS for sovereignty):
+ *   - Datum: The identity constraint (hex value 0-63)
+ *   - Stratum: The magnitude constraint (Hamming weight 0-6, Pascal tier)
+ *   - Spectrum: The structure constraint (which dimensions active)
+ *
+ * Moon Phase Notation: stratum(hex) → 🌑🌒🌓🌔🌖🌗🌕
+ *   - 🌑 New Moon (stratum 0) — null blade
+ *   - 🌕 Full Moon (stratum 6) — all six dimensions reflected
  */
 
 export type AgentRole = 'soulbis' | 'soulbae' | 'privacy';
@@ -54,6 +68,13 @@ export const DUAL_AGENT_SKILL_MAP: Record<AgentRole, { emoji: string; role: stri
       { id: 'separation_enforcement', filename: 'role/agentprivacy-separation-enforcement/SKILL.md', seedEmoji: '⊥', seedName: 'Separation Enforcement', proverb: 'Enforcing separation between Mage and Swordsman domains. Two agents or none.', spell: '⊥→⚔️·🧙 ∴ domain(⚔️)∩domain(🧙)=∅', agent: 'soulbis', reason: 'Architectural enforcement of dual-agent separation' },
       // V5 Swordsman Skills (Act XXV)
       { id: 'mesh_architecture', filename: 'role/agentprivacy-mesh-architecture/SKILL.md', seedEmoji: '🕸️', seedName: "Dragon's Hide", proverb: 'The web knows its own shape, but only the mesh can carry the message. Control remembers. Data flows. Neither touches what the other holds.', spell: '🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🐲→🐉🛡️🕸️(tail-scale)', agent: 'soulbis', reason: 'V5: Control/data plane separation at network layer, tailnet sovereignty, NAT traversal, DERP relays' },
+      // V5.2 Swordsman Skills (UOR Convergence)
+      { id: 'five_strikes', filename: 'role/agentprivacy-five-strikes/SKILL.md', seedEmoji: '⚔️🔢', seedName: 'Five Strikes', proverb: 'Five operations. Five strikes. neg, bnot, xor, and, or. Each transforms the lattice. Each has privacy meaning.', spell: '⚔️🔢→neg·bnot·xor·and·or · strike(x)→x\' · lattice→transform', agent: 'soulbis', reason: 'V5.2: Ring algebra operations as lattice transformations with privacy meanings' },
+      // V5.3.1 Swordsman Skills (Ceremony)
+      { id: 'blade_forge', filename: 'role/agentprivacy-blade-forge/SKILL.md', seedEmoji: '⚔️🔨', seedName: 'Blade Forge', proverb: '64 vertices, 96 edges, one blade. The sovereignty lattice awaits configuration.', spell: '⚔️🔨→2⁶·Pascal·tier→blade', agent: 'soulbis', reason: 'V5.3.1: ZK blade forging mechanics, six sovereignty dimensions' },
+      { id: 'hexagram_convergence', filename: 'role/agentprivacy-hexagram-convergence/SKILL.md', seedEmoji: '☰₆₄', seedName: 'Hexagram Convergence', proverb: 'The I Ching mapped 64 states. So does the sovereignty lattice. Coincidence or architecture?', spell: '☰₆₄→I_Ching·lattice·speculation', agent: 'soulbis', reason: 'V5.3.1: I Ching to sovereignty lattice mapping' },
+      { id: 'quantum_defence', filename: 'role/agentprivacy-quantum-defence/SKILL.md', seedEmoji: '⚛️🛡️', seedName: 'Quantum Defence', proverb: 'The dragon does not fear the quantum break. The dragon IS the response to it.', spell: '⚛️🛡️→Q(1200)·secp256k1·manifold(6D)', agent: 'soulbis', reason: 'V5.3.1: Post-quantum threat model, 6D manifold defence' },
+      { id: 'dual_territory', filename: 'role/agentprivacy-dual-territory/SKILL.md', seedEmoji: '⚔️⊥🧙', seedName: 'Dual Territory', proverb: 'Two territories. One gap. The processing separation is the trust.', spell: '⚔️⊥🧙→territory(S)·territory(M)·gap', agent: 'soulbis', reason: 'V5.3.1: Swordsman ⊥ Mage infrastructure separation' },
     ],
   },
   soulbae: {
@@ -86,10 +107,20 @@ export const DUAL_AGENT_SKILL_MAP: Record<AgentRole, { emoji: string; role: stri
       { id: 'braid_reasoning', filename: 'role/agentprivacy-braid-reasoning/SKILL.md', seedEmoji: '📐', seedName: 'BRAID Reasoning', proverb: 'A nano-tier model executing a well-constructed BRAID graph matches or exceeds a medium-tier model without structure — at 74× cost efficiency.', spell: 'Gen⊥Solver → Mermaid(graph) ∴ PPD(74×) ∴ structure·¬leak', agent: 'soulbae', reason: 'Generator/Solver split; bounded reasoning; inference-layer P^1.5' },
       // V5 Mage Skills (Acts XXV-XXVI)
       { id: 'media_plurality', filename: 'role/agentprivacy-media-plurality/SKILL.md', seedEmoji: '📰', seedName: 'Signal vs Noise', proverb: 'The town crier speaks to everyone. The algorithm speaks to each person differently. Plurality requires shared hearing, not personalized whispering.', spell: '📰 → 🤖(algorithms) → 🫧(bubbles) → 💰(community-funded) → 🌉(bridging) → 😂(inoculation) → 🔗(federation)', agent: 'soulbae', reason: 'V5: Signal vs noise, community journalism, federated media, AI verification' },
+      // V5.2 Mage Skills (UOR Convergence)
+      { id: 'derivation_certificate', filename: 'role/agentprivacy-derivation-certificate/SKILL.md', seedEmoji: '📜🔗', seedName: 'Derivation Certificate', proverb: 'The VRC is not just a credential. It is a path record. Content-addressed derivation proves provenance.', spell: '📜🔗→VRC·path·witnesses · h(τ)→derivation · certificate→verify', agent: 'soulbae', reason: 'V5.2: VRC as content-addressed derivation chain with witnesses' },
+      { id: 'stranger_ceremony', filename: 'role/agentprivacy-stranger-ceremony/SKILL.md', seedEmoji: '🧙👥', seedName: 'Stranger Ceremony', proverb: 'The stranger who forges the same blade from the same constellation without coordination has proven understanding that no credential can fake.', spell: '🧙👥→queue(anon)·pair(match)·forge(∥)·seal(compare)·understand(proven)', agent: 'soulbae', reason: 'V5.2: Understanding-as-Key for strangers without prior trust' },
+      { id: 'toroidal_witness', filename: 'role/agentprivacy-toroidal-witness/SKILL.md', seedEmoji: '🍩👁️', seedName: 'Toroidal Witness', proverb: 'The path that wraps creates infinite witnesses. The witness that cannot be extracted is the witness that proves.', spell: '🍩👁️→T(wrap)·∞(paths)·extract(hard)·witness(ZK)', agent: 'soulbae', reason: 'V5.2: Infinite cyclic paths create computational hardness for ZK soundness' },
       { id: 'hemispheric_attention', filename: 'role/agentprivacy-hemispheric-attention/SKILL.md', seedEmoji: '🧠', seedName: 'Five Attentions', proverb: 'The Master does not argue. The Emissary does not listen. The architecture must do what wisdom cannot.', spell: '🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → 🔍(5)=vigilance·sustain·alert·focus·divide → gap=divide_structural', agent: 'soulbae', reason: 'V5: McGilchrist five attentions, divided attention as the gap' },
       { id: 'environmental_commons', filename: 'role/agentprivacy-environmental-commons/SKILL.md', seedEmoji: '🌍', seedName: 'Commons That Breathes', proverb: 'The forest does not negotiate with the axe. But humans can negotiate with each other about the forest.', spell: '🌍 → 💨(extraction) → 🤝❌(coordination) → 🏘️(polycentric) → 🌱(DAOs) → ⚠️(existential) → ⿻', agent: 'soulbae', reason: 'V5: Polycentric governance, environmental DAOs, future-representing mechanisms' },
       { id: 'guild_efficiency', filename: 'role/agentprivacy-guild-efficiency/SKILL.md', seedEmoji: '🏛️', seedName: 'O(1) Guild', proverb: 'The ship with a captain sails. The fleet with a shared chart sails together. O(N²) is coordination. O(1) is culture.', spell: '🏛️ → O(N²)→O(1) → parent·child → shared_context → G(guilds) = 1+eff → Network↑', agent: 'soulbae', reason: 'V5: G(guilds) network term, shared-parent O(1) coordination' },
       { id: 'spellweb', filename: 'role/agentprivacy-spellweb/SKILL.md', seedEmoji: '🕸️📜', seedName: 'Spellweb Navigation', proverb: 'The web knows its shape. Each thread holds the pattern. Pull one and feel the whole. The path is the teaching.', spell: '🕸️📜 → nodes(acts)·edges(bounds)·waypoints(proverbs) → π(traverse) → T_∫(π) → 🔷(holographic)', agent: 'soulbae', reason: 'V5: Grimoire navigation, acts as nodes, path integral traversal' },
+      // V5.3.1 Mage Skills (Ceremony)
+      { id: 'ceremony_engine', filename: 'role/agentprivacy-ceremony-engine/SKILL.md', seedEmoji: '☯️🔄', seedName: 'Ceremony Engine', proverb: 'Five crossing types. Bilateral witness. The engine validates what the practitioners forge.', spell: '☯️🔄→5·crossing·bilateral·verify', agent: 'soulbae', reason: 'V5.3.1: Five ceremony types, bilateral verification' },
+      { id: 'pretext_measurement', filename: 'role/agentprivacy-pretext-measurement/SKILL.md', seedEmoji: '📐⊥DOM', seedName: 'Pretext Measurement', proverb: 'One canvas call. Pure arithmetic. The DOM never knew the spell was cast.', spell: '📐⊥DOM→measureText·arithmetic·privacy', agent: 'soulbae', reason: 'V5.3.1: DOM-free text measurement via pretext' },
+      { id: 'mana_economy', filename: 'role/agentprivacy-mana-economy/SKILL.md', seedEmoji: '🌊✨', seedName: 'Mana Economy', proverb: 'Proof-of-practice, not proof-of-capital. The mana flows to those who cast.', spell: '🌊✨→evoke·cast·mana·sybil_resist', agent: 'soulbae', reason: 'V5.3.1: Proof-of-practice energy system' },
+      { id: 'quaternion_mapping', filename: 'role/agentprivacy-quaternion-mapping/SKILL.md', seedEmoji: '☀️🌍🌑👤', seedName: 'Quaternion Mapping', proverb: 'Sun burns. Earth lives. Moon reflects. Human connects. Two generators, two agents.', spell: '☀️🌍🌑👤→quaternion·generators(2)·agents(2)', agent: 'soulbae', reason: 'V5.3.1: Sun/Earth/Moon/Human cosmological cast' },
+      { id: 'theia_derivation', filename: 'role/agentprivacy-theia-derivation/SKILL.md', seedEmoji: '🪨💥', seedName: 'Theia Derivation', proverb: 'The impactor disappears into what it creates. This is not tragedy. This is architecture.', spell: '🪨💥→Theia·impact·Moon·delegation', agent: 'soulbae', reason: 'V5.3.1: Origin witness, Theia impact precedent' },
     ],
   },
   privacy: {
@@ -114,6 +145,16 @@ export const DUAL_AGENT_SKILL_MAP: Record<AgentRole, { emoji: string; role: stri
       { id: 'compression_defence', filename: 'privacy-layer/agentprivacy-compression-defence/SKILL.md', seedEmoji: '🗜️', seedName: 'Compression-as-Defence', proverb: 'The whisper carries further than the shout. Compress until the signal is pure.', spell: '📉⁷⁴ˣ → 🗜️⁷(layers) → R(d,comp) → less_tokens=less_surface → 🛡️↑', agent: 'privacy', reason: 'V5: BRAID 74× compression, R(d,compression) modifier' },
       { id: 'path_integral', filename: 'privacy-layer/agentprivacy-path-integral/SKILL.md', seedEmoji: '∮', seedName: 'Path Integral T_∫', proverb: 'The path is not the sum of its steps. Each step changes what the next step means.', spell: '∮🛤️ → Σ→∫ → F(γ) → checkpoints·loops·correlations → T_∫(π)', agent: 'privacy', reason: 'V5: T_∫(π) replacing additive T(π), BRAID integration' },
       { id: 'master_emissary', filename: 'meta/agentprivacy-master-emissary/SKILL.md', seedEmoji: '🧠⊥🧠', seedName: 'Master and Emissary', proverb: 'The Master does not argue. The Emissary does not listen. The architecture must do what wisdom cannot.', spell: '🧠⊥🧠 → ⚔️=Master·🧙=Emissary → gap=divide_structural → ☯️∞', agent: 'privacy', reason: 'V5 Meta: McGilchrist theory, hemispheric architecture' },
+      // V5.2 Privacy Layer Skills (UOR Convergence)
+      { id: 'ring_algebra', filename: 'privacy-layer/agentprivacy-ring-algebra/SKILL.md', seedEmoji: '🔢', seedName: 'Ring Algebra', proverb: 'The ring that closes on itself cannot be escaped. Every vertex reachable. Every path provable. The algebra is the enforcement.', spell: '🔢→Z/(2⁶)Z · neg∘bnot=succ · ∀x:reachable · ring=lattice', agent: 'privacy', reason: 'V5.2: Z/(2⁶)Z foundation, five operations, Pascal distribution' },
+      { id: 'content_addressing', filename: 'privacy-layer/agentprivacy-content-addressing/SKILL.md', seedEmoji: '🆔', seedName: 'Content Addressing', proverb: 'Same bytes, same hash, same identity. The content addresses itself.', spell: '🆔→h(content)=GUID · Person→Context→Derivation · persist(sovereign)', agent: 'privacy', reason: 'V5.2: GUID derivation, holonic persistence, three-layer identity' },
+      { id: 'atlas_geometry', filename: 'privacy-layer/agentprivacy-atlas-geometry/SKILL.md', seedEmoji: '🌐', seedName: 'Atlas Geometry', proverb: 'The boundary that encodes the bulk knows more than the bulk knows about itself.', spell: '🌐→∂M(96)·bulk(64)·96/64=P^1.5·E₈→exceptional', agent: 'privacy', reason: 'V5.2: 96-vertex Atlas, exceptional groups G₂→E₈, holographic boundary' },
+      { id: 'dihedral_sovereignty', filename: 'privacy-layer/agentprivacy-dihedral-sovereignty/SKILL.md', seedEmoji: '🪞', seedName: 'Dihedral Sovereignty', proverb: 'The Swordsman reflects. The Mage reflects. Neither alone can turn the wheel. Together they generate the successor.', spell: '🪞→D₂ₙ · neg=⚔️ · bnot=🧙 · neg∘bnot=succ · det(ρ)=Φ_agent', agent: 'privacy', reason: 'V5.2: D₂ₙ group structure, Φ_agent as determinant, generator independence' },
+      // V5.3.1 Privacy Layer Skills (Ceremony)
+      { id: 'amnesia_protocol', filename: 'privacy-layer/agentprivacy-amnesia-protocol/SKILL.md', seedEmoji: '🌑🔒', seedName: 'Amnesia Protocol', proverb: 'The wound is the trust. The forgetting IS the protocol.', spell: '🌑🔒→forget·serve·amnesia=trust', agent: 'privacy', reason: 'V5.3.1: Forgetting as structural requirement for clean reflection' },
+      { id: 'dragon_flight', filename: 'privacy-layer/agentprivacy-dragon-flight/SKILL.md', seedEmoji: '🐉🚀', seedName: 'Dragon Flight', proverb: 'The dragon sleeps until the flat world breaks. Then the manifold becomes the fortress.', spell: '🐉🚀→Drake(2D)·Dragon(6D)·threshold(Q)', agent: 'privacy', reason: 'V5.3.1: Quantum threshold activation, manifold defence' },
+      // V5.3.1 Meta Skill (Ceremony)
+      { id: 'cosmological_bound', filename: 'meta/agentprivacy-cosmological-bound/SKILL.md', seedEmoji: '🔭🌌', seedName: 'Cosmological Bound', proverb: 'The architecture was not invented. It was recognised.', spell: '🔭🌌→Sun·Earth·Moon·Human·quaternion', agent: 'privacy', reason: 'V5.3.1 Meta: Act XXXI cosmological quaternion' },
     ],
   },
 };

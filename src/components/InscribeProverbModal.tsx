@@ -78,6 +78,9 @@ export default function InscribeProverbModal({
     if (!spellId) return;
     setInscribedProverb(spellId, trimmed, selectedMarker ?? undefined);
     addSpellToSpellbook(spellId);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('agentprivacy:learning-spells-sync'));
+    }
     onCommitted?.();
     onClose();
   };

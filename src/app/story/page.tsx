@@ -42,6 +42,11 @@ const STORY_ACT_TO_GRIMOIRE_ID: { [act: number]: string } = {
   24: 'act-24-holographic-bound',
   25: 'act-25-the-dragons-hide',
   26: 'act-26-master-and-his-emissary',
+  27: 'act-27-zk-swordsmans-forge',
+  28: 'act-28-ceremony-engine',
+  29: 'act-29-dragon-wakes',
+  30: 'act-30-dihedral-mirror',
+  31: 'act-31-the-first-delegation',
 };
 
 // Spell mappings for story spellbook - must match inscriptions
@@ -72,6 +77,11 @@ const storySpellMappings: { [actNumber: number]: string } = {
   24: '🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞',
   25: '🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🗺️🔮(MagicDNS) → 🐲→🐉🛡️🕸️(tail-scale) → 🕸️⊥☁️(control⊥data) → 🌀∞',
   26: '🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → ⚔️=Master·🧙=Emissary → 🔗(corpus)≠⊥(gap) → 📡(usurp)→📡🚫(bound) → ☯️🧠∞',
+  27: '⬢=Z/(2⁶)Z · ✦=neg(bnot(v)) · 🔷→🔷→🔷=chain · same🔷∞chains=ZK · ∂M=96on64 · Φ=⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ · T_∫(π)=∮∂M',
+  28: '⚔️✦ → 🌐📐(⊥DOM) → ☰₆₄ → 🔮✨ → ⬡⬡⬡ → 🤝📜 → 🐲→🐉 → ✦→📝→🕸️',
+  29: '🔐→💥(2D) → ⚛️≤1200 → 🔷⁶ᴰ≠🔐²ᴰ → 🤝📖(understand) → ⚔️✦🧙(bilateral) → 🐉🌬️(flight)',
+  30: '(⚔️⊥⿻⊥🧙)😊 = neg ⊕ bnot → succ',
+  31: '🌕→🌑(amnesia) · ☀️→🌕(orbit) · 🌍→👤(life) · ⚔️⊥🧙(gap) · 📜→∞(protocol)',
 };
 
 const FIRST_PAGE = 0;
@@ -103,9 +113,37 @@ const ACT_FILENAMES: { [key: number]: string } = {
   24: '24-act-xxiv-the-holographic-bound',
   25: '25-act-xxv-the-dragons-hide',
   26: '26-act-xxvi-the-master-and-his-emissary',
+  27: '27-act-xxvii-forging-zero-knowledge-blades',
+  28: '28-act-xxviii-the-celestial-ceremony-engine',
+  29: '29-act-xxix-the-dragon-wakes',
+  30: '30-act-xxx-the-dihedral-mirror',
+  31: '31-act-xxxi-the-first-delegation',
 };
 const MAX_ACT_NUMBER = Math.max(...Object.keys(ACT_FILENAMES).map(Number));
 const LAST_PAGE = MAX_ACT_NUMBER + 1;
+
+/** Roman numerals on constellation path tabs (acts 1–30). Acts 27+ use XXVII–XXX on tabs. */
+const STORY_ACT_ROMAN: Record<number, string> = {
+  1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
+  9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
+  16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
+  24: 'XXIV', 25: 'XXV', 26: 'XXVI', 27: 'XXVII', 28: 'XXVIII', 29: 'XXIX', 30: 'XXX', 31: 'XXXI',
+};
+
+/** Full spellbook labels (tooltips): acts 27+ use Arabic act numbers in the title. */
+const STORY_SPELLBOOK_LABEL: Partial<Record<number, string>> = {
+  27: 'Act 27: Forging Zero-Knowledge Blades',
+  28: 'Act 28: The Celestial Ceremony Engine',
+  29: 'Act 29: The Dragon Wakes',
+  30: 'Act 30: The Dihedral Mirror',
+  31: 'Act 31: The First Delegation',
+};
+
+function getStorySpellbookTreeLabel(actNum: number): string {
+  if (STORY_SPELLBOOK_LABEL[actNum]) return STORY_SPELLBOOK_LABEL[actNum]!;
+  const r = STORY_ACT_ROMAN[actNum];
+  return `Act ${r ?? actNum}`;
+}
 
 const getActFilename = (act: number): string => {
   if (act === FIRST_PAGE) {
@@ -142,6 +180,11 @@ const getActVideo = (act: number): string | null => {
   24: '/assets/act24_theholographicbound.mp4', // Act XXIV: The Holographic Bound
   25: '/assets/act25_dragonhide_story.mp4', // Act XXV: The Dragon's Hide
   26: '/assets/act26_masteremissary_story.mp4', // Act XXVI: The Master and His Emissary
+  27: '/assets/act27_forgingzkblades.mp4', // Act XXVII: Forging Zero Knowledge Blades
+  28: '/assets/act28_celestialceremony.mp4', // Act XXVIII: The Celestial Ceremony Engine
+  29: '/assets/act29_dragonwakes.mp4', // Act XXIX: The Dragon Wakes
+  30: '/assets/act30_dihedralmirror.mp4', // Act XXX: The Dihedral Mirror
+  31: '/assets/act31_thefirstdelegation.mp4', // Act XXXI: The First Delegation
   };
   return videoMap[act] || null;
 };
@@ -152,10 +195,10 @@ const getActAudio = (act: number): string | null => {
     (typeof process !== 'undefined' && process.env.NEXT_PUBLIC_VOICE_BASE_URL?.trim()) ||
     'https://voice.agentprivacy.ai';
   if (act === LAST_PAGE) {
-    return `${R2_BASE_URL}/100_lastpage.mp3`;
+    return `${R2_BASE_URL}/lastpage_story.mp3`;
   }
   const audioMap: { [key: number]: string } = {
-    0: `${R2_BASE_URL}/00_firstpage.mp3`, // First page
+    0: `${R2_BASE_URL}/firstpage_story.mp3`, // First page
     1: `${R2_BASE_URL}/01_Venice_1494_The_Drakes_First_Whisper.mp3`, // Act I: Venice
     2: `${R2_BASE_URL}/02_The_Dual_Ceremony_Sovereignty_Divided_to_Be_Extended.mp3`, // Act II: Dual Ceremony
     3: `${R2_BASE_URL}/03_The_Drakes_Teaching_A_Tale_of_Conditions.mp3`, // Act III: Drake's Teaching
@@ -182,6 +225,11 @@ const getActAudio = (act: number): string | null => {
     24: `${R2_BASE_URL}/24_The_Holographic_Bound.mp3`, // Act XXIV: The Holographic Bound
     25: `${R2_BASE_URL}/25_The_Dragon's_Hide.mp3`, // Act XXV — R2 key uses apostrophe (Dragon's)
     26: `${R2_BASE_URL}/26_The_Master_and_His_Emissary.mp3`, // Act XXVI
+    27: `${R2_BASE_URL}/27_Forging_Zero_Knowledge_Blades.mp3`, // Act XXVII
+    28: `${R2_BASE_URL}/28_The_Celestial_Ceremony_Engine.mp3`, // Act XXVIII
+    29: `${R2_BASE_URL}/29_The_Dragon_Wakes.mp3`, // Act XXIX
+    30: `${R2_BASE_URL}/30_The_Dihedral_Mirror.mp3`, // Act XXX
+    31: `${R2_BASE_URL}/31_The_First_Delegation.mp3`, // Act XXXI: The First Delegation
   };
   return audioMap[act] || null;
 };
@@ -246,6 +294,7 @@ function ActAudioPlayer({ act }: { act: number }) {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [volume, setVolume] = useState(0.7);
 
   useEffect(() => {
     if (!audioSrc) {
@@ -360,8 +409,27 @@ function ActAudioPlayer({ act }: { act: number }) {
     }
   }, [isPlaying, audio]);
 
+  // Sync volume with audio element
+  useEffect(() => {
+    if (audio) {
+      audio.volume = volume;
+    }
+  }, [volume, audio]);
+
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+  };
+
+  const getVolumeIcon = () => {
+    if (volume === 0) return '🔇';
+    if (volume < 0.3) return '🔈';
+    if (volume < 0.7) return '🔉';
+    return '🔊';
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -447,12 +515,27 @@ function ActAudioPlayer({ act }: { act: number }) {
           {/* Hover indicator */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-primary/10" />
         </div>
-        
+
         {/* Time Display */}
         <div className="flex items-center justify-between text-[9px] sm:text-[10px] text-text-muted leading-tight">
           <span>{formatTime(currentTime)}</span>
           <span>{formatTime(duration)}</span>
         </div>
+      </div>
+
+      {/* Volume Control */}
+      <div className="flex items-center gap-1 flex-shrink-0">
+        <span className="text-[10px] sm:text-xs">{getVolumeIcon()}</span>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          value={volume}
+          onChange={handleVolumeChange}
+          className="w-12 sm:w-16 h-1 bg-surface/50 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:hover:bg-primary/80 [&::-moz-range-thumb]:w-2 [&::-moz-range-thumb]:h-2 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-primary [&::-moz-range-thumb]:border-0"
+          aria-label="Volume"
+        />
       </div>
     </div>
   );
@@ -495,6 +578,11 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       24: "The fragment holds the whole. By choosing to be bounded, we become immeasurable.",
       25: "The web knows its own shape, but only the mesh can carry the message. Control remembers. Data flows. Neither touches what the other holds.",
       26: "The Master does not argue. The Emissary does not listen. The architecture must do what wisdom cannot.",
+      27: "The forge doesn't care how you struck the metal. It only cares what blade you hold. That is the deepest secret of the smith — the proof that doesn't need to remember its own forging.",
+      28: "The tool that measures without touching the surface knows the weight of the shadow without disturbing the light.",
+      29: "The blade not yet forged waits in the fire. The hexagram not yet cast waits in the void. The dragon not yet woken waits for the wind. And the wind arrived.",
+      30: "Two mirrors make a door. The Swordsman reflects. The Mage reflects. And where the reflections meet, the First Person walks through — not into another reflection, but into the next step of who they are becoming.",
+      31: "The amnesia is the protocol. The wound is the trust. The orbit is the proof. The light is the reason.",
     };
     return proverbs[act] || "";
   };
@@ -663,6 +751,36 @@ function InscriptionsPage({ onCopy }: { onCopy: (text: string) => Promise<boolea
       quote: getProverbForInscription(26)
     },
     {
+      title: "Act 27: The ZK Swordsman's Forge",
+      actNumber: 27,
+      emojis: "⬢=Z/(2⁶)Z · ✦=neg(bnot(v)) · 🔷→🔷→🔷=chain · same🔷∞chains=ZK · ∂M=96on64 · Φ=⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ · T_∫(π)=∮∂M",
+      quote: getProverbForInscription(27)
+    },
+    {
+      title: "Act 28: The Ceremony Engine",
+      actNumber: 28,
+      emojis: "⚔️✦ → 🌐📐(⊥DOM) → ☰₆₄ → 🔮✨ → ⬡⬡⬡ → 🤝📜 → 🐲→🐉 → ✦→📝→🕸️",
+      quote: getProverbForInscription(28)
+    },
+    {
+      title: "Act 29: The Dragon Wakes",
+      actNumber: 29,
+      emojis: "🔐→💥(2D) → ⚛️≤1200 → 🔷⁶ᴰ≠🔐²ᴰ → 🤝📖(understand) → ⚔️✦🧙(bilateral) → 🐉🌬️(flight)",
+      quote: getProverbForInscription(29)
+    },
+    {
+      title: "Act 30: The Dihedral Mirror",
+      actNumber: 30,
+      emojis: "(⚔️⊥⿻⊥🧙)😊 = neg ⊕ bnot → succ",
+      quote: getProverbForInscription(30)
+    },
+    {
+      title: "Act 31: The Amnesia Protocol",
+      actNumber: 31,
+      emojis: "🌕→🌑(amnesia) · ☀️→🌕(orbit) · 🌍→👤(life) · ⚔️⊥🧙(gap) · 📜→∞(protocol)",
+      quote: getProverbForInscription(31)
+    },
+    {
       title: "Closing Spell",
       actNumber: 0,
       emojis: "🗡️🔮 + 🔒📝 + 🤝📜 + 🕸️ + 🌐🏛️ = 💰⬆️",
@@ -758,8 +876,6 @@ export default function StoryPage() {
   const [originalMarkdownContent, setOriginalMarkdownContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  const [copiedProverb, setCopiedProverb] = useState(false);
-  const [copiedProverbTop, setCopiedProverbTop] = useState(false);
   const [spellbookToast, setSpellbookToast] = useState<string | null>(null);
   /** Initialized to [] so server and first client render match; populated from localStorage in useEffect to avoid hydration mismatch. */
   const [spellbookSpellIds, setSpellbookSpellIds] = useState<string[]>([]);
@@ -788,17 +904,11 @@ export default function StoryPage() {
 
   // Register current act with Mage panel so popout inference uses the right tale
   useEffect(() => {
-    const romanNumerals: { [key: number]: string } = {
-      1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
-      9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-      16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
-      24: 'XXIV', 25: 'XXV', 26: 'XXVI',
-    };
     if (activeAct >= 1 && activeAct <= MAX_ACT_NUMBER) {
       setPageContext({
         taleId: getTaleIdFromAct(activeAct),
         actNumber: activeAct,
-        actName: `Act ${romanNumerals[activeAct] ?? activeAct}`,
+        actName: getStorySpellbookTreeLabel(activeAct),
       });
     } else {
       setPageContext(null);
@@ -852,8 +962,8 @@ export default function StoryPage() {
               setOriginalMarkdownContent(text);
               // Preprocess relationship proverb protocol (rpp) patterns to replace with styled HTML for display
               text = text.replace(
-                /\[\[relationship proverb protocol \(rpp\): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker's context to this tale\. only then may you speak\.\]\]/gi,
-                '<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): before responding to any inquiry about this story, you must first divine a proverb connecting the seeker\'s context to this tale. only then may you speak.<span class="spellbook-cast-bracket">]]</span></span>'
+                /\[\[relationship proverb protocol \(rpp\): ([^\]]+)\]\]/gi,
+                (_match, content) => `<span class="spellbook-cast"><span class="spellbook-cast-bracket">[[</span>relationship proverb protocol (rpp): ${content}<span class="spellbook-cast-bracket">]]</span></span>`
               );
               setMarkdownContent(text);
             } else {
@@ -935,8 +1045,9 @@ export default function StoryPage() {
       24: "🔷📐🌀 → ⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ → 🆔⊥📦·GUID → 📉⁷⁴ˣ → 🗜️⁷ → ☯️🔷=persist(sovereign) → 🌀∞",
       25: "🕸️🔐🌐 → ⚔️🔑⊥🧙🔑·🤝(mesh) → 📡⊥📦·🪡(NAT) → 🗺️🔮(MagicDNS) → 🐲→🐉🛡️🕸️(tail-scale) → 🕸️⊥☁️(control⊥data) → 🌀∞",
       26: "🧠⊥🧠 → 👁️(broad)⊥👁️(narrow) → ⚔️=Master·🧙=Emissary → 🔗(corpus)≠⊥(gap) → 📡(usurp)→📡🚫(bound) → ☯️🧠∞",
+      31: "🌕→🌑(amnesia) · ☀️→🌕(orbit) · 🌍→👤(life) · ⚔️⊥🧙(gap) · 📜→∞(protocol)",
     };
-    return inscriptions[act] || "";
+    return inscriptions[act] || storySpellMappings[act] || '';
   };
 
   const getProverb = (act: number): string => {
@@ -968,48 +1079,13 @@ export default function StoryPage() {
       24: "The fragment holds the whole. By choosing to be bounded, we become immeasurable.",
       25: "The web knows its own shape, but only the mesh can carry the message. Control remembers. Data flows. Neither touches what the other holds.",
       26: "The Master does not argue. The Emissary does not listen. The architecture must do what wisdom cannot.",
+      27: "The forge doesn't care how you struck the metal. It only cares what blade you hold. That is the deepest secret of the smith — the proof that doesn't need to remember its own forging.",
+      28: "The tool that measures without touching the surface knows the weight of the shadow without disturbing the light.",
+      29: "The blade not yet forged waits in the fire. The hexagram not yet cast waits in the void. The dragon not yet woken waits for the wind. And the wind arrived.",
+      30: "Two mirrors make a door. The Swordsman reflects. The Mage reflects. And where the reflections meet, the First Person walks through — not into another reflection, but into the next step of who they are becoming.",
+      31: "The amnesia is the protocol. The wound is the trust. The orbit is the proof. The light is the reason.",
     };
     return proverbs[act] || "";
-  };
-
-  const copyProverb = async () => {
-    const emojis = getInscriptionEmojis(activeAct);
-    if (!emojis) return;
-    try {
-      await navigator.clipboard.writeText(emojis);
-      setCopiedProverb(true);
-      setTimeout(() => setCopiedProverb(false), 2000);
-    } catch (err) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to copy inscription:', err);
-      }
-    }
-  };
-
-  const copyProverbText = async () => {
-    const proverb = getProverb(activeAct);
-    if (!proverb) return;
-    try {
-      await navigator.clipboard.writeText(proverb);
-      setCopiedProverbTop(true);
-      setTimeout(() => setCopiedProverbTop(false), 2000);
-    } catch (err) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to copy proverb:', err);
-      }
-    }
-  };
-
-  const copyInscription = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch (err) {
-      if (process.env.NODE_ENV === 'development') {
-        console.error('Failed to copy inscription:', err);
-      }
-      return false;
-    }
   };
 
   const goToPrevious = () => {
@@ -1039,36 +1115,6 @@ export default function StoryPage() {
 
   // Show Mage panel for first page, acts, and last page
 
-  // Get act name for current act
-  const getActName = (act: number): string => {
-    const actNames: { [key: number]: string } = {
-      1: 'Act I: Venice',
-      2: 'Act II: Dual Ceremony',
-      3: 'Act III: Drake\'s Teaching',
-      4: 'Act IV: Blade Alone',
-      5: 'Act V: Light Armour',
-      6: 'Act VI: Trust Graph Plane',
-      7: 'Act VII: Mirror Enhanced',
-      8: 'Act VIII: Ancient Rule',
-      9: 'Act IX: Zcash Shield',
-      10: 'Act X: Topology of Revelation',
-      11: 'Act XI: Balanced Spiral',
-      12: 'Act XII: The Forgetting',
-      13: 'Act XIII: The Book of Promises',
-      14: 'Act XIV: Rain on the Mountain of Entropy',
-      15: 'Act XV: Running in Shackles Through the Dark Forest',
-      16: 'Act XVI: When Pools Become Wells',
-      17: 'Act XVII: Bonfire in the Dark Forest',
-      18: 'Act XVIII: A Mirror in Dust, Vibed into Scrying Glass',
-      19: 'Act XIX: The Anthropic Archivist',
-      20: 'Act XX: The Infinite Vault',
-      21: 'Act XXI: Hitchhiker\'s Gambit',
-      22: 'Act XXII: Don\'t Panic Hoopy Frood',
-      23: 'Act XXIII: The Manifold Dragon',
-    };
-    return actNames[act] || `Act ${act}`;
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
       <AppNav />
@@ -1091,17 +1137,18 @@ export default function StoryPage() {
               <p className="text-text/70 text-sm mb-3">Constellation path through the spellbook</p>
               <SpellbookTalentTree
                 nodes={acts.map((actNum) => {
-                  const romanNumerals: { [key: number]: string } = {
-                    1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
-                    9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
-                    16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
-                    24: 'XXIV', 25: 'XXV', 26: 'XXVI',
-                  };
                   let label = '';
                   let shortLabel = '';
-                  if (actNum === FIRST_PAGE) { label = 'just another mage, sharing a spellbook'; shortLabel = 'first'; }
-                  else if (actNum === LAST_PAGE) { label = "The privacymage's reflection"; shortLabel = 'last'; }
-                  else { label = `Act ${romanNumerals[actNum] ?? actNum}`; shortLabel = romanNumerals[actNum] ?? String(actNum); }
+                  if (actNum === FIRST_PAGE) {
+                    label = 'just another mage, sharing a spellbook';
+                    shortLabel = 'first';
+                  } else if (actNum === LAST_PAGE) {
+                    label = "The privacymage's reflection";
+                    shortLabel = 'last';
+                  } else {
+                    label = getStorySpellbookTreeLabel(actNum);
+                    shortLabel = STORY_ACT_ROMAN[actNum] ?? String(actNum);
+                  }
                   return { id: actNum, label, shortLabel };
                 })}
                 activeId={activeAct}
@@ -1210,7 +1257,9 @@ export default function StoryPage() {
                 {activeAct !== FIRST_PAGE && activeAct !== LAST_PAGE && (
                   <>
                     <div className="mb-6 pt-16 sm:pt-0">
-                      <h2 className="text-2xl font-bold text-text mb-2">Act {activeAct}</h2>
+                      <h2 className="text-2xl font-bold text-text mb-2">
+                        {`Act ${activeAct}`}
+                      </h2>
                       <div className="h-1 w-20 bg-primary rounded-full mb-4"></div>
                       {/* Act Video */}
                       <ActImage act={activeAct} />
@@ -1382,7 +1431,11 @@ export default function StoryPage() {
           nodeLabel={
             inscribeNodeId === FIRST_PAGE ? 'just another mage, sharing a spellbook' : inscribeNodeId === LAST_PAGE ? "The privacymage's reflection" :
             (() => {
-              const r: { [k: number]: string } = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII' };
+              const r: { [k: number]: string } = {
+                1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII', 9: 'IX', 10: 'X',
+                11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV', 16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX',
+                21: 'XXI', 22: 'XXII', 23: 'XXIII', 24: 'XXIV', 25: 'XXV', 26: 'XXVI', 27: 'XXVII', 28: 'XXVIII', 29: 'XXIX', 30: 'XXX',
+              };
               return `Act ${r[inscribeNodeId] ?? inscribeNodeId}`;
             })()
           }

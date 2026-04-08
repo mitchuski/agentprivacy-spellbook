@@ -174,6 +174,7 @@ export function setSpellbookInStorage(data: SpellbookStorage): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(SPELLBOOK_STORAGE_KEY, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent('agentprivacy:spellbook-changed'));
   } catch {
     // ignore
   }

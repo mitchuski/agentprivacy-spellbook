@@ -6,8 +6,7 @@ import { buildSpellweb } from '@/lib/spellweb/builder';
 import type { SpellCard } from '@/lib/grimoire-baked';
 import type { SkillFileMeta } from '@/lib/skills-data';
 import type { SpellwebNode, SpellwebLink } from '@/lib/spellweb/types';
-
-const USER_LINKS_STORAGE_KEY = 'agentprivacy-spellweb-user-links';
+import { USER_LINKS_STORAGE_KEY } from '@/lib/spellweb-keys';
 
 const ForceGraph2D = dynamic(
   () => import('react-force-graph-2d').then((m) => m.default),

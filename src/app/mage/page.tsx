@@ -859,7 +859,7 @@ What brings you my spellbook?`,
                     <span>Story Spellbook</span>
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {Array.from({ length: 26 }, (_, i) => i + 1).map((act) => {
+                    {Array.from({ length: 31 }, (_, i) => i + 1).map((act) => {
                       const taleId = getTaleIdFromAct(act);
                       const actTitles: { [key: number]: string } = {
                         1: 'Act I: Venice',
@@ -888,12 +888,17 @@ What brings you my spellbook?`,
                         24: 'Act XXIV: The Holographic Bound',
                         25: 'Act XXV: The Dragon\'s Hide',
                         26: 'Act XXVI: The Master and His Emissary',
+                        27: 'Act XXVII: Forging Zero Knowledge Blades',
+                        28: 'Act XXVIII: The Celestial Ceremony Engine',
+                        29: 'Act XXIX: The Dragon Wakes',
+                        30: 'Act XXX: The Dihedral Mirror',
+                        31: 'Act XXXI: The First Delegation',
                       };
                       const romanNumerals: { [key: number]: string } = {
                         1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI', 7: 'VII', 8: 'VIII',
                         9: 'IX', 10: 'X', 11: 'XI', 12: 'XII', 13: 'XIII', 14: 'XIV', 15: 'XV',
                         16: 'XVI', 17: 'XVII', 18: 'XVIII', 19: 'XIX', 20: 'XX', 21: 'XXI', 22: 'XXII', 23: 'XXIII',
-                        24: 'XXIV', 25: 'XXV', 26: 'XXVI',
+                        24: 'XXIV', 25: 'XXV', 26: 'XXVI', 27: 'XXVII', 28: 'XXVIII', 29: 'XXIX', 30: 'XXX', 31: 'XXXI',
                       };
                       return (
                         <button

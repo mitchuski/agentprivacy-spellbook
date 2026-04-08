@@ -3,9 +3,9 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import fs from 'fs';
 
-const GRIMOIRE_FILENAME = 'complete-spellbook-v5.0.0-canonical.json';
+const GRIMOIRE_FILENAME = 'privacymage-grimoire-v10.0.0-canonical.json';
 
-/** Spells page uses baked grimoire (getBakedSpellCards); this route is optional/legacy. */
+/** Spells page uses baked grimoire (getBakedSpellCards); this route serves the canonical v10 grimoire. */
 export const dynamic = 'force-static';
 export const revalidate = 86400;
 
