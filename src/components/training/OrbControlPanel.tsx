@@ -100,7 +100,7 @@ export default function OrbControlPanel({
   const mageSlots = loadout.mage;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[9990] pointer-events-auto">
+    <div className="hidden sm:block fixed bottom-4 left-1/2 -translate-x-1/2 z-[9990] pointer-events-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

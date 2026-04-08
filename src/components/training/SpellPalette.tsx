@@ -284,8 +284,8 @@ export default function SpellPalette({
         </motion.div>
       )}
 
-      {/* Training progress indicator - comprehensive .soul stats */}
-      <div className="fixed bottom-4 right-4 z-[9990] pointer-events-none">
+      {/* Training progress indicator - comprehensive .soul stats (hidden on mobile) */}
+      <div className="hidden sm:block fixed bottom-4 right-4 z-[9990] pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

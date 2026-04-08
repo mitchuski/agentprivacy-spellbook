@@ -1124,7 +1124,7 @@ const DualOrbs = forwardRef<DualOrbsHandle, DualOrbsProps>(function DualOrbs({
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[9999]"
+      className="hidden sm:block fixed inset-0 pointer-events-none z-[9999]"
       aria-hidden
     />
   )
