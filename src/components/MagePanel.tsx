@@ -10,6 +10,7 @@ import ProverbSuggestions from '@/components/ProverbSuggestions';
 import { getSpellemojiForAct, getActFromTaleId } from '@/lib/zcash-memo';
 import { getCustomProverbs, setCustomProverbs } from '@/lib/spellbook-storage';
 import { addEvokedMessage } from '@/lib/evoked-storage';
+import EvokeModal from '@/components/EvokeModal';
 
 // Spellbook structures for feedback form
 type SpellbookType = 'story' | 'zero' | 'canon' | 'society' | 'plurality' | null;
@@ -496,6 +497,7 @@ export default function MagePanel({
   const [userProverb, setUserProverb] = useState('');
   const [proverbCopied, setProverbCopied] = useState(false);
   const [inscriptionCopied, setInscriptionCopied] = useState(false);
+  const [showEvokeModal, setShowEvokeModal] = useState(false);
 
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -1055,16 +1057,10 @@ What would you like to explore?`;
                       </button>
                       <button
                         type="button"
-                        onClick={() => {
-                          const trimmed = userProverb.trim();
-                          if (!trimmed) return;
-                          const existing = getCustomProverbs();
-                          setCustomProverbs(existing ? `${existing}\n${trimmed}` : trimmed);
-                          setUserProverb('');
-                        }}
-                        className="flex-1 min-w-[100px] px-3 py-2 bg-surface/30 hover:bg-surface/50 border border-surface/50 rounded-lg text-text text-sm font-medium"
+                        onClick={() => setShowEvokeModal(true)}
+                        className="flex-1 min-w-[100px] px-3 py-2 bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-lg text-accent text-sm font-medium"
                       >
-                        Add to my proverbs
+                        ✦ Evoke
                       </button>
                       <Link
                         href={`/promises?proverb=${encodeURIComponent(userProverb.trim())}`}
@@ -1183,6 +1179,14 @@ What would you like to explore?`;
           </>
         )}
       </AnimatePresence>
+
+      {/* Evoke Modal */}
+      <EvokeModal
+        isOpen={showEvokeModal}
+        onClose={() => setShowEvokeModal(false)}
+        initialProverb={userProverb}
+        onEvoked={() => setUserProverb('')}
+      />
     </>
   );
 }

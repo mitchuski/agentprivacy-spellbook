@@ -6,6 +6,7 @@ import Link from 'next/link';
 import AppNav from '@/components/AppNav';
 import { useMagePanel } from '@/contexts/MagePanelContext';
 import ProverbCard from '@/components/ProverbCard';
+import EvokeModal from '@/components/EvokeModal';
 import UAddressDisplay from '@/components/UAddressDisplay';
 import {
   getUserProverbs,
@@ -50,6 +51,8 @@ function ProverbsPageContent() {
   const [filterValue, setFilterValue] = useState<string | null>(null);
   const [revealTaleId, setRevealTaleId] = useState<string | null>(null);
   const [memoCopiedTaleId, setMemoCopiedTaleId] = useState<string | null>(null);
+  const [showEvokeModal, setShowEvokeModal] = useState(false);
+  const [evokeProverb, setEvokeProverb] = useState<string>("")
 
   const load = useCallback(() => {
     setProverbs(getUserProverbs());
@@ -89,7 +92,8 @@ function ProverbsPageContent() {
           : proverbs;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+    <>
+      <div className="min-h-screen bg-gradient-to-b from-primary/5 to-background">
       <AppNav />
 
       <section className="py-10 px-4 sm:px-6 lg:px-8">
@@ -109,12 +113,13 @@ function ProverbsPageContent() {
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <Link
-                href="/evoke"
+              <button
+                type="button"
+                onClick={() => { setEvokeProverb(''); setShowEvokeModal(true); }}
                 className="inline-flex items-center justify-center gap-2 px-4 py-3 bg-primary hover:bg-primary/90 text-background font-medium rounded-xl transition-colors"
               >
-                <span>⭐ Evoke Proverb</span>
-              </Link>
+                <span>✦ Evoke Proverb</span>
+              </button>
               <button
                 type="button"
                 onClick={openMagePanel}
@@ -171,12 +176,13 @@ function ProverbsPageContent() {
                       >
                         Copy
                       </button>
-                      <Link
-                        href={`/evoke?proverb=${encodeURIComponent(proverb)}`}
+                      <button
+                        type="button"
+                        onClick={() => { setEvokeProverb(proverb); setShowEvokeModal(true); }}
                         className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent/10 hover:bg-accent/20 border border-accent/30 text-accent"
                       >
-                        🧙 Evoke
-                      </Link>
+                        ✦ Evoke
+                      </button>
                       <Link
                         href="/spells"
                         className="px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/10 hover:bg-primary/20 border border-primary/30 text-primary"
@@ -298,9 +304,13 @@ function ProverbsPageContent() {
                     <p className="text-sm">
                       Collect proverbs from the Mage, agree on casts in spellbooks, or inscribe on the constellation—they’ll appear here.
                     </p>
-                    <Link href="/evoke" className="mt-4 inline-block text-primary hover:underline">
-                      ⭐ Evoke Proverb →
-                    </Link>
+                    <button
+                    type="button"
+                    onClick={() => { setEvokeProverb(''); setShowEvokeModal(true); }}
+                    className="mt-4 inline-block text-primary hover:underline"
+                  >
+                    ✦ Evoke Proverb →
+                  </button>
                   </>
                 ) : (
                   <p>No proverbs match the current filter.</p>
@@ -326,6 +336,14 @@ function ProverbsPageContent() {
         </div>
       </section>
     </div>
+
+      <EvokeModal
+        isOpen={showEvokeModal}
+        onClose={() => setShowEvokeModal(false)}
+        initialProverb={evokeProverb}
+        onEvoked={() => setShowEvokeModal(false)}
+      />
+    </>
   );
 }
 

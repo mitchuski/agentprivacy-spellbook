@@ -6,7 +6,8 @@
 export type ProverbSourceType =
   | 'mage_response'     // From MagePanel chat
   | 'cast_inscription'  // Direct inscription
-  | 'cast_agreement';   // Agreement with existing content
+  | 'cast_agreement'    // Agreement with existing content
+  | 'evoked';           // Evoked via modal (standalone or connected)
 
 export type ProverbStatus =
   | 'collected'         // In local collection
@@ -22,6 +23,9 @@ export interface UserProverb {
   actNumber?: number;           // For story spellbook
   sourceType: ProverbSourceType;
   castEntryId?: string;         // Links to spellbook entry if agreement
+  reflection?: string;          // Personal notes/reflection on this proverb
+  connectedTo?: string;         // ID of proverb this is connected to
+  connectedTaleId?: string;     // TaleId of inscribed proverb this connects to
   createdAt: string;            // ISO timestamp
   status: ProverbStatus;
   revealedTxid?: string;        // If inscribed on Zcash
@@ -162,6 +166,8 @@ export function getGrimoireDisplayName(grimoire: string): string {
     society: 'Society',
     plurality: 'Plurality',
     incantations: 'Incantations',
+    standalone: 'Standalone',
+    connected: 'Connected',
   };
   return names[grimoire] || grimoire;
 }
@@ -187,6 +193,7 @@ export function getSourceTypeDisplay(sourceType: ProverbSourceType): { label: st
     mage_response: { label: 'From Mage', icon: '🧙' },
     cast_inscription: { label: 'Cast inscription', icon: '📜' },
     cast_agreement: { label: 'Agreed on cast', icon: '🤝' },
+    evoked: { label: 'Evoked', icon: '✦' },
   };
   return displays[sourceType];
 }

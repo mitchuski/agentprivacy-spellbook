@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import EvokeModal from '@/components/EvokeModal';
 import {
   type UserProverb,
   updateProverbStatus,
@@ -40,6 +41,7 @@ export default function ProverbCard({ proverb, onUpdate, showActions = true, sho
   const [copied, setCopied] = useState(false);
   const [showRevealFlow, setShowRevealFlow] = useState(false);
   const [memoCopied, setMemoCopied] = useState(false);
+  const [showEvokeModal, setShowEvokeModal] = useState(false);
 
   const statusDisplay = getStatusDisplay(proverb.status);
   const sourceDisplay = getSourceTypeDisplay(proverb.sourceType);
@@ -84,6 +86,7 @@ export default function ProverbCard({ proverb, onUpdate, showActions = true, sho
   };
 
   return (
+    <>
     <motion.div
       layout
       initial={{ opacity: 0, y: 10 }}
@@ -145,12 +148,12 @@ export default function ProverbCard({ proverb, onUpdate, showActions = true, sho
                 ✨ Add to spell graph
               </button>
 
-              <Link
-                href={`/evoke?proverb=${encodeURIComponent(proverb.content)}`}
+              <button
+                onClick={() => setShowEvokeModal(true)}
                 className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent/10 hover:bg-accent/20 border border-accent/30 text-accent transition-colors"
               >
-                🧙 Evoke
-              </Link>
+                ✦ Evoke
+              </button>
 
               <button
                 onClick={() => setShowRevealFlow(!showRevealFlow)}
@@ -223,6 +226,18 @@ export default function ProverbCard({ proverb, onUpdate, showActions = true, sho
         </motion.div>
       )}
     </motion.div>
+
+      {/* Evoke Modal */}
+      <EvokeModal
+        isOpen={showEvokeModal}
+        onClose={() => setShowEvokeModal(false)}
+        initialProverb={proverb.content}
+        onEvoked={() => {
+          setShowEvokeModal(false);
+          onUpdate?.();
+        }}
+      />
+    </>
   );
 }
 

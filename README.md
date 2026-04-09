@@ -1,9 +1,10 @@
 # Proof of Proverb Revelation Protocol
 ## Evoke: The Primary Mage Interface | Zcash: The Swordsman's Shield
 
-**Project**: 0xagentprivacy  
-**Status**: ✅ Production-Ready  
-**Version**: 1.0
+**Project**: 0xagentprivacy
+**Status**: ✅ Production
+**Version**: 10.0.0
+**Stack**: Next.js 16.2 | React 19 | Zcash | NEAR Cloud AI
 
 ---
 
@@ -17,7 +18,7 @@ This repository is the **full stack** for the Proof of Proverb Revelation Protoc
 
 - **Next.js frontend** — Landing, Evoke, Mage, spellbook readers, proverbs gallery
 - **Oracle Swordsman** — Backend (transaction monitoring, AI verification, inscriptions)
-- **Spellbooks** — All 5 grimoires (Story, Zero, Canon, Society, Plurality) and canonical JSON
+- **Spellbooks** — All 5 grimoires (Story, Zero, Canon, Society, Plurality) and canonical JSON (v10.0.0)
 - **Evoke & Mage** — Soulbae (NEAR Cloud AI) integration for proverb formation
 - **Docs & scripts** — Build guide, deployment, security, and tooling
 
@@ -43,7 +44,7 @@ The **Proof of Proverb Revelation Protocol** is the first concrete implementatio
 │   ├── Whitepaper v4.3 - Architecture specification
 │   ├── Research Paper v3.2 - Mathematical foundations
 │   ├── Tokenomics v2.0 - Economic model
-│   ├── Spellbook v4.0.1-canonical - Narrative framework
+│   ├── Spellbook v10.0.0-canonical - Narrative framework
 │   └── Glossary v2.1 - Canonical terminology
 │
 └── Implementations
@@ -53,7 +54,7 @@ The **Proof of Proverb Revelation Protocol** is the first concrete implementatio
 
 **0xagentprivacy** solves the privacy-delegation paradox: AI agents need information to act on your behalf, but that same information enables surveillance. The solution is **dual-agent architecture**—splitting observation rights (Swordsman) from action capabilities (Mage) with mathematical separation guarantees.
 
-This hackathon implementation proves the architecture works:
+This implementation proves the architecture works:
 - ✅ Cryptographic separation of viewing/spending keys
 - ✅ Privacy-preserving AI verification
 - ✅ Onchain proof inscriptions
@@ -173,12 +174,12 @@ First Person visits /evoke
 |-----------|-------------|
 | **Evoke Interface** | Primary Mage interaction—Soulbae AI assistance for proverb formation |
 | **Zcash Protection** | Swordsman infrastructure—verifies and inscribes proverbs onchain |
-| **Frontend** | Next.js 16 with story reader, Evoke interface, spellbook navigation |
+| **Frontend** | Next.js 16.2 + React 19 with story reader, Evoke interface, spellbook navigation |
 | **Backend** | Oracle with transaction monitoring, AI verification |
 | **Blockchain** | Zebra + Zallet integration, inscription system |
 | **AI Verification** | NEAR Cloud AI (privacy-preserving) |
 | **Golden Split** | 61.8% transparent / 38.2% shielded |
-| **Inscriptions** | Acts 1-12 confirmed on mainnet |
+| **Inscriptions** | Acts 1-31 complete, mainnet confirmed |
 
 ### ⏸️ On Hold
 
@@ -203,8 +204,8 @@ First Person visits /evoke
 
 ```bash
 # Clone this repository (full stack)
-git clone https://github.com/mitchuski/agentprivacy-spellbook
-cd agentprivacy-spellbook
+git clone https://github.com/mitchuski/agentprivacy
+cd agentprivacy
 
 # Install dependencies (root + Oracle Swordsman)
 npm install
@@ -245,7 +246,7 @@ The website is a Next.js application with the following main routes:
 | Route | Description | Content |
 |-------|-------------|---------|
 | `/` | Landing page | Introduction to the protocol |
-| `/story` | Story Spellbook | 18 Acts of narrative tales about privacy and sovereignty |
+| `/story` | Story Spellbook | 31 Acts of narrative tales about privacy and sovereignty |
 | `/zero` | Zero Knowledge Spellbook | 30 Tales teaching cryptographic concepts |
 | `/canon` | Canon Spellbook | 10 Chapters of blockchain history from cypherpunks to present |
 | `/society` | Society/Parallel Spellbook | 17 Chapters on parallel society and network states |
@@ -260,9 +261,9 @@ The website is a Next.js application with the following main routes:
 
 The website hosts **5 complete spellbooks** (grimoires):
 
-1. **Story Spellbook** (`/story`) - 18 Acts
+1. **Story Spellbook** (`/story`) - 31 Acts
    - Narrative tales about privacy, sovereignty, and the dual-agent architecture
-   - Acts 1-12 inscribed on Zcash mainnet
+   - Acts 1-31 inscribed on Zcash mainnet
 
 2. **Zero Knowledge Spellbook** (`/zero`) - 30 Tales
    - Mathematical foundations of zero-knowledge proofs
@@ -300,7 +301,7 @@ The `/mage` route provides an alternative interface for Soulbae interactions:
 ## Architecture (repository layout)
 
 ```
-agentprivacy-spellbook/           # This repo (full stack)
+agentprivacy/                     # This repo (full stack)
 ├── src/                          # Frontend (Next.js 16)
 │   ├── app/                      # Routes
 │   │   ├── page.tsx              # Landing page (/)
@@ -335,7 +336,7 @@ agentprivacy-spellbook/           # This repo (full stack)
 │   └── inscribe-act*.js          # Inscription scripts
 │
 ├── public/
-│   ├── story/markdown/           # 18 Acts content
+│   ├── story/markdown/           # 31 Acts content
 │   ├── zero/markdown/            # 30 Tales content
 │   ├── canon/markdown/           # 10 Chapters content
 │   ├── society/markdown/         # 17 Chapters content
@@ -418,7 +419,7 @@ This implementation aligns with the 0xagentprivacy living documentation:
 | **Whitepaper** | 4.4 | Dual-agent architecture |
 | **Research Paper** | 3.2 | Mathematical foundations |
 | **Tokenomics** | 2.1 | Signal economics |
-| **Spellbook** | 4.0.2-canonical | Narrative framework |
+| **Spellbook** | 10.0.0-canonical | Narrative framework |
 | **Visual Guide** | 1.2 | Architecture diagrams |
 
 **Citation Format**: When referencing across documents, use `[Document v#.#, §Section]`
@@ -451,17 +452,16 @@ This implementation aligns with the 0xagentprivacy living documentation:
 ### Project Links
 
 - **Website**: [agentprivacy.ai](https://agentprivacy.ai)
-- **This repo (full stack)**: [github.com/mitchuski/agentprivacy-spellbook](https://github.com/mitchuski/agentprivacy-spellbook)
-- **0xagentprivacy**: [@mitchuski/agentprivacy](https://github.com/mitchuski/agentprivacy)
+- **This repo (full stack)**: [github.com/mitchuski/agentprivacy](https://github.com/mitchuski/agentprivacy)
 
 ### Spellbooks
 
-- **Story Spellbook**: 18 Acts (narrative tales)
+- **Story Spellbook**: 31 Acts (narrative tales)
 - **Zero Knowledge Spellbook**: 30 Tales (cryptographic concepts)
 - **Canon Spellbook**: 10 Chapters (blockchain history)
 - **Society/Parallel Spellbook**: 17 Chapters (network states)
 - **Plurality Spellbook**: 30 Acts (collective intelligence)
-- **Total**: 105 spellbook entries across 5 grimoires
+- **Total**: 118 spellbook entries across 5 grimoires
 
 ### Collaborators
 
