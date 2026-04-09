@@ -22,10 +22,8 @@ const nextConfig = {
   turbopack: {
     root: process.cwd(),
   },
-  experimental: {
-    // Next.js 16: flatten RSC payload paths (optional; file may be missing on CI/Cloudflare)
-    ...(existsSync(adapterPath) && { adapterPath: path.resolve(adapterPath) }),
-  },
+  // Next.js 16.2+: adapterPath moved from experimental to root level
+  ...(existsSync(adapterPath) && { adapterPath: path.resolve(adapterPath) }),
 };
 
 export default nextConfig;
