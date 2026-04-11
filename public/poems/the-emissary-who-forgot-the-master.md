@@ -1,6 +1,7 @@
 # The Emissary Who Forgot the Master
 
-Light and Darkness. Earth and Sun, found balance.
+Light and Darkness. 
+Earth and Sun, found balance.
 
 always everywhere,
 river flows in you.
