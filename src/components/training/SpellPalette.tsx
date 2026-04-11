@@ -26,6 +26,8 @@ import { getSoulStats, type SoulStats } from '@/lib/soul-stats';
 interface SpellPaletteProps {
   onSpellCast?: (spellId: string, position: { x: number; y: number }) => void
   currentSection?: string
+  /** When true, the training stats panel is hidden */
+  collapsed?: boolean
 }
 
 interface SpellNode {
@@ -44,7 +46,8 @@ interface SpellNode {
 
 export default function SpellPalette({
   onSpellCast,
-  currentSection = 'hero'
+  currentSection = 'hero',
+  collapsed = false
 }: SpellPaletteProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -285,12 +288,16 @@ export default function SpellPalette({
       )}
 
       {/* Training progress indicator - comprehensive .soul stats (hidden on mobile) */}
-      <div className="hidden sm:block fixed bottom-4 right-4 z-[9990] pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-surface/80 backdrop-blur-sm px-4 py-3 rounded-lg border border-surface/50 text-right max-w-[320px]"
-        >
+      <AnimatePresence>
+        {!collapsed && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+            className="hidden sm:block fixed bottom-4 right-4 z-[9990] pointer-events-none"
+          >
+            <div className="bg-surface/80 backdrop-blur-sm px-4 py-3 rounded-lg border border-surface/50 text-right max-w-[320px]">
           <div className="text-[10px] text-text-muted font-mono tracking-wide mb-1 leading-tight">
             {LEARNING_SPELLS_FORMING_BLADE}
           </div>
@@ -420,13 +427,15 @@ export default function SpellPalette({
           )}
 
           {/* Persona indicator */}
-          {soulStats?.personaName && (
-            <div className="mt-1 text-[9px] text-primary/70">
-              persona: {soulStats.personaName}
+              {soulStats?.personaName && (
+                <div className="mt-1 text-[9px] text-primary/70">
+                  persona: {soulStats.personaName}
+                </div>
+              )}
             </div>
-          )}
-        </motion.div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hint removed - using OrbControlPanel instead */}
     </>

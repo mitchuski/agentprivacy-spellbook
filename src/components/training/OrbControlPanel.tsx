@@ -25,6 +25,10 @@ interface OrbControlPanelProps {
   currentMode?: 'cursor' | 'hidden' | 'wander';
   selectedSwordIdx?: number;
   selectedMageIdx?: number;
+  /** Whether the training stats panel is collapsed */
+  statsCollapsed?: boolean;
+  /** Toggle training stats panel collapse state */
+  onStatsCollapseToggle?: () => void;
 }
 
 /**
@@ -37,6 +41,8 @@ export default function OrbControlPanel({
   currentMode = 'cursor',
   selectedSwordIdx: propSwordIdx = 0,
   selectedMageIdx: propMageIdx = 0,
+  statsCollapsed = false,
+  onStatsCollapseToggle,
 }: OrbControlPanelProps) {
   // Initialize with static empty values to avoid hydration mismatch (localStorage not available on server)
   const [loadout, setLoadout] = useState<OrbLoadout>(EMPTY_LOADOUT);
@@ -204,6 +210,17 @@ export default function OrbControlPanel({
             ↻
           </button>
           <span className="text-[9px] text-violet-400/60 font-mono ml-0.5" title="Press R to rotate spell">[r]</span>
+          <button
+            onClick={onStatsCollapseToggle}
+            className={`px-2 py-1 rounded text-sm font-medium transition-all ml-2 ${
+              statsCollapsed
+                ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30'
+                : 'bg-white/5 text-white/50 border border-transparent hover:bg-white/10'
+            }`}
+            title={statsCollapsed ? "Show training stats" : "Hide training stats"}
+          >
+            📖
+          </button>
         </div>
       </motion.div>
     </div>

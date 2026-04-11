@@ -7,6 +7,10 @@ import { useMagePanel } from '@/contexts/MagePanelContext';
 import { getAgentCard, hasCompletedCeremony } from '@/lib/ceremony/storage';
 import { NAV_LINKS } from '@/lib/nav';
 
+// Split nav links into two groups for mobile dropdowns
+const SPELLBOOKS_KEYS = ['story', 'zero', 'canon', 'society', 'plural'];
+const TOOLS_KEYS = ['proverbs', 'evoke', 'poems', 'mage', 'promise', 'spells', 'web', 'orbs'];
+
 // Plain <a> for nav so static server serves the right HTML on click (no RSC fetch).
 const NavLink = ({ href, className, onClick, title, children }: { href: string; className: string; onClick?: () => void; title?: string; children: React.ReactNode }) => (
   <a href={href} className={className} onClick={onClick} title={title}>{children}</a>
@@ -16,8 +20,15 @@ export default function AppNav() {
   const pathname = usePathname();
   const { openMagePanel } = useMagePanel();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [spellbooksOpen, setSpellbooksOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const [ceremonyComplete, setCeremonyComplete] = useState(false);
   const [swordsmanName, setSwordsmanName] = useState<string | null>(null);
+
+  // Filter nav links into groups
+  const soulbisLink = NAV_LINKS.find(l => l.key === 'soulbis');
+  const spellbookLinks = NAV_LINKS.filter(l => SPELLBOOKS_KEYS.includes(l.key));
+  const toolLinks = NAV_LINKS.filter(l => TOOLS_KEYS.includes(l.key));
 
   useEffect(() => {
     const sync = () => {
@@ -106,25 +117,110 @@ export default function AppNav() {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden overflow-hidden"
             >
-              <div className="py-4 space-y-3 border-t border-surface/50">
-                {navLinks.map(({ href, label, key }) => (
+              <div className="py-4 space-y-2 border-t border-surface/50">
+                {/* Soulbis (Ceremony) - standalone */}
+                {soulbisLink && (
                   <NavLink
-                    key={href}
-                    href={href}
-                    className={mobileLinkClass(href)}
-                    title={key === 'soulbis' ? (ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony') : undefined}
+                    href={soulbisLink.href}
+                    className={mobileLinkClass(soulbisLink.href)}
+                    title={ceremonyComplete && swordsmanName ? `Ceremony: ${swordsmanName}` : 'Ceremony'}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {key === 'soulbis' ? <span className="text-2xl leading-none" aria-hidden>⚔️</span> : label}
+                    <span className="text-2xl leading-none" aria-hidden>⚔️</span>
+                    <span className="ml-2 text-sm text-text-muted">ceremony</span>
                   </NavLink>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => { openMagePanel(); setMobileMenuOpen(false); }}
-                  className="block text-text-muted hover:text-text transition-colors font-medium py-2 w-full text-left"
-                >
-                  🧙 Soulbae
-                </button>
+                )}
+
+                {/* Spellbooks Dropdown */}
+                <div className="border-t border-surface/30 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setSpellbooksOpen(!spellbooksOpen)}
+                    className="flex items-center justify-between w-full text-text-muted hover:text-text transition-colors font-medium py-2"
+                  >
+                    <span>📚 Spellbooks</span>
+                    <svg
+                      className={`w-4 h-4 transition-transform ${spellbooksOpen ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <AnimatePresence>
+                    {spellbooksOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden pl-4 border-l-2 border-primary/30 ml-2"
+                      >
+                        {spellbookLinks.map(({ href, label }) => (
+                          <NavLink
+                            key={href}
+                            href={href}
+                            className={mobileLinkClass(href)}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {label}
+                          </NavLink>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Tools Dropdown */}
+                <div className="border-t border-surface/30 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setToolsOpen(!toolsOpen)}
+                    className="flex items-center justify-between w-full text-text-muted hover:text-text transition-colors font-medium py-2"
+                  >
+                    <span>🛠️ Tools</span>
+                    <svg
+                      className={`w-4 h-4 transition-transform ${toolsOpen ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <AnimatePresence>
+                    {toolsOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="overflow-hidden pl-4 border-l-2 border-amber-500/30 ml-2"
+                      >
+                        {toolLinks.map(({ href, label }) => (
+                          <NavLink
+                            key={href}
+                            href={href}
+                            className={mobileLinkClass(href)}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {label}
+                          </NavLink>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Soulbae button */}
+                <div className="border-t border-surface/30 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => { openMagePanel(); setMobileMenuOpen(false); }}
+                    className="block text-text-muted hover:text-text transition-colors font-medium py-2 w-full text-left"
+                  >
+                    🧙 Soulbae
+                  </button>
+                </div>
               </div>
             </motion.div>
           )}

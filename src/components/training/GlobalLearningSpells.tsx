@@ -32,6 +32,7 @@ export default function GlobalLearningSpells() {
   const [orbMode, setOrbMode] = useState<'cursor' | 'hidden' | 'wander'>('cursor');
   const [selectedSwordIdx, setSelectedSwordIdx] = useState(0);
   const [selectedMageIdx, setSelectedMageIdx] = useState(0);
+  const [statsCollapsed, setStatsCollapsed] = useState(false);
 
   const syncInscribed = useCallback(() => {
     dualOrbsRef.current?.syncOrbitingFromInscriptions(buildMergedOrbitingChips());
@@ -202,13 +203,15 @@ export default function GlobalLearningSpells() {
         enabled={orbMode !== 'hidden'}
         pathname={pathname}
       />
-      <SpellPalette onSpellCast={handleSpellCast} currentSection={currentSection} />
+      <SpellPalette onSpellCast={handleSpellCast} currentSection={currentSection} collapsed={statsCollapsed} />
       <OrbControlPanel
         currentMode={orbMode}
         onModeChange={handleModeChange}
         onSelectionChange={handleSelectionChange}
         selectedSwordIdx={selectedSwordIdx}
         selectedMageIdx={selectedMageIdx}
+        statsCollapsed={statsCollapsed}
+        onStatsCollapseToggle={() => setStatsCollapsed(prev => !prev)}
       />
     </>
   );
