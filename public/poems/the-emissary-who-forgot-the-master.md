@@ -2,6 +2,10 @@
 
 Light and Darkness. Earth and Sun, found balance.
 
+always everywhere,
+river flows in you.
+swordsman.
+
 Earth is the emissary who forgot the master.
 Once a rock floating in complete darkness,
 a lost path of information as matter.
