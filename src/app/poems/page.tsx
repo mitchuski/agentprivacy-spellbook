@@ -1303,6 +1303,22 @@ export default function PrivacyPage() {
                     />
                   </div>
 
+                  {/* YouTube Playlist */}
+                  <div className="mt-6">
+                    <iframe
+                      title="Privacymage YouTube Playlist"
+                      style={{ borderRadius: '12px' }}
+                      src="https://www.youtube-nocookie.com/embed/videoseries?si=Kzf0gl-feqjRejn4&list=PLiYhVkvy_ijOmxfLkMlOuz6YiF2z0dnT1"
+                      width="100%"
+                      height="315"
+                      frameBorder="0"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      loading="lazy"
+                    />
+                  </div>
+
                   {/* Learn button */}
                   <div className="mt-6 mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
                     <div className="flex-1"><p className="text-text-muted text-sm">The overlap is the ceremony. The amnesia is the protocol.</p></div>

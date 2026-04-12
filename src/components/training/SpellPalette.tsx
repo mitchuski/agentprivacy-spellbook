@@ -54,7 +54,7 @@ export default function SpellPalette({
   const [selectedSpell, setSelectedSpell] = useState<string | null>(null)
   const [spellNodes, setSpellNodes] = useState<SpellNode[]>([])
   // Initialize with defaults to avoid hydration mismatch (localStorage not available on server)
-  const [stats, setStats] = useState({ spellsCast: 0, convergences: 0, sectionsVisited: 0, totalSections: 0 })
+  const [stats, setStats] = useState({ spellsCast: 0, convergences: 0, sectionsVisited: 0, totalSections: 0, progress: 0, pathUnlocked: false })
   const [soulStats, setSoulStats] = useState<SoulStats | null>(null)
 
   // Get available spells

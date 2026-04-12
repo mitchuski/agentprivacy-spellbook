@@ -630,7 +630,6 @@ export default function LandingPage() {
               muted
               playsInline
               preload="metadata"
-              poster="/assets/agentprivacy_swordmage_bg_frame.jpg"
               onCanPlay={(e) => {
                 const video = e.currentTarget;
                 video.play().catch(() => {});
