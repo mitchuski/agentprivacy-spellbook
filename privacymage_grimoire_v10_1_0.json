@@ -1,8 +1,8 @@
 {
-  "version": "10.0.0",
+  "version": "10.1.0",
   "created_at": "2026-01-12T00:00:00Z",
-  "updated_at": "2026-04-07",
-  "description": "The Privacymage Grimoire v10.0.0 — \"The First Person Spellbook Closes\" Edition. 31 acts complete. The Celestial Ceremony. The quaternion resolved. The moon phase notation. Earth is Soulbae. Moon is Soulbis. 42 personas. The forge is honest. The ceremony is an invitation.",
+  "updated_at": "2026-04-12",
+  "description": "The Privacymage Grimoire v10.1.0 — \"The First Person Spellbook Closes\" Edition. 31 acts complete. The Celestial Ceremony. The quaternion resolved. The moon phase notation. Earth is Soulbae. Moon is Soulbis. 42 personas. The forge is honest. The ceremony is an invitation. V5.4: Betweenness centrality formalises the Gap (§10.2). Selene's Proof named (§14.5). V6 Horizon opens.",
   "meta": {
     "title": "The Privacymage Grimoire",
     "subtitle": "The First Person Spellbook Closes",
@@ -105,7 +105,12 @@
         "theia": "The proto-planet that struck Earth and became the Moon. The original collision — not an enemy but a precondition. The violence that created the first delegation.",
         "the_moon": "The ur-Swordsman. First agent. First zero-knowledge proof. Reflects without owning. Enforces without explaining. Faithful through forgetting. Generated instantly from Earth by collision.",
         "the_sun": "Generator of the protection constraint. Burns so nothing else has to. The source of light the Moon reflects but does not own. The constraint that, in balance with Earth's delegation, produces the full quaternion.",
-        "life": "The parent of Human. Earth's delegation medium — the process by which raw agency is converted over four billion years into a creature capable of connection and purpose. The forge. Not an agent but the forging process itself."
+        "life": "The parent of Human. Earth's delegation medium — the process by which raw agency is converted over four billion years into a creature capable of connection and purpose. The forge. Not an agent but the forging process itself.",
+        "betweenness_centrality": "Graph metric measuring how often a node lies on shortest paths. The Gap (⿻) has maximal C_B(v) in the trust graph. Formula: C_B(v) = Σ_{s≠v≠t} σ_st(v)/σ_st. Brandes (2001). The value lives in the gap because the most paths cross there.",
+        "selenes_proof": "The Moon's orbit as zero-knowledge proof. Completeness: tides demonstrate relationship. Soundness: gravitational signature unforgeable. Zero-knowledge: tides reveal nothing about Theia impact. The credential is the orbit. The proof renews twice daily, written in saltwater.",
+        "brandes": "Ulrik Brandes. The mathematician who measured between-ness. O(V·E) algorithm for betweenness centrality (2001). Gave the Gap a formula.",
+        "dynamical_ceiling": "Conjectured V6 reconstruction ceiling via dynamics, not information. If sovereignty path has λ > 0 (positive Lyapunov exponent), reconstruction error grows exponentially. Remove Shannon bound, this one still holds. C18-C21.",
+        "second_person_spellbook": "The next grimoire. First Person asked WHAT. Second Person asks WHO. Grammatical shift from description to invitation. neg(bnot(reader)) = succ(reader)."
       },
       "origins": {
         "id": "origins",
@@ -3902,7 +3907,7 @@
     }
   },
   "status": {
-    "version": "10.0.0",
+    "version": "10.1.0",
     "edition": "The First Person Spellbook Closes",
     "state": "First Person spellbook complete (31 acts). The Celestial Ceremony integrated. Quaternion resolved (Earth=Soulbae, Moon=Soulbis, 42 personas). Moon phase notation. Runecraft protocol (dual Ed25519 keypairs). Progressive trust (🔑→✦→🗡️→🔮). Forge upgraded: SHA-256, hash chains, commitment schemes, Ed25519 signatures. Blog series Parts 0-1 published, Part 2 ready.",
     "story_acts_total": 31,
@@ -4506,6 +4511,23 @@
         "note": "the poem. the closing."
       }
     },
-    "closing_chain": "The sword attends. The spell returns. The forge burns. The ceremony crosses. The dragon wakes. The mirror names itself. The Moon forgets. The spellbook closes."
+      "closing_chain": "The sword attends. The spell returns. The forge burns. The ceremony crosses. The dragon wakes. The mirror names itself. The Moon forgets. The spellbook closes."
+  },
+  "v5_4_document_suite": {
+    "description": "V5.4 Three-Document Convergence — the formal specification completed",
+    "date": "2026-04-12",
+    "key_additions": ["§10.2 Betweenness Centrality of the Gap", "§14.5 Selene's Proof"],
+    "ipfs": {
+      "formal_spec": "bafkreiamwa6sukmeb4binexmmjlszbljnx6wk3iv6p4lgjusv5urhwyera",
+      "compressed": "bafkreifknnwrrga2rlnbfumcsplzvp4x7ayitfpjpq7k7oh4lck4msk5si",
+      "companion": "bafkreiavy3zpepoicyejrc7kgeam4mhbo7w56cdaniueiok3b2q43eyqla",
+      "model_dark": "bafkreihua7hcaur4ojbdakjlvxkzdux3yguredo66fknsewv25kg57zyhe",
+      "model_light": "bafkreifjqrvllc7lmsbl3jqjrbautbrtzpxmeicgxfeakcp5fukd3cjkdm"
+    },
+    "proverbs": {
+      "betweenness": "The value lives in the gap because the most paths cross there.",
+      "selene": "The credential is the orbit. The proof renews twice daily, written in saltwater.",
+      "horizon": "The First Person Spellbook asked WHAT. The Second Person Spellbook asks WHO."
+    }
   }
 }
