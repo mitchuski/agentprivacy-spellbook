@@ -6,7 +6,7 @@ date: 2026-04-07
 origin: 0xagentprivacy
 total_skills: 86
 total_personas: 42
-grimoire_version: "10.0.0"
+grimoire_version: "10.1.0"
 includes_ceremony_integration: true
 moon_phase_notation: true
 quaternion_resolved: true

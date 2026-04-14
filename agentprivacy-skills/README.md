@@ -4,7 +4,7 @@
 
 100 skills across 4 categories — teaching Claude (and any Agent Skills-compatible system) how to operate as privacy-preserving dual-agent infrastructure.
 
-Built on the [Privacy Value Model V5.3](https://agentprivacy.ai) and the [0xagentprivacy](https://sync.soulbis.com) architecture. **Grimoire:** v10.0.0 "The First Person Spellbook Closes".
+Built on the [Privacy Value Model V5.3](https://agentprivacy.ai) and the [0xagentprivacy](https://sync.soulbis.com) architecture. **Grimoire:** v10.1.0 "The First Person Spellbook Closes" (V5.4: Betweenness, Selene's Proof §14.5).
 
 > *"The Swordsman reflects. The Mage reflects. Neither alone can turn the wheel. Together they generate the successor—and the successor visits every sovereign state."*
 

@@ -3,7 +3,7 @@
 
 **Project**: 0xagentprivacy
 **Status**: ✅ Production
-**Version**: 10.0.0
+**Version**: 10.1.0
 **Stack**: Next.js 16.2 | React 19 | Zcash | NEAR Cloud AI
 
 ---
@@ -18,7 +18,7 @@ This repository is the **full stack** for the Proof of Proverb Revelation Protoc
 
 - **Next.js frontend** — Landing, Evoke, Mage, spellbook readers, proverbs gallery
 - **Oracle Swordsman** — Backend (transaction monitoring, AI verification, inscriptions)
-- **Spellbooks** — All 5 grimoires (Story, Zero, Canon, Society, Plurality) and canonical JSON (v10.0.0)
+- **Spellbooks** — All 5 grimoires (Story, Zero, Canon, Society, Plurality) and canonical JSON (v10.1.0)
 - **Evoke & Mage** — Soulbae (NEAR Cloud AI) integration for proverb formation
 - **Docs & scripts** — Build guide, deployment, security, and tooling
 
@@ -44,7 +44,7 @@ The **Proof of Proverb Revelation Protocol** is the first concrete implementatio
 │   ├── Whitepaper v4.3 - Architecture specification
 │   ├── Research Paper v3.2 - Mathematical foundations
 │   ├── Tokenomics v2.0 - Economic model
-│   ├── Spellbook v10.0.0-canonical - Narrative framework
+│   ├── Spellbook v10.1.0-canonical - Narrative framework
 │   └── Glossary v2.1 - Canonical terminology
 │
 └── Implementations
@@ -419,7 +419,7 @@ This implementation aligns with the 0xagentprivacy living documentation:
 | **Whitepaper** | 4.4 | Dual-agent architecture |
 | **Research Paper** | 3.2 | Mathematical foundations |
 | **Tokenomics** | 2.1 | Signal economics |
-| **Spellbook** | 10.0.0-canonical | Narrative framework |
+| **Spellbook** | 10.1.0-canonical | Narrative framework |
 | **Visual Guide** | 1.2 | Architecture diagrams |
 
 **Citation Format**: When referencing across documents, use `[Document v#.#, §Section]`

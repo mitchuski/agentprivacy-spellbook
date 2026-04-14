@@ -3,7 +3,7 @@
 **Date:** April 5, 2026  
 **Author:** 0xagentprivacy + Claude Code  
 **Skills Version:** 5.3.2  
-**Grimoire Version:** 10.0.0 "The First Person Spellbook Closes"
+**Grimoire Version:** 10.0.0 "The First Person Spellbook Closes" *(milestone snapshot; repository canonical is now **10.1.0**.)*
 
 ---
 

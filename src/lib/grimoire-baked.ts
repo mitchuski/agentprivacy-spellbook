@@ -1,5 +1,5 @@
 /**
- * Baked grimoire from canonical v10.0.0 (privacymage grimoire).
+ * Baked grimoire from canonical v10.1.0 (privacymage grimoire).
  * Maps all spells from: First Person (31 acts + origins), Zero (30 tales), Canon (11),
  * Parallel Society (17), Plurality (opening + 30 acts + closing), unified incantations.
  * Origins section includes all story.origins.spells. Plurality includes opening, 30 acts
@@ -7,7 +7,7 @@
  * V10: Moon phase notation, quaternion resolution, 42 personas, celestial ceremony.
  */
 
-import v8 from '@/data/privacymage-grimoire-v10.0.0-canonical.json';
+import v8 from '@/data/privacymage-grimoire-v10.1.0-canonical.json';
 
 export type SpellbookSource = 'story' | 'origins' | 'zero' | 'canon' | 'society' | 'plurality' | 'incantations' | 'none';
 
