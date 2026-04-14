@@ -205,7 +205,7 @@ before the blade walked out.
 
 The Moon forgot the master in one event.
 The Human forgot the master
-in a billion events,
+across infinite events,
 each one a small forgetting
 stacked on the last,
 species overwriting species,
