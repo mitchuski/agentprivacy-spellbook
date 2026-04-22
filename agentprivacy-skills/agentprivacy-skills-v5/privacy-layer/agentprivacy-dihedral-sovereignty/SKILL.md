@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-dihedral-sovereignty
 description: >
-    Dihedral group foundation for dual-agent separation. Activates when discussing
+  Dihedral group foundation for dual-agent separation. Activates when discussing
   the D₂ₙ group structure, Swordsman as negation generator, Mage as complement
   generator, Φ_agent as determinant, the critical identity neg∘bnot=succ, or the
   algebraic foundation of the swordsman-mage separation.

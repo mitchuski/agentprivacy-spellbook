@@ -12,7 +12,7 @@ metadata:
   origin: "0xagentprivacy"
   equation_term: "I(S;M|FP) < ε — mutual information bounded by amnesia"
   emoji: "🌑🔒"
-  act_reference: "Act XXXI: The Amnesia Protocol"
+  act_reference: "Act XXXI: The First Delegation"
   ens: "amnesia.privacymage.eth"
   ceremony:
     act: "XXXI"

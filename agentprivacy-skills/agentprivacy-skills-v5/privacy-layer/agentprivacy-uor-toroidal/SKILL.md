@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-uor-toroidal
 description: >
-    UOR toroidal correspondence and manifold conjecture for 0xagentprivacy.
+  UOR toroidal correspondence and manifold conjecture for 0xagentprivacy.
   Activates when discussing the toroidal manifold mapping, 96 vs 192 edge
   structures, conjectured ~3,000× ZKP reduction from lattice constraints, or
   the relationship between sovereignty geometry and proof efficiency.

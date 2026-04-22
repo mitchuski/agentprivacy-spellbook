@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-edge-value
 description: >
-    Edge value and trajectory dynamics for sovereignty transitions in
+  Edge value and trajectory dynamics for sovereignty transitions in
   0xagentprivacy. Activates when discussing T(π) trajectory terms, sovereignty
   lattice transitions (64-vertex {0,1}⁶), Yoneda lemma applications, vertical
   vs lateral sovereignty movement, or edge weight functions. Use for

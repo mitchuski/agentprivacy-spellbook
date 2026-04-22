@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-ai-agent
 description: >
-    AI agent architecture and dual-agent separation for 0xagentprivacy.
+  AI agent architecture and dual-agent separation for 0xagentprivacy.
   Activates when discussing I(S;M|π) mutual information bounds, TEE isolation,
   agent lifecycle (spawn/operate/rotate/recover/retire), Oracle architecture,
   or the fundamental design of privacy-preserving AI agents.

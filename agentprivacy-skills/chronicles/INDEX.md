@@ -4,6 +4,15 @@
 
 ---
 
+## V5.4.x Series (Maintenance & Integration)
+
+| Chronicle | Date | Summary |
+|-----------|------|---------|
+| [CHRONICLE_MASTER_CONTENT_SYNC_2026-04-22.md](CHRONICLE_MASTER_CONTENT_SYNC_2026-04-22.md) | 2026-04-22 | Source→master content sync: Act XXXI rename, Moon Phase Notation propagation, PRISM triadic coordinates (11 files, drift=0) |
+| [CHRONICLE_SKILL_YAML_FIX_2026-04-22.md](CHRONICLE_SKILL_YAML_FIX_2026-04-22.md) | 2026-04-22 | Bulk repair of SKILL.md frontmatter — folded-scalar indent mismatch broke Claude web uploads (99 files fixed in master) |
+
+---
+
 ## V5.3.x Series (Ceremony Integration)
 
 | Chronicle | Date | Summary |

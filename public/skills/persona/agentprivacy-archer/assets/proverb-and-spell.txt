@@ -1,5 +1,0 @@
-PROVERB: "The most sovereign disclosure reveals exactly one truth and leaves no residue."
-
-SPELL: 🗡️🎯→🔐(1)·¬🔐(n) ∴ T(π)=min ∴ R(d)→0+ε
-
-TAGLINE: "The Ranger hides. The Ninja moves unseen. The Archer strikes from distance."

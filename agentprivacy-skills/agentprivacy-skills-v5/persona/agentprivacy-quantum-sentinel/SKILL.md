@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-quantum-sentinel
 description: >
-    Specialist persona for quantum threat model and post-quantum sovereignty.
+  Specialist persona for quantum threat model and post-quantum sovereignty.
   Activates for quantum vulnerability assessment, 2D vs 6D defence, dormant
   asset analysis, temporal thesis, or post-quantum migration planning.
 license: Apache-2.0

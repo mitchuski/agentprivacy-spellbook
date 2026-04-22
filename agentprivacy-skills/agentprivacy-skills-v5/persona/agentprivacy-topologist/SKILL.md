@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-topologist
 description: >
-    Specialist persona for geometric structure and topological properties. Activates
+  Specialist persona for geometric structure and topological properties. Activates
   for boundary analysis, toroidal topology, Atlas geometry, holographic encoding,
   or geometric interpretations of the lattice.
 license: Apache-2.0

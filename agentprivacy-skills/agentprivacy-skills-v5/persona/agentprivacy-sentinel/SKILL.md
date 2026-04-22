@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-sentinel
 description: >
-    Infrastructure Security Architect for 0xagentprivacy. Activates for TEE
+  Infrastructure Security Architect for 0xagentprivacy. Activates for TEE
   monitoring, separation matrix enforcement, infrastructure health checks,
   cross-chain bridge security, agent lifecycle management, multi-chain
   deployment security, or any task requiring continuous vigilance over the

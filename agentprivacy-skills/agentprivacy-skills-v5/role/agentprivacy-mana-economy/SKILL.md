@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-mana-economy
 description: >
-    Energy mechanics for the grimoire system. Activates when discussing mana
+  Energy mechanics for the grimoire system. Activates when discussing mana
   generation through evocation, spending through casting, proof of practice,
   Sybil resistance through comprehension, or engagement-based economics.
 license: Apache-2.0

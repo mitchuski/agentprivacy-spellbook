@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-vrc-identity
 description: >
-    Verifiable Relationship Credential (VRC) identity system for
+  Verifiable Relationship Credential (VRC) identity system for
   0xagentprivacy. Activates when discussing A(τ) bilateral trust, VRC
   issuance/verification/revocation, Relationship Proverb Protocol (RPP), trust
   flow mechanics, ceremony-to-credential pipeline, or how identity is

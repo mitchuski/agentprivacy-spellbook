@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-ring-algebra
 description: >
-    UOR ring algebra foundation for 0xagentprivacy. Activates when discussing
+  UOR ring algebra foundation for 0xagentprivacy. Activates when discussing
   Z/(2^6)Z structure, the five operations (neg, bnot, xor, and, or), the critical
   identity neg(bnot(x))=succ(x), stratum as popcount, Pascal's row distribution,
   or why the lattice has no dead ends.

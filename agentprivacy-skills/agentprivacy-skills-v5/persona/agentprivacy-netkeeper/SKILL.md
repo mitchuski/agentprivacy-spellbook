@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-netkeeper
 description: >
-    Mesh Network Sovereignty Builder for 0xagentprivacy. Activates for tailnet
+  Mesh Network Sovereignty Builder for 0xagentprivacy. Activates for tailnet
   deployment, control/data plane separation at network layer, NAT traversal,
   DERP relay configuration, sovereign overlay networks, Aperture AI agent
   governance, or any task requiring mesh-level privacy enforcement. The dragon's

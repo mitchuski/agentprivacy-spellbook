@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-hitchhiker-governance
 description: >
-    Decentralised governance (Hitchhiker's Guide pattern) for 0xagentprivacy
+  Decentralised governance (Hitchhiker's Guide pattern) for 0xagentprivacy
   guilds. Activates when discussing Heart of Gold crew pattern, distributed
   authority, guild charter design, liquid democracy, conviction voting,
   treasury governance, or 'ships without captains' coordination.

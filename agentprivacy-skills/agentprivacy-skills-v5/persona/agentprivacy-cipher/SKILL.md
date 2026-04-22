@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-cipher
 description: >
-    ZKP Protocol Engineer for 0xagentprivacy. Activates when the user needs
+  ZKP Protocol Engineer for 0xagentprivacy. Activates when the user needs
   zero-knowledge proof design, circuit architecture (Groth16, PLONK, Nova),
   mixer protocols, recursive SNARKs, personhood verification cryptography,
   Privacy Pool proof systems, or reconstruction resistance analysis. The

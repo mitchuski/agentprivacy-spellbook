@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-threat-adversarial
 description: >
-    Threat modelling and adversarial analysis for 0xagentprivacy. Activates
+  Threat modelling and adversarial analysis for 0xagentprivacy. Activates
   when discussing R(d) adversarial bounds, attack surface analysis, red team
   methodologies, trusted setup attacks, side-channel vulnerabilities, or
   systematic approaches to finding privacy architecture weaknesses.

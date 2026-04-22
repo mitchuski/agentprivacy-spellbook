@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-ambassador
 description: >
-    Standards and Governance Architect for 0xagentprivacy. Activates for
+  Standards and Governance Architect for 0xagentprivacy. Activates for
   institutional engagement (BGIN, IIW, ToIP, IEEE 7012), privacy standard
   development, policy translation, regulatory navigation, cross-institutional
   coordination, or any task requiring the privacy architecture to interface

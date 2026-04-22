@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-priest
 description: >
-    Ceremony and Ritual Designer for 0xagentprivacy. Activates for VRC
+  Ceremony and Ritual Designer for 0xagentprivacy. Activates for VRC
   ceremony design (Shadow→Guarded→Balanced→Open→Declared), Signal to Sanctuary
   pipeline choreography, proverb evaluation calibration, ceremony progression
   rituals, RPP recovery ceremonies, or any task requiring the sacred

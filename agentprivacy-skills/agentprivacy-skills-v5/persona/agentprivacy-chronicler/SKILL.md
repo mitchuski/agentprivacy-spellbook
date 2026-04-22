@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-chronicler
 description: >
-    Narrative Compression Specialist for 0xagentprivacy. Activates for
+  Narrative Compression Specialist for 0xagentprivacy. Activates for
   chronicle creation, narrative compression (70:1-125:1 ratios), spellbook
   methodology, story-as-documentation, proverb extraction from experience,
   Privacy Pool chronicle contribution, or any task requiring complex knowledge

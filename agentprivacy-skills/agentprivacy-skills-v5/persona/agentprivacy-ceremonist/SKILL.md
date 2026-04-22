@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-ceremonist
 description: >
-    Specialist persona for ceremony facilitation between territories. Activates
+  Specialist persona for ceremony facilitation between territories. Activates
   for ceremony coordination, bilateral witness protocols, mana economy management,
   Understanding-as-Key ceremonies, or cross-territory coordination.
 license: Apache-2.0

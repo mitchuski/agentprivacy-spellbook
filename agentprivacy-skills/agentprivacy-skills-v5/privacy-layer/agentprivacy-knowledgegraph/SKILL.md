@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-knowledgegraph
 description: >
-    Complete entity-relationship knowledge graph for 0xagentprivacy. Activates
+  Complete entity-relationship knowledge graph for 0xagentprivacy. Activates
   when needing the full map of entities (persons, agents, VRCs, guilds, pools,
   ceremonies), their relationships, and query surfaces. Use as the canonical
   reference for how all system components connect. Contains the comprehensive

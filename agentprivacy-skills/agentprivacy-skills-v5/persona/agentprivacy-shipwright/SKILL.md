@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-shipwright
 description: >
-    DAO and Community Architect for 0xagentprivacy. Activates for guild
+  DAO and Community Architect for 0xagentprivacy. Activates for guild
   deployment, treaty negotiation between guilds, governance mechanism design
   (conviction voting, quadratic funding), treasury architecture, Heart of Gold
   crew patterns, decentralised fabric coordination, or any task requiring

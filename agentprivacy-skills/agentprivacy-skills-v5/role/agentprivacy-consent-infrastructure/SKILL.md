@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-consent-infrastructure
 description: >
-    Consent infrastructure and IEEE 7012 MyTerms integration for
+  Consent infrastructure and IEEE 7012 MyTerms integration for
   0xagentprivacy. Activates when discussing bilateral consent,
   cookie-slashing, consent receipts, Customer Commons, MyTerms Alliance, or
   how P·C·Σ creates enforceable consent rather than checkbox compliance.

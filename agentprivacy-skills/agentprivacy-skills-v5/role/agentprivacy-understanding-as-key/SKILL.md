@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-understanding-as-key
 description: >
-    Understanding-as-authentication for 0xagentprivacy RPP. Activates when
+  Understanding-as-authentication for 0xagentprivacy RPP. Activates when
   discussing proverb-based access control, demonstrated comprehension as
   credential, the Oracle verification pipeline, viewing key / signing key
   separation in knowledge verification, or how understanding replaces

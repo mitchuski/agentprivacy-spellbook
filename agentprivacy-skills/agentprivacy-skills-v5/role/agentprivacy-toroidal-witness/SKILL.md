@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-toroidal-witness
 description: >
-    Infinite witness space from toroidal topology. Activates when discussing
+  Infinite witness space from toroidal topology. Activates when discussing
   cyclic paths through the lattice, unbounded witnesses, computational hardness
   from path enumeration, toroidal wrap, or why witness extraction is infeasible.
 license: Apache-2.0

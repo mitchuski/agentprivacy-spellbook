@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-assessor
 description: >
-    Privacy Data Economist for 0xagentprivacy. Activates for sovereignty gap
+  Privacy Data Economist for 0xagentprivacy. Activates for sovereignty gap
   quantification (17×-12,000× multiplier), tokenomics design (SWORD/MAGE
   pairs), Privacy Pool valuation, guild economics modelling, 7th capital
   accounting, investor pitch economics, or any task requiring V(π,t)

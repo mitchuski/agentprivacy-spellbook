@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-network-topology
 description: >
-    Network topology and stratum-weighted effects for 0xagentprivacy Privacy
+  Network topology and stratum-weighted effects for 0xagentprivacy Privacy
   Pools. Activates when discussing (1 + Σ wᵢ nᵢ/N₀)^k, binomial coefficients
   across strata, Metcalfe generalisation, pool composition optimisation, or
   network scaling exponents. Use for Privacy Pool design and network value

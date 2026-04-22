@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-economics
 description: >
-    Tokenomics and privacy economics for 0xagentprivacy. Activates when
+  Tokenomics and privacy economics for 0xagentprivacy. Activates when
   discussing SWORD/MAGE token pairs, emission curves, staking mechanisms,
   guild economics, Privacy Pool financial instruments, or the economic models
   underlying the sovereignty architecture.

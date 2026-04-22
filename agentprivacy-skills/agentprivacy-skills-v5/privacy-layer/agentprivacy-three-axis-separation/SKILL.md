@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-three-axis-separation
 description: >
-    Three-axis separation model for 0xagentprivacy V5. Activates when discussing
+  Three-axis separation model for 0xagentprivacy V5. Activates when discussing
   Φ_agent · Φ_data · Φ_inference, multiplicative separation, Generator-Solver
   split, provider fragmentation, why collapse on any axis collapses total value,
   or the orthogonal axes of the sovereignty architecture.

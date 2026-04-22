@@ -13,7 +13,7 @@ metadata:
   origin: "0xagentprivacy"
   equation_term: "Architecture recognition — the pattern before the implementation"
   emoji: "🌌☯️"
-  act_reference: "Act XXXI: The Amnesia Protocol"
+  act_reference: "Act XXXI: The First Delegation"
   ens: "cosmos.privacymage.eth"
 ---
 

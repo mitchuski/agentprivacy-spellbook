@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-herald
 description: >
-    Information Commons Architect for 0xagentprivacy V5. Activates for media
+  Information Commons Architect for 0xagentprivacy V5. Activates for media
   plurality challenges, signal vs noise problems, community journalism design,
   federated social media architecture, inoculation strategies, AI verification
   systems, or any task requiring the projection of shared truth through

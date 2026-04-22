@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-atlas-geometry
 description: >
-    Atlas embeddings and exceptional Lie group geometry. Activates when discussing
+  Atlas embeddings and exceptional Lie group geometry. Activates when discussing
   the 96-vertex Atlas, exceptional Lie groups (G₂, F₄, E₆, E₇, E₈), the Golden
   Seed Vector, connection to 96-edge holographic boundary, or higher geometric
   structures underlying the lattice.

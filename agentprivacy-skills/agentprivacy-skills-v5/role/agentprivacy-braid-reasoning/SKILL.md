@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-braid-reasoning
 description: >
-    Bounded reasoning architecture for privacy-preserving AI agents using BRAID
+  Bounded reasoning architecture for privacy-preserving AI agents using BRAID
   Mermaid graphs. Activates when discussing Generator/Solver split architecture,
   Performance-Per-Dollar (PPD) inference economics, BRAID Parity Effect (small
   model + structure ≥ large model), Mermaid reasoning graph construction, node

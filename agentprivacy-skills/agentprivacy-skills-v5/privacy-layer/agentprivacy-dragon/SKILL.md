@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-dragon
 description: >
-    Root equation and complete Privacy Value Model V4 overview for
+  Root equation and complete Privacy Value Model V4 overview for
   0xagentprivacy. Activates when discussing V(π,t), the sovereignty value
   equation, proven bounds (reconstruction ceiling R<1), conjectured properties
   (golden ratio φ optimality), or any foundational question about how privacy

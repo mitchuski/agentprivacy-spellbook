@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-narrative-compression
 description: >
-    Narrative compression methodology for 0xagentprivacy spellbook system.
+  Narrative compression methodology for 0xagentprivacy spellbook system.
   Activates when discussing 70:1-125:1 compression ratios,
   story-as-documentation, proverb extraction, symbolic notation, emoji spell
   encoding, or how complex cryptographic concepts compress into regenerative

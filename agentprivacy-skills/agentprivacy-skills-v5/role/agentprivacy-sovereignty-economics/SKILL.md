@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-sovereignty-economics
 description: >
-    Sovereignty economics and P^1.5 superlinearity for 0xagentprivacy.
+  Sovereignty economics and P^1.5 superlinearity for 0xagentprivacy.
   Activates when discussing the superlinear returns of protection, sovereignty
   gap quantification (17×-12,000×), V_sovereign/V_surveillance ratios, or the
   mathematical proof that privacy creates exponentially more value than

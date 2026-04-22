@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-content-addressing
 description: >
-    UOR content addressing foundation for holonic persistence. Activates when
+  UOR content addressing foundation for holonic persistence. Activates when
   discussing content-based identity, same bytes same hash, GUID derivation,
   infrastructure independence, Braille IRI encoding, or why identity follows
   content not location.

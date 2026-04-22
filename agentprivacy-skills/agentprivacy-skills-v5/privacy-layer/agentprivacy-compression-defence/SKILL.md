@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-compression-defence
 description: >
-    Compression-as-defence principle for 0xagentprivacy V5. Activates when
+  Compression-as-defence principle for 0xagentprivacy V5. Activates when
   discussing BRAID 74× compression, R(d,compression) modifier, token reduction
   as attack surface reduction, the compression spectrum (7 layers), or why
   efficient inference is also private inference.

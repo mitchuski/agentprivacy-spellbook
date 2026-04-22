@@ -117,6 +117,20 @@ oracle-swordsman/tests/integration/test-secretsigner.ts
 # Backup files
 *.bak
 
+# Skills build artifact — auto-generated from agentprivacy-skills/ via prebuild script
+/public/skills/
+
+# Ad-hoc audit/maintenance scripts (not part of the build)
+/.public_skills_*
+/.reference_audit*
+/agentprivacy-skills/.yaml_fix*
+/agentprivacy-skills/.yaml_fix_manifest.json
+/agentprivacy-skills/.content_sync*
+/agentprivacy-skills/.content_sync_manifest*.json
+/agentprivacy-skills/.diff_*
+/agentprivacy-skills/.non_yaml_diff*
+/agentprivacy-skills/.remaining_diff*
+
 # Audio files (stored in R2 buckets, not git)
 public/audio_soulbae/*.mp3
 # Note: Keep *.mp3 pattern specific to avoid ignoring video files

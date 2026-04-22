@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-policy-governance
 description: >
-    Standards and policy governance for 0xagentprivacy. Activates when
+  Standards and policy governance for 0xagentprivacy. Activates when
   discussing IEEE 7012, BGIN working groups, Internet Identity Workshop, Trust
   Over IP Foundation, W3C credentials, IETF standards, regulatory frameworks,
   or how privacy architecture interfaces with institutional governance.

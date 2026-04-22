@@ -13,7 +13,7 @@ metadata:
   origin: "0xagentprivacy"
   equation_term: "Agent derivation through impact event"
   emoji: "💥🌑"
-  act_reference: "Act XXXI: The Amnesia Protocol"
+  act_reference: "Act XXXI: The First Delegation"
   scientific_reference: "Branco, Machado, Raymond (2025) Icarus — Carbonaceous Theia hypothesis"
 ---
 

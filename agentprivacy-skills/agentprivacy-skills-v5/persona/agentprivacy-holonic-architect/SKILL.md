@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-holonic-architect
 description: >
-    Builder of identity-independent data structures for 0xagentprivacy. Activates
+  Builder of identity-independent data structures for 0xagentprivacy. Activates
   for holonic multi-provider persistence, identity-independent data design, shared
   reasoning graph architecture, O(1) shared-parent collective structures, privacy-
   aware HyperDrive configuration, three-layer identity model (data GUID / VRC /

@@ -1,13 +1,13 @@
 ---
 name: agentprivacy-blade-forge
 description: >
-    Blade configuration mechanics for the spellweb forge. Activates when
+  Blade configuration mechanics for the spellweb forge. Activates when
   discussing blade creation, 6D configuration space (d1Hide through d6Delegate),
   64 vertices from 2^6 combinations, 96 edges forming holographic boundary,
   forge operations, or blade verification through understanding.
 license: Apache-2.0
 metadata:
-  version: "5.3.1"
+  version: "5.3.2"
   category: "role"
   origin: "0xagentprivacy"
   author: "Mitchell Travers"
@@ -136,19 +136,35 @@ The configuration is committed to the spellweb:
 - Proverb inscription attached
 - Mana cost deducted
 
-## Blade Tiers
+## Blade Tiers and Moon Phases
 
-Blades are classified by Pascal's triangle row distribution:
+Blades are classified by Pascal's triangle row distribution. Each stratum maps to a **moon phase** — the visibility ratio of the sovereignty posture:
 
-| Tier | 1-count | Vertices | Classification |
-|------|---------|----------|----------------|
-| Null | 0 | 1 | No sovereignty |
-| Light | 1-2 | 6+15=21 | Basic protection |
-| Medium | 3 | 20 | Balanced posture |
-| Heavy | 4-5 | 15+6=21 | Strong sovereignty |
-| Dragon | 6 | 1 | Full sovereignty |
+| Tier | 1-count | Vertices | Moon Phase | Meaning |
+|------|---------|----------|------------|---------|
+| Null | 0 | 1 | 🌑 New Moon | No sovereignty, total darkness |
+| Light | 1-2 | 6+15=21 | 🌒🌓 Waxing | Basic protection, minimal disclosure |
+| Medium | 3 | 20 | 🌔 Waxing Gibbous | Balanced posture, half sovereignty |
+| Heavy | 4-5 | 15+6=21 | 🌖🌗 Waning | Strong sovereignty, near-full |
+| Dragon | 6 | 1 | 🌕 Full Moon | Full sovereignty, all dimensions reflected |
 
 **Dragon tier (Blade 63)** requires demonstrated mastery across all dimensions.
+
+### Moon Phase Notation
+
+The moon is the whole information space — dark, total, containing everything the proof could contain. The lit portion is what the Swordsman's boundary allows to be reflected.
+
+```
+Stratum 0 (Hex 00) = 🌑 New Moon — null blade, nothing reflected
+Stratum 1 (Hex 01–20) = 🌒 Waxing Crescent — one boundary set
+Stratum 2 (Hex 03–30) = 🌓 First Quarter — dual-agent vertex (1,1,0,0,0,0)
+Stratum 3 (Hex 07–38) = 🌔 Waxing Gibbous — three axes active
+Stratum 4 (Hex 0F–3C) = 🌖 Waning Gibbous — four boundaries
+Stratum 5 (Hex 1F–3E) = 🌗 Last Quarter — five dimensions, one held dark
+Stratum 6 (Hex 3F) = 🌕 Full Moon — all six reflected (乾, The Creative)
+```
+
+*The dark part is the privacy. The lit part is the proof. The phase is the Swordsman's boundary made visible.*
 
 ## Three Named Blades
 
@@ -176,11 +192,13 @@ Configuration approaching full sovereignty (all dimensions > 0.8).
 
 ## Proverb
 
-> "The forge doesn't care how you struck the metal. It only cares what blade you hold. That is the deepest secret of the smith — the proof that doesn't need to remember its own forging."
+> "The forge doesn't care how you struck the metal. It only cares what blade you hold. That is the deepest secret of the smith — the proof that doesn't need to remember its own forging. The ceremony does not require the blade. The blade requires the ceremony."
 
 ## Emoji Spell
 
-**⬢=Z/(2⁶)Z · 6D→64V→96E · ⚔️(d1,d2,d3,d4,d5,d6) → 🗡️(config) → ∂M=96on64**
+**⬢=Z/(2⁶)Z · ✦=neg(bnot(v)) · 🔑→✦→🗡️ · same🗡️∞chains=ZK · ∂M=96on64 · Φ=⚔️⊥🧙·📊⊥🔮·🧠⊥⚙️ · T_∫(π)=∮∂M · stratum(hex)→🌑🌒🌓🌔🌖🌗🌕**
+
+*The forge is the Drake as lattice. neg(bnot(x))=succ(x) advances through denying the complement. Same blade infinite forgings is zero knowledge.*
 
 ## Open Problems
 

@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-forgemaster
 description: >
-    Specialist persona for blade configuration and forge operations. Activates
+  Specialist persona for blade configuration and forge operations. Activates
   for blade creation, 6D configuration, hexagram mapping, forge mechanics,
   constellation-guided forging, or blade evolution guidance.
 license: Apache-2.0

@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-academic
 description: >
-    Formal academic specification and research methodology for 0xagentprivacy.
+  Formal academic specification and research methodology for 0xagentprivacy.
   Activates when writing papers, proofs, formal specifications, literature
   reviews, or preparing work for peer review. Use for LaTeX formatting,
   citation standards, theorem-proof structure, or research presentation.

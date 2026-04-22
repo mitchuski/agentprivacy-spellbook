@@ -1,7 +1,7 @@
 ---
 name: agentprivacy-crypto-zkp
 description: >
-    Zero-knowledge proof systems for 0xagentprivacy. Activates when discussing
+  Zero-knowledge proof systems for 0xagentprivacy. Activates when discussing
   ZKP circuits (Groth16, PLONK, Nova), proof composition, Privacy Pool
   cryptography, reconstruction resistance R(d), h(τ) attestation chains, or
   sovereignty-class proof optimisation. Core cryptographic skill.
