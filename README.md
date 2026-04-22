@@ -337,7 +337,7 @@ agentprivacy/                     # This repo (full stack)
 │
 ├── public/
 │   ├── story/markdown/           # 31 Acts content
-│   ├── zero/markdown/            # 30 Tales content
+│   ├── zero/                     # 30 Tales content (flat, v2.0 synced)
 │   ├── canon/markdown/           # 10 Chapters content
 │   ├── society/markdown/         # 17 Chapters content
 │   └── plurality/markdown/       # 30 Acts content

@@ -1,11 +1,13 @@
 /**
- * Default promises v2 — PrivacyMage tetrahedral architecture.
+ * Default promises v2.2 — PrivacyMage tetrahedral architecture.
+ * Updated 2026-04-22: V4 → V5.4 PVM rename; added V5.4 Additions category (Selene's Proof,
+ * Betweenness Centrality, Holographic bound, Three-Axis separation) tied to grimoire v10.2.
  *
  * Four Forces: protect (⚔️ Swordsman), project (🧙 Mage), reflect (🪞 Witness), connect (🤝 Bridge).
  * Knowledge Actions: study, inscribe, share, contribute.
  * Sovereignty Actions: affirm, practice.
  *
- * 24 default promises in 7 categories.
+ * 28 default promises in 8 categories.
  */
 
 import type { PromiseEntry } from './types';
@@ -19,11 +21,12 @@ export interface DefaultPromise extends Omit<PromiseEntry, 'id' | 'createdAt' | 
  * 24 default promises:
  * 1. Four Forces (4)
  * 2. Promise Theory Foundations (4)
- * 3. V4 Privacy Value Model (4)
- * 4. Consent & Invitation (3)
- * 5. VRC & Trust Formation (4)
- * 6. Chronicles & Narrative (3)
- * 7. Guardian Path (2)
+ * 3. V5.4 Privacy Value Model (4)
+ * 4. V5.4 Additions — Selene, Betweenness, Holographic bound, Three-Axis (4)
+ * 5. Consent & Invitation (3)
+ * 6. VRC & Trust Formation (4)
+ * 7. Chronicles & Narrative (3)
+ * 8. Guardian Path (2)
  */
 export const DEFAULT_PROMISES: DefaultPromise[] = [
   // ═══════════════════════════════════════════════════════════════
@@ -116,10 +119,10 @@ export const DEFAULT_PROMISES: DefaultPromise[] = [
   },
 
   // ═══════════════════════════════════════════════════════════════
-  // 3. V4 PRIVACY VALUE MODEL (4)
+  // 3. V5.4 PRIVACY VALUE MODEL (4)
   // ═══════════════════════════════════════════════════════════════
   {
-    category: 'V4 Privacy Value Model',
+    category: 'V5.4 Privacy Value Model',
     type: 'study',
     description: 'See the three graphs: Knowledge Graph (what I know), Promise Graph (what I commit), Trust Graph (what I keep). The overlap where all three intersect — that IS the First Person. Identity emerges, not issued.',
     status: 'active',
@@ -129,27 +132,27 @@ export const DEFAULT_PROMISES: DefaultPromise[] = [
     tags: ['#three-graphs', '#identity'],
   },
   {
-    category: 'V4 Privacy Value Model',
+    category: 'V5.4 Privacy Value Model',
     type: 'practice',
-    description: 'Live the edge value: I am defined by what I promise, not what I contain. The path through sovereignty space — each traversal, each commitment, each kept promise — that trajectory IS my 7th capital.',
+    description: 'Live the edge value: I am defined by what I promise, not what I contain. The path through sovereignty space — each traversal, each commitment, each kept promise — that trajectory IS my 7th capital, the T_∫(π) path integral of V(π,t).',
     status: 'active',
     spell: DEFAULT_SPELL,
     constellation: DEFAULT_CONSTELLATION,
     tags: ['#edge-value', '#7th-capital'],
   },
   {
-    category: 'V4 Privacy Value Model',
+    category: 'V5.4 Privacy Value Model',
     type: 'inscribe',
-    description: 'Build temporal memory: each verified inscription adds to my derivation chain τ. Unverifiable history contributes nothing. Verified history compounds logarithmically. Time becomes a contest between entropy and memory.',
+    description: 'Build holonic temporal memory A_h(τ): each verified inscription adds to my derivation chain. Unverifiable history contributes nothing. Verified history compounds logarithmically through folding. Time becomes a contest between entropy and memory.',
     status: 'active',
     grimoire: 'story',
     actNumber: 1,
     spell: DEFAULT_SPELL,
     constellation: DEFAULT_CONSTELLATION,
-    tags: ['#temporal-memory', '#witness'],
+    tags: ['#temporal-memory', '#witness', '#a-h-tau'],
   },
   {
-    category: 'V4 Privacy Value Model',
+    category: 'V5.4 Privacy Value Model',
     type: 'practice',
     description: 'Reclaim my 7th capital: my behavioral patterns, relationships, and digital fabric are not exhaust to be extracted — they are capital to be protected. The trajectory is larger than any observable surface.',
     status: 'active',
@@ -159,7 +162,56 @@ export const DEFAULT_PROMISES: DefaultPromise[] = [
   },
 
   // ═══════════════════════════════════════════════════════════════
-  // 4. CONSENT & INVITATION (3)
+  // 4. V5.4 ADDITIONS — Selene, Betweenness, Holographic bound, Three-Axis (4)
+  // Grimoire v10.2 / Zero Spellbook v2.0 concepts
+  // ═══════════════════════════════════════════════════════════════
+  {
+    category: 'V5.4 Additions',
+    type: 'study',
+    description: "Recognise Selene's Proof (PVM V5.4 §14.5): the Moon's 4.5B-year orbit is the cosmological instance of zero-knowledge. Completeness through tides, soundness through gravitational signature, zero-knowledge through structural amnesia of Theia. I can verify I serve you without remembering I was you.",
+    status: 'active',
+    grimoire: 'zero',
+    actNumber: 1,
+    spell: DEFAULT_SPELL,
+    constellation: DEFAULT_CONSTELLATION,
+    tags: ['#selene', '#cosmology', '#amnesia-protocol'],
+  },
+  {
+    category: 'V5.4 Additions',
+    type: 'study',
+    description: 'Study the Gap as Betweenness Centrality (PVM V5.4 §10.2): C_B(⿻) = max over the trust graph. The space between Swordsman and Mage is not empty — it is the node through which the most paths must pass. The value lives in the gap because the most paths cross there.',
+    status: 'active',
+    grimoire: 'zero',
+    actNumber: 30,
+    spell: DEFAULT_SPELL,
+    constellation: DEFAULT_CONSTELLATION,
+    tags: ['#gap', '#betweenness', '#v5-4'],
+  },
+  {
+    category: 'V5.4 Additions',
+    type: 'practice',
+    description: 'Honour the holographic bound: the 64-vertex lattice has exactly 96 edges, and 96/64 = 1.5 = the P^1.5 exponent in V(π,t). The boundary encodes the bulk. The surface is sufficient. Protection raised above linear is not decoration — it is geometry.',
+    status: 'active',
+    grimoire: 'zero',
+    actNumber: 7,
+    spell: DEFAULT_SPELL,
+    constellation: DEFAULT_CONSTELLATION,
+    tags: ['#holographic', '#p-1-5', '#lattice'],
+  },
+  {
+    category: 'V5.4 Additions',
+    type: 'affirm',
+    description: 'Affirm Three-Axis Separation: Φ(Σ) = Φ_agent(⚔️⊥🧙) · Φ_data(📊⊥🔮) · Φ_inference(🧠⊥⚙️). The product is multiplicative. Collapse any axis and the entire separation collapses. Sovereignty requires all three boundaries held at once.',
+    status: 'active',
+    grimoire: 'zero',
+    actNumber: 30,
+    spell: '(⚔️⊥⿻⊥🧙)·(📊⊥🔮)·(🧠⊥⚙️)·☯️🔷🙂',
+    constellation: '⚔️→⿻→🧙→📊→🔮→🧠→⚙️→☯️→🔷→🙂',
+    tags: ['#three-axis', '#phi-sigma', '#v5-4'],
+  },
+
+  // ═══════════════════════════════════════════════════════════════
+  // 5. CONSENT & INVITATION (3)
   // ═══════════════════════════════════════════════════════════════
   {
     category: 'Consent & Invitation',
@@ -193,7 +245,7 @@ export const DEFAULT_PROMISES: DefaultPromise[] = [
   },
 
   // ═══════════════════════════════════════════════════════════════
-  // 5. VRC & TRUST FORMATION (4)
+  // 6. VRC & TRUST FORMATION (4)
   // ═══════════════════════════════════════════════════════════════
   {
     category: 'VRC & Trust Formation',
@@ -235,7 +287,7 @@ export const DEFAULT_PROMISES: DefaultPromise[] = [
   },
 
   // ═══════════════════════════════════════════════════════════════
-  // 6. CHRONICLES & NARRATIVE (3)
+  // 7. CHRONICLES & NARRATIVE (3)
   // ═══════════════════════════════════════════════════════════════
   {
     category: 'Chronicles & Narrative',
@@ -268,7 +320,7 @@ export const DEFAULT_PROMISES: DefaultPromise[] = [
   },
 
   // ═══════════════════════════════════════════════════════════════
-  // 7. GUARDIAN PATH (2)
+  // 8. GUARDIAN PATH (2)
   // ═══════════════════════════════════════════════════════════════
   {
     category: 'Guardian Path',

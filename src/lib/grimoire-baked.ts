@@ -1,13 +1,14 @@
 /**
- * Baked grimoire from canonical v10.1.0 (privacymage grimoire).
+ * Baked grimoire from canonical v10.2.0 (privacymage grimoire).
  * Maps all spells from: First Person (31 acts + origins), Zero (30 tales), Canon (11),
  * Parallel Society (17), Plurality (opening + 30 acts + closing), unified incantations.
  * Origins section includes all story.origins.spells. Plurality includes opening, 30 acts
  * from parts[].acts[], and closing. Total matches the grimoire JSON.
- * V10: Moon phase notation, quaternion resolution, 42 personas, celestial ceremony.
+ * V10.1: Moon phase notation, quaternion resolution, 42 personas, celestial ceremony.
+ * V10.2 (2026-04-22): Zero Spellbook v2.0 sync — Blade IDs, Moon Phases, V(π,t) term mapping, Drake/Dragon framing, Selene's Proof cosmological ground, persona crossovers (Cipher, Architect, Sentinel, Ranger) across all 30 tales.
  */
 
-import v8 from '@/data/privacymage-grimoire-v10.1.0-canonical.json';
+import v8 from '@/data/privacymage-grimoire-v10.2.0-canonical.json';
 
 export type SpellbookSource = 'story' | 'origins' | 'zero' | 'canon' | 'society' | 'plurality' | 'incantations' | 'none';
 
@@ -65,7 +66,11 @@ type V8 = {
   unified_incantations?: Record<string, { name: string; spell: string; proverb: string; incantation?: string }>;
 };
 
-const data = v8 as V8;
+// v10.2.0 grimoire adds per-tale metadata (blade, moon_phase, stratum, v_pi_t_terms, persona_cameo)
+// plus new sibling blocks (blade_key, moon_phase_key, v_pi_t_terms_key, persona_crossovers, narrative_sync)
+// that aren't captured in the V8 type. We widen through `unknown` to assert we only use the
+// subset of fields declared in V8 (story/origins, zero, canon, parallel, plurality, unified_incantations).
+const data = v8 as unknown as V8;
 
 function flattenV8(): SpellCard[] {
   const cards: SpellCard[] = [];

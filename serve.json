@@ -14,10 +14,6 @@
       "destination": "/zero.html"
     },
     {
-      "source": "/zero/markdown/**",
-      "destination": "/zero/markdown/:filename"
-    },
-    {
       "source": "/mage",
       "destination": "/mage.html"
     },
