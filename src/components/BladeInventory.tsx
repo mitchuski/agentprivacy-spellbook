@@ -229,6 +229,11 @@ export default function BladeInventory({ onBladeChange }: BladeInventoryProps) {
                           witness
                         </span>
                       )}
+                      {blade.runecrafted && (
+                        <span className="px-1.5 py-0.5 rounded text-[9px] bg-amber-500/20 text-amber-300" title={`Runecrafted · ${blade.swordsmanId}`}>
+                          ⚔️🔮 runecrafted
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-text-muted">
                       <span>{blade.tier} · stratum {blade.stratum}/6</span>
