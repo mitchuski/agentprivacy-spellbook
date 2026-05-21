@@ -23,6 +23,9 @@ export type SpellwebBladeImportPayloadV1 = {
   markEmojis: string[];
   proofSignature?: string;
   isWitness?: boolean;
+  swordsmanId?: string;
+  runecrafted?: boolean;
+  swordsmanSignature?: string;
 };
 
 export type SpellwebBladeMeta = {
@@ -32,6 +35,9 @@ export type SpellwebBladeMeta = {
   proofSignature?: string;
   isWitness?: boolean;
   importedAt: string;
+  swordsmanId?: string;
+  runecrafted?: boolean;
+  swordsmanSignature?: string;
 };
 
 /** A blade facet - one of 6 spell slots unlocked by a blade */
@@ -53,6 +59,9 @@ export type InventoryBlade = {
   stratum: number;
   facets: BladeFacet[];
   importedAt: string;
+  swordsmanId?: string;
+  runecrafted?: boolean;
+  swordsmanSignature?: string;
 };
 
 /** Stance loadout: 6 lines (L1-L6) + 1 swap slot = 7 blade positions */
@@ -227,6 +236,9 @@ export function applySpellwebBladeMarkdownToSwordsmanSlots(md: string): Spellweb
     proofSignature: payload.proofSignature,
     isWitness: payload.isWitness,
     importedAt: new Date().toISOString(),
+    swordsmanId: payload.swordsmanId,
+    runecrafted: payload.runecrafted,
+    swordsmanSignature: payload.swordsmanSignature,
   };
   try {
     localStorage.setItem(SPELLWEB_BLADE_META_KEY, JSON.stringify(meta));
@@ -254,6 +266,9 @@ export function applySpellwebBladeToSwordsmanSlots(payload: SpellwebBladeImportP
     proofSignature: payload.proofSignature,
     isWitness: payload.isWitness,
     importedAt: new Date().toISOString(),
+    swordsmanId: payload.swordsmanId,
+    runecrafted: payload.runecrafted,
+    swordsmanSignature: payload.swordsmanSignature,
   };
   try {
     localStorage.setItem(SPELLWEB_BLADE_META_KEY, JSON.stringify(meta));
@@ -443,6 +458,11 @@ export function parseAndAddBladeToInventory(md: string): InventoryBlade | null {
       }
     }
 
+    // Extract runecraft proof if present in markdown
+    const swordsmanIdMatch = md.match(/\*\*Swordsman ID:\*\*\s*`([^`]+)`/);
+    const swordsmanSigMatch = md.match(/\*\*Swordsman Signature:\*\*\s*`([^`]+)`/);
+    const runecraftedMatch = /Dual Ed25519 signature verified/.test(md);
+
     const blade: InventoryBlade = {
       id,
       name,
@@ -454,6 +474,11 @@ export function parseAndAddBladeToInventory(md: string): InventoryBlade | null {
       stratum,
       facets,
       importedAt: new Date().toISOString(),
+      ...(runecraftedMatch && {
+        swordsmanId: swordsmanIdMatch?.[1],
+        runecrafted: true,
+        swordsmanSignature: swordsmanSigMatch?.[1],
+      }),
     };
 
     // Add to inventory (or update if same signature exists)

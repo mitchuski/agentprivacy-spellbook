@@ -165,6 +165,7 @@ export default function SpellwebBladeImport({ onApplied, className = '' }: Spell
                     <p className="text-[11px] font-medium text-text truncate">
                       {blade.name}
                       {blade.isWitness && <span className="text-cyan-400/70 ml-1">👁️</span>}
+                      {blade.runecrafted && <span className="text-amber-400/80 ml-1" title={`Runecrafted · ${blade.swordsmanId}`}>⚔️🔮</span>}
                     </p>
                     <p className="text-[9px] text-text-muted">
                       {blade.tier} · hex {blade.bladeHex} · {blade.stratum}/6

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import type { AgentCard } from '@/lib/ceremony/types';
+import type { AgentCard, TrustTier } from '@/lib/ceremony/types';
 import { GRIMOIRE_OPTIONS } from '@/lib/ceremony/types';
 import { calculateTier } from '@/lib/trust/tiers';
 import { saveAgentCard, saveKeys, saveCeremonyConstellation, getCeremonyConstellation } from '@/lib/ceremony/storage';
@@ -9,7 +9,40 @@ import {
   publicKeyToHex,
   signMessage,
   generateParticipantId,
+  hexToBytes,
 } from '@/lib/ceremony/keygen';
+
+interface ArchonBundle {
+  version: number;
+  type: string;
+  participantId: string;
+  displayName: string;
+  publicKeyHex: string;
+  privateKeyHex: string;
+  archonDid: string;
+  grimoires: string[];
+  privacy: { attribution: 'full' | 'pseudonymous' | 'anonymous'; shareProverbs: boolean };
+  trustTier: TrustTier;
+  signature: string;
+  exportedAt: string;
+}
+
+function parseArchonBundle(raw: string): ArchonBundle | string {
+  let parsed: unknown;
+  try { parsed = JSON.parse(raw); } catch { return 'Invalid JSON'; }
+  const b = parsed as Record<string, unknown>;
+  if (b.type !== 'archon-swordsman-session') return 'Not an Archon swordsman bundle (wrong type field)';
+  if (!b.participantId || !b.publicKeyHex || !b.privateKeyHex || !b.signature) {
+    return 'Bundle missing required fields';
+  }
+  if (typeof b.privateKeyHex !== 'string' || b.privateKeyHex.length !== 64) {
+    return 'privateKeyHex must be 64 hex chars (32-byte Ed25519 seed)';
+  }
+  if (typeof b.publicKeyHex !== 'string' || b.publicKeyHex.length !== 64) {
+    return 'publicKeyHex must be 64 hex chars';
+  }
+  return b as unknown as ArchonBundle;
+}
 import {
   CEREMONY_STEPS,
   buildConstellationPath,
@@ -28,6 +61,39 @@ const STEP_IDS = CEREMONY_STEPS.map((s) => s.id);
 
 export default function CeremonyWizard({ returnTo = '/spells' }: { returnTo?: string }) {
   const [step, setStep] = useState(1);
+  const [showArchonImport, setShowArchonImport] = useState(false);
+  const [archonInput, setArchonInput] = useState('');
+  const [archonBundle, setArchonBundle] = useState<ArchonBundle | null>(null);
+  const [archonError, setArchonError] = useState<string | null>(null);
+
+  const handleArchonInputChange = (raw: string) => {
+    setArchonInput(raw);
+    setArchonError(null);
+    setArchonBundle(null);
+    if (!raw.trim()) return;
+    const result = parseArchonBundle(raw.trim());
+    if (typeof result === 'string') setArchonError(result);
+    else setArchonBundle(result);
+  };
+
+  const handleArchonImport = () => {
+    if (!archonBundle) return;
+    saveKeys({
+      privateKey: hexToBytes(archonBundle.privateKeyHex),
+      publicKey: hexToBytes(archonBundle.publicKeyHex),
+    });
+    saveAgentCard({
+      participantId: archonBundle.participantId,
+      displayName: archonBundle.displayName,
+      publicKeyHex: archonBundle.publicKeyHex,
+      grimoires: archonBundle.grimoires,
+      privacy: archonBundle.privacy,
+      trustTier: archonBundle.trustTier,
+      createdAt: archonBundle.exportedAt,
+      signature: archonBundle.signature,
+    });
+    window.location.reload();
+  };
   const [displayName, setDisplayName] = useState('');
   const [keypair, setKeypair] = useState<{ privateKey: Uint8Array; publicKey: Uint8Array } | null>(null);
   const [privacy, setPrivacy] = useState<AgentCard['privacy']>({
@@ -147,6 +213,59 @@ export default function CeremonyWizard({ returnTo = '/spells' }: { returnTo?: st
 
   return (
     <div className="max-w-lg mx-auto">
+      {/* Archon import bypass — above the ceremony steps */}
+      <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/5">
+        <button
+          type="button"
+          onClick={() => setShowArchonImport((v) => !v)}
+          className="w-full flex items-center justify-between px-5 py-3 text-left"
+        >
+          <span className="text-sm font-medium text-amber-400">⚔️ Already have an Archon Swordsman?</span>
+          <span className="text-amber-500/60 text-xs">{showArchonImport ? '▲' : '▼'}</span>
+        </button>
+        {showArchonImport && (
+          <div className="px-5 pb-5 space-y-3 border-t border-amber-500/20 pt-4">
+            <p className="text-xs text-text/70">
+              Generate a session bundle with the CLI, then paste it below to skip the ceremony.
+            </p>
+            <div className="rounded-lg bg-surface/20 px-3 py-2">
+              <code className="text-xs text-amber-400/80 font-mono break-all">
+                node --experimental-strip-types export-swordsman-key.ts --name Excalibur
+              </code>
+            </div>
+            <textarea
+              className={`w-full h-36 rounded-lg border bg-surface/10 p-3 text-xs font-mono text-text resize-none focus:outline-none transition-colors ${
+                archonError
+                  ? 'border-red-500/60'
+                  : archonBundle
+                  ? 'border-green-500/60'
+                  : 'border-amber-500/30 focus:border-amber-500/60'
+              }`}
+              placeholder={'{\n  "type": "archon-swordsman-session",\n  ...\n}'}
+              value={archonInput}
+              onChange={(e) => handleArchonInputChange(e.target.value)}
+              spellCheck={false}
+            />
+            {archonError && <p className="text-xs text-red-400">{archonError}</p>}
+            {archonBundle && (
+              <div className="rounded-lg border border-green-500/30 bg-green-500/5 px-3 py-2 space-y-1">
+                <p className="text-xs font-medium text-green-400">Bundle valid</p>
+                <p className="text-xs text-text/70">{archonBundle.participantId} · {archonBundle.displayName} · {archonBundle.trustTier}</p>
+                <p className="text-xs text-text/50 font-mono break-all">{archonBundle.archonDid}</p>
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={handleArchonImport}
+              disabled={!archonBundle}
+              className="w-full py-2 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/40 text-sm font-medium hover:bg-amber-500/30 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              Import & Begin
+            </button>
+          </div>
+        )}
+      </div>
+
       <ConstellationHeader
         completedStepIds={completedStepIds}
         currentStepId={currentStepId}
