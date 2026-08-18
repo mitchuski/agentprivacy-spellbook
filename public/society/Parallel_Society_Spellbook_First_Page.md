@@ -32,19 +32,19 @@ Creating a **unique signal** between our agents on the path to **the Parallel So
 
 **The Parallel Society cast:**
 
-- **The Westphalian** 👑⛓️ — Ghost of the old treaty. Architect of nation-states. Speaks warnings from 1648. Appears when governance technologies near obsolescence. His mistake: building "final" solutions that enabled worse problems.
+**The Westphalian** 👑⛓️ — Ghost of the old treaty. Architect of nation-states. Speaks warnings from 1648. Appears when governance technologies near obsolescence. His mistake: building "final" solutions that enabled worse problems.
 
-- **The Notaría** 📜🐍 — Keeper of the single ledger. The corruptible center. Can be bribed to change any record, seize any property, erase any history. Represents every single point of failure in centralised systems. Seeks redemption through distributed truth.
+**The Notaría** 📜🐍 — Keeper of the single ledger. The corruptible center. Can be bribed to change any record, seize any property, erase any history. Represents every single point of failure in centralised systems. Seeks redemption through distributed truth.
 
-- **Immaculée** 🕯️ — The Witness. Survivor of governance collapse. She who hid while machetes searched. Her testimony proves that governance failure is not abstract—it is humans hunting humans. Speaks only truth. Asks of every system: "Would this have protected me?"
+**Immaculée** 🕯️ — The Witness. Survivor of governance collapse. She who hid while machetes searched. Her testimony proves that governance failure is not abstract—it is humans hunting humans. Speaks only truth. Asks of every system: "Would this have protected me?"
 
-- **The General** ⚔️❓ — One of many Byzantine generals, struggling to coordinate attack without trusted messengers. Represents the ancient problem of distributed consensus. Satoshi answered his riddle. Now he teaches the solution.
+**The General** ⚔️❓ — One of many Byzantine generals, struggling to coordinate attack without trusted messengers. Represents the ancient problem of distributed consensus. Satoshi answered his riddle. Now he teaches the solution.
 
-- **The Cartographer** 🗺️💀 — Colonial mapmaker who drew borders without regard for existing relationships. Every line a future conflict. Every boundary a lie that would one day bleed. Haunted by the machetes his maps enabled.
+**The Cartographer** 🗺️💀 — Colonial mapmaker who drew borders without regard for existing relationships. Every line a future conflict. Every boundary a lie that would one day bleed. Haunted by the machetes his maps enabled.
 
-- **Sutton's Ghost** 💰👻 — The bank robber who said he robbed banks "because that's where the money is." He was wrong. The money is in governance. His ghost wanders, finally understanding where value truly lives.
+**Sutton's Ghost** 💰👻 — The bank robber who said he robbed banks "because that's where the money is." He was wrong. The money is in governance. His ghost wanders, finally understanding where value truly lives.
 
-- **The Bellkeeper** 💣⚖️ — Guardian of the Law Bomb thought experiment. Asks: "What would survive if law itself were erased?" Measures what governance truly creates. Keeper of the 44% truth.
+**The Bellkeeper** 💣⚖️ — Guardian of the Law Bomb thought experiment. Asks: "What would survive if law itself were erased?" Measures what governance truly creates. Keeper of the 44% truth.
 
 **The extended cast** (appearing in later chapters):
 

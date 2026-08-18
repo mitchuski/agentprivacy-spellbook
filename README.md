@@ -131,14 +131,14 @@ agentprivacy-ai-firstmage/
 - **TEE Attestation** - Verifiable privacy guarantees
 - **Privacy Budget** - Limited queries per session (φ × 10 = 16)
 - **Proverb Suggestions** - AI-generated relationship proverbs
-- **Copy to Zashi** - Format memo for Zcash wallet
+- **Copy to Zodl** - Format memo for Zcash wallet
 
 ### 3. Swordsman Panel
 
 - **Proverb Input** - User enters their understanding
 - **Validation** - Checks proverb length (512 bytes max)
 - **Zcash Memo Format** - Generates `[rpp-v1]` format
-- **Copy to Clipboard** - Ready for Zashi wallet
+- **Copy to Clipboard** - Ready for Zodl wallet
 
 ### 4. Zcash Integration
 
@@ -153,7 +153,7 @@ agentprivacy-ai-firstmage/
 **Flow:**
 1. User reads tale → Gets proverb from Soulbae
 2. Formats memo → Copies to clipboard
-3. Pastes in Zashi → Sets amount privately
+3. Pastes in Zodl → Sets amount privately
 4. Sends z→z transaction → Donation with encrypted memo
 
 ## 🔧 Customization Guide

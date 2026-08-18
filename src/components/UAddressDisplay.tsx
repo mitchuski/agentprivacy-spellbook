@@ -209,7 +209,7 @@ export default function UAddressDisplay({
       {showDescription && (
         <p className="text-xs text-text-muted mt-2">
           Send your shielded proverb transaction (0.01 ZEC) to this Unified Address.
-          Use a z-to-z transaction in Zashi or any Zcash wallet.
+          Use a z-to-z transaction in Zodl or any Zcash wallet.
         </p>
       )}
     </div>

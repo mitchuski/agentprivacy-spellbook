@@ -30,8 +30,8 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
     setMageWindow(newWindow);
   };
 
-  // Handle copy to Zashi
-  const handleCopyToZashi = async () => {
+  // Handle copy to Zodl
+  const handleCopyToZodl = async () => {
     if (!userProverb.trim()) return;
 
     const memo = formatZcashMemo(taleId, userProverb.trim());
@@ -155,7 +155,7 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                     </div>
                     <div className="text-2xl font-bold text-secondary mb-1">0.01 ZEC</div>
                     <div className="text-sm text-text-muted mb-2">Send shielded transaction with your proverb</div>
-                    <div className="text-xs text-text-muted mb-2">Via Zashi wallet • Unlimited signals</div>
+                    <div className="text-xs text-text-muted mb-2">Via Zodl wallet • Unlimited signals</div>
                     <div className="text-xs text-secondary/80 border-t border-secondary/20 pt-2 mt-2">
                       <strong>Public:</strong> Proverb commitment • <strong>Private:</strong> Fees in treasury
                     </div>
@@ -213,14 +213,14 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                   )}
                 </div>
 
-                {/* Step 3: Copy to Zashi */}
+                {/* Step 3: Copy to Zodl */}
                 <div className="mb-6">
                   <h3 className="text-sm font-semibold text-text mb-3 flex items-center gap-2">
                     <span className="text-lg">💰</span>
                     <span>Step 3: Send Shielded Transaction (0.01 ZEC)</span>
                   </h3>
                   <button
-                    onClick={handleCopyToZashi}
+                    onClick={handleCopyToZodl}
                     disabled={!userProverb.trim() || (validation !== null && !validation.valid)}
                     className="w-full btn-secondary py-3 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -238,12 +238,12 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                     ) : (
                       <>
                         <span>📋</span>
-                        <span>Copy Memo to Zashi</span>
+                        <span>Copy Memo to Zodl</span>
                       </>
                     )}
                   </button>
                   <p className="text-xs text-text-muted mt-2">
-                    Paste the memo into your Zashi wallet, set amount to <strong className="text-secondary">0.01 ZEC</strong>, and send to:
+                    Paste the memo into your Zodl wallet, set amount to <strong className="text-secondary">0.01 ZEC</strong>, and send to:
                   </p>
                   <div className="mt-2">
                     <UAddressDisplay
@@ -257,7 +257,7 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                 <div className="card bg-secondary/10 border-secondary/30">
                   <h4 className="text-sm font-semibold text-text mb-2">Mage Learning Flow:</h4>
                   <ol className="text-xs text-text-muted space-y-1 list-decimal list-inside">
-                    <li>Open your Zashi wallet</li>
+                    <li>Open your Zodl wallet</li>
                     <li>Create a new z→z (shielded) transaction</li>
                     <li>Paste the memo into the memo field</li>
                     <li>Set amount to <strong className="text-secondary">0.01 ZEC</strong></li>
@@ -290,7 +290,7 @@ export default function SwordsmanPanel({ taleId, actNumber, spellbook, actName, 
                   </div>
                   <div className="text-xl font-bold text-text-muted mb-1">1 ZEC</div>
                   <div className="text-sm text-text-muted mb-2">Swordsmen stake 1 ZEC to protect the spellbook</div>
-                  <div className="text-xs text-text-muted mb-2">Via Zashi wallet • Guardians store proverb privately</div>
+                  <div className="text-xs text-text-muted mb-2">Via Zodl wallet • Guardians store proverb privately</div>
                   <div className="text-xs text-text-muted/60 border-t border-surface/20 pt-2 mt-2">
                     <strong>Private:</strong> Proverb in spellbook • <strong>Public:</strong> 1 ZEC stake proof
                   </div>

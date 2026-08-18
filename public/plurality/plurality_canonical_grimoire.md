@@ -91,6 +91,7 @@ Plurality:     ⿻ → 🌊 → 🏔️ → 🌐 → 🔐 → 🤝 → 🌍 → 
 
 **Spell:** `🏙️ → 🚗💢(uber) → 📊(polis) → 🗣️(deliberation) → ✅(consensus) → 😷(masks) → 😂(humor) → 🔨(hackathon) → 🔄(daily practice)`
 
+
 **Proverb:** *"The difference is not better people. The difference is better architecture. Taiwan's processes channel what humans are toward what humans can become."*
 
 **Key Concept:** vTaiwan, Pol.is, and daily practices of digital democracy

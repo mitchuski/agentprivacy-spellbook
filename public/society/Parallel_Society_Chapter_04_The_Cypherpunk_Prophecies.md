@@ -82,7 +82,7 @@ Hughes smiled—the smile of someone who built instead of merely complained:
 
 *"Cypherpunks write code. We know that someone has to write software to defend privacy, and since we can't get privacy unless we all do, we're going to write it."*
 
-May's Ghost added: *"In 1992, we set up a mailing list. In 1997, a distributed mailing list—to avoid reliance on a single point of failure. Our members included Julian Assange of WikiLeaks, founders of the Electronic Frontier Foundation, Richard Stallman of the Free Software Foundation, Nick Szabo who invented the smart contract, Satoshi Nakamoto who created Bitcoin, and Hal Finney—who most probably was Satoshi Nakamoto."*
+May's Ghost added: *"In 1992, we set up a mailing list. In 1997, a distributed mailing list—to avoid reliance on a single point of failure. Our members included Julian Assange of WikiLeaks, founders of the Electronic Frontier Foundation, Richard Stallman of the Free Software Foundation, Nick Szabo who invented the smart contract, Satoshi Nakamoto who created Bitcoin, and Hal Finney—who probably knows who that is"*
 
 *"The swordsmen before the blade was forged,"* Soulbis said.
 

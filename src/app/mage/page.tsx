@@ -772,8 +772,8 @@ What brings you my spellbook?`,
     inputRef.current?.focus();
   };
 
-  // Handle copy to Zashi
-  const handleCopyToZashi = async () => {
+  // Handle copy to Zodl
+  const handleCopyToZodl = async () => {
     if (!proverbForMemo.trim() || !hasTaleSelected || !taleIdParam) return;
 
     const memo = formatZcashMemo(taleIdParam, proverbForMemo.trim());
@@ -1213,7 +1213,7 @@ What brings you my spellbook?`,
             )}
           </motion.div>
 
-          {/* Step 2: Copy Memo to Zashi */}
+          {/* Step 2: Copy Memo to Zodl */}
           {proverbForMemo.trim() && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -1225,14 +1225,14 @@ What brings you my spellbook?`,
                 <span>Step 2: Send Shielded Transaction (0.01 ZEC)</span>
               </h3>
               <p className="text-sm text-text-muted mb-4">
-                Copy the formatted memo to paste into your Zashi wallet. Set the amount to <strong className="text-secondary">0.01 ZEC</strong> and send as a shielded transaction to the spellbook address.
+                Copy the formatted memo to paste into your Zodl wallet. Set the amount to <strong className="text-secondary">0.01 ZEC</strong> and send as a shielded transaction to the spellbook address.
               </p>
               <div className="mb-4 p-3 bg-secondary/10 border border-secondary/30 rounded text-xs text-text-muted">
                 <strong className="text-text">Your signal:</strong> This is your proof of understanding—a compressed proverb that demonstrates you've engaged with the spellbook content. The Oracle will verify and inscribe it on the blockchain.
               </div>
               <div className="flex gap-3">
                 <button
-                  onClick={handleCopyToZashi}
+                  onClick={handleCopyToZodl}
                   className="btn-secondary px-6 py-3 flex items-center gap-2"
                 >
                   {copied ? (
@@ -1249,7 +1249,7 @@ What brings you my spellbook?`,
                   ) : (
                     <>
                       <span>📋</span>
-                      <span>Copy Memo to Zashi</span>
+                      <span>Copy Memo to Zodl</span>
                     </>
                   )}
                 </button>
